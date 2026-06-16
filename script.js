@@ -617,7 +617,7 @@ const routines = {
   dario: {
     id: "dario",
     name: "Dario",
-    title: "Rutina PreparaciÃ³n FÃ­sica MMA",
+    title: "RutFit",
     kicker: "12 semanas",
     exerciseLibrary,
     plan: darioPlan
@@ -626,7 +626,7 @@ const routines = {
     id: "bia",
     name: "Bia",
     title: "Rutina Bia",
-    kicker: "PrÃ³ximamente",
+    kicker: "Próximamente",
     exerciseLibrary: {},
     plan: []
   },
@@ -640,8 +640,10 @@ const routines = {
   }
 };
 
-routines.dario.title = "Rutina Preparación Física MMA";
+routines.dario.title = "RutFit";
 routines.bia.kicker = "Próximamente";
+routines.pending.title = "Rutina en preparación";
+routines.pending.kicker = "Próximamente";
 
 function progressId(week, dayIndex, exerciseKey) {
   return `w${week}-d${dayIndex + 1}-${exerciseKey}`;

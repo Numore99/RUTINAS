@@ -1,0 +1,34 @@
+{
+  "expo": {
+    "name": "RutFit",
+    "slug": "rutfit",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "scheme": "rutfit",
+    "userInterfaceStyle": "dark",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#090909"
+    },
+    "assetBundlePatterns": [
+      "assets/**/*"
+    ],
+    "android": {
+      "package": "com.lalog.rutfit",
+      "permissions": [
+        "android.permission.INTERNET"
+      ],
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#090909"
+      }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "a725ed81-a8e8-48ef-a5a4-a125f68a9f2b"
+      }
+    }
+  }
+}

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rutina Preparación Física MMA</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <section class="routine-select screen-transition" id="routineSelect">
+      <div class="routine-select-panel">
+        <span class="kicker">Acceso privado</span>
+        <h1>Iniciar sesión</h1>
+        <form class="auth-form" id="authForm">
+          <label class="search-box" for="authEmail">
+            <span>Email</span>
+            <input id="authEmail" type="email" placeholder="tu@email.com" autocomplete="email" required />
+          </label>
+          <label class="search-box" for="authPassword">
+            <span>Contraseña</span>
+            <input id="authPassword" type="password" placeholder="Mínimo 6 caracteres" autocomplete="current-password" required />
+          </label>
+          <div class="auth-actions">
+            <button class="primary-button" id="loginButton" type="submit">Iniciar sesión</button>
+            <button class="secondary-button" id="registerButton" type="button">Crear cuenta</button>
+          </div>
+          <button class="link-button" id="resetPasswordButton" type="button">Recuperar contraseña por mail</button>
+          <p class="auth-message" id="authMessage" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+
+    <header class="app-header screen-transition is-hidden" id="appHeader">
+      <div class="brand-block">
+        <span class="kicker">12 semanas</span>
+        <h1>Rutina Preparación Física MMA</h1>
+        <p class="user-greeting" id="userGreeting"></p>
+      </div>
+      <button class="change-routine-button" id="changeRoutine" type="button">Cerrar sesión</button>
+      <div class="progress-ring" aria-label="Progreso total">
+        <span id="progressPercent">0%</span>
+        <small>hecho</small>
+      </div>
+    </header>
+
+    <main class="screen-transition is-hidden" id="appMain">
+      <section class="controls" aria-label="Controles de búsqueda y filtro">
+        <label class="search-box" for="searchInput">
+          <span>Buscar</span>
+          <input id="searchInput" type="search" placeholder="Ej: squat, lactato, bike..." autocomplete="off" />
+        </label>
+
+        <div class="filter-tabs" id="filterTabs" aria-label="Filtrar por objetivo">
+          <button class="active" type="button" data-filter="todos">Todos</button>
+          <button type="button" data-filter="fuerza"><span class="filter-dot fuerza"></span>Fuerza</button>
+          <button type="button" data-filter="potencia"><span class="filter-dot potencia"></span>Potencia</button>
+          <button type="button" data-filter="lactato"><span class="filter-dot lactato"></span>Lactato</button>
+          <button type="button" data-filter="isometría"><span class="filter-dot isometría"></span>Isometría</button>
+          <button type="button" data-filter="ground and pound"><span class="filter-dot ground-and-pound"></span>G&P</button>
+          <button type="button" data-filter="recuperación"><span class="filter-dot recuperación"></span>Recuperación</button>
+        </div>
+      </section>
+
+      <section class="summary-strip" id="summaryStrip" aria-label="Resumen del plan"></section>
+
+      <section class="weeks" id="weeksContainer" aria-live="polite"></section>
+
+      <section class="routine-placeholder is-hidden" id="routinePlaceholder" aria-live="polite">
+        <h2>Rutina en preparación</h2>
+        <p>Próximamente</p>
+      </section>
+    </main>
+
+    <div class="modal" id="exerciseModal" aria-hidden="true" role="dialog" aria-modal="true">
+      <div class="modal-panel">
+        <button class="icon-button close-modal" id="closeModal" type="button" aria-label="Cerrar detalle">×</button>
+
+        <div class="modal-hero">
+          <span class="exercise-tag" id="modalObjective"></span>
+          <h2 id="modalTitle"></h2>
+          <p id="modalGoal"></p>
+        </div>
+
+        <div class="image-grid">
+          <figure>
+            <img id="modalImageStart" src="" alt="" />
+            <figcaption>Posición inicial / bajada</figcaption>
+          </figure>
+          <figure>
+            <img id="modalImageEnd" src="" alt="" />
+            <figcaption>Posición final / subida</figcaption>
+          </figure>
+        </div>
+
+        <div class="detail-grid">
+          <div>
+            <span>Series</span>
+            <strong id="modalSets"></strong>
+          </div>
+          <div>
+            <span>Reps</span>
+            <strong id="modalReps"></strong>
+          </div>
+          <div>
+            <span>Descanso</span>
+            <strong id="modalRest"></strong>
+          </div>
+        </div>
+
+        <section class="detail-section">
+          <h3>Técnica</h3>
+          <p id="modalTechnique"></p>
+        </section>
+
+        <section class="detail-section">
+          <h3>Errores comunes</h3>
+          <ul id="modalMistakes"></ul>
+        </section>
+
+        <div class="modal-actions">
+          <button class="primary-button" id="doneButton" type="button">Marcar como hecho</button>
+          <div class="rest-timer">
+            <span id="timerDisplay">00:00</span>
+            <button id="startTimer" type="button">Iniciar descanso</button>
+            <button id="resetTimer" type="button">Reiniciar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
+    <script src="firebase-config.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
