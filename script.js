@@ -211,7 +211,7 @@ const exerciseLibrary = {
     baseReps: "2:00 suave",
     rest: "0:30",
     technique:
-      "Pedaleo nasal o conversacional, hombros relajados y cadencia constante. La meta es recuperar, no competir con el monitor.",
+      "Pedaleo nasal o conversacional, hombros relajados y cadencia constante. La meta es recuperar, no perseguir el monitor.",
     mistakes: ["Ir demasiado fuerte", "Tensionar cuello", "Respirar siempre por la boca"],
     images: ["img/assault-bike-recovery-1.jpg", "img/assault-bike-recovery-2.jpg"]
   },
@@ -517,7 +517,7 @@ function renderSummary() {
     ["36", "sesiones"],
     [Object.keys(exerciseLibrary).length, "ejercicios"],
     [doneCount, "completados"],
-    ["66 kg", "objetivo"]
+    ["12", "semanas"]
   ]
     .map(([value, label]) => `<div class="summary-item"><strong>${value}</strong><span>${label}</span></div>`)
     .join("");
