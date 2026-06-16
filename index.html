@@ -3,18 +3,30 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Rutina MMA/Grappling 12 semanas</title>
+    <title>Rutina Preparación Física MMA</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <section class="routine-select screen-transition" id="routineSelect">
       <div class="routine-select-panel">
-        <span class="kicker">Rutinas</span>
-        <h1>Seleccionar Rutina</h1>
-        <div class="routine-options">
-          <button class="primary-button" type="button" data-routine-select="dario">Dario</button>
-          <button class="secondary-button" type="button" data-routine-select="bia">Bia</button>
-        </div>
+        <span class="kicker">Acceso privado</span>
+        <h1>Iniciar sesión</h1>
+        <form class="auth-form" id="authForm">
+          <label class="search-box" for="authEmail">
+            <span>Email</span>
+            <input id="authEmail" type="email" placeholder="tu@email.com" autocomplete="email" required />
+          </label>
+          <label class="search-box" for="authPassword">
+            <span>Contraseña</span>
+            <input id="authPassword" type="password" placeholder="Mínimo 6 caracteres" autocomplete="current-password" required />
+          </label>
+          <div class="auth-actions">
+            <button class="primary-button" id="loginButton" type="submit">Iniciar sesión</button>
+            <button class="secondary-button" id="registerButton" type="button">Crear cuenta</button>
+          </div>
+          <button class="link-button" id="resetPasswordButton" type="button">Recuperar contraseña por mail</button>
+          <p class="auth-message" id="authMessage" role="status" aria-live="polite"></p>
+        </form>
       </div>
     </section>
 
@@ -22,8 +34,9 @@
       <div class="brand-block">
         <span class="kicker">12 semanas</span>
         <h1>Rutina Preparación Física MMA</h1>
+        <p class="user-greeting" id="userGreeting"></p>
       </div>
-      <button class="change-routine-button" id="changeRoutine" type="button">Cambiar rutina</button>
+      <button class="change-routine-button" id="changeRoutine" type="button">Cerrar sesión</button>
       <div class="progress-ring" aria-label="Progreso total">
         <span id="progressPercent">0%</span>
         <small>hecho</small>
@@ -115,6 +128,10 @@
       </div>
     </div>
 
+    <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
+    <script src="firebase-config.js"></script>
     <script src="script.js"></script>
   </body>
 </html>

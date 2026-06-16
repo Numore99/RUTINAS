@@ -381,7 +381,9 @@ const weekSwaps = {
 const state = {
   filter: "todos",
   search: "",
-  selectedRoutine: localStorage.getItem("mma-selected-routine") || "",
+  selectedRoutine: "",
+  currentUser: null,
+  currentUserData: null,
   currentExerciseKey: null,
   timerSeconds: 0,
   timerInterval: null
@@ -391,11 +393,18 @@ let progressKey = "";
 let collapsedWeeksKey = "";
 let progress = {};
 let collapsedWeeks = {};
+let db = null;
 
 const routineSelect = document.querySelector("#routineSelect");
 const appHeader = document.querySelector("#appHeader");
 const appMain = document.querySelector("#appMain");
 const changeRoutine = document.querySelector("#changeRoutine");
+const authForm = document.querySelector("#authForm");
+const authEmail = document.querySelector("#authEmail");
+const authPassword = document.querySelector("#authPassword");
+const registerButton = document.querySelector("#registerButton");
+const resetPasswordButton = document.querySelector("#resetPasswordButton");
+const authMessage = document.querySelector("#authMessage");
 const routineControls = document.querySelector(".controls");
 const routinePlaceholder = document.querySelector("#routinePlaceholder");
 const weeksContainer = document.querySelector("#weeksContainer");
@@ -406,6 +415,7 @@ const progressPercent = document.querySelector("#progressPercent");
 const progressRing = document.querySelector(".progress-ring");
 const appKicker = document.querySelector(".app-header .kicker");
 const appTitle = document.querySelector(".app-header h1");
+const userGreeting = document.querySelector("#userGreeting");
 
 const modal = document.querySelector("#exerciseModal");
 const closeModal = document.querySelector("#closeModal");
@@ -423,19 +433,96 @@ function getRoutineTotalSessions(routine) {
 }
 
 function loadRoutineStorage(routineId) {
-  progressKey = routineId === "dario" ? "mma-grappling-12w-progress" : `mma-${routineId}-progress`;
-  collapsedWeeksKey = routineId === "dario" ? "mma-grappling-12w-collapsed-weeks" : `mma-${routineId}-collapsed-weeks`;
+  const uid = state.currentUser?.uid || "local";
+  progressKey = `mma-${uid}-${routineId}-progress`;
+  collapsedWeeksKey = `mma-${uid}-${routineId}-collapsed-weeks`;
   progress = JSON.parse(localStorage.getItem(progressKey) || "{}");
   collapsedWeeks = JSON.parse(localStorage.getItem(collapsedWeeksKey) || "{}");
 }
 
-function showRoutineSelector() {
+function setAuthMessage(message, type = "") {
+  authMessage.textContent = message;
+  authMessage.classList.toggle("error", type === "error");
+  authMessage.classList.toggle("success", type === "success");
+}
+
+function setAuthBusy(isBusy) {
+  document.querySelectorAll("#authForm button").forEach((button) => {
+    button.disabled = isBusy;
+  });
+}
+
+function isFirebaseConfigured() {
+  const config = window.FIREBASE_CONFIG || {};
+  return Boolean(config.apiKey && config.authDomain && !String(config.apiKey).startsWith("PEGAR_"));
+}
+
+function normalizeEmail(email) {
+  return email.trim().toLowerCase();
+}
+
+function getDisplayNameFromEmail(email) {
+  return normalizeEmail(email).split("@")[0] || "usuario";
+}
+
+function getDefaultRoutineForUser(user) {
+  const emailDefault = (window.EMAIL_ROUTINE_DEFAULTS || {})[normalizeEmail(user.email || "")];
+  return emailDefault || window.DEFAULT_ROUTINE_ID || "";
+}
+
+function getAuthErrorMessage(error) {
+  const code = error?.code || "";
+  if (code.includes("invalid-email")) return "El email no es válido.";
+  if (code.includes("user-not-found") || code.includes("wrong-password") || code.includes("invalid-credential")) return "Email o contraseña incorrectos.";
+  if (code.includes("email-already-in-use")) return "Ese email ya tiene una cuenta.";
+  if (code.includes("weak-password")) return "La contraseña debe tener al menos 6 caracteres.";
+  if (code.includes("configuration-not-found")) return "Falta activar Firebase Authentication en este proyecto.";
+  if (code.includes("operation-not-allowed")) return "Activa Email/Password en Firebase Authentication.";
+  if (code.includes("api-key-not-valid")) return "La configuración de Firebase no es válida.";
+  if (code.includes("permission-denied")) return "Firestore está bloqueando el acceso. Revisa las reglas de la base de datos.";
+  if (code.includes("not-found")) return "No se encontró Firestore o el documento solicitado. Revisa que la base sea (default).";
+  if (code.includes("failed-precondition")) return `Firestore necesita terminar de activarse o tiene una condición pendiente (${code}). Espera un minuto y recarga.`;
+  if (code.includes("unavailable")) return "Firestore no está disponible ahora. Revisa conexión o configuración.";
+  if (code.includes("network-request-failed")) return "No hay conexión. Inténtalo de nuevo.";
+  return `No se pudo completar la acción${code ? ` (${code})` : ""}.`;
+}
+
+function showAuthScreen(message = "") {
   state.selectedRoutine = "";
-  localStorage.removeItem("mma-selected-routine");
+  state.currentUser = null;
+  state.currentUserData = null;
   closeExercise();
   routineSelect.classList.remove("is-hidden");
   appHeader.classList.add("is-hidden");
   appMain.classList.add("is-hidden");
+  if (message) setAuthMessage(message);
+}
+
+async function ensureUserDocument(user) {
+  const ref = db.collection("users").doc(user.uid);
+  const snapshot = await ref.get();
+  if (!snapshot.exists) {
+    const routineId = getDefaultRoutineForUser(user);
+    const displayName = getDisplayNameFromEmail(user.email);
+    await ref.set({
+      email: normalizeEmail(user.email),
+      displayName,
+      routineId,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+    });
+    return { email: normalizeEmail(user.email), displayName, routineId };
+  }
+
+  const data = snapshot.data();
+  if (!data.routineId) {
+    const routineId = getDefaultRoutineForUser(user);
+    if (routineId) {
+      return { ...data, routineId };
+    }
+  }
+
+  return data;
 }
 
 function selectRoutine(routineId) {
@@ -445,9 +532,30 @@ function selectRoutine(routineId) {
   state.filter = "todos";
   searchInput.value = "";
   filterTabs.querySelectorAll("button").forEach((tab) => tab.classList.toggle("active", tab.dataset.filter === "todos"));
-  localStorage.setItem("mma-selected-routine", routineId);
   loadRoutineStorage(routineId);
   renderApp();
+}
+
+async function handleAuthenticatedUser(user) {
+  if (!user?.email) {
+    showAuthScreen();
+    return;
+  }
+
+  state.currentUser = user;
+  setAuthMessage("Cargando rutina...");
+
+  try {
+    const userData = await ensureUserDocument(user);
+    state.currentUserData = userData;
+    const routineId = userData.routineId;
+    selectRoutine(routines[routineId] ? routineId : "pending");
+  } catch (error) {
+    await firebase.auth().signOut();
+    showAuthScreen("No se pudo cargar tu usuario. Revisa Firestore.");
+    setAuthMessage(`${getAuthErrorMessage(error)} ${error?.message || ""}`.trim(), "error");
+    console.error("Firestore user load error:", error);
+  }
 }
 
 function renderApp() {
@@ -462,6 +570,8 @@ function renderApp() {
   appMain.classList.remove("is-hidden");
   appKicker.textContent = routine.kicker;
   appTitle.textContent = routine.title;
+  const displayName = state.currentUserData?.displayName || getDisplayNameFromEmail(state.currentUser?.email || "");
+  userGreeting.textContent = displayName ? `Hola, ${displayName}` : "";
 
   const hasPlan = routine.plan.length > 0;
   routineControls.classList.toggle("is-hidden", !hasPlan);
@@ -519,8 +629,19 @@ const routines = {
     kicker: "PrÃ³ximamente",
     exerciseLibrary: {},
     plan: []
+  },
+  pending: {
+    id: "pending",
+    name: "Sin rutina",
+    title: "Rutina en preparación",
+    kicker: "Próximamente",
+    exerciseLibrary: {},
+    plan: []
   }
 };
+
+routines.dario.title = "Rutina Preparación Física MMA";
+routines.bia.kicker = "Próximamente";
 
 function progressId(week, dayIndex, exerciseKey) {
   return `w${week}-d${dayIndex + 1}-${exerciseKey}`;
@@ -831,15 +952,73 @@ resetTimer.addEventListener("click", () => {
   setTimer(parseRestToSeconds(prescription.rest));
 });
 
-document.querySelectorAll("[data-routine-select]").forEach((button) => {
-  button.addEventListener("click", () => selectRoutine(button.dataset.routineSelect));
+authForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  setAuthBusy(true);
+  setAuthMessage("Ingresando...");
+
+  try {
+    const email = normalizeEmail(authEmail.value);
+    const password = authPassword.value;
+    await firebase.auth().signInWithEmailAndPassword(email, password);
+  } catch (error) {
+    setAuthMessage(getAuthErrorMessage(error), "error");
+  } finally {
+    setAuthBusy(false);
+  }
 });
 
-changeRoutine.addEventListener("click", showRoutineSelector);
+registerButton.addEventListener("click", async () => {
+  const email = normalizeEmail(authEmail.value);
+  const password = authPassword.value;
 
-if (state.selectedRoutine && routines[state.selectedRoutine]) {
-  loadRoutineStorage(state.selectedRoutine);
-  renderApp();
+  setAuthBusy(true);
+  setAuthMessage("Creando cuenta...");
+
+  try {
+    await firebase.auth().createUserWithEmailAndPassword(email, password);
+  } catch (error) {
+    setAuthMessage(getAuthErrorMessage(error), "error");
+  } finally {
+    setAuthBusy(false);
+  }
+});
+
+resetPasswordButton.addEventListener("click", async () => {
+  const email = normalizeEmail(authEmail.value);
+  if (!email) {
+    setAuthMessage("Escribe tu email para recuperar la contraseña.", "error");
+    return;
+  }
+
+  setAuthBusy(true);
+  setAuthMessage("Enviando correo de recuperación...");
+
+  try {
+    await firebase.auth().sendPasswordResetEmail(email);
+    setAuthMessage("Te envié un correo para recuperar la contraseña.", "success");
+  } catch (error) {
+    setAuthMessage(getAuthErrorMessage(error), "error");
+  } finally {
+    setAuthBusy(false);
+  }
+});
+
+changeRoutine.addEventListener("click", async () => {
+  await firebase.auth().signOut();
+});
+
+if (!window.firebase || !isFirebaseConfigured()) {
+  showAuthScreen("Falta configurar Firebase en firebase-config.js.");
+  setAuthBusy(true);
 } else {
-  showRoutineSelector();
+  firebase.initializeApp(window.FIREBASE_CONFIG);
+  db = firebase.firestore(firebase.app());
+  firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+      handleAuthenticatedUser(user);
+    } else {
+      showAuthScreen();
+    }
+  });
 }
