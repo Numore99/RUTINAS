@@ -448,6 +448,11 @@ function isWeekDone(week) {
   return getWeekExerciseIds(week).every((id) => progress[id]);
 }
 
+function isWeekCollapsed(weekNumber) {
+  const collapseId = weekCollapseId(weekNumber);
+  return collapsedWeeks[collapseId] !== false;
+}
+
 function saveCollapsedWeeks() {
   localStorage.setItem(collapsedWeeksKey, JSON.stringify(collapsedWeeks));
 }
@@ -525,7 +530,7 @@ function renderPlan() {
     .map((week) => {
       const weekDone = isWeekDone(week);
       const collapseId = weekCollapseId(week.number);
-      const isCollapsed = Boolean(collapsedWeeks[collapseId]);
+      const isCollapsed = isWeekCollapsed(week.number);
       const days = week.days
         .map((day, dayIndex) => {
           const exerciseCards = day.exercises
@@ -661,7 +666,7 @@ function toggleDone() {
     if (isWeekDone(week)) {
       collapsedWeeks[weekCollapseId(weekNumber)] = true;
     } else {
-      delete collapsedWeeks[weekCollapseId(weekNumber)];
+      collapsedWeeks[weekCollapseId(weekNumber)] = false;
     }
     saveCollapsedWeeks();
   }
@@ -677,7 +682,7 @@ weeksContainer.addEventListener("click", (event) => {
   const weekToggle = event.target.closest(".week-toggle");
   if (weekToggle) {
     const collapseId = weekCollapseId(Number(weekToggle.dataset.week));
-    collapsedWeeks[collapseId] = !collapsedWeeks[collapseId];
+    collapsedWeeks[collapseId] = !isWeekCollapsed(Number(weekToggle.dataset.week));
     saveCollapsedWeeks();
     renderPlan();
     return;
