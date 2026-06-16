@@ -384,6 +384,10 @@ const state = {
   selectedRoutine: "",
   currentUser: null,
   currentUserData: null,
+  isAdmin: false,
+  adminPanelOpen: false,
+  adminRoutineId: "",
+  adminDraft: null,
   currentExerciseKey: null,
   timerSeconds: 0,
   timerInterval: null
@@ -416,6 +420,21 @@ const progressRing = document.querySelector(".progress-ring");
 const appKicker = document.querySelector(".app-header .kicker");
 const appTitle = document.querySelector(".app-header h1");
 const userGreeting = document.querySelector("#userGreeting");
+const adminToggle = document.querySelector("#adminToggle");
+const adminPanel = document.querySelector("#adminPanel");
+const adminClose = document.querySelector("#adminClose");
+const adminRoutineSelect = document.querySelector("#adminRoutineSelect");
+const adminRoutineId = document.querySelector("#adminRoutineId");
+const adminRoutineName = document.querySelector("#adminRoutineName");
+const adminRoutineTitle = document.querySelector("#adminRoutineTitle");
+const adminRoutineKicker = document.querySelector("#adminRoutineKicker");
+const adminSaveRoutine = document.querySelector("#adminSaveRoutine");
+const adminNewRoutine = document.querySelector("#adminNewRoutine");
+const adminSeedDario = document.querySelector("#adminSeedDario");
+const adminAddWeek = document.querySelector("#adminAddWeek");
+const adminDeleteRoutine = document.querySelector("#adminDeleteRoutine");
+const adminMessage = document.querySelector("#adminMessage");
+const adminWeeks = document.querySelector("#adminWeeks");
 
 const modal = document.querySelector("#exerciseModal");
 const closeModal = document.querySelector("#closeModal");
@@ -461,6 +480,43 @@ function normalizeEmail(email) {
   return email.trim().toLowerCase();
 }
 
+function isAdminEmail(email) {
+  return (window.ADMIN_EMAILS || []).map(normalizeEmail).includes(normalizeEmail(email || ""));
+}
+
+function cloneData(data) {
+  return JSON.parse(JSON.stringify(data));
+}
+
+function slugify(text) {
+  return normalize(String(text || ""))
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 64);
+}
+
+function createEmptyRoutine(id = "") {
+  return {
+    id,
+    name: id || "Nueva rutina",
+    title: id || "RutFit",
+    kicker: "Nueva",
+    exerciseLibrary: {},
+    plan: []
+  };
+}
+
+function serializeRoutine(routine) {
+  return {
+    id: routine.id,
+    name: routine.name,
+    title: routine.title,
+    kicker: routine.kicker,
+    exerciseLibrary: routine.exerciseLibrary || {},
+    plan: routine.plan || []
+  };
+}
+
 function getDisplayNameFromEmail(email) {
   return normalizeEmail(email).split("@")[0] || "usuario";
 }
@@ -491,16 +547,22 @@ function showAuthScreen(message = "") {
   state.selectedRoutine = "";
   state.currentUser = null;
   state.currentUserData = null;
+  state.isAdmin = false;
+  state.adminPanelOpen = false;
+  state.adminDraft = null;
   closeExercise();
   routineSelect.classList.remove("is-hidden");
   appHeader.classList.add("is-hidden");
   appMain.classList.add("is-hidden");
+  adminToggle.classList.add("is-hidden");
+  adminPanel.classList.add("is-hidden");
   if (message) setAuthMessage(message);
 }
 
 async function ensureUserDocument(user) {
   const ref = db.collection("users").doc(user.uid);
   const snapshot = await ref.get();
+  const isAdmin = isAdminEmail(user.email);
   if (!snapshot.exists) {
     const routineId = getDefaultRoutineForUser(user);
     const displayName = getDisplayNameFromEmail(user.email);
@@ -508,13 +570,28 @@ async function ensureUserDocument(user) {
       email: normalizeEmail(user.email),
       displayName,
       routineId,
+      role: isAdmin ? "admin" : "user",
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
       updatedAt: firebase.firestore.FieldValue.serverTimestamp()
     });
-    return { email: normalizeEmail(user.email), displayName, routineId };
+    return { email: normalizeEmail(user.email), displayName, routineId, role: isAdmin ? "admin" : "user" };
   }
 
   const data = snapshot.data();
+  if (isAdmin && data.role !== "admin") {
+    try {
+      await ref.set(
+        {
+          role: "admin",
+          updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+        },
+        { merge: true }
+      );
+    } catch (error) {
+      console.warn("No se pudo guardar el rol admin. Se usará el email admin local.", error);
+    }
+    data.role = "admin";
+  }
   if (!data.routineId) {
     const routineId = getDefaultRoutineForUser(user);
     if (routineId) {
@@ -523,6 +600,60 @@ async function ensureUserDocument(user) {
   }
 
   return data;
+}
+
+async function loadRoutineFromFirestore(routineId) {
+  if (!routineId || routineId === "pending") return null;
+  const snapshot = await db.collection("routines").doc(routineId).get();
+  if (!snapshot.exists) return null;
+  const data = snapshot.data();
+  return {
+    id: data.id || routineId,
+    name: data.name || routineId,
+    title: data.title || data.name || routineId,
+    kicker: data.kicker || "",
+    exerciseLibrary: data.exerciseLibrary || {},
+    plan: data.plan || []
+  };
+}
+
+async function loadFirestoreRoutinesForAdmin() {
+  if (!state.isAdmin) return;
+  try {
+    const snapshot = await db.collection("routines").orderBy("updatedAt", "desc").get();
+    snapshot.forEach((doc) => {
+      const data = doc.data();
+      routines[doc.id] = {
+        id: data.id || doc.id,
+        name: data.name || doc.id,
+        title: data.title || data.name || doc.id,
+        kicker: data.kicker || "",
+        exerciseLibrary: data.exerciseLibrary || {},
+        plan: data.plan || []
+      };
+    });
+  } catch (error) {
+    console.warn("No se pudieron cargar rutinas Firestore para admin.", error);
+    setAuthMessage("Entraste como admin. Para editar rutinas, publica las reglas nuevas de Firestore.", "error");
+  }
+}
+
+async function saveRoutineToFirestore(routine) {
+  const data = serializeRoutine(routine);
+  await db.collection("routines").doc(data.id).set(
+    {
+      ...data,
+      updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+      updatedBy: normalizeEmail(state.currentUser?.email || "")
+    },
+    { merge: true }
+  );
+  routines[data.id] = data;
+}
+
+async function deleteRoutineFromFirestore(routineId) {
+  await db.collection("routines").doc(routineId).delete();
+  delete routines[routineId];
 }
 
 function selectRoutine(routineId) {
@@ -548,7 +679,15 @@ async function handleAuthenticatedUser(user) {
   try {
     const userData = await ensureUserDocument(user);
     state.currentUserData = userData;
+    state.isAdmin = userData.role === "admin" || isAdminEmail(user.email);
+    if (state.isAdmin) {
+      await loadFirestoreRoutinesForAdmin();
+    }
     const routineId = userData.routineId;
+    const firestoreRoutine = routineId ? await loadRoutineFromFirestore(routineId) : null;
+    if (firestoreRoutine) {
+      routines[firestoreRoutine.id] = firestoreRoutine;
+    }
     selectRoutine(routines[routineId] ? routineId : "pending");
   } catch (error) {
     await firebase.auth().signOut();
@@ -572,6 +711,11 @@ function renderApp() {
   appTitle.textContent = routine.title;
   const displayName = state.currentUserData?.displayName || getDisplayNameFromEmail(state.currentUser?.email || "");
   userGreeting.textContent = displayName ? `Hola, ${displayName}` : "";
+  adminToggle.classList.toggle("is-hidden", !state.isAdmin);
+  adminPanel.classList.toggle("is-hidden", !state.isAdmin || !state.adminPanelOpen);
+  if (state.isAdmin && state.adminPanelOpen) {
+    renderAdminPanel();
+  }
 
   const hasPlan = routine.plan.length > 0;
   routineControls.classList.toggle("is-hidden", !hasPlan);
@@ -738,6 +882,208 @@ function renderSummary() {
     .join("");
 }
 
+function escapeHtml(value) {
+  return String(value ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;");
+}
+
+function setAdminMessage(message, type = "") {
+  adminMessage.textContent = message;
+  adminMessage.classList.toggle("error", type === "error");
+  adminMessage.classList.toggle("success", type === "success");
+}
+
+function getAdminRoutineIds() {
+  return Object.keys(routines).filter((id) => id !== "pending");
+}
+
+function setAdminDraftFromRoutine(routineId) {
+  const routine = routines[routineId] || createEmptyRoutine(routineId);
+  state.adminRoutineId = routine.id;
+  state.adminDraft = cloneData(serializeRoutine(routine));
+}
+
+function readAdminBasics() {
+  const id = slugify(adminRoutineId.value || state.adminDraft?.id || "");
+  state.adminDraft.id = id;
+  state.adminDraft.name = adminRoutineName.value.trim() || id;
+  state.adminDraft.title = adminRoutineTitle.value.trim() || state.adminDraft.name;
+  state.adminDraft.kicker = adminRoutineKicker.value.trim();
+  state.adminRoutineId = id;
+}
+
+function renderAdminPanel() {
+  if (!state.adminDraft) {
+    setAdminDraftFromRoutine(state.selectedRoutine === "pending" ? "dario" : state.selectedRoutine);
+  }
+
+  const draft = state.adminDraft;
+  adminRoutineSelect.innerHTML = getAdminRoutineIds()
+    .map((id) => `<option value="${escapeHtml(id)}" ${id === draft.id ? "selected" : ""}>${escapeHtml(routines[id].name || id)}</option>`)
+    .join("");
+  adminRoutineId.value = draft.id || "";
+  adminRoutineName.value = draft.name || "";
+  adminRoutineTitle.value = draft.title || "";
+  adminRoutineKicker.value = draft.kicker || "";
+
+  adminWeeks.innerHTML = draft.plan
+    .map((week, weekIndex) => {
+      const phase = week.phase || {};
+      const days = (week.days || [])
+        .map((day, dayIndex) => {
+          const exercises = (day.exercises || [])
+            .map((exerciseKey) => {
+              const exercise = draft.exerciseLibrary[exerciseKey] || {};
+              const images = exercise.images || ["", ""];
+              return `
+                <div class="admin-exercise" data-week-index="${weekIndex}" data-day-index="${dayIndex}" data-exercise-key="${escapeHtml(exerciseKey)}">
+                  <div class="admin-card-title">
+                    <h4>${escapeHtml(exercise.name || "Ejercicio nuevo")}</h4>
+                    <button class="danger-button" type="button" data-admin-action="delete-exercise">Eliminar ejercicio</button>
+                  </div>
+                  <div class="admin-exercise-grid">
+                    <label class="search-box"><span>Nombre</span><input class="admin-field" data-exercise-field="name" value="${escapeHtml(exercise.name || "")}" /></label>
+                    <label class="search-box"><span>Objetivo</span><input class="admin-field" data-exercise-field="objective" value="${escapeHtml(exercise.objective || "")}" /></label>
+                    <label class="search-box"><span>Series</span><input class="admin-field" data-exercise-field="baseSets" value="${escapeHtml(exercise.baseSets || "")}" /></label>
+                    <label class="search-box"><span>Reps</span><input class="admin-field" data-exercise-field="baseReps" value="${escapeHtml(exercise.baseReps || "")}" /></label>
+                    <label class="search-box"><span>Descanso</span><input class="admin-field" data-exercise-field="rest" value="${escapeHtml(exercise.rest || "")}" /></label>
+                    <label class="search-box"><span>Imagen inicial</span><input class="admin-field" data-exercise-field="imageStart" value="${escapeHtml(images[0] || "")}" /></label>
+                    <label class="search-box"><span>Imagen final</span><input class="admin-field" data-exercise-field="imageEnd" value="${escapeHtml(images[1] || "")}" /></label>
+                  </div>
+                  <label class="search-box"><span>Objetivo técnico</span><textarea class="admin-textarea" data-exercise-field="goal">${escapeHtml(exercise.goal || "")}</textarea></label>
+                  <label class="search-box"><span>Técnica</span><textarea class="admin-textarea" data-exercise-field="technique">${escapeHtml(exercise.technique || "")}</textarea></label>
+                  <label class="search-box"><span>Errores comunes, uno por línea</span><textarea class="admin-textarea" data-exercise-field="mistakes">${escapeHtml((exercise.mistakes || []).join("\n"))}</textarea></label>
+                </div>
+              `;
+            })
+            .join("");
+
+          return `
+            <div class="admin-day" data-week-index="${weekIndex}" data-day-index="${dayIndex}">
+              <div class="admin-card-title">
+                <h4>Día ${dayIndex + 1}</h4>
+                <button class="danger-button" type="button" data-admin-action="delete-day">Eliminar día</button>
+              </div>
+              <div class="admin-exercise-grid">
+                <label class="search-box"><span>Título del día</span><input class="admin-field" data-day-field="title" value="${escapeHtml(day.title || "")}" /></label>
+                <label class="search-box"><span>Foco</span><input class="admin-field" data-day-field="focus" value="${escapeHtml(day.focus || "")}" /></label>
+              </div>
+              <div class="admin-row-actions">
+                <button class="secondary-button" type="button" data-admin-action="add-exercise">Crear ejercicio</button>
+              </div>
+              ${exercises || `<div class="empty-state">Este día todavía no tiene ejercicios.</div>`}
+            </div>
+          `;
+        })
+        .join("");
+
+      return `
+        <article class="admin-editor-card" data-week-index="${weekIndex}">
+          <div class="admin-card-title">
+            <div>
+              <small>Semana</small>
+              <h3>${escapeHtml(week.number || weekIndex + 1)}: ${escapeHtml(phase.name || "Sin fase")}</h3>
+            </div>
+            <button class="danger-button" type="button" data-admin-action="delete-week">Eliminar semana</button>
+          </div>
+          <div class="admin-exercise-grid">
+            <label class="search-box"><span>Número</span><input class="admin-field" data-week-field="number" value="${escapeHtml(week.number || weekIndex + 1)}" /></label>
+            <label class="search-box"><span>Fase</span><input class="admin-field" data-week-field="phase.name" value="${escapeHtml(phase.name || "")}" /></label>
+            <label class="search-box"><span>Badge</span><input class="admin-field" data-week-field="phase.badge" value="${escapeHtml(phase.badge || "")}" /></label>
+            <label class="search-box"><span>Indicaciones</span><input class="admin-field" data-week-field="phase.modifier" value="${escapeHtml(phase.modifier || "")}" /></label>
+          </div>
+          <div class="admin-row-actions">
+            <button class="secondary-button" type="button" data-admin-action="add-day">Crear día</button>
+          </div>
+          ${days || `<div class="empty-state">Esta semana todavía no tiene días.</div>`}
+        </article>
+      `;
+    })
+    .join("");
+
+  if (!draft.plan.length) {
+    adminWeeks.innerHTML = `<div class="empty-state">Crea una semana para empezar esta rutina.</div>`;
+  }
+}
+
+function updateAdminDraftFromInput(input) {
+  if (!state.adminDraft) return;
+  const weekIndex = Number(input.closest("[data-week-index]")?.dataset.weekIndex);
+  const dayIndex = Number(input.closest("[data-day-index]")?.dataset.dayIndex);
+  const exerciseKey = input.closest("[data-exercise-key]")?.dataset.exerciseKey;
+
+  if (input.dataset.weekField) {
+    const week = state.adminDraft.plan[weekIndex];
+    week.phase = week.phase || {};
+    if (input.dataset.weekField === "number") week.number = Number(input.value) || weekIndex + 1;
+    if (input.dataset.weekField === "phase.name") week.phase.name = input.value;
+    if (input.dataset.weekField === "phase.badge") week.phase.badge = input.value;
+    if (input.dataset.weekField === "phase.modifier") week.phase.modifier = input.value;
+  }
+
+  if (input.dataset.dayField) {
+    const day = state.adminDraft.plan[weekIndex].days[dayIndex];
+    day[input.dataset.dayField] = input.value;
+  }
+
+  if (input.dataset.exerciseField) {
+    const exercise = state.adminDraft.exerciseLibrary[exerciseKey];
+    exercise.images = exercise.images || ["", ""];
+    if (input.dataset.exerciseField === "imageStart") exercise.images[0] = input.value;
+    else if (input.dataset.exerciseField === "imageEnd") exercise.images[1] = input.value;
+    else if (input.dataset.exerciseField === "mistakes") exercise.mistakes = input.value.split("\n").map((item) => item.trim()).filter(Boolean);
+    else exercise[input.dataset.exerciseField] = input.value;
+  }
+}
+
+function handleAdminAction(button) {
+  const weekIndex = Number(button.closest("[data-week-index]")?.dataset.weekIndex);
+  const dayIndex = Number(button.closest("[data-day-index]")?.dataset.dayIndex);
+  const exerciseKey = button.closest("[data-exercise-key]")?.dataset.exerciseKey;
+  const action = button.dataset.adminAction;
+
+  if (action === "delete-week") {
+    state.adminDraft.plan.splice(weekIndex, 1);
+  }
+
+  if (action === "add-day") {
+    state.adminDraft.plan[weekIndex].days = state.adminDraft.plan[weekIndex].days || [];
+    state.adminDraft.plan[weekIndex].days.push({ title: `Día ${state.adminDraft.plan[weekIndex].days.length + 1}`, focus: "", exercises: [] });
+  }
+
+  if (action === "delete-day") {
+    state.adminDraft.plan[weekIndex].days.splice(dayIndex, 1);
+  }
+
+  if (action === "add-exercise") {
+    const key = `ejercicio-${Date.now()}`;
+    state.adminDraft.exerciseLibrary[key] = {
+      name: "Ejercicio nuevo",
+      objective: "fuerza",
+      goal: "",
+      baseSets: "",
+      baseReps: "",
+      rest: "1:00",
+      technique: "",
+      mistakes: [],
+      images: ["img/placeholder-1.jpg", "img/placeholder-2.jpg"]
+    };
+    state.adminDraft.plan[weekIndex].days[dayIndex].exercises.push(key);
+  }
+
+  if (action === "delete-exercise") {
+    const exercises = state.adminDraft.plan[weekIndex].days[dayIndex].exercises;
+    state.adminDraft.plan[weekIndex].days[dayIndex].exercises = exercises.filter((key) => key !== exerciseKey);
+    const stillUsed = state.adminDraft.plan.some((week) => week.days.some((day) => day.exercises.includes(exerciseKey)));
+    if (!stillUsed) delete state.adminDraft.exerciseLibrary[exerciseKey];
+  }
+
+  renderAdminPanel();
+}
+
 function renderPlan() {
   const routine = getActiveRoutine();
   const plan = routine.plan;
@@ -749,6 +1095,7 @@ function renderPlan() {
       const weekDone = isWeekDone(week);
       const collapseId = weekCollapseId(week.number);
       const isCollapsed = isWeekCollapsed(week.number);
+      const phase = week.phase || { name: "Semana", badge: "Plan", modifier: "" };
       const days = week.days
         .map((day, dayIndex) => {
           const exerciseCards = day.exercises
@@ -790,12 +1137,12 @@ function renderPlan() {
         <article class="week-card ${weekDone ? "week-done" : ""} ${isCollapsed ? "collapsed" : ""}">
           <button class="week-header week-toggle" type="button" data-week="${week.number}" aria-expanded="${!isCollapsed}">
             <div>
-              <h2>Semana ${week.number}: ${week.phase.name}</h2>
-              ${isCollapsed ? "" : `<p>${week.phase.modifier}</p>`}
+              <h2>Semana ${week.number}: ${phase.name}</h2>
+              ${isCollapsed ? "" : `<p>${phase.modifier || ""}</p>`}
             </div>
             <span class="week-actions">
               ${weekDone ? `<span class="week-done-label">Hecha</span>` : ""}
-              <span class="week-badge">${week.phase.badge}</span>
+              <span class="week-badge">${phase.badge || "Plan"}</span>
               <span class="week-chevron">${isCollapsed ? "+" : "−"}</span>
             </span>
           </button>
@@ -925,6 +1272,113 @@ filterTabs.addEventListener("click", (event) => {
   state.filter = button.dataset.filter;
   filterTabs.querySelectorAll("button").forEach((tab) => tab.classList.toggle("active", tab === button));
   renderPlan();
+});
+
+adminToggle.addEventListener("click", () => {
+  if (!state.isAdmin) return;
+  state.adminPanelOpen = !state.adminPanelOpen;
+  if (state.adminPanelOpen && !state.adminDraft) {
+    setAdminDraftFromRoutine(state.selectedRoutine === "pending" ? "dario" : state.selectedRoutine);
+  }
+  renderApp();
+});
+
+adminClose.addEventListener("click", () => {
+  state.adminPanelOpen = false;
+  renderApp();
+});
+
+adminRoutineSelect.addEventListener("change", () => {
+  setAdminDraftFromRoutine(adminRoutineSelect.value);
+  setAdminMessage("");
+  renderAdminPanel();
+});
+
+[adminRoutineId, adminRoutineName, adminRoutineTitle, adminRoutineKicker].forEach((input) => {
+  input.addEventListener("input", () => {
+    if (!state.adminDraft) return;
+    readAdminBasics();
+  });
+});
+
+adminWeeks.addEventListener("input", (event) => {
+  updateAdminDraftFromInput(event.target);
+});
+
+adminWeeks.addEventListener("click", (event) => {
+  const button = event.target.closest("[data-admin-action]");
+  if (!button) return;
+  handleAdminAction(button);
+});
+
+adminAddWeek.addEventListener("click", () => {
+  if (!state.adminDraft) state.adminDraft = createEmptyRoutine("nueva-rutina");
+  state.adminDraft.plan.push({
+    number: state.adminDraft.plan.length + 1,
+    phase: { name: "Nueva fase", badge: "Plan", modifier: "" },
+    days: []
+  });
+  renderAdminPanel();
+});
+
+adminNewRoutine.addEventListener("click", () => {
+  state.adminDraft = createEmptyRoutine(`rutina-${Date.now()}`);
+  state.adminRoutineId = state.adminDraft.id;
+  setAdminMessage("Nueva rutina preparada. Edita los datos y guárdala.", "success");
+  renderAdminPanel();
+});
+
+adminSeedDario.addEventListener("click", async () => {
+  if (!state.isAdmin) return;
+  state.adminDraft = cloneData(serializeRoutine(routines.dario));
+  try {
+    await saveRoutineToFirestore(state.adminDraft);
+    setAdminMessage("Rutina Dario migrada a Firestore.", "success");
+    renderAdminPanel();
+  } catch (error) {
+    setAdminMessage(getAuthErrorMessage(error), "error");
+  }
+});
+
+adminSaveRoutine.addEventListener("click", async () => {
+  if (!state.isAdmin || !state.adminDraft) return;
+  readAdminBasics();
+  if (!state.adminDraft.id) {
+    setAdminMessage("La rutina necesita un ID.", "error");
+    return;
+  }
+  try {
+    await saveRoutineToFirestore(state.adminDraft);
+    setAdminMessage("Rutina guardada en Firestore.", "success");
+    if (state.selectedRoutine === state.adminDraft.id) {
+      selectRoutine(state.adminDraft.id);
+    }
+    renderAdminPanel();
+  } catch (error) {
+    setAdminMessage(getAuthErrorMessage(error), "error");
+  }
+});
+
+adminDeleteRoutine.addEventListener("click", async () => {
+  if (!state.isAdmin || !state.adminDraft?.id) return;
+  const deletedId = state.adminDraft.id;
+  if (!confirm(`¿Eliminar la rutina "${state.adminDraft.name || state.adminDraft.id}" de Firestore?`)) return;
+  try {
+    await deleteRoutineFromFirestore(deletedId);
+    setAdminMessage("Rutina eliminada.", "success");
+    state.adminDraft = null;
+    const nextRoutineId = getAdminRoutineIds()[0] || "dario";
+    if (!routines[nextRoutineId]) {
+      routines[nextRoutineId] = createEmptyRoutine(nextRoutineId);
+    }
+    setAdminDraftFromRoutine(nextRoutineId);
+    if (state.selectedRoutine === deletedId) {
+      selectRoutine(routines[nextRoutineId] ? nextRoutineId : "pending");
+    }
+    renderAdminPanel();
+  } catch (error) {
+    setAdminMessage(getAuthErrorMessage(error), "error");
+  }
 });
 
 closeModal.addEventListener("click", closeExercise);

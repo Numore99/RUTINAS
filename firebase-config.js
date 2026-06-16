@@ -16,3 +16,6 @@ window.EMAIL_ROUTINE_DEFAULTS = {
   "lalo.giraudo@gmail.com": "dario",
   "lalogiraudo@gmail.com": "dario"
 };
+
+// Emails con acceso al panel administrador.
+window.ADMIN_EMAILS = ["admin@gmail.com"];

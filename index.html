@@ -44,6 +44,7 @@
         <h1>Rutina Preparación Física MMA</h1>
         <p class="user-greeting" id="userGreeting"></p>
       </div>
+      <button class="admin-toggle is-hidden" id="adminToggle" type="button">Admin</button>
       <button class="change-routine-button" id="changeRoutine" type="button">Cerrar sesión</button>
       <div class="progress-ring" aria-label="Progreso total">
         <span id="progressPercent">0%</span>
@@ -76,6 +77,51 @@
       <section class="routine-placeholder is-hidden" id="routinePlaceholder" aria-live="polite">
         <h2>Rutina en preparación</h2>
         <p>Próximamente</p>
+      </section>
+
+      <section class="admin-panel is-hidden" id="adminPanel" aria-live="polite">
+        <div class="admin-panel-header">
+          <div>
+            <span class="kicker">Administrador</span>
+            <h2>Panel de rutinas</h2>
+            <p>Crea y edita rutinas guardadas en Firestore.</p>
+          </div>
+          <button class="secondary-button" id="adminClose" type="button">Cerrar panel</button>
+        </div>
+
+        <div class="admin-grid">
+          <label class="search-box" for="adminRoutineSelect">
+            <span>Rutina</span>
+            <select id="adminRoutineSelect"></select>
+          </label>
+          <label class="search-box" for="adminRoutineId">
+            <span>ID</span>
+            <input id="adminRoutineId" type="text" placeholder="ej: dario" autocomplete="off" />
+          </label>
+          <label class="search-box" for="adminRoutineName">
+            <span>Nombre</span>
+            <input id="adminRoutineName" type="text" placeholder="Dario" autocomplete="off" />
+          </label>
+          <label class="search-box" for="adminRoutineTitle">
+            <span>Título</span>
+            <input id="adminRoutineTitle" type="text" placeholder="RutFit" autocomplete="off" />
+          </label>
+          <label class="search-box" for="adminRoutineKicker">
+            <span>Etiqueta</span>
+            <input id="adminRoutineKicker" type="text" placeholder="12 semanas" autocomplete="off" />
+          </label>
+        </div>
+
+        <div class="admin-actions">
+          <button class="primary-button" id="adminSaveRoutine" type="button">Guardar rutina</button>
+          <button class="secondary-button" id="adminNewRoutine" type="button">Nueva rutina</button>
+          <button class="secondary-button" id="adminSeedDario" type="button">Migrar Dario actual</button>
+          <button class="secondary-button" id="adminAddWeek" type="button">Crear semana</button>
+          <button class="danger-button" id="adminDeleteRoutine" type="button">Eliminar rutina</button>
+        </div>
+
+        <p class="auth-message" id="adminMessage" role="status" aria-live="polite"></p>
+        <div class="admin-weeks" id="adminWeeks"></div>
       </section>
     </main>
 
