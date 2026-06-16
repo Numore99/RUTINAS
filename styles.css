@@ -157,6 +157,9 @@ main {
 }
 
 .filter-tabs button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.42rem;
   flex: 0 0 auto;
   border: 1px solid var(--line);
   border-radius: 999px;
@@ -171,6 +174,39 @@ main {
   border-color: rgba(36, 209, 143, 0.45);
   background: rgba(36, 209, 143, 0.14);
   color: var(--accent);
+}
+
+.filter-dot {
+  width: 0.62rem;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 3px rgba(36, 209, 143, 0.12);
+}
+
+.filter-dot.potencia {
+  background: var(--accent-2);
+  box-shadow: 0 0 0 3px rgba(255, 90, 61, 0.12);
+}
+
+.filter-dot.lactato {
+  background: var(--warning);
+  box-shadow: 0 0 0 3px rgba(246, 196, 83, 0.13);
+}
+
+.filter-dot.isometría {
+  background: var(--accent-3);
+  box-shadow: 0 0 0 3px rgba(74, 163, 255, 0.13);
+}
+
+.filter-dot.ground-and-pound {
+  background: #e66cff;
+  box-shadow: 0 0 0 3px rgba(230, 108, 255, 0.13);
+}
+
+.filter-dot.recuperación {
+  background: #4aa3ff;
+  box-shadow: 0 0 0 3px rgba(74, 163, 255, 0.13);
 }
 
 .summary-strip {
