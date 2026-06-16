@@ -560,14 +560,14 @@ function renderPlan() {
         })
         .join("");
 
-      if (!days) return "";
+      if (!days && !isCollapsed) return "";
 
       return `
         <article class="week-card ${weekDone ? "week-done" : ""} ${isCollapsed ? "collapsed" : ""}">
           <button class="week-header week-toggle" type="button" data-week="${week.number}" aria-expanded="${!isCollapsed}">
             <div>
               <h2>Semana ${week.number}: ${week.phase.name}</h2>
-              <p>${week.phase.modifier}</p>
+              ${isCollapsed ? "" : `<p>${week.phase.modifier}</p>`}
             </div>
             <span class="week-actions">
               ${weekDone ? `<span class="week-done-label">Hecha</span>` : ""}
@@ -575,7 +575,7 @@ function renderPlan() {
               <span class="week-chevron">${isCollapsed ? "+" : "−"}</span>
             </span>
           </button>
-          <div class="days" ${isCollapsed ? "hidden" : ""}>${days}</div>
+          ${isCollapsed ? "" : `<div class="days">${days}</div>`}
         </article>
       `;
     })

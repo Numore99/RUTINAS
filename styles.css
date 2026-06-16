@@ -256,6 +256,11 @@ main {
   background: linear-gradient(180deg, rgba(20, 31, 29, 0.96), rgba(10, 16, 15, 0.96));
 }
 
+.week-card.collapsed .week-header {
+  border-bottom: 0;
+  padding-block: 0.9rem;
+}
+
 .week-header {
   width: 100%;
   display: grid;
