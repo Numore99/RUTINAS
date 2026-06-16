@@ -387,7 +387,9 @@ const state = {
 };
 
 const progressKey = "mma-grappling-12w-progress";
+const collapsedWeeksKey = "mma-grappling-12w-collapsed-weeks";
 const progress = JSON.parse(localStorage.getItem(progressKey) || "{}");
+const collapsedWeeks = JSON.parse(localStorage.getItem(collapsedWeeksKey) || "{}");
 
 const weeksContainer = document.querySelector("#weeksContainer");
 const summaryStrip = document.querySelector("#summaryStrip");
@@ -432,6 +434,22 @@ const totalSessions = plan.reduce((sum, week) => sum + week.days.reduce((daySum,
 
 function progressId(week, dayIndex, exerciseKey) {
   return `w${week}-d${dayIndex + 1}-${exerciseKey}`;
+}
+
+function weekCollapseId(weekNumber) {
+  return `w${weekNumber}`;
+}
+
+function getWeekExerciseIds(week) {
+  return week.days.flatMap((day, dayIndex) => day.exercises.map((exerciseKey) => progressId(week.number, dayIndex, exerciseKey)));
+}
+
+function isWeekDone(week) {
+  return getWeekExerciseIds(week).every((id) => progress[id]);
+}
+
+function saveCollapsedWeeks() {
+  localStorage.setItem(collapsedWeeksKey, JSON.stringify(collapsedWeeks));
 }
 
 function normalize(text) {
@@ -505,6 +523,9 @@ function renderPlan() {
 
   weeksContainer.innerHTML = plan
     .map((week) => {
+      const weekDone = isWeekDone(week);
+      const collapseId = weekCollapseId(week.number);
+      const isCollapsed = Boolean(collapsedWeeks[collapseId]);
       const days = week.days
         .map((day, dayIndex) => {
           const exerciseCards = day.exercises
@@ -542,15 +563,19 @@ function renderPlan() {
       if (!days) return "";
 
       return `
-        <article class="week-card">
-          <div class="week-header">
+        <article class="week-card ${weekDone ? "week-done" : ""} ${isCollapsed ? "collapsed" : ""}">
+          <button class="week-header week-toggle" type="button" data-week="${week.number}" aria-expanded="${!isCollapsed}">
             <div>
               <h2>Semana ${week.number}: ${week.phase.name}</h2>
               <p>${week.phase.modifier}</p>
             </div>
-            <span class="week-badge">${week.phase.badge}</span>
-          </div>
-          <div class="days">${days}</div>
+            <span class="week-actions">
+              ${weekDone ? `<span class="week-done-label">Hecha</span>` : ""}
+              <span class="week-badge">${week.phase.badge}</span>
+              <span class="week-chevron">${isCollapsed ? "+" : "−"}</span>
+            </span>
+          </button>
+          <div class="days" ${isCollapsed ? "hidden" : ""}>${days}</div>
         </article>
       `;
     })
@@ -625,15 +650,39 @@ function closeExercise() {
 
 function toggleDone() {
   if (!state.currentExerciseKey) return;
-  const { id } = state.currentExerciseKey;
+  const { id, weekNumber } = state.currentExerciseKey;
   progress[id] = !progress[id];
   localStorage.setItem(progressKey, JSON.stringify(progress));
   doneButton.classList.toggle("done", Boolean(progress[id]));
   doneButton.textContent = progress[id] ? "Hecho" : "Marcar como hecho";
+
+  const week = plan.find((item) => item.number === weekNumber);
+  if (week) {
+    if (isWeekDone(week)) {
+      collapsedWeeks[weekCollapseId(weekNumber)] = true;
+    } else {
+      delete collapsedWeeks[weekCollapseId(weekNumber)];
+    }
+    saveCollapsedWeeks();
+  }
+
+  if (progress[id]) {
+    closeExercise();
+  }
+
   renderPlan();
 }
 
 weeksContainer.addEventListener("click", (event) => {
+  const weekToggle = event.target.closest(".week-toggle");
+  if (weekToggle) {
+    const collapseId = weekCollapseId(Number(weekToggle.dataset.week));
+    collapsedWeeks[collapseId] = !collapsedWeeks[collapseId];
+    saveCollapsedWeeks();
+    renderPlan();
+    return;
+  }
+
   const card = event.target.closest(".exercise-card");
   if (!card) return;
   openExercise(Number(card.dataset.week), Number(card.dataset.day), card.dataset.exercise);
