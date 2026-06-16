@@ -7,18 +7,30 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <header class="app-header">
+    <section class="routine-select screen-transition" id="routineSelect">
+      <div class="routine-select-panel">
+        <span class="kicker">Rutinas</span>
+        <h1>Seleccionar Rutina</h1>
+        <div class="routine-options">
+          <button class="primary-button" type="button" data-routine-select="dario">Dario</button>
+          <button class="secondary-button" type="button" data-routine-select="bia">Bia</button>
+        </div>
+      </div>
+    </section>
+
+    <header class="app-header screen-transition is-hidden" id="appHeader">
       <div class="brand-block">
         <span class="kicker">12 semanas</span>
         <h1>Rutina Preparación Física MMA</h1>
       </div>
+      <button class="change-routine-button" id="changeRoutine" type="button">Cambiar rutina</button>
       <div class="progress-ring" aria-label="Progreso total">
         <span id="progressPercent">0%</span>
         <small>hecho</small>
       </div>
     </header>
 
-    <main>
+    <main class="screen-transition is-hidden" id="appMain">
       <section class="controls" aria-label="Controles de búsqueda y filtro">
         <label class="search-box" for="searchInput">
           <span>Buscar</span>
@@ -39,6 +51,11 @@
       <section class="summary-strip" id="summaryStrip" aria-label="Resumen del plan"></section>
 
       <section class="weeks" id="weeksContainer" aria-live="polite"></section>
+
+      <section class="routine-placeholder is-hidden" id="routinePlaceholder" aria-live="polite">
+        <h2>Rutina en preparación</h2>
+        <p>Próximamente</p>
+      </section>
     </main>
 
     <div class="modal" id="exerciseModal" aria-hidden="true" role="dialog" aria-modal="true">

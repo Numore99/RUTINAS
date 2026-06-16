@@ -381,22 +381,31 @@ const weekSwaps = {
 const state = {
   filter: "todos",
   search: "",
+  selectedRoutine: localStorage.getItem("mma-selected-routine") || "",
   currentExerciseKey: null,
   timerSeconds: 0,
   timerInterval: null
 };
 
-const progressKey = "mma-grappling-12w-progress";
-const collapsedWeeksKey = "mma-grappling-12w-collapsed-weeks";
-const progress = JSON.parse(localStorage.getItem(progressKey) || "{}");
-const collapsedWeeks = JSON.parse(localStorage.getItem(collapsedWeeksKey) || "{}");
+let progressKey = "";
+let collapsedWeeksKey = "";
+let progress = {};
+let collapsedWeeks = {};
 
+const routineSelect = document.querySelector("#routineSelect");
+const appHeader = document.querySelector("#appHeader");
+const appMain = document.querySelector("#appMain");
+const changeRoutine = document.querySelector("#changeRoutine");
+const routineControls = document.querySelector(".controls");
+const routinePlaceholder = document.querySelector("#routinePlaceholder");
 const weeksContainer = document.querySelector("#weeksContainer");
 const summaryStrip = document.querySelector("#summaryStrip");
 const searchInput = document.querySelector("#searchInput");
 const filterTabs = document.querySelector("#filterTabs");
 const progressPercent = document.querySelector("#progressPercent");
 const progressRing = document.querySelector(".progress-ring");
+const appKicker = document.querySelector(".app-header .kicker");
+const appTitle = document.querySelector(".app-header h1");
 
 const modal = document.querySelector("#exerciseModal");
 const closeModal = document.querySelector("#closeModal");
@@ -404,6 +413,69 @@ const doneButton = document.querySelector("#doneButton");
 const startTimer = document.querySelector("#startTimer");
 const resetTimer = document.querySelector("#resetTimer");
 const timerDisplay = document.querySelector("#timerDisplay");
+
+function getActiveRoutine() {
+  return routines[state.selectedRoutine] || null;
+}
+
+function getRoutineTotalSessions(routine) {
+  return routine.plan.reduce((sum, week) => sum + week.days.reduce((daySum, day) => daySum + day.exercises.length, 0), 0);
+}
+
+function loadRoutineStorage(routineId) {
+  progressKey = routineId === "dario" ? "mma-grappling-12w-progress" : `mma-${routineId}-progress`;
+  collapsedWeeksKey = routineId === "dario" ? "mma-grappling-12w-collapsed-weeks" : `mma-${routineId}-collapsed-weeks`;
+  progress = JSON.parse(localStorage.getItem(progressKey) || "{}");
+  collapsedWeeks = JSON.parse(localStorage.getItem(collapsedWeeksKey) || "{}");
+}
+
+function showRoutineSelector() {
+  state.selectedRoutine = "";
+  localStorage.removeItem("mma-selected-routine");
+  closeExercise();
+  routineSelect.classList.remove("is-hidden");
+  appHeader.classList.add("is-hidden");
+  appMain.classList.add("is-hidden");
+}
+
+function selectRoutine(routineId) {
+  if (!routines[routineId]) return;
+  state.selectedRoutine = routineId;
+  state.search = "";
+  state.filter = "todos";
+  searchInput.value = "";
+  filterTabs.querySelectorAll("button").forEach((tab) => tab.classList.toggle("active", tab.dataset.filter === "todos"));
+  localStorage.setItem("mma-selected-routine", routineId);
+  loadRoutineStorage(routineId);
+  renderApp();
+}
+
+function renderApp() {
+  const routine = getActiveRoutine();
+  if (!routine) {
+    showRoutineSelector();
+    return;
+  }
+
+  routineSelect.classList.add("is-hidden");
+  appHeader.classList.remove("is-hidden");
+  appMain.classList.remove("is-hidden");
+  appKicker.textContent = routine.kicker;
+  appTitle.textContent = routine.title;
+
+  const hasPlan = routine.plan.length > 0;
+  routineControls.classList.toggle("is-hidden", !hasPlan);
+  summaryStrip.classList.toggle("is-hidden", !hasPlan);
+  weeksContainer.classList.toggle("is-hidden", !hasPlan);
+  routinePlaceholder.classList.toggle("is-hidden", hasPlan);
+  progressRing.classList.toggle("is-hidden", !hasPlan);
+
+  if (hasPlan) {
+    renderPlan();
+  } else {
+    stopTimer();
+  }
+}
 
 function getPhase(weekNumber) {
   return phases.find((phase) => phase.weeks.includes(weekNumber));
@@ -429,8 +501,26 @@ function buildWeek(weekNumber) {
   return { number: weekNumber, phase, days };
 }
 
-const plan = Array.from({ length: 12 }, (_, index) => buildWeek(index + 1));
-const totalSessions = plan.reduce((sum, week) => sum + week.days.reduce((daySum, day) => daySum + day.exercises.length, 0), 0);
+const darioPlan = Array.from({ length: 12 }, (_, index) => buildWeek(index + 1));
+
+const routines = {
+  dario: {
+    id: "dario",
+    name: "Dario",
+    title: "Rutina PreparaciÃ³n FÃ­sica MMA",
+    kicker: "12 semanas",
+    exerciseLibrary,
+    plan: darioPlan
+  },
+  bia: {
+    id: "bia",
+    name: "Bia",
+    title: "Rutina Bia",
+    kicker: "PrÃ³ximamente",
+    exerciseLibrary: {},
+    plan: []
+  }
+};
 
 function progressId(week, dayIndex, exerciseKey) {
   return `w${week}-d${dayIndex + 1}-${exerciseKey}`;
@@ -508,22 +598,27 @@ function phasePrescription(exercise, weekNumber) {
 }
 
 function renderSummary() {
+  const routine = getActiveRoutine();
+  const totalSessions = getRoutineTotalSessions(routine);
   const doneCount = Object.values(progress).filter(Boolean).length;
-  const percent = Math.round((doneCount / totalSessions) * 100);
+  const percent = totalSessions ? Math.round((doneCount / totalSessions) * 100) : 0;
   progressPercent.textContent = `${percent}%`;
   progressRing.style.setProperty("--progress", `${percent}%`);
 
   summaryStrip.innerHTML = [
-    ["36", "sesiones"],
-    [Object.keys(exerciseLibrary).length, "ejercicios"],
+    [totalSessions, "sesiones"],
+    [Object.keys(routine.exerciseLibrary).length, "ejercicios"],
     [doneCount, "completados"],
-    ["12", "semanas"]
+    [routine.plan.length, "semanas"]
   ]
     .map(([value, label]) => `<div class="summary-item"><strong>${value}</strong><span>${label}</span></div>`)
     .join("");
 }
 
 function renderPlan() {
+  const routine = getActiveRoutine();
+  const plan = routine.plan;
+  const library = routine.exerciseLibrary;
   let visibleCount = 0;
 
   weeksContainer.innerHTML = plan
@@ -535,7 +630,8 @@ function renderPlan() {
         .map((day, dayIndex) => {
           const exerciseCards = day.exercises
             .map((exerciseKey) => {
-              const exercise = exerciseLibrary[exerciseKey];
+              const exercise = library[exerciseKey];
+              if (!exercise) return "";
               if (!matchesFilters(exercise)) return "";
               visibleCount += 1;
               const id = progressId(week.number, dayIndex, exerciseKey);
@@ -616,7 +712,9 @@ function setTimer(seconds) {
 }
 
 function openExercise(weekNumber, dayIndex, exerciseKey) {
-  const exercise = exerciseLibrary[exerciseKey];
+  const routine = getActiveRoutine();
+  const exercise = routine.exerciseLibrary[exerciseKey];
+  if (!exercise) return;
   const prescription = phasePrescription(exercise, weekNumber);
   const id = progressId(weekNumber, dayIndex, exerciseKey);
   state.currentExerciseKey = { id, weekNumber, dayIndex, exerciseKey };
@@ -661,7 +759,7 @@ function toggleDone() {
   doneButton.classList.toggle("done", Boolean(progress[id]));
   doneButton.textContent = progress[id] ? "Hecho" : "Marcar como hecho";
 
-  const week = plan.find((item) => item.number === weekNumber);
+  const week = getActiveRoutine().plan.find((item) => item.number === weekNumber);
   if (week) {
     if (isWeekDone(week)) {
       collapsedWeeks[weekCollapseId(weekNumber)] = true;
@@ -728,9 +826,20 @@ startTimer.addEventListener("click", () => {
 resetTimer.addEventListener("click", () => {
   if (!state.currentExerciseKey) return;
   const { weekNumber, exerciseKey } = state.currentExerciseKey;
-  const prescription = phasePrescription(exerciseLibrary[exerciseKey], weekNumber);
+  const prescription = phasePrescription(getActiveRoutine().exerciseLibrary[exerciseKey], weekNumber);
   stopTimer();
   setTimer(parseRestToSeconds(prescription.rest));
 });
 
-renderPlan();
+document.querySelectorAll("[data-routine-select]").forEach((button) => {
+  button.addEventListener("click", () => selectRoutine(button.dataset.routineSelect));
+});
+
+changeRoutine.addEventListener("click", showRoutineSelector);
+
+if (state.selectedRoutine && routines[state.selectedRoutine]) {
+  loadRoutineStorage(state.selectedRoutine);
+  renderApp();
+} else {
+  showRoutineSelector();
+}
