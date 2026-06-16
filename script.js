@@ -1211,13 +1211,11 @@ function openExercise(weekNumber, dayIndex, exerciseKey) {
 
   modal.classList.add("open");
   modal.setAttribute("aria-hidden", "false");
-  document.body.style.overflow = "hidden";
 }
 
 function closeExercise() {
   modal.classList.remove("open");
   modal.setAttribute("aria-hidden", "true");
-  document.body.style.overflow = "";
   stopTimer();
 }
 
