@@ -492,6 +492,7 @@ const translations = {
     routinePanelHelp: "Crea y edita rutinas guardadas en Firestore.",
     closePanel: "Cerrar panel",
     users: "Usuarios",
+    loadingUsers: "Cargando usuarios...",
     assignRoutines: "Asignar rutinas",
     routine: "Rutina",
     routineEditor: "Editor de rutina",
@@ -524,6 +525,7 @@ const translations = {
     noRoutine: "Sin rutina",
     unavailableRoutine: "Rutina no disponible: {id}",
     user: "Usuario",
+    noEmail: "Sin email",
     assignExistingRoutine: "Asignar rutina existente",
     addRoutine: "Agregar rutina",
     editCurrentRoutine: "Editar rutina actual",
@@ -539,6 +541,8 @@ const translations = {
     objective: "Objetivo",
     startImage: "Imagen inicial",
     endImage: "Imagen final",
+    startImageAlt: "{name} posición inicial o bajada",
+    endImageAlt: "{name} posición final o subida",
     uploadStartImage: "Subir imagen inicial",
     uploadEndImage: "Subir imagen final",
     technicalGoal: "Objetivo técnico",
@@ -559,6 +563,7 @@ const translations = {
     createDay: "Crear día",
     emptyWeek: "Esta semana todavía no tiene días.",
     createWeekPrompt: "Crea una semana para empezar esta rutina.",
+    newPhase: "Nueva fase",
     noMatchingExercises: "No hay ejercicios que coincidan con esa búsqueda.",
     completeWeek: "Hecha",
     restLower: "descanso",
@@ -636,6 +641,7 @@ const translations = {
     routinePanelHelp: "Create and edit routines stored in Firestore.",
     closePanel: "Close panel",
     users: "Users",
+    loadingUsers: "Loading users...",
     assignRoutines: "Assign routines",
     routine: "Routine",
     routineEditor: "Routine editor",
@@ -668,6 +674,7 @@ const translations = {
     noRoutine: "No routine",
     unavailableRoutine: "Routine unavailable: {id}",
     user: "User",
+    noEmail: "No email",
     assignExistingRoutine: "Assign existing routine",
     addRoutine: "Add routine",
     editCurrentRoutine: "Edit current routine",
@@ -683,6 +690,8 @@ const translations = {
     objective: "Goal",
     startImage: "Start image",
     endImage: "End image",
+    startImageAlt: "{name} start or lowering position",
+    endImageAlt: "{name} end or rising position",
     uploadStartImage: "Upload start image",
     uploadEndImage: "Upload end image",
     technicalGoal: "Technical goal",
@@ -703,6 +712,7 @@ const translations = {
     createDay: "Create day",
     emptyWeek: "This week has no days yet.",
     createWeekPrompt: "Create a week to start this routine.",
+    newPhase: "New phase",
     noMatchingExercises: "No exercises match that search.",
     completeWeek: "Done",
     restLower: "rest",
@@ -780,6 +790,7 @@ const translations = {
     routinePanelHelp: "Crie e edite rotinas salvas no Firestore.",
     closePanel: "Fechar painel",
     users: "Usuários",
+    loadingUsers: "Carregando usuários...",
     assignRoutines: "Atribuir rotinas",
     routine: "Rotina",
     routineEditor: "Editor de rotina",
@@ -812,6 +823,7 @@ const translations = {
     noRoutine: "Sem rotina",
     unavailableRoutine: "Rotina indisponível: {id}",
     user: "Usuário",
+    noEmail: "Sem email",
     assignExistingRoutine: "Atribuir rotina existente",
     addRoutine: "Adicionar rotina",
     editCurrentRoutine: "Editar rotina atual",
@@ -827,6 +839,8 @@ const translations = {
     objective: "Objetivo",
     startImage: "Imagem inicial",
     endImage: "Imagem final",
+    startImageAlt: "{name} posição inicial ou descida",
+    endImageAlt: "{name} posição final ou subida",
     uploadStartImage: "Enviar imagem inicial",
     uploadEndImage: "Enviar imagem final",
     technicalGoal: "Objetivo técnico",
@@ -847,6 +861,7 @@ const translations = {
     createDay: "Criar dia",
     emptyWeek: "Esta semana ainda não tem dias.",
     createWeekPrompt: "Crie uma semana para iniciar esta rotina.",
+    newPhase: "Nova fase",
     noMatchingExercises: "Nenhum exercício corresponde a essa busca.",
     completeWeek: "Feita",
     restLower: "descanso",
@@ -1033,19 +1048,19 @@ function getDefaultRoutineForUser(user) {
 
 function getAuthErrorMessage(error) {
   const code = error?.code || "";
-  if (code.includes("invalid-email")) return "El email no es válido.";
-  if (code.includes("user-not-found") || code.includes("wrong-password") || code.includes("invalid-credential")) return "Email o contraseña incorrectos.";
-  if (code.includes("email-already-in-use")) return "Ese email ya tiene una cuenta.";
-  if (code.includes("weak-password")) return "La contraseña debe tener al menos 6 caracteres.";
-  if (code.includes("configuration-not-found")) return "Falta activar Firebase Authentication en este proyecto.";
-  if (code.includes("operation-not-allowed")) return "Activa Email/Password en Firebase Authentication.";
-  if (code.includes("api-key-not-valid")) return "La configuración de Firebase no es válida.";
-  if (code.includes("permission-denied")) return "Firestore está bloqueando el acceso. Revisa las reglas de la base de datos.";
-  if (code.includes("not-found")) return "No se encontró Firestore o el documento solicitado. Revisa que la base sea (default).";
-  if (code.includes("failed-precondition")) return `Firestore necesita terminar de activarse o tiene una condición pendiente (${code}). Espera un minuto y recarga.`;
-  if (code.includes("unavailable")) return "Firestore no está disponible ahora. Revisa conexión o configuración.";
-  if (code.includes("network-request-failed")) return "No hay conexión. Inténtalo de nuevo.";
-  return `No se pudo completar la acción${code ? ` (${code})` : ""}.`;
+  if (code.includes("invalid-email")) return t("invalidEmail");
+  if (code.includes("user-not-found") || code.includes("wrong-password") || code.includes("invalid-credential")) return t("invalidLogin");
+  if (code.includes("email-already-in-use")) return t("emailInUse");
+  if (code.includes("weak-password")) return t("weakPassword");
+  if (code.includes("configuration-not-found")) return t("firebaseAuthMissing");
+  if (code.includes("operation-not-allowed")) return t("authProviderDisabled");
+  if (code.includes("api-key-not-valid")) return t("invalidApiKey");
+  if (code.includes("permission-denied")) return t("permissionDenied");
+  if (code.includes("not-found")) return t("firestoreNotFound");
+  if (code.includes("failed-precondition")) return t("firestorePending", { code });
+  if (code.includes("unavailable")) return t("firestoreUnavailable");
+  if (code.includes("network-request-failed")) return t("networkFailed");
+  return t("actionFailed", { code: code ? ` (${code})` : "" });
 }
 
 function showAuthScreen(message = "") {
@@ -1155,7 +1170,7 @@ async function loadFirestoreRoutinesForAdmin() {
     });
   } catch (error) {
     console.warn("No se pudieron cargar rutinas Firestore para admin.", error);
-    setAuthMessage("Entraste como admin. Para editar rutinas, publica las reglas nuevas de Firestore.", "error");
+    setAuthMessage(t("adminRulesNotice"), "error");
   }
 }
 
@@ -1182,7 +1197,7 @@ function startAdminUsersListener() {
     (error) => {
       console.error("Admin users listener error:", error);
       if (adminUsers) {
-        adminUsers.innerHTML = `<div class="empty-state">No se pudieron cargar usuarios. Revisa reglas de Firestore.</div>`;
+        adminUsers.innerHTML = `<div class="empty-state">${t("usersLoadError")}</div>`;
       }
     }
   );
@@ -1214,7 +1229,7 @@ function renderAdminUsers() {
   const routineIds = getAdminRoutineIds();
 
   if (!state.adminUsers.length) {
-    adminUsers.innerHTML = `<div class="empty-state">Todavía no hay usuarios con perfil en Firestore.</div>`;
+    adminUsers.innerHTML = `<div class="empty-state">${t("noUsers")}</div>`;
     return;
   }
 
@@ -1242,22 +1257,22 @@ function renderAdminUsers() {
       const currentRoutineName = currentRoutine && routines[currentRoutine]
         ? routines[currentRoutine].name || currentRoutine
         : currentRoutine
-          ? `No disponible: ${currentRoutine}`
-          : "Sin rutina";
+          ? t("unavailableRoutine", { id: currentRoutine })
+          : t("noRoutine");
       const isOpen = state.selectedAdminUserId === user.uid;
       const routineOptions = [
-        `<option value="" ${!currentRoutine ? "selected" : ""}>Sin rutina</option>`,
+        `<option value="" ${!currentRoutine ? "selected" : ""}>${t("noRoutine")}</option>`,
         ...routineIds.map((id) => `<option value="${escapeHtml(id)}" ${id === currentRoutine ? "selected" : ""}>${escapeHtml(routines[id].name || id)}</option>`),
         currentRoutine && !routineIds.includes(currentRoutine)
-          ? `<option value="${escapeHtml(currentRoutine)}" selected>Rutina no disponible: ${escapeHtml(currentRoutine)}</option>`
+          ? `<option value="${escapeHtml(currentRoutine)}" selected>${escapeHtml(t("unavailableRoutine", { id: currentRoutine }))}</option>`
           : ""
       ].join("");
       return `
         <article class="admin-user-card ${isOpen ? "open" : ""}" data-user-id="${escapeHtml(user.uid)}">
           <button class="admin-user-toggle" type="button" data-user-toggle aria-expanded="${isOpen}">
             <span class="admin-user-main">
-              <strong>${escapeHtml(displayName || "Usuario")}</strong>
-              <span>${escapeHtml(user.email || "Sin email")}</span>
+              <strong>${escapeHtml(displayName || t("user"))}</strong>
+              <span>${escapeHtml(user.email || t("noEmail"))}</span>
               <small>${escapeHtml(user.role || "user")}</small>
             </span>
             <span class="admin-user-status">${escapeHtml(currentRoutineName)}</span>
@@ -1266,15 +1281,15 @@ function renderAdminUsers() {
           ${isOpen ? `
             <div class="admin-user-panel">
               <label class="search-box admin-user-routine">
-                <span>Asignar rutina existente</span>
+                <span>${t("assignExistingRoutine")}</span>
                 <select data-user-routine>
                   ${routineOptions}
                 </select>
               </label>
               <div class="admin-row-actions">
-                <button class="primary-button" type="button" data-user-action="add-routine">Agregar rutina</button>
-                <button class="secondary-button" type="button" data-user-action="edit-routine" ${currentRoutine && routines[currentRoutine] ? "" : "disabled"}>Editar rutina actual</button>
-                <button class="danger-button" type="button" data-user-clear>Quitar rutina</button>
+                <button class="primary-button" type="button" data-user-action="add-routine">${t("addRoutine")}</button>
+                <button class="secondary-button" type="button" data-user-action="edit-routine" ${currentRoutine && routines[currentRoutine] ? "" : "disabled"}>${t("editCurrentRoutine")}</button>
+                <button class="danger-button" type="button" data-user-clear>${t("removeRoutine")}</button>
               </div>
             </div>
           ` : ""}
@@ -1387,14 +1402,14 @@ async function handleAuthenticatedUser(user) {
   }
 
   state.currentUser = user;
-  setAuthMessage("Cargando rutina...");
+  setAuthMessage(t("loadingRoutine"));
 
   try {
     await ensureUserDocument(user);
     startCurrentUserListener(user);
   } catch (error) {
     await firebase.auth().signOut();
-    showAuthScreen("No se pudo cargar tu usuario. Revisa Firestore.");
+    showAuthScreen(t("userLoadError"));
     setAuthMessage(`${getAuthErrorMessage(error)} ${error?.message || ""}`.trim(), "error");
     console.error("Firestore user load error:", error);
   }
@@ -1412,7 +1427,7 @@ function renderApp() {
   appKicker.textContent = routine.kicker;
   appTitle.textContent = routine.title;
   const displayName = state.currentUserData?.displayName || getDisplayNameFromEmail(state.currentUser?.email || "");
-  userGreeting.textContent = displayName ? `Hola, ${displayName}` : "";
+  userGreeting.textContent = displayName ? t("hello", { name: displayName }) : "";
   adminToggle.classList.toggle("is-hidden", !state.isAdmin);
   adminPanel.classList.toggle("is-hidden", !state.isAdmin || !state.adminPanelOpen);
   if (state.isAdmin && state.adminPanelOpen) {
@@ -1575,10 +1590,10 @@ function renderSummary() {
   progressRing.style.setProperty("--progress", `${percent}%`);
 
   summaryStrip.innerHTML = [
-    [totalSessions, "sesiones"],
-    [Object.keys(routine.exerciseLibrary).length, "ejercicios"],
-    [doneCount, "completados"],
-    [routine.plan.length, "semanas"]
+    [totalSessions, t("sessions")],
+    [Object.keys(routine.exerciseLibrary).length, t("exercises")],
+    [doneCount, t("completed")],
+    [routine.plan.length, t("weeks")]
   ]
     .map(([value, label]) => `<div class="summary-item"><strong>${value}</strong><span>${label}</span></div>`)
     .join("");
@@ -1604,8 +1619,8 @@ function getFileExtension(file) {
 }
 
 async function uploadExerciseImage(file, exerciseKey, imageIndex) {
-  if (!storage) throw new Error("Firebase Storage no está inicializado.");
-  if (!file?.type?.startsWith("image/")) throw new Error("Selecciona un archivo de imagen.");
+  if (!storage) throw new Error(t("storageNotReady"));
+  if (!file?.type?.startsWith("image/")) throw new Error(t("selectImageFile"));
   const routineId = state.adminDraft?.id || adminRoutineId.value || "rutina";
   const slot = imageIndex === 0 ? "start" : "end";
   const extension = getFileExtension(file);
@@ -1661,12 +1676,12 @@ function renderAdminPanel() {
   const selectedUser = getAdminUser(state.pendingAssignUserId || state.selectedAdminUserId);
   const selectedUserName = selectedUser?.displayName || getDisplayNameFromEmail(selectedUser?.email || "");
   adminEditorTitle.textContent = state.adminEditorMode === "create"
-    ? `Nueva rutina para ${selectedUserName || "usuario"}`
-    : `Editando ${draft.name || draft.id}`;
+    ? t("newRoutineFor", { name: selectedUserName || t("user") })
+    : t("editingRoutine", { name: draft.name || draft.id });
 
   const routineIds = getAdminRoutineIds();
   adminRoutineSelect.innerHTML = [
-    !routineIds.includes(draft.id) ? `<option value="${escapeHtml(draft.id)}" selected>Rutina nueva</option>` : "",
+    !routineIds.includes(draft.id) ? `<option value="${escapeHtml(draft.id)}" selected>${t("newRoutineOption")}</option>` : "",
     ...routineIds.map((id) => `<option value="${escapeHtml(id)}" ${id === draft.id ? "selected" : ""}>${escapeHtml(routines[id].name || id)}</option>`)
   ].join("");
   adminRoutineId.value = draft.id || "";
@@ -1684,45 +1699,45 @@ function renderAdminPanel() {
               const exercise = draft.exerciseLibrary[exerciseKey] || {};
               const images = exercise.images || ["", ""];
               const startPreview = images[0]
-                ? `<img class="admin-image-preview" src="${escapeHtml(images[0])}" alt="Vista previa inicial" />`
-                : `<div class="admin-image-empty">Sin imagen inicial</div>`;
+                ? `<img class="admin-image-preview" src="${escapeHtml(images[0])}" alt="${t("startImage")}" />`
+                : `<div class="admin-image-empty">${t("noStartImage")}</div>`;
               const endPreview = images[1]
-                ? `<img class="admin-image-preview" src="${escapeHtml(images[1])}" alt="Vista previa final" />`
-                : `<div class="admin-image-empty">Sin imagen final</div>`;
+                ? `<img class="admin-image-preview" src="${escapeHtml(images[1])}" alt="${t("endImage")}" />`
+                : `<div class="admin-image-empty">${t("noEndImage")}</div>`;
               return `
                 <div class="admin-exercise" data-week-index="${weekIndex}" data-day-index="${dayIndex}" data-exercise-key="${escapeHtml(exerciseKey)}">
                   <div class="admin-card-title">
-                    <h4>${escapeHtml(exercise.name || "Ejercicio nuevo")}</h4>
-                    <button class="danger-button" type="button" data-admin-action="delete-exercise">Eliminar ejercicio</button>
+                    <h4>${escapeHtml(exercise.name || t("newExercise"))}</h4>
+                    <button class="danger-button" type="button" data-admin-action="delete-exercise">${t("deleteExercise")}</button>
                   </div>
                   <div class="admin-exercise-grid">
-                    <label class="search-box"><span>Nombre</span><input class="admin-field" data-exercise-field="name" value="${escapeHtml(exercise.name || "")}" /></label>
-                    <label class="search-box"><span>Objetivo</span><input class="admin-field" data-exercise-field="objective" value="${escapeHtml(exercise.objective || "")}" /></label>
-                    <label class="search-box"><span>Series</span><input class="admin-field" data-exercise-field="baseSets" value="${escapeHtml(exercise.baseSets || "")}" /></label>
-                    <label class="search-box"><span>Reps</span><input class="admin-field" data-exercise-field="baseReps" value="${escapeHtml(exercise.baseReps || "")}" /></label>
-                    <label class="search-box"><span>Descanso</span><input class="admin-field" data-exercise-field="rest" value="${escapeHtml(exercise.rest || "")}" /></label>
+                    <label class="search-box"><span>${t("name")}</span><input class="admin-field" data-exercise-field="name" value="${escapeHtml(exercise.name || "")}" /></label>
+                    <label class="search-box"><span>${t("objective")}</span><input class="admin-field" data-exercise-field="objective" value="${escapeHtml(exercise.objective || "")}" /></label>
+                    <label class="search-box"><span>${t("sets")}</span><input class="admin-field" data-exercise-field="baseSets" value="${escapeHtml(exercise.baseSets || "")}" /></label>
+                    <label class="search-box"><span>${t("reps")}</span><input class="admin-field" data-exercise-field="baseReps" value="${escapeHtml(exercise.baseReps || "")}" /></label>
+                    <label class="search-box"><span>${t("rest")}</span><input class="admin-field" data-exercise-field="rest" value="${escapeHtml(exercise.rest || "")}" /></label>
                     <div class="admin-image-uploader">
-                      <span>Imagen inicial</span>
+                      <span>${t("startImage")}</span>
                       ${startPreview}
                       <input class="admin-field" data-exercise-field="imageStart" value="${escapeHtml(images[0] || "")}" />
                       <label class="file-button">
-                        Subir imagen inicial
+                        ${t("uploadStartImage")}
                         <input type="file" accept="image/*" data-image-upload="0" />
                       </label>
                     </div>
                     <div class="admin-image-uploader">
-                      <span>Imagen final</span>
+                      <span>${t("endImage")}</span>
                       ${endPreview}
                       <input class="admin-field" data-exercise-field="imageEnd" value="${escapeHtml(images[1] || "")}" />
                       <label class="file-button">
-                        Subir imagen final
+                        ${t("uploadEndImage")}
                         <input type="file" accept="image/*" data-image-upload="1" />
                       </label>
                     </div>
                   </div>
-                  <label class="search-box"><span>Objetivo técnico</span><textarea class="admin-textarea" data-exercise-field="goal">${escapeHtml(exercise.goal || "")}</textarea></label>
-                  <label class="search-box"><span>Técnica</span><textarea class="admin-textarea" data-exercise-field="technique">${escapeHtml(exercise.technique || "")}</textarea></label>
-                  <label class="search-box"><span>Errores comunes, uno por línea</span><textarea class="admin-textarea" data-exercise-field="mistakes">${escapeHtml((exercise.mistakes || []).join("\n"))}</textarea></label>
+                  <label class="search-box"><span>${t("technicalGoal")}</span><textarea class="admin-textarea" data-exercise-field="goal">${escapeHtml(exercise.goal || "")}</textarea></label>
+                  <label class="search-box"><span>${t("technique")}</span><textarea class="admin-textarea" data-exercise-field="technique">${escapeHtml(exercise.technique || "")}</textarea></label>
+                  <label class="search-box"><span>${t("mistakesOnePerLine")}</span><textarea class="admin-textarea" data-exercise-field="mistakes">${escapeHtml((exercise.mistakes || []).join("\n"))}</textarea></label>
                 </div>
               `;
             })
@@ -1731,17 +1746,17 @@ function renderAdminPanel() {
           return `
             <div class="admin-day" data-week-index="${weekIndex}" data-day-index="${dayIndex}">
               <div class="admin-card-title">
-                <h4>Día ${dayIndex + 1}</h4>
-                <button class="danger-button" type="button" data-admin-action="delete-day">Eliminar día</button>
+                <h4>${t("dayNumber", { number: dayIndex + 1 })}</h4>
+                <button class="danger-button" type="button" data-admin-action="delete-day">${t("deleteDay")}</button>
               </div>
               <div class="admin-exercise-grid">
-                <label class="search-box"><span>Título del día</span><input class="admin-field" data-day-field="title" value="${escapeHtml(day.title || "")}" /></label>
-                <label class="search-box"><span>Foco</span><input class="admin-field" data-day-field="focus" value="${escapeHtml(day.focus || "")}" /></label>
+                <label class="search-box"><span>${t("dayTitle")}</span><input class="admin-field" data-day-field="title" value="${escapeHtml(day.title || "")}" /></label>
+                <label class="search-box"><span>${t("focus")}</span><input class="admin-field" data-day-field="focus" value="${escapeHtml(day.focus || "")}" /></label>
               </div>
               <div class="admin-row-actions">
-                <button class="secondary-button" type="button" data-admin-action="add-exercise">Crear ejercicio</button>
+                <button class="secondary-button" type="button" data-admin-action="add-exercise">${t("createExercise")}</button>
               </div>
-              ${exercises || `<div class="empty-state">Este día todavía no tiene ejercicios.</div>`}
+              ${exercises || `<div class="empty-state">${t("emptyDay")}</div>`}
             </div>
           `;
         })
@@ -1751,28 +1766,28 @@ function renderAdminPanel() {
         <article class="admin-editor-card" data-week-index="${weekIndex}">
           <div class="admin-card-title">
             <div>
-              <small>Semana</small>
-              <h3>${escapeHtml(week.number || weekIndex + 1)}: ${escapeHtml(phase.name || "Sin fase")}</h3>
+              <small>${t("week")}</small>
+              <h3>${escapeHtml(week.number || weekIndex + 1)}: ${escapeHtml(phase.name || t("noPhase"))}</h3>
             </div>
-            <button class="danger-button" type="button" data-admin-action="delete-week">Eliminar semana</button>
+            <button class="danger-button" type="button" data-admin-action="delete-week">${t("deleteWeek")}</button>
           </div>
           <div class="admin-exercise-grid">
-            <label class="search-box"><span>Número</span><input class="admin-field" data-week-field="number" value="${escapeHtml(week.number || weekIndex + 1)}" /></label>
-            <label class="search-box"><span>Fase</span><input class="admin-field" data-week-field="phase.name" value="${escapeHtml(phase.name || "")}" /></label>
-            <label class="search-box"><span>Badge</span><input class="admin-field" data-week-field="phase.badge" value="${escapeHtml(phase.badge || "")}" /></label>
-            <label class="search-box"><span>Indicaciones</span><input class="admin-field" data-week-field="phase.modifier" value="${escapeHtml(phase.modifier || "")}" /></label>
+            <label class="search-box"><span>${t("number")}</span><input class="admin-field" data-week-field="number" value="${escapeHtml(week.number || weekIndex + 1)}" /></label>
+            <label class="search-box"><span>${t("phase")}</span><input class="admin-field" data-week-field="phase.name" value="${escapeHtml(phase.name || "")}" /></label>
+            <label class="search-box"><span>${t("badge")}</span><input class="admin-field" data-week-field="phase.badge" value="${escapeHtml(phase.badge || "")}" /></label>
+            <label class="search-box"><span>${t("instructions")}</span><input class="admin-field" data-week-field="phase.modifier" value="${escapeHtml(phase.modifier || "")}" /></label>
           </div>
           <div class="admin-row-actions">
-            <button class="secondary-button" type="button" data-admin-action="add-day">Crear día</button>
+            <button class="secondary-button" type="button" data-admin-action="add-day">${t("createDay")}</button>
           </div>
-          ${days || `<div class="empty-state">Esta semana todavía no tiene días.</div>`}
+          ${days || `<div class="empty-state">${t("emptyWeek")}</div>`}
         </article>
       `;
     })
     .join("");
 
   if (!draft.plan.length) {
-    adminWeeks.innerHTML = `<div class="empty-state">Crea una semana para empezar esta rutina.</div>`;
+    adminWeeks.innerHTML = `<div class="empty-state">${t("createWeekPrompt")}</div>`;
   }
 }
 
@@ -1818,7 +1833,7 @@ function handleAdminAction(button) {
 
   if (action === "add-day") {
     state.adminDraft.plan[weekIndex].days = state.adminDraft.plan[weekIndex].days || [];
-    state.adminDraft.plan[weekIndex].days.push({ title: `Día ${state.adminDraft.plan[weekIndex].days.length + 1}`, focus: "", exercises: [] });
+    state.adminDraft.plan[weekIndex].days.push({ title: t("dayNumber", { number: state.adminDraft.plan[weekIndex].days.length + 1 }), focus: "", exercises: [] });
   }
 
   if (action === "delete-day") {
@@ -1828,7 +1843,7 @@ function handleAdminAction(button) {
   if (action === "add-exercise") {
     const key = `ejercicio-${Date.now()}`;
     state.adminDraft.exerciseLibrary[key] = {
-      name: "Ejercicio nuevo",
+      name: t("newExercise"),
       objective: "fuerza",
       goal: "",
       baseSets: "",
@@ -1879,7 +1894,7 @@ function renderPlan() {
                   <span class="objective-dot ${objectiveClass}"></span>
                   <span>
                     <strong>${exercise.name}</strong>
-                    <small>${exercise.objective} · ${prescription.sets} x ${prescription.reps} · descanso ${prescription.rest}</small>
+                    <small>${exercise.objective} · ${prescription.sets} x ${prescription.reps} · ${t("restLower")} ${prescription.rest}</small>
                   </span>
                   <span class="done-mark">✓</span>
                 </button>
@@ -1904,11 +1919,11 @@ function renderPlan() {
         <article class="week-card ${weekDone ? "week-done" : ""} ${isCollapsed ? "collapsed" : ""}">
           <button class="week-header week-toggle" type="button" data-week="${week.number}" aria-expanded="${!isCollapsed}">
             <div>
-              <h2>Semana ${week.number}: ${phase.name}</h2>
+              <h2>${t("week")} ${week.number}: ${phase.name}</h2>
               ${isCollapsed ? "" : `<p>${phase.modifier || ""}</p>`}
             </div>
             <span class="week-actions">
-              ${weekDone ? `<span class="week-done-label">Hecha</span>` : ""}
+              ${weekDone ? `<span class="week-done-label">${t("completeWeek")}</span>` : ""}
               <span class="week-badge">${phase.badge || "Plan"}</span>
               <span class="week-chevron">${isCollapsed ? "+" : "−"}</span>
             </span>
@@ -1920,7 +1935,7 @@ function renderPlan() {
     .join("");
 
   if (!visibleCount) {
-    weeksContainer.innerHTML = `<div class="empty-state">No hay ejercicios que coincidan con esa búsqueda.</div>`;
+    weeksContainer.innerHTML = `<div class="empty-state">${t("noMatchingExercises")}</div>`;
   }
 
   renderSummary();
@@ -1967,12 +1982,12 @@ function openExercise(weekNumber, dayIndex, exerciseKey) {
 
   const [startImage, endImage] = exercise.images;
   document.querySelector("#modalImageStart").src = startImage;
-  document.querySelector("#modalImageStart").alt = `${exercise.name} posición inicial o bajada`;
+  document.querySelector("#modalImageStart").alt = t("startImageAlt", { name: exercise.name });
   document.querySelector("#modalImageEnd").src = endImage;
-  document.querySelector("#modalImageEnd").alt = `${exercise.name} posición final o subida`;
+  document.querySelector("#modalImageEnd").alt = t("endImageAlt", { name: exercise.name });
 
   doneButton.classList.toggle("done", Boolean(progress[id]));
-  doneButton.textContent = progress[id] ? "Hecho" : "Marcar como hecho";
+  doneButton.textContent = progress[id] ? t("done") : t("markDone");
   setTimer(parseRestToSeconds(prescription.rest));
   stopTimer();
 
@@ -1992,7 +2007,7 @@ function toggleDone() {
   progress[id] = !progress[id];
   localStorage.setItem(progressKey, JSON.stringify(progress));
   doneButton.classList.toggle("done", Boolean(progress[id]));
-  doneButton.textContent = progress[id] ? "Hecho" : "Marcar como hecho";
+  doneButton.textContent = progress[id] ? t("done") : t("markDone");
 
   const week = getActiveRoutine().plan.find((item) => item.number === weekNumber);
   if (week) {
@@ -2087,13 +2102,13 @@ adminWeeks.addEventListener("change", async (event) => {
   const imageIndex = Number(input.dataset.imageUpload);
   if (!exerciseKey || Number.isNaN(imageIndex)) return;
 
-  setAdminMessage("Subiendo imagen...");
+  setAdminMessage(t("uploadingImage"));
   try {
     const url = await uploadExerciseImage(file, exerciseKey, imageIndex);
     const exercise = state.adminDraft.exerciseLibrary[exerciseKey];
     exercise.images = exercise.images || ["", ""];
     exercise.images[imageIndex] = url;
-    setAdminMessage("Imagen cargada. Toca Guardar rutina para guardar el cambio.", "success");
+    setAdminMessage(t("imageLoaded"), "success");
     renderAdminPanel();
   } catch (error) {
     setAdminMessage(error?.message || getAuthErrorMessage(error), "error");
@@ -2116,7 +2131,7 @@ adminUsers.addEventListener("change", async (event) => {
   if (!uid) return;
 
   select.disabled = true;
-  setAdminMessage("Actualizando usuario...");
+  setAdminMessage(t("updatingUser"));
   try {
     await updateUserRoutine(uid, select.value);
     if (state.pendingAssignUserId === uid || state.selectedAdminUserId === uid) {
@@ -2124,7 +2139,7 @@ adminUsers.addEventListener("change", async (event) => {
       state.pendingAssignUserId = "";
       state.adminDraft = null;
     }
-    setAdminMessage(select.value ? "Rutina asignada al usuario." : "Usuario sin rutina asignada.", "success");
+    setAdminMessage(select.value ? t("assignedRoutine") : t("userWithoutRoutine"), "success");
     renderAdminPanel();
   } catch (error) {
     setAdminMessage(getAuthErrorMessage(error), "error");
@@ -2172,10 +2187,10 @@ adminUsers.addEventListener("click", async (event) => {
       state.pendingAssignUserId = uid;
       state.adminEditorMode = "create";
       state.adminDraft = createEmptyRoutine(routineId);
-      state.adminDraft.name = `Rutina ${displayName || "usuario"}`;
+      state.adminDraft.name = `Rutina ${displayName || t("user")}`;
       state.adminDraft.title = "RutFit";
       state.adminDraft.kicker = "Nueva";
-      setAdminMessage("Nueva rutina preparada. Al guardar se asigna a este usuario.", "success");
+      setAdminMessage(t("newRoutinePreparedAssign"), "success");
       renderAdminPanel();
       return;
     }
@@ -2198,7 +2213,7 @@ adminUsers.addEventListener("click", async (event) => {
   if (!uid) return;
 
   button.disabled = true;
-  setAdminMessage("Quitando rutina...");
+  setAdminMessage(t("removingRoutine"));
   try {
     await updateUserRoutine(uid, "");
     if (state.pendingAssignUserId === uid) {
@@ -2206,7 +2221,7 @@ adminUsers.addEventListener("click", async (event) => {
       state.pendingAssignUserId = "";
       state.adminDraft = null;
     }
-    setAdminMessage("Rutina quitada. El usuario verá Próximamente.", "success");
+    setAdminMessage(t("routineRemoved"), "success");
   } catch (error) {
     setAdminMessage(getAuthErrorMessage(error), "error");
   } finally {
@@ -2218,7 +2233,7 @@ adminAddWeek.addEventListener("click", () => {
   if (!state.adminDraft) state.adminDraft = createEmptyRoutine("nueva-rutina");
   state.adminDraft.plan.push({
     number: state.adminDraft.plan.length + 1,
-    phase: { name: "Nueva fase", badge: "Plan", modifier: "" },
+    phase: { name: t("newPhase"), badge: "Plan", modifier: "" },
     days: []
   });
   renderAdminPanel();
@@ -2232,10 +2247,10 @@ adminNewRoutine.addEventListener("click", () => {
   state.adminDraft = createEmptyRoutine(routineId);
   if (user) {
     const displayName = user.displayName || getDisplayNameFromEmail(user.email || "");
-    state.adminDraft.name = `Rutina ${displayName || "usuario"}`;
+    state.adminDraft.name = `Rutina ${displayName || t("user")}`;
   }
   state.adminRoutineId = state.adminDraft.id;
-  setAdminMessage(user ? "Nueva rutina preparada. Al guardar se asigna a este usuario." : "Nueva rutina preparada. Edita los datos y guárdala.", "success");
+  setAdminMessage(user ? t("newRoutinePreparedAssign") : t("newRoutinePrepared"), "success");
   renderAdminPanel();
 });
 
@@ -2247,7 +2262,7 @@ adminSeedDario.addEventListener("click", async () => {
     if (state.pendingAssignUserId || state.selectedAdminUserId) {
       await updateUserRoutine(state.pendingAssignUserId || state.selectedAdminUserId, state.adminDraft.id);
     }
-    setAdminMessage(state.pendingAssignUserId || state.selectedAdminUserId ? "Rutina Dario migrada y asignada al usuario." : "Rutina Dario migrada a Firestore.", "success");
+    setAdminMessage(state.pendingAssignUserId || state.selectedAdminUserId ? t("darioMigratedAssigned") : t("darioMigrated"), "success");
     renderAdminPanel();
   } catch (error) {
     setAdminMessage(getAuthErrorMessage(error), "error");
@@ -2258,7 +2273,7 @@ adminSaveRoutine.addEventListener("click", async () => {
   if (!state.isAdmin || !state.adminDraft) return;
   readAdminBasics();
   if (!state.adminDraft.id) {
-    setAdminMessage("La rutina necesita un ID.", "error");
+    setAdminMessage(t("routineNeedsId"), "error");
     return;
   }
   try {
@@ -2266,7 +2281,7 @@ adminSaveRoutine.addEventListener("click", async () => {
     if (state.pendingAssignUserId) {
       await updateUserRoutine(state.pendingAssignUserId, state.adminDraft.id);
     }
-    setAdminMessage(state.pendingAssignUserId ? "Rutina guardada y asignada al usuario." : "Rutina guardada en Firestore.", "success");
+    setAdminMessage(state.pendingAssignUserId ? t("routineSavedAssigned") : t("routineSaved"), "success");
     if (state.selectedRoutine === state.adminDraft.id) {
       selectRoutine(state.adminDraft.id);
     }
@@ -2279,10 +2294,10 @@ adminSaveRoutine.addEventListener("click", async () => {
 adminDeleteRoutine.addEventListener("click", async () => {
   if (!state.isAdmin || !state.adminDraft?.id) return;
   const deletedId = state.adminDraft.id;
-  if (!confirm(`¿Eliminar la rutina "${state.adminDraft.name || state.adminDraft.id}" de Firestore?`)) return;
+  if (!confirm(t("deleteRoutineConfirm", { name: state.adminDraft.name || state.adminDraft.id }))) return;
   try {
     await deleteRoutineFromFirestore(deletedId);
-    setAdminMessage("Rutina eliminada.", "success");
+    setAdminMessage(t("routineDeleted"), "success");
     state.adminDraft = null;
     const nextRoutineId = getAdminRoutineIds()[0] || "dario";
     if (!routines[nextRoutineId]) {
@@ -2328,7 +2343,7 @@ resetTimer.addEventListener("click", () => {
 authForm.addEventListener("submit", async (event) => {
   event.preventDefault();
   setAuthBusy(true);
-  setAuthMessage("Ingresando...");
+  setAuthMessage(t("signingIn"));
 
   try {
     const email = normalizeEmail(authEmail.value);
@@ -2347,7 +2362,7 @@ registerButton.addEventListener("click", async () => {
   const password = authPassword.value;
 
   setAuthBusy(true);
-  setAuthMessage("Creando cuenta...");
+  setAuthMessage(t("creatingAccount"));
 
   try {
     await applyAuthPersistence();
@@ -2362,16 +2377,16 @@ registerButton.addEventListener("click", async () => {
 resetPasswordButton.addEventListener("click", async () => {
   const email = normalizeEmail(authEmail.value);
   if (!email) {
-    setAuthMessage("Escribe tu email para recuperar la contraseña.", "error");
+    setAuthMessage(t("writeEmailForReset"), "error");
     return;
   }
 
   setAuthBusy(true);
-  setAuthMessage("Enviando correo de recuperación...");
+  setAuthMessage(t("sendingReset"));
 
   try {
     await firebase.auth().sendPasswordResetEmail(email);
-    setAuthMessage("Te envié un correo para recuperar la contraseña.", "success");
+    setAuthMessage(t("resetSent"), "success");
   } catch (error) {
     setAuthMessage(getAuthErrorMessage(error), "error");
   } finally {
@@ -2507,7 +2522,7 @@ if (languageSelect) {
 }
 
 if (!window.firebase || !isFirebaseConfigured()) {
-  showAuthScreen("Falta configurar Firebase en firebase-config.js.");
+  showAuthScreen(t("firebaseMissing"));
   setAuthBusy(true);
 } else {
   firebase.initializeApp(window.FIREBASE_CONFIG);
