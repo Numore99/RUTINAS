@@ -52,6 +52,12 @@ export default function App() {
           thirdPartyCookiesEnabled
           mixedContentMode="always"
           setSupportMultipleWindows={false}
+          nestedScrollEnabled
+          overScrollMode="never"
+          showsVerticalScrollIndicator={false}
+          scalesPageToFit={false}
+          setBuiltInZoomControls={false}
+          setDisplayZoomControls={false}
           startInLoadingState
           renderLoading={LoadingScreen}
           onError={() => setOffline(true)}
