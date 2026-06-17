@@ -1466,25 +1466,33 @@ function installTouchScrollFallback() {
   let startY = 0;
   let lastY = 0;
   let moved = false;
+  let cancelNextClick = false;
+  let active = false;
   const interactiveSelector = "input, textarea, select, option, [contenteditable='true']";
+  const getTarget = (event) => (event.target?.nodeType === Node.TEXT_NODE ? event.target.parentElement : event.target);
+  const getScrollRoot = () => document.scrollingElement || document.documentElement;
 
   document.addEventListener(
     "touchstart",
     (event) => {
-      if (event.touches.length !== 1 || event.target.closest(interactiveSelector)) return;
+      const target = getTarget(event);
+      active = event.touches.length === 1 && !target.closest(interactiveSelector);
+      if (!active) return;
       startY = event.touches[0].clientY;
       lastY = startY;
       moved = false;
     },
-    { passive: true }
+    { passive: true, capture: true }
   );
 
   document.addEventListener(
     "touchmove",
     (event) => {
-      if (event.touches.length !== 1 || event.target.closest(interactiveSelector)) return;
+      if (!active || event.touches.length !== 1) return;
+      const target = getTarget(event);
+      if (target.closest(interactiveSelector)) return;
 
-      const modalPanel = event.target.closest(".modal-panel");
+      const modalPanel = target.closest(".modal-panel");
       if (modal.classList.contains("open") && modalPanel) return;
 
       const currentY = event.touches[0].clientY;
@@ -1494,23 +1502,41 @@ function installTouchScrollFallback() {
       if (Math.abs(currentY - startY) < 6) return;
       moved = true;
 
-      const maxScroll = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
-      const currentScroll = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
+      const scrollRoot = getScrollRoot();
+      const maxScroll = Math.max(0, scrollRoot.scrollHeight - window.innerHeight);
+      const currentScroll = window.scrollY || scrollRoot.scrollTop || 0;
       const nextScroll = Math.min(maxScroll, Math.max(0, currentScroll + delta));
 
-      if (nextScroll !== currentScroll) {
-        event.preventDefault();
-        window.scrollTo(0, nextScroll);
-      }
+      event.preventDefault();
+      if (nextScroll !== currentScroll) window.scrollTo(0, nextScroll);
     },
-    { passive: false }
+    { passive: false, capture: true }
+  );
+
+  document.addEventListener(
+    "touchend",
+    () => {
+      cancelNextClick = moved;
+      active = false;
+    },
+    { passive: true, capture: true }
+  );
+
+  document.addEventListener(
+    "touchcancel",
+    () => {
+      active = false;
+      moved = false;
+    },
+    { passive: true, capture: true }
   );
 
   document.addEventListener(
     "click",
     (event) => {
-      if (!moved) return;
+      if (!cancelNextClick) return;
       moved = false;
+      cancelNextClick = false;
       if (Math.abs(lastY - startY) > 10) {
         event.preventDefault();
         event.stopPropagation();
