@@ -407,6 +407,7 @@ const changeRoutine = document.querySelector("#changeRoutine");
 const authForm = document.querySelector("#authForm");
 const authEmail = document.querySelector("#authEmail");
 const authPassword = document.querySelector("#authPassword");
+const rememberSession = document.querySelector("#rememberSession");
 const registerButton = document.querySelector("#registerButton");
 const resetPasswordButton = document.querySelector("#resetPasswordButton");
 const authMessage = document.querySelector("#authMessage");
@@ -443,6 +444,7 @@ const doneButton = document.querySelector("#doneButton");
 const startTimer = document.querySelector("#startTimer");
 const resetTimer = document.querySelector("#resetTimer");
 const timerDisplay = document.querySelector("#timerDisplay");
+const AUTH_PERSISTENCE_KEY = "rutfit-auth-persistence";
 
 function getActiveRoutine() {
   return routines[state.selectedRoutine] || null;
@@ -470,6 +472,9 @@ function setAuthBusy(isBusy) {
   document.querySelectorAll("#authForm button").forEach((button) => {
     button.disabled = isBusy;
   });
+  if (rememberSession) {
+    rememberSession.disabled = isBusy;
+  }
 }
 
 function isFirebaseConfigured() {
@@ -479,6 +484,21 @@ function isFirebaseConfigured() {
 
 function normalizeEmail(email) {
   return email.trim().toLowerCase();
+}
+
+function initializeRememberSession() {
+  if (!rememberSession) return;
+  rememberSession.checked = localStorage.getItem(AUTH_PERSISTENCE_KEY) === "local";
+}
+
+async function applyAuthPersistence() {
+  if (!rememberSession || !window.firebase?.auth) return;
+  const mode = rememberSession.checked ? "local" : "session";
+  localStorage.setItem(AUTH_PERSISTENCE_KEY, mode);
+  const persistence = mode === "local"
+    ? firebase.auth.Auth.Persistence.LOCAL
+    : firebase.auth.Auth.Persistence.SESSION;
+  await firebase.auth().setPersistence(persistence);
 }
 
 function isAdminEmail(email) {
@@ -1491,6 +1511,7 @@ authForm.addEventListener("submit", async (event) => {
   try {
     const email = normalizeEmail(authEmail.value);
     const password = authPassword.value;
+    await applyAuthPersistence();
     await firebase.auth().signInWithEmailAndPassword(email, password);
   } catch (error) {
     setAuthMessage(getAuthErrorMessage(error), "error");
@@ -1507,6 +1528,7 @@ registerButton.addEventListener("click", async () => {
   setAuthMessage("Creando cuenta...");
 
   try {
+    await applyAuthPersistence();
     await firebase.auth().createUserWithEmailAndPassword(email, password);
   } catch (error) {
     setAuthMessage(getAuthErrorMessage(error), "error");
@@ -1625,6 +1647,14 @@ function installTouchScrollFallback() {
 
 if (new URLSearchParams(window.location.search).get("manualScroll") === "1") {
   installTouchScrollFallback();
+}
+
+initializeRememberSession();
+
+if (rememberSession) {
+  rememberSession.addEventListener("change", () => {
+    localStorage.setItem(AUTH_PERSISTENCE_KEY, rememberSession.checked ? "local" : "session");
+  });
 }
 
 if (!window.firebase || !isFirebaseConfigured()) {

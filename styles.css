@@ -148,6 +148,32 @@ button:disabled {
   gap: 0.85rem;
 }
 
+.remember-session {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  min-height: 3rem;
+  padding: 0.8rem 0.9rem;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: rgba(20, 20, 20, 0.78);
+  color: var(--soft);
+  font-size: 0.9rem;
+  font-weight: 850;
+  letter-spacing: 0;
+}
+
+.remember-session input {
+  flex: 0 0 auto;
+  width: 1.1rem;
+  height: 1.1rem;
+  accent-color: var(--accent);
+}
+
+.remember-session span {
+  line-height: 1.25;
+}
+
 .auth-actions {
   display: grid;
   grid-template-columns: 1fr;
