@@ -393,6 +393,7 @@ const state = {
   selectedAdminUserId: "",
   adminEditorMode: "",
   pendingAssignUserId: "",
+  adminEditingExerciseKey: "",
   currentExerciseKey: null,
   timerSeconds: 0,
   timerInterval: null
@@ -537,6 +538,10 @@ const translations = {
     noStartImage: "Sin imagen inicial",
     noEndImage: "Sin imagen final",
     newExercise: "Ejercicio nuevo",
+    savedExercises: "Ejercicios guardados",
+    editExercise: "Editar ejercicio",
+    saveExercise: "Guardar ejercicio",
+    exerciseSaved: "Ejercicio guardado.",
     deleteExercise: "Eliminar ejercicio",
     objective: "Objetivo",
     startImage: "Imagen inicial",
@@ -686,6 +691,10 @@ const translations = {
     noStartImage: "No start image",
     noEndImage: "No end image",
     newExercise: "New exercise",
+    savedExercises: "Saved exercises",
+    editExercise: "Edit exercise",
+    saveExercise: "Save exercise",
+    exerciseSaved: "Exercise saved.",
     deleteExercise: "Delete exercise",
     objective: "Goal",
     startImage: "Start image",
@@ -835,6 +844,10 @@ const translations = {
     noStartImage: "Sem imagem inicial",
     noEndImage: "Sem imagem final",
     newExercise: "Novo exercício",
+    savedExercises: "Exercícios salvos",
+    editExercise: "Editar exercício",
+    saveExercise: "Salvar exercício",
+    exerciseSaved: "Exercício salvo.",
     deleteExercise: "Excluir exercício",
     objective: "Objetivo",
     startImage: "Imagem inicial",
@@ -1075,6 +1088,7 @@ function showAuthScreen(message = "") {
   state.selectedAdminUserId = "";
   state.adminEditorMode = "";
   state.pendingAssignUserId = "";
+  state.adminEditingExerciseKey = "";
   closeExercise();
   routineSelect.classList.remove("is-hidden");
   appHeader.classList.add("is-hidden");
@@ -1188,6 +1202,7 @@ function startAdminUsersListener() {
         state.selectedAdminUserId = "";
         state.adminEditorMode = "";
         state.pendingAssignUserId = "";
+        state.adminEditingExerciseKey = "";
         state.adminDraft = null;
       }
       if (state.adminPanelOpen) {
@@ -1241,6 +1256,7 @@ function renderAdminUsers() {
     state.selectedAdminUserId = "";
     state.adminEditorMode = "";
     state.pendingAssignUserId = "";
+    state.adminEditingExerciseKey = "";
     state.adminDraft = null;
     renderAdminUsers();
     return;
@@ -1310,6 +1326,21 @@ async function saveRoutineToFirestore(routine) {
     { merge: true }
   );
   routines[data.id] = data;
+}
+
+async function saveAdminDraftAndAssignment() {
+  if (!state.adminDraft) return "";
+  readAdminBasics();
+  await saveRoutineToFirestore(state.adminDraft);
+  const targetUserId = state.pendingAssignUserId || state.selectedAdminUserId;
+  if (targetUserId) {
+    await updateUserRoutine(targetUserId, state.adminDraft.id);
+    state.pendingAssignUserId = targetUserId;
+  }
+  if (state.selectedRoutine === state.adminDraft.id) {
+    selectRoutine(state.adminDraft.id);
+  }
+  return targetUserId;
 }
 
 async function deleteRoutineFromFirestore(routineId) {
@@ -1650,6 +1681,7 @@ function setAdminDraftFromRoutine(routineId) {
   const routine = routines[routineId] || createEmptyRoutine(routineId);
   state.adminRoutineId = routine.id;
   state.adminDraft = cloneData(serializeRoutine(routine));
+  state.adminEditingExerciseKey = "";
 }
 
 function readAdminBasics() {
@@ -1697,6 +1729,7 @@ function renderAdminPanel() {
           const exercises = (day.exercises || [])
             .map((exerciseKey) => {
               const exercise = draft.exerciseLibrary[exerciseKey] || {};
+              const isEditingExercise = state.adminEditingExerciseKey === exerciseKey;
               const images = exercise.images || ["", ""];
               const startPreview = images[0]
                 ? `<img class="admin-image-preview" src="${escapeHtml(images[0])}" alt="${t("startImage")}" />`
@@ -1705,39 +1738,50 @@ function renderAdminPanel() {
                 ? `<img class="admin-image-preview" src="${escapeHtml(images[1])}" alt="${t("endImage")}" />`
                 : `<div class="admin-image-empty">${t("noEndImage")}</div>`;
               return `
-                <div class="admin-exercise" data-week-index="${weekIndex}" data-day-index="${dayIndex}" data-exercise-key="${escapeHtml(exerciseKey)}">
-                  <div class="admin-card-title">
-                    <h4>${escapeHtml(exercise.name || t("newExercise"))}</h4>
-                    <button class="danger-button" type="button" data-admin-action="delete-exercise">${t("deleteExercise")}</button>
-                  </div>
-                  <div class="admin-exercise-grid">
-                    <label class="search-box"><span>${t("name")}</span><input class="admin-field" data-exercise-field="name" value="${escapeHtml(exercise.name || "")}" /></label>
-                    <label class="search-box"><span>${t("objective")}</span><input class="admin-field" data-exercise-field="objective" value="${escapeHtml(exercise.objective || "")}" /></label>
-                    <label class="search-box"><span>${t("sets")}</span><input class="admin-field" data-exercise-field="baseSets" value="${escapeHtml(exercise.baseSets || "")}" /></label>
-                    <label class="search-box"><span>${t("reps")}</span><input class="admin-field" data-exercise-field="baseReps" value="${escapeHtml(exercise.baseReps || "")}" /></label>
-                    <label class="search-box"><span>${t("rest")}</span><input class="admin-field" data-exercise-field="rest" value="${escapeHtml(exercise.rest || "")}" /></label>
-                    <div class="admin-image-uploader">
-                      <span>${t("startImage")}</span>
-                      ${startPreview}
-                      <input class="admin-field" data-exercise-field="imageStart" value="${escapeHtml(images[0] || "")}" />
-                      <label class="file-button">
-                        ${t("uploadStartImage")}
-                        <input type="file" accept="image/*" data-image-upload="0" />
-                      </label>
+                <div class="admin-exercise ${isEditingExercise ? "is-editing" : ""}" data-week-index="${weekIndex}" data-day-index="${dayIndex}" data-exercise-key="${escapeHtml(exerciseKey)}">
+                  <div class="admin-exercise-summary">
+                    <div>
+                      <strong>${escapeHtml(exercise.name || t("newExercise"))}</strong>
+                      <small>${escapeHtml([exercise.objective, exercise.baseSets && exercise.baseReps ? `${exercise.baseSets} x ${exercise.baseReps}` : "", exercise.rest].filter(Boolean).join(" · "))}</small>
                     </div>
-                    <div class="admin-image-uploader">
-                      <span>${t("endImage")}</span>
-                      ${endPreview}
-                      <input class="admin-field" data-exercise-field="imageEnd" value="${escapeHtml(images[1] || "")}" />
-                      <label class="file-button">
-                        ${t("uploadEndImage")}
-                        <input type="file" accept="image/*" data-image-upload="1" />
-                      </label>
+                    <div class="admin-row-actions compact">
+                      <button class="secondary-button" type="button" data-admin-action="edit-exercise">${t("editExercise")}</button>
+                      <button class="danger-button" type="button" data-admin-action="delete-exercise">${t("deleteExercise")}</button>
                     </div>
                   </div>
-                  <label class="search-box"><span>${t("technicalGoal")}</span><textarea class="admin-textarea" data-exercise-field="goal">${escapeHtml(exercise.goal || "")}</textarea></label>
-                  <label class="search-box"><span>${t("technique")}</span><textarea class="admin-textarea" data-exercise-field="technique">${escapeHtml(exercise.technique || "")}</textarea></label>
-                  <label class="search-box"><span>${t("mistakesOnePerLine")}</span><textarea class="admin-textarea" data-exercise-field="mistakes">${escapeHtml((exercise.mistakes || []).join("\n"))}</textarea></label>
+                  ${isEditingExercise ? `
+                    <div class="admin-exercise-form">
+                      <div class="admin-exercise-grid">
+                        <label class="search-box"><span>${t("name")}</span><input class="admin-field" data-exercise-field="name" value="${escapeHtml(exercise.name || "")}" /></label>
+                        <label class="search-box"><span>${t("objective")}</span><input class="admin-field" data-exercise-field="objective" value="${escapeHtml(exercise.objective || "")}" /></label>
+                        <label class="search-box"><span>${t("sets")}</span><input class="admin-field" data-exercise-field="baseSets" value="${escapeHtml(exercise.baseSets || "")}" /></label>
+                        <label class="search-box"><span>${t("reps")}</span><input class="admin-field" data-exercise-field="baseReps" value="${escapeHtml(exercise.baseReps || "")}" /></label>
+                        <label class="search-box"><span>${t("rest")}</span><input class="admin-field" data-exercise-field="rest" value="${escapeHtml(exercise.rest || "")}" /></label>
+                        <div class="admin-image-uploader">
+                          <span>${t("startImage")}</span>
+                          ${startPreview}
+                          <input class="admin-field" data-exercise-field="imageStart" value="${escapeHtml(images[0] || "")}" />
+                          <label class="file-button">
+                            ${t("uploadStartImage")}
+                            <input type="file" accept="image/*" data-image-upload="0" />
+                          </label>
+                        </div>
+                        <div class="admin-image-uploader">
+                          <span>${t("endImage")}</span>
+                          ${endPreview}
+                          <input class="admin-field" data-exercise-field="imageEnd" value="${escapeHtml(images[1] || "")}" />
+                          <label class="file-button">
+                            ${t("uploadEndImage")}
+                            <input type="file" accept="image/*" data-image-upload="1" />
+                          </label>
+                        </div>
+                      </div>
+                      <label class="search-box"><span>${t("technicalGoal")}</span><textarea class="admin-textarea" data-exercise-field="goal">${escapeHtml(exercise.goal || "")}</textarea></label>
+                      <label class="search-box"><span>${t("technique")}</span><textarea class="admin-textarea" data-exercise-field="technique">${escapeHtml(exercise.technique || "")}</textarea></label>
+                      <label class="search-box"><span>${t("mistakesOnePerLine")}</span><textarea class="admin-textarea" data-exercise-field="mistakes">${escapeHtml((exercise.mistakes || []).join("\n"))}</textarea></label>
+                      <button class="primary-button" type="button" data-admin-action="save-exercise">${t("saveExercise")}</button>
+                    </div>
+                  ` : ""}
                 </div>
               `;
             })
@@ -1756,7 +1800,7 @@ function renderAdminPanel() {
               <div class="admin-row-actions">
                 <button class="secondary-button" type="button" data-admin-action="add-exercise">${t("createExercise")}</button>
               </div>
-              ${exercises || `<div class="empty-state">${t("emptyDay")}</div>`}
+              ${exercises ? `<div class="admin-exercise-list"><small>${t("savedExercises")}</small>${exercises}</div>` : `<div class="empty-state">${t("emptyDay")}</div>`}
             </div>
           `;
         })
@@ -1821,14 +1865,33 @@ function updateAdminDraftFromInput(input) {
   }
 }
 
-function handleAdminAction(button) {
+async function handleAdminAction(button) {
   const weekIndex = Number(button.closest("[data-week-index]")?.dataset.weekIndex);
   const dayIndex = Number(button.closest("[data-day-index]")?.dataset.dayIndex);
   const exerciseKey = button.closest("[data-exercise-key]")?.dataset.exerciseKey;
   const action = button.dataset.adminAction;
 
+  if (action === "edit-exercise") {
+    state.adminEditingExerciseKey = state.adminEditingExerciseKey === exerciseKey ? "" : exerciseKey;
+    renderAdminPanel();
+    return;
+  }
+
+  if (action === "save-exercise") {
+    try {
+      await saveAdminDraftAndAssignment();
+      state.adminEditingExerciseKey = "";
+      setAdminMessage(t("exerciseSaved"), "success");
+      renderAdminPanel();
+    } catch (error) {
+      setAdminMessage(getAuthErrorMessage(error), "error");
+    }
+    return;
+  }
+
   if (action === "delete-week") {
     state.adminDraft.plan.splice(weekIndex, 1);
+    state.adminEditingExerciseKey = "";
   }
 
   if (action === "add-day") {
@@ -1854,6 +1917,7 @@ function handleAdminAction(button) {
       images: ["img/placeholder-1.jpg", "img/placeholder-2.jpg"]
     };
     state.adminDraft.plan[weekIndex].days[dayIndex].exercises.push(key);
+    state.adminEditingExerciseKey = key;
   }
 
   if (action === "delete-exercise") {
@@ -1861,6 +1925,7 @@ function handleAdminAction(button) {
     state.adminDraft.plan[weekIndex].days[dayIndex].exercises = exercises.filter((key) => key !== exerciseKey);
     const stillUsed = state.adminDraft.plan.some((week) => week.days.some((day) => day.exercises.includes(exerciseKey)));
     if (!stillUsed) delete state.adminDraft.exerciseLibrary[exerciseKey];
+    if (state.adminEditingExerciseKey === exerciseKey) state.adminEditingExerciseKey = "";
   }
 
   renderAdminPanel();
@@ -2061,6 +2126,7 @@ adminToggle.addEventListener("click", () => {
     state.selectedAdminUserId = "";
     state.adminEditorMode = "";
     state.pendingAssignUserId = "";
+    state.adminEditingExerciseKey = "";
     state.adminDraft = null;
   }
   renderApp();
@@ -2071,6 +2137,7 @@ adminClose.addEventListener("click", () => {
   state.selectedAdminUserId = "";
   state.adminEditorMode = "";
   state.pendingAssignUserId = "";
+  state.adminEditingExerciseKey = "";
   state.adminDraft = null;
   renderApp();
 });
@@ -2117,10 +2184,10 @@ adminWeeks.addEventListener("change", async (event) => {
   }
 });
 
-adminWeeks.addEventListener("click", (event) => {
+adminWeeks.addEventListener("click", async (event) => {
   const button = event.target.closest("[data-admin-action]");
   if (!button) return;
-  handleAdminAction(button);
+  await handleAdminAction(button);
 });
 
 adminUsers.addEventListener("change", async (event) => {
@@ -2137,6 +2204,7 @@ adminUsers.addEventListener("change", async (event) => {
     if (state.pendingAssignUserId === uid || state.selectedAdminUserId === uid) {
       state.adminEditorMode = "";
       state.pendingAssignUserId = "";
+      state.adminEditingExerciseKey = "";
       state.adminDraft = null;
     }
     setAdminMessage(select.value ? t("assignedRoutine") : t("userWithoutRoutine"), "success");
@@ -2154,6 +2222,7 @@ adminUsers.addEventListener("click", async (event) => {
     state.selectedAdminUserId = "";
     state.adminEditorMode = "";
     state.pendingAssignUserId = "";
+    state.adminEditingExerciseKey = "";
     state.adminDraft = null;
     setAdminMessage("");
     renderAdminPanel();
@@ -2167,6 +2236,7 @@ adminUsers.addEventListener("click", async (event) => {
     state.selectedAdminUserId = state.selectedAdminUserId === uid ? "" : uid;
     state.adminEditorMode = "";
     state.pendingAssignUserId = "";
+    state.adminEditingExerciseKey = "";
     state.adminDraft = null;
     setAdminMessage("");
     renderAdminPanel();
@@ -2186,6 +2256,7 @@ adminUsers.addEventListener("click", async (event) => {
       state.selectedAdminUserId = uid;
       state.pendingAssignUserId = uid;
       state.adminEditorMode = "create";
+      state.adminEditingExerciseKey = "";
       state.adminDraft = createEmptyRoutine(routineId);
       state.adminDraft.name = `Rutina ${displayName || t("user")}`;
       state.adminDraft.title = "RutFit";
@@ -2219,6 +2290,7 @@ adminUsers.addEventListener("click", async (event) => {
     if (state.pendingAssignUserId === uid) {
       state.adminEditorMode = "";
       state.pendingAssignUserId = "";
+      state.adminEditingExerciseKey = "";
       state.adminDraft = null;
     }
     setAdminMessage(t("routineRemoved"), "success");
@@ -2277,14 +2349,8 @@ adminSaveRoutine.addEventListener("click", async () => {
     return;
   }
   try {
-    await saveRoutineToFirestore(state.adminDraft);
-    if (state.pendingAssignUserId) {
-      await updateUserRoutine(state.pendingAssignUserId, state.adminDraft.id);
-    }
-    setAdminMessage(state.pendingAssignUserId ? t("routineSavedAssigned") : t("routineSaved"), "success");
-    if (state.selectedRoutine === state.adminDraft.id) {
-      selectRoutine(state.adminDraft.id);
-    }
+    const assignedUserId = await saveAdminDraftAndAssignment();
+    setAdminMessage(assignedUserId ? t("routineSavedAssigned") : t("routineSaved"), "success");
     renderAdminPanel();
   } catch (error) {
     setAdminMessage(getAuthErrorMessage(error), "error");
