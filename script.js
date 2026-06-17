@@ -381,6 +381,7 @@ const weekSwaps = {
 const state = {
   filter: "todos",
   search: "",
+  language: localStorage.getItem("rutfit-language") || "es",
   selectedRoutine: "",
   currentUser: null,
   currentUserData: null,
@@ -389,6 +390,9 @@ const state = {
   adminRoutineId: "",
   adminDraft: null,
   adminUsers: [],
+  selectedAdminUserId: "",
+  adminEditorMode: "",
+  pendingAssignUserId: "",
   currentExerciseKey: null,
   timerSeconds: 0,
   timerInterval: null
@@ -411,6 +415,7 @@ const authForm = document.querySelector("#authForm");
 const authEmail = document.querySelector("#authEmail");
 const authPassword = document.querySelector("#authPassword");
 const rememberSession = document.querySelector("#rememberSession");
+const languageSelect = document.querySelector("#languageSelect");
 const registerButton = document.querySelector("#registerButton");
 const resetPasswordButton = document.querySelector("#resetPasswordButton");
 const authMessage = document.querySelector("#authMessage");
@@ -428,6 +433,8 @@ const userGreeting = document.querySelector("#userGreeting");
 const adminToggle = document.querySelector("#adminToggle");
 const adminPanel = document.querySelector("#adminPanel");
 const adminClose = document.querySelector("#adminClose");
+const adminRoutineEditor = document.querySelector("#adminRoutineEditor");
+const adminEditorTitle = document.querySelector("#adminEditorTitle");
 const adminRoutineSelect = document.querySelector("#adminRoutineSelect");
 const adminRoutineId = document.querySelector("#adminRoutineId");
 const adminRoutineName = document.querySelector("#adminRoutineName");
@@ -449,6 +456,440 @@ const startTimer = document.querySelector("#startTimer");
 const resetTimer = document.querySelector("#resetTimer");
 const timerDisplay = document.querySelector("#timerDisplay");
 const AUTH_PERSISTENCE_KEY = "rutfit-auth-persistence";
+const LANGUAGE_KEY = "rutfit-language";
+const DEFAULT_LANGUAGE = "es";
+
+const translations = {
+  es: {
+    privateAccess: "Acceso privado",
+    loginTitle: "Iniciar sesión",
+    languageLabel: "Idioma",
+    password: "Contraseña",
+    passwordPlaceholder: "Mínimo 6 caracteres",
+    rememberSession: "Mantener sesión iniciada",
+    loginButton: "Iniciar sesión",
+    createAccount: "Crear cuenta",
+    resetPassword: "Recuperar contraseña por mail",
+    admin: "Admin",
+    logout: "Cerrar sesión",
+    totalProgress: "Progreso total",
+    doneShort: "hecho",
+    searchFilterControls: "Controles de búsqueda y filtro",
+    search: "Buscar",
+    searchPlaceholder: "Ej: squat, lactato, bike...",
+    filterByGoal: "Filtrar por objetivo",
+    all: "Todos",
+    strength: "Fuerza",
+    power: "Potencia",
+    lactate: "Lactato",
+    isometry: "Isometría",
+    recovery: "Recuperación",
+    planSummary: "Resumen del plan",
+    routineInPreparation: "Rutina en preparación",
+    comingSoon: "Próximamente",
+    administrator: "Administrador",
+    routinePanel: "Panel de rutinas",
+    routinePanelHelp: "Crea y edita rutinas guardadas en Firestore.",
+    closePanel: "Cerrar panel",
+    users: "Usuarios",
+    assignRoutines: "Asignar rutinas",
+    routine: "Rutina",
+    routineEditor: "Editor de rutina",
+    name: "Nombre",
+    title: "Título",
+    tag: "Etiqueta",
+    saveRoutine: "Guardar rutina",
+    newRoutine: "Nueva rutina",
+    migrateDario: "Migrar Dario actual",
+    createWeek: "Crear semana",
+    deleteRoutine: "Eliminar rutina",
+    closeDetail: "Cerrar detalle",
+    startPosition: "Posición inicial / bajada",
+    endPosition: "Posición final / subida",
+    sets: "Series",
+    reps: "Reps",
+    rest: "Descanso",
+    technique: "Técnica",
+    commonMistakes: "Errores comunes",
+    done: "Hecho",
+    markDone: "Marcar como hecho",
+    startRest: "Iniciar descanso",
+    reset: "Reiniciar",
+    sessions: "sesiones",
+    exercises: "ejercicios",
+    completed: "completados",
+    weeks: "semanas",
+    noUsers: "Todavía no hay usuarios con perfil en Firestore.",
+    usersLoadError: "No se pudieron cargar usuarios. Revisa reglas de Firestore.",
+    noRoutine: "Sin rutina",
+    unavailableRoutine: "Rutina no disponible: {id}",
+    user: "Usuario",
+    assignExistingRoutine: "Asignar rutina existente",
+    addRoutine: "Agregar rutina",
+    editCurrentRoutine: "Editar rutina actual",
+    removeRoutine: "Quitar rutina",
+    newRoutineFor: "Nueva rutina para {name}",
+    editingRoutine: "Editando {name}",
+    newRoutineOption: "Rutina nueva",
+    noStartImage: "Sin imagen inicial",
+    noEndImage: "Sin imagen final",
+    newExercise: "Ejercicio nuevo",
+    deleteExercise: "Eliminar ejercicio",
+    objective: "Objetivo",
+    startImage: "Imagen inicial",
+    endImage: "Imagen final",
+    uploadStartImage: "Subir imagen inicial",
+    uploadEndImage: "Subir imagen final",
+    technicalGoal: "Objetivo técnico",
+    mistakesOnePerLine: "Errores comunes, uno por línea",
+    dayNumber: "Día {number}",
+    deleteDay: "Eliminar día",
+    dayTitle: "Título del día",
+    focus: "Foco",
+    createExercise: "Crear ejercicio",
+    emptyDay: "Este día todavía no tiene ejercicios.",
+    week: "Semana",
+    noPhase: "Sin fase",
+    deleteWeek: "Eliminar semana",
+    number: "Número",
+    phase: "Fase",
+    badge: "Badge",
+    instructions: "Indicaciones",
+    createDay: "Crear día",
+    emptyWeek: "Esta semana todavía no tiene días.",
+    createWeekPrompt: "Crea una semana para empezar esta rutina.",
+    noMatchingExercises: "No hay ejercicios que coincidan con esa búsqueda.",
+    completeWeek: "Hecha",
+    restLower: "descanso",
+    hello: "Hola, {name}",
+    loadingRoutine: "Cargando rutina...",
+    adminRulesNotice: "Entraste como admin. Para editar rutinas, publica las reglas nuevas de Firestore.",
+    userLoadError: "No se pudo cargar tu usuario. Revisa Firestore.",
+    uploadingImage: "Subiendo imagen...",
+    imageLoaded: "Imagen cargada. Toca Guardar rutina para guardar el cambio.",
+    updatingUser: "Actualizando usuario...",
+    assignedRoutine: "Rutina asignada al usuario.",
+    userWithoutRoutine: "Usuario sin rutina asignada.",
+    newRoutinePreparedAssign: "Nueva rutina preparada. Al guardar se asigna a este usuario.",
+    removingRoutine: "Quitando rutina...",
+    routineRemoved: "Rutina quitada. El usuario verá Próximamente.",
+    newRoutinePrepared: "Nueva rutina preparada. Edita los datos y guárdala.",
+    darioMigrated: "Rutina Dario migrada a Firestore.",
+    darioMigratedAssigned: "Rutina Dario migrada y asignada al usuario.",
+    routineNeedsId: "La rutina necesita un ID.",
+    routineSaved: "Rutina guardada en Firestore.",
+    routineSavedAssigned: "Rutina guardada y asignada al usuario.",
+    deleteRoutineConfirm: "¿Eliminar la rutina \"{name}\" de Firestore?",
+    routineDeleted: "Rutina eliminada.",
+    signingIn: "Ingresando...",
+    creatingAccount: "Creando cuenta...",
+    writeEmailForReset: "Escribe tu email para recuperar la contraseña.",
+    sendingReset: "Enviando correo de recuperación...",
+    resetSent: "Te envié un correo para recuperar la contraseña.",
+    firebaseMissing: "Falta configurar Firebase en firebase-config.js.",
+    invalidEmail: "El email no es válido.",
+    invalidLogin: "Email o contraseña incorrectos.",
+    emailInUse: "Ese email ya tiene una cuenta.",
+    weakPassword: "La contraseña debe tener al menos 6 caracteres.",
+    firebaseAuthMissing: "Falta activar Firebase Authentication en este proyecto.",
+    authProviderDisabled: "Activa Email/Password en Firebase Authentication.",
+    invalidApiKey: "La configuración de Firebase no es válida.",
+    permissionDenied: "Firestore está bloqueando el acceso. Revisa las reglas de la base de datos.",
+    firestoreNotFound: "No se encontró Firestore o el documento solicitado. Revisa que la base sea (default).",
+    firestorePending: "Firestore necesita terminar de activarse o tiene una condición pendiente ({code}). Espera un minuto y recarga.",
+    firestoreUnavailable: "Firestore no está disponible ahora. Revisa conexión o configuración.",
+    networkFailed: "No hay conexión. Inténtalo de nuevo.",
+    actionFailed: "No se pudo completar la acción{code}.",
+    storageNotReady: "Firebase Storage no está inicializado.",
+    selectImageFile: "Selecciona un archivo de imagen."
+  },
+  en: {
+    privateAccess: "Private access",
+    loginTitle: "Sign in",
+    languageLabel: "Language",
+    password: "Password",
+    passwordPlaceholder: "Minimum 6 characters",
+    rememberSession: "Keep me signed in",
+    loginButton: "Sign in",
+    createAccount: "Create account",
+    resetPassword: "Reset password by email",
+    admin: "Admin",
+    logout: "Sign out",
+    totalProgress: "Total progress",
+    doneShort: "done",
+    searchFilterControls: "Search and filter controls",
+    search: "Search",
+    searchPlaceholder: "Ex: squat, lactate, bike...",
+    filterByGoal: "Filter by goal",
+    all: "All",
+    strength: "Strength",
+    power: "Power",
+    lactate: "Lactate",
+    isometry: "Isometry",
+    recovery: "Recovery",
+    planSummary: "Plan summary",
+    routineInPreparation: "Routine in preparation",
+    comingSoon: "Coming soon",
+    administrator: "Administrator",
+    routinePanel: "Routine panel",
+    routinePanelHelp: "Create and edit routines stored in Firestore.",
+    closePanel: "Close panel",
+    users: "Users",
+    assignRoutines: "Assign routines",
+    routine: "Routine",
+    routineEditor: "Routine editor",
+    name: "Name",
+    title: "Title",
+    tag: "Tag",
+    saveRoutine: "Save routine",
+    newRoutine: "New routine",
+    migrateDario: "Migrate current Dario",
+    createWeek: "Create week",
+    deleteRoutine: "Delete routine",
+    closeDetail: "Close detail",
+    startPosition: "Start / lowering position",
+    endPosition: "End / rising position",
+    sets: "Sets",
+    reps: "Reps",
+    rest: "Rest",
+    technique: "Technique",
+    commonMistakes: "Common mistakes",
+    done: "Done",
+    markDone: "Mark as done",
+    startRest: "Start rest",
+    reset: "Reset",
+    sessions: "sessions",
+    exercises: "exercises",
+    completed: "completed",
+    weeks: "weeks",
+    noUsers: "There are no users with a Firestore profile yet.",
+    usersLoadError: "Could not load users. Check Firestore rules.",
+    noRoutine: "No routine",
+    unavailableRoutine: "Routine unavailable: {id}",
+    user: "User",
+    assignExistingRoutine: "Assign existing routine",
+    addRoutine: "Add routine",
+    editCurrentRoutine: "Edit current routine",
+    removeRoutine: "Remove routine",
+    newRoutineFor: "New routine for {name}",
+    editingRoutine: "Editing {name}",
+    newRoutineOption: "New routine",
+    noStartImage: "No start image",
+    noEndImage: "No end image",
+    newExercise: "New exercise",
+    deleteExercise: "Delete exercise",
+    objective: "Goal",
+    startImage: "Start image",
+    endImage: "End image",
+    uploadStartImage: "Upload start image",
+    uploadEndImage: "Upload end image",
+    technicalGoal: "Technical goal",
+    mistakesOnePerLine: "Common mistakes, one per line",
+    dayNumber: "Day {number}",
+    deleteDay: "Delete day",
+    dayTitle: "Day title",
+    focus: "Focus",
+    createExercise: "Create exercise",
+    emptyDay: "This day has no exercises yet.",
+    week: "Week",
+    noPhase: "No phase",
+    deleteWeek: "Delete week",
+    number: "Number",
+    phase: "Phase",
+    badge: "Badge",
+    instructions: "Instructions",
+    createDay: "Create day",
+    emptyWeek: "This week has no days yet.",
+    createWeekPrompt: "Create a week to start this routine.",
+    noMatchingExercises: "No exercises match that search.",
+    completeWeek: "Done",
+    restLower: "rest",
+    hello: "Hi, {name}",
+    loadingRoutine: "Loading routine...",
+    adminRulesNotice: "You entered as admin. To edit routines, publish the new Firestore rules.",
+    userLoadError: "Could not load your user. Check Firestore.",
+    uploadingImage: "Uploading image...",
+    imageLoaded: "Image uploaded. Tap Save routine to save the change.",
+    updatingUser: "Updating user...",
+    assignedRoutine: "Routine assigned to user.",
+    userWithoutRoutine: "User has no assigned routine.",
+    newRoutinePreparedAssign: "New routine prepared. Saving will assign it to this user.",
+    removingRoutine: "Removing routine...",
+    routineRemoved: "Routine removed. The user will see Coming soon.",
+    newRoutinePrepared: "New routine prepared. Edit it and save.",
+    darioMigrated: "Dario routine migrated to Firestore.",
+    darioMigratedAssigned: "Dario routine migrated and assigned to user.",
+    routineNeedsId: "The routine needs an ID.",
+    routineSaved: "Routine saved in Firestore.",
+    routineSavedAssigned: "Routine saved and assigned to user.",
+    deleteRoutineConfirm: "Delete routine \"{name}\" from Firestore?",
+    routineDeleted: "Routine deleted.",
+    signingIn: "Signing in...",
+    creatingAccount: "Creating account...",
+    writeEmailForReset: "Enter your email to reset the password.",
+    sendingReset: "Sending recovery email...",
+    resetSent: "I sent you a password recovery email.",
+    firebaseMissing: "Firebase is missing in firebase-config.js.",
+    invalidEmail: "The email is not valid.",
+    invalidLogin: "Incorrect email or password.",
+    emailInUse: "That email already has an account.",
+    weakPassword: "Password must be at least 6 characters.",
+    firebaseAuthMissing: "Firebase Authentication must be enabled for this project.",
+    authProviderDisabled: "Enable Email/Password in Firebase Authentication.",
+    invalidApiKey: "Firebase configuration is not valid.",
+    permissionDenied: "Firestore is blocking access. Check database rules.",
+    firestoreNotFound: "Firestore or the requested document was not found. Check that the database is (default).",
+    firestorePending: "Firestore needs to finish activating or has a pending condition ({code}). Wait a minute and reload.",
+    firestoreUnavailable: "Firestore is unavailable right now. Check connection or configuration.",
+    networkFailed: "No connection. Try again.",
+    actionFailed: "Could not complete the action{code}.",
+    storageNotReady: "Firebase Storage is not initialized.",
+    selectImageFile: "Select an image file."
+  },
+  pt: {
+    privateAccess: "Acesso privado",
+    loginTitle: "Entrar",
+    languageLabel: "Idioma",
+    password: "Senha",
+    passwordPlaceholder: "Mínimo de 6 caracteres",
+    rememberSession: "Manter sessão iniciada",
+    loginButton: "Entrar",
+    createAccount: "Criar conta",
+    resetPassword: "Recuperar senha por email",
+    admin: "Admin",
+    logout: "Sair",
+    totalProgress: "Progresso total",
+    doneShort: "feito",
+    searchFilterControls: "Controles de busca e filtro",
+    search: "Buscar",
+    searchPlaceholder: "Ex: squat, lactato, bike...",
+    filterByGoal: "Filtrar por objetivo",
+    all: "Todos",
+    strength: "Força",
+    power: "Potência",
+    lactate: "Lactato",
+    isometry: "Isometria",
+    recovery: "Recuperação",
+    planSummary: "Resumo do plano",
+    routineInPreparation: "Rotina em preparação",
+    comingSoon: "Em breve",
+    administrator: "Administrador",
+    routinePanel: "Painel de rotinas",
+    routinePanelHelp: "Crie e edite rotinas salvas no Firestore.",
+    closePanel: "Fechar painel",
+    users: "Usuários",
+    assignRoutines: "Atribuir rotinas",
+    routine: "Rotina",
+    routineEditor: "Editor de rotina",
+    name: "Nome",
+    title: "Título",
+    tag: "Etiqueta",
+    saveRoutine: "Salvar rotina",
+    newRoutine: "Nova rotina",
+    migrateDario: "Migrar Dario atual",
+    createWeek: "Criar semana",
+    deleteRoutine: "Excluir rotina",
+    closeDetail: "Fechar detalhe",
+    startPosition: "Posição inicial / descida",
+    endPosition: "Posição final / subida",
+    sets: "Séries",
+    reps: "Reps",
+    rest: "Descanso",
+    technique: "Técnica",
+    commonMistakes: "Erros comuns",
+    done: "Feito",
+    markDone: "Marcar como feito",
+    startRest: "Iniciar descanso",
+    reset: "Reiniciar",
+    sessions: "sessões",
+    exercises: "exercícios",
+    completed: "concluídos",
+    weeks: "semanas",
+    noUsers: "Ainda não há usuários com perfil no Firestore.",
+    usersLoadError: "Não foi possível carregar usuários. Revise as regras do Firestore.",
+    noRoutine: "Sem rotina",
+    unavailableRoutine: "Rotina indisponível: {id}",
+    user: "Usuário",
+    assignExistingRoutine: "Atribuir rotina existente",
+    addRoutine: "Adicionar rotina",
+    editCurrentRoutine: "Editar rotina atual",
+    removeRoutine: "Remover rotina",
+    newRoutineFor: "Nova rotina para {name}",
+    editingRoutine: "Editando {name}",
+    newRoutineOption: "Nova rotina",
+    noStartImage: "Sem imagem inicial",
+    noEndImage: "Sem imagem final",
+    newExercise: "Novo exercício",
+    deleteExercise: "Excluir exercício",
+    objective: "Objetivo",
+    startImage: "Imagem inicial",
+    endImage: "Imagem final",
+    uploadStartImage: "Enviar imagem inicial",
+    uploadEndImage: "Enviar imagem final",
+    technicalGoal: "Objetivo técnico",
+    mistakesOnePerLine: "Erros comuns, um por linha",
+    dayNumber: "Dia {number}",
+    deleteDay: "Excluir dia",
+    dayTitle: "Título do dia",
+    focus: "Foco",
+    createExercise: "Criar exercício",
+    emptyDay: "Este dia ainda não tem exercícios.",
+    week: "Semana",
+    noPhase: "Sem fase",
+    deleteWeek: "Excluir semana",
+    number: "Número",
+    phase: "Fase",
+    badge: "Badge",
+    instructions: "Indicações",
+    createDay: "Criar dia",
+    emptyWeek: "Esta semana ainda não tem dias.",
+    createWeekPrompt: "Crie uma semana para iniciar esta rotina.",
+    noMatchingExercises: "Nenhum exercício corresponde a essa busca.",
+    completeWeek: "Feita",
+    restLower: "descanso",
+    hello: "Olá, {name}",
+    loadingRoutine: "Carregando rotina...",
+    adminRulesNotice: "Você entrou como admin. Para editar rotinas, publique as novas regras do Firestore.",
+    userLoadError: "Não foi possível carregar seu usuário. Revise o Firestore.",
+    uploadingImage: "Enviando imagem...",
+    imageLoaded: "Imagem carregada. Toque em Salvar rotina para salvar a alteração.",
+    updatingUser: "Atualizando usuário...",
+    assignedRoutine: "Rotina atribuída ao usuário.",
+    userWithoutRoutine: "Usuário sem rotina atribuída.",
+    newRoutinePreparedAssign: "Nova rotina preparada. Ao salvar, será atribuída a este usuário.",
+    removingRoutine: "Removendo rotina...",
+    routineRemoved: "Rotina removida. O usuário verá Em breve.",
+    newRoutinePrepared: "Nova rotina preparada. Edite os dados e salve.",
+    darioMigrated: "Rotina Dario migrada para Firestore.",
+    darioMigratedAssigned: "Rotina Dario migrada e atribuída ao usuário.",
+    routineNeedsId: "A rotina precisa de um ID.",
+    routineSaved: "Rotina salva no Firestore.",
+    routineSavedAssigned: "Rotina salva e atribuída ao usuário.",
+    deleteRoutineConfirm: "Excluir a rotina \"{name}\" do Firestore?",
+    routineDeleted: "Rotina excluída.",
+    signingIn: "Entrando...",
+    creatingAccount: "Criando conta...",
+    writeEmailForReset: "Digite seu email para recuperar a senha.",
+    sendingReset: "Enviando email de recuperação...",
+    resetSent: "Enviei um email para recuperar a senha.",
+    firebaseMissing: "Falta configurar Firebase em firebase-config.js.",
+    invalidEmail: "O email não é válido.",
+    invalidLogin: "Email ou senha incorretos.",
+    emailInUse: "Esse email já tem uma conta.",
+    weakPassword: "A senha deve ter pelo menos 6 caracteres.",
+    firebaseAuthMissing: "É necessário ativar Firebase Authentication neste projeto.",
+    authProviderDisabled: "Ative Email/Password no Firebase Authentication.",
+    invalidApiKey: "A configuração do Firebase não é válida.",
+    permissionDenied: "Firestore está bloqueando o acesso. Revise as regras do banco de dados.",
+    firestoreNotFound: "Firestore ou o documento solicitado não foi encontrado. Confira se o banco é (default).",
+    firestorePending: "Firestore precisa terminar de ativar ou tem uma condição pendente ({code}). Aguarde um minuto e recarregue.",
+    firestoreUnavailable: "Firestore não está disponível agora. Revise conexão ou configuração.",
+    networkFailed: "Sem conexão. Tente novamente.",
+    actionFailed: "Não foi possível concluir a ação{code}.",
+    storageNotReady: "Firebase Storage não está inicializado.",
+    selectImageFile: "Selecione um arquivo de imagem."
+  }
+};
 
 function getActiveRoutine() {
   return routines[state.selectedRoutine] || null;
@@ -488,6 +929,42 @@ function isFirebaseConfigured() {
 
 function normalizeEmail(email) {
   return email.trim().toLowerCase();
+}
+
+function t(key, params = {}) {
+  const dictionary = translations[state.language] || translations[DEFAULT_LANGUAGE];
+  let value = dictionary[key] || translations[DEFAULT_LANGUAGE][key] || key;
+  Object.entries(params).forEach(([paramKey, paramValue]) => {
+    value = value.replaceAll(`{${paramKey}}`, String(paramValue ?? ""));
+  });
+  return value;
+}
+
+function applyTranslations() {
+  document.documentElement.lang = state.language;
+  if (languageSelect) languageSelect.value = state.language;
+
+  document.querySelectorAll("[data-i18n]").forEach((element) => {
+    element.textContent = t(element.dataset.i18n);
+  });
+  document.querySelectorAll("[data-i18n-placeholder]").forEach((element) => {
+    element.setAttribute("placeholder", t(element.dataset.i18nPlaceholder));
+  });
+  document.querySelectorAll("[data-i18n-aria-label]").forEach((element) => {
+    element.setAttribute("aria-label", t(element.dataset.i18nAriaLabel));
+  });
+
+  if (state.currentExerciseKey) {
+    doneButton.textContent = progress[state.currentExerciseKey.id] ? t("done") : t("markDone");
+  }
+}
+
+function setLanguage(language) {
+  state.language = translations[language] ? language : DEFAULT_LANGUAGE;
+  localStorage.setItem(LANGUAGE_KEY, state.language);
+  applyTranslations();
+  if (getActiveRoutine()) renderApp();
+  else if (state.adminPanelOpen) renderAdminPanel();
 }
 
 function initializeRememberSession() {
@@ -577,6 +1054,9 @@ function showAuthScreen(message = "") {
   state.adminPanelOpen = false;
   state.adminDraft = null;
   state.adminUsers = [];
+  state.selectedAdminUserId = "";
+  state.adminEditorMode = "";
+  state.pendingAssignUserId = "";
   closeExercise();
   routineSelect.classList.remove("is-hidden");
   appHeader.classList.add("is-hidden");
@@ -686,6 +1166,12 @@ function startAdminUsersListener() {
           ...doc.data()
         }))
         .sort((a, b) => String(a.email || a.displayName || "").localeCompare(String(b.email || b.displayName || "")));
+      if (state.selectedAdminUserId && !state.adminUsers.some((user) => user.uid === state.selectedAdminUserId)) {
+        state.selectedAdminUserId = "";
+        state.adminEditorMode = "";
+        state.pendingAssignUserId = "";
+        state.adminDraft = null;
+      }
       if (state.adminPanelOpen) {
         renderAdminUsers();
       }
@@ -711,6 +1197,15 @@ async function updateUserRoutine(uid, routineId) {
   );
 }
 
+function getAdminUser(uid) {
+  return state.adminUsers.find((user) => user.uid === uid) || null;
+}
+
+function createRoutineIdForUser(user) {
+  const baseName = user?.displayName || getDisplayNameFromEmail(user?.email || "") || "usuario";
+  return slugify(`rutina-${baseName}-${Date.now()}`);
+}
+
 function renderAdminUsers() {
   if (!adminUsers) return;
   const routineIds = getAdminRoutineIds();
@@ -724,6 +1219,12 @@ function renderAdminUsers() {
     .map((user) => {
       const displayName = user.displayName || getDisplayNameFromEmail(user.email || "");
       const currentRoutine = user.routineId || "";
+      const currentRoutineName = currentRoutine && routines[currentRoutine]
+        ? routines[currentRoutine].name || currentRoutine
+        : currentRoutine
+          ? `No disponible: ${currentRoutine}`
+          : "Sin rutina";
+      const isOpen = state.selectedAdminUserId === user.uid;
       const routineOptions = [
         `<option value="" ${!currentRoutine ? "selected" : ""}>Sin rutina</option>`,
         ...routineIds.map((id) => `<option value="${escapeHtml(id)}" ${id === currentRoutine ? "selected" : ""}>${escapeHtml(routines[id].name || id)}</option>`),
@@ -732,19 +1233,31 @@ function renderAdminUsers() {
           : ""
       ].join("");
       return `
-        <article class="admin-user-card" data-user-id="${escapeHtml(user.uid)}">
-          <div class="admin-user-main">
-            <strong>${escapeHtml(displayName || "Usuario")}</strong>
-            <span>${escapeHtml(user.email || "Sin email")}</span>
-            <small>${escapeHtml(user.role || "user")}</small>
-          </div>
-          <label class="search-box admin-user-routine">
-            <span>Rutina</span>
-            <select data-user-routine>
-              ${routineOptions}
-            </select>
-          </label>
-          <button class="danger-button" type="button" data-user-clear>Quitar rutina</button>
+        <article class="admin-user-card ${isOpen ? "open" : ""}" data-user-id="${escapeHtml(user.uid)}">
+          <button class="admin-user-toggle" type="button" data-user-toggle aria-expanded="${isOpen}">
+            <span class="admin-user-main">
+              <strong>${escapeHtml(displayName || "Usuario")}</strong>
+              <span>${escapeHtml(user.email || "Sin email")}</span>
+              <small>${escapeHtml(user.role || "user")}</small>
+            </span>
+            <span class="admin-user-status">${escapeHtml(currentRoutineName)}</span>
+            <span class="week-chevron">${isOpen ? "−" : "+"}</span>
+          </button>
+          ${isOpen ? `
+            <div class="admin-user-panel">
+              <label class="search-box admin-user-routine">
+                <span>Asignar rutina existente</span>
+                <select data-user-routine>
+                  ${routineOptions}
+                </select>
+              </label>
+              <div class="admin-row-actions">
+                <button class="primary-button" type="button" data-user-action="add-routine">Agregar rutina</button>
+                <button class="secondary-button" type="button" data-user-action="edit-routine" ${currentRoutine && routines[currentRoutine] ? "" : "disabled"}>Editar rutina actual</button>
+                <button class="danger-button" type="button" data-user-clear>Quitar rutina</button>
+              </div>
+            </div>
+          ` : ""}
         </article>
       `;
     })
@@ -1114,15 +1627,28 @@ function readAdminBasics() {
 }
 
 function renderAdminPanel() {
-  if (!state.adminDraft) {
-    setAdminDraftFromRoutine(state.selectedRoutine === "pending" ? "dario" : state.selectedRoutine);
-  }
   renderAdminUsers();
 
+  if (!state.adminDraft || !state.adminEditorMode) {
+    adminRoutineEditor.classList.add("is-hidden");
+    adminWeeks.innerHTML = "";
+    adminRoutineSelect.innerHTML = "";
+    return;
+  }
+
+  adminRoutineEditor.classList.remove("is-hidden");
   const draft = state.adminDraft;
-  adminRoutineSelect.innerHTML = getAdminRoutineIds()
-    .map((id) => `<option value="${escapeHtml(id)}" ${id === draft.id ? "selected" : ""}>${escapeHtml(routines[id].name || id)}</option>`)
-    .join("");
+  const selectedUser = getAdminUser(state.pendingAssignUserId || state.selectedAdminUserId);
+  const selectedUserName = selectedUser?.displayName || getDisplayNameFromEmail(selectedUser?.email || "");
+  adminEditorTitle.textContent = state.adminEditorMode === "create"
+    ? `Nueva rutina para ${selectedUserName || "usuario"}`
+    : `Editando ${draft.name || draft.id}`;
+
+  const routineIds = getAdminRoutineIds();
+  adminRoutineSelect.innerHTML = [
+    !routineIds.includes(draft.id) ? `<option value="${escapeHtml(draft.id)}" selected>Rutina nueva</option>` : "",
+    ...routineIds.map((id) => `<option value="${escapeHtml(id)}" ${id === draft.id ? "selected" : ""}>${escapeHtml(routines[id].name || id)}</option>`)
+  ].join("");
   adminRoutineId.value = draft.id || "";
   adminRoutineName.value = draft.name || "";
   adminRoutineTitle.value = draft.title || "";
@@ -1496,14 +2022,21 @@ filterTabs.addEventListener("click", (event) => {
 adminToggle.addEventListener("click", () => {
   if (!state.isAdmin) return;
   state.adminPanelOpen = !state.adminPanelOpen;
-  if (state.adminPanelOpen && !state.adminDraft) {
-    setAdminDraftFromRoutine(state.selectedRoutine === "pending" ? "dario" : state.selectedRoutine);
+  if (!state.adminPanelOpen) {
+    state.selectedAdminUserId = "";
+    state.adminEditorMode = "";
+    state.pendingAssignUserId = "";
+    state.adminDraft = null;
   }
   renderApp();
 });
 
 adminClose.addEventListener("click", () => {
   state.adminPanelOpen = false;
+  state.selectedAdminUserId = "";
+  state.adminEditorMode = "";
+  state.pendingAssignUserId = "";
+  state.adminDraft = null;
   renderApp();
 });
 
@@ -1566,7 +2099,13 @@ adminUsers.addEventListener("change", async (event) => {
   setAdminMessage("Actualizando usuario...");
   try {
     await updateUserRoutine(uid, select.value);
+    if (state.pendingAssignUserId === uid || state.selectedAdminUserId === uid) {
+      state.adminEditorMode = "";
+      state.pendingAssignUserId = "";
+      state.adminDraft = null;
+    }
     setAdminMessage(select.value ? "Rutina asignada al usuario." : "Usuario sin rutina asignada.", "success");
+    renderAdminPanel();
   } catch (error) {
     setAdminMessage(getAuthErrorMessage(error), "error");
   } finally {
@@ -1575,6 +2114,52 @@ adminUsers.addEventListener("change", async (event) => {
 });
 
 adminUsers.addEventListener("click", async (event) => {
+  const toggle = event.target.closest("[data-user-toggle]");
+  if (toggle) {
+    const card = toggle.closest("[data-user-id]");
+    const uid = card?.dataset.userId;
+    state.selectedAdminUserId = state.selectedAdminUserId === uid ? "" : uid;
+    state.adminEditorMode = "";
+    state.pendingAssignUserId = "";
+    state.adminDraft = null;
+    setAdminMessage("");
+    renderAdminPanel();
+    return;
+  }
+
+  const actionButton = event.target.closest("[data-user-action]");
+  if (actionButton) {
+    const card = actionButton.closest("[data-user-id]");
+    const uid = card?.dataset.userId;
+    const user = getAdminUser(uid);
+    if (!uid || !user) return;
+
+    if (actionButton.dataset.userAction === "add-routine") {
+      const routineId = createRoutineIdForUser(user);
+      const displayName = user.displayName || getDisplayNameFromEmail(user.email || "");
+      state.selectedAdminUserId = uid;
+      state.pendingAssignUserId = uid;
+      state.adminEditorMode = "create";
+      state.adminDraft = createEmptyRoutine(routineId);
+      state.adminDraft.name = `Rutina ${displayName || "usuario"}`;
+      state.adminDraft.title = "RutFit";
+      state.adminDraft.kicker = "Nueva";
+      setAdminMessage("Nueva rutina preparada. Al guardar se asigna a este usuario.", "success");
+      renderAdminPanel();
+      return;
+    }
+
+    if (actionButton.dataset.userAction === "edit-routine" && user.routineId && routines[user.routineId]) {
+      state.selectedAdminUserId = uid;
+      state.pendingAssignUserId = uid;
+      state.adminEditorMode = "edit";
+      setAdminDraftFromRoutine(user.routineId);
+      setAdminMessage("");
+      renderAdminPanel();
+      return;
+    }
+  }
+
   const button = event.target.closest("[data-user-clear]");
   if (!button) return;
   const card = button.closest("[data-user-id]");
@@ -1585,6 +2170,11 @@ adminUsers.addEventListener("click", async (event) => {
   setAdminMessage("Quitando rutina...");
   try {
     await updateUserRoutine(uid, "");
+    if (state.pendingAssignUserId === uid) {
+      state.adminEditorMode = "";
+      state.pendingAssignUserId = "";
+      state.adminDraft = null;
+    }
     setAdminMessage("Rutina quitada. El usuario verá Próximamente.", "success");
   } catch (error) {
     setAdminMessage(getAuthErrorMessage(error), "error");
@@ -1604,9 +2194,17 @@ adminAddWeek.addEventListener("click", () => {
 });
 
 adminNewRoutine.addEventListener("click", () => {
-  state.adminDraft = createEmptyRoutine(`rutina-${Date.now()}`);
+  const user = getAdminUser(state.selectedAdminUserId);
+  const routineId = user ? createRoutineIdForUser(user) : `rutina-${Date.now()}`;
+  state.pendingAssignUserId = user?.uid || "";
+  state.adminEditorMode = user ? "create" : "edit";
+  state.adminDraft = createEmptyRoutine(routineId);
+  if (user) {
+    const displayName = user.displayName || getDisplayNameFromEmail(user.email || "");
+    state.adminDraft.name = `Rutina ${displayName || "usuario"}`;
+  }
   state.adminRoutineId = state.adminDraft.id;
-  setAdminMessage("Nueva rutina preparada. Edita los datos y guárdala.", "success");
+  setAdminMessage(user ? "Nueva rutina preparada. Al guardar se asigna a este usuario." : "Nueva rutina preparada. Edita los datos y guárdala.", "success");
   renderAdminPanel();
 });
 
@@ -1615,7 +2213,10 @@ adminSeedDario.addEventListener("click", async () => {
   state.adminDraft = cloneData(serializeRoutine(routines.dario));
   try {
     await saveRoutineToFirestore(state.adminDraft);
-    setAdminMessage("Rutina Dario migrada a Firestore.", "success");
+    if (state.pendingAssignUserId || state.selectedAdminUserId) {
+      await updateUserRoutine(state.pendingAssignUserId || state.selectedAdminUserId, state.adminDraft.id);
+    }
+    setAdminMessage(state.pendingAssignUserId || state.selectedAdminUserId ? "Rutina Dario migrada y asignada al usuario." : "Rutina Dario migrada a Firestore.", "success");
     renderAdminPanel();
   } catch (error) {
     setAdminMessage(getAuthErrorMessage(error), "error");
@@ -1631,7 +2232,10 @@ adminSaveRoutine.addEventListener("click", async () => {
   }
   try {
     await saveRoutineToFirestore(state.adminDraft);
-    setAdminMessage("Rutina guardada en Firestore.", "success");
+    if (state.pendingAssignUserId) {
+      await updateUserRoutine(state.pendingAssignUserId, state.adminDraft.id);
+    }
+    setAdminMessage(state.pendingAssignUserId ? "Rutina guardada y asignada al usuario." : "Rutina guardada en Firestore.", "success");
     if (state.selectedRoutine === state.adminDraft.id) {
       selectRoutine(state.adminDraft.id);
     }

@@ -17,26 +17,34 @@
   <body>
     <section class="routine-select screen-transition" id="routineSelect">
       <div class="routine-select-panel">
-        <span class="kicker">Acceso privado</span>
-        <h1>Iniciar sesión</h1>
+        <span class="kicker" data-i18n="privateAccess">Acceso privado</span>
+        <h1 data-i18n="loginTitle">Iniciar sesión</h1>
+        <label class="language-picker" for="languageSelect">
+          <span data-i18n="languageLabel">Idioma</span>
+          <select id="languageSelect" aria-label="Idioma">
+            <option value="es">Español 🇪🇸</option>
+            <option value="en">English 🇬🇧</option>
+            <option value="pt">Português 🇧🇷</option>
+          </select>
+        </label>
         <form class="auth-form" id="authForm">
           <label class="search-box" for="authEmail">
             <span>Email</span>
             <input id="authEmail" type="email" placeholder="tu@email.com" autocomplete="email" required />
           </label>
           <label class="search-box" for="authPassword">
-            <span>Contraseña</span>
-            <input id="authPassword" type="password" placeholder="Mínimo 6 caracteres" autocomplete="current-password" required />
+            <span data-i18n="password">Contraseña</span>
+            <input id="authPassword" type="password" placeholder="Mínimo 6 caracteres" data-i18n-placeholder="passwordPlaceholder" autocomplete="current-password" required />
           </label>
           <label class="remember-session" for="rememberSession">
             <input id="rememberSession" type="checkbox" />
-            <span>Mantener sesión iniciada</span>
+            <span data-i18n="rememberSession">Mantener sesión iniciada</span>
           </label>
           <div class="auth-actions">
-            <button class="primary-button" id="loginButton" type="submit">Iniciar sesión</button>
-            <button class="secondary-button" id="registerButton" type="button">Crear cuenta</button>
+            <button class="primary-button" id="loginButton" type="submit" data-i18n="loginButton">Iniciar sesión</button>
+            <button class="secondary-button" id="registerButton" type="button" data-i18n="createAccount">Crear cuenta</button>
           </div>
-          <button class="link-button" id="resetPasswordButton" type="button">Recuperar contraseña por mail</button>
+          <button class="link-button" id="resetPasswordButton" type="button" data-i18n="resetPassword">Recuperar contraseña por mail</button>
           <p class="auth-message" id="authMessage" role="status" aria-live="polite"></p>
         </form>
       </div>
@@ -48,56 +56,56 @@
         <h1>Rutina Preparación Física MMA</h1>
         <p class="user-greeting" id="userGreeting"></p>
       </div>
-      <button class="admin-toggle is-hidden" id="adminToggle" type="button">Admin</button>
-      <button class="change-routine-button" id="changeRoutine" type="button">Cerrar sesión</button>
-      <div class="progress-ring" aria-label="Progreso total">
+      <button class="admin-toggle is-hidden" id="adminToggle" type="button" data-i18n="admin">Admin</button>
+      <button class="change-routine-button" id="changeRoutine" type="button" data-i18n="logout">Cerrar sesión</button>
+      <div class="progress-ring" aria-label="Progreso total" data-i18n-aria-label="totalProgress">
         <span id="progressPercent">0%</span>
-        <small>hecho</small>
+        <small data-i18n="doneShort">hecho</small>
       </div>
     </header>
 
     <main class="screen-transition is-hidden" id="appMain">
-      <section class="controls" aria-label="Controles de búsqueda y filtro">
+      <section class="controls" aria-label="Controles de búsqueda y filtro" data-i18n-aria-label="searchFilterControls">
         <label class="search-box" for="searchInput">
-          <span>Buscar</span>
-          <input id="searchInput" type="search" placeholder="Ej: squat, lactato, bike..." autocomplete="off" />
+          <span data-i18n="search">Buscar</span>
+          <input id="searchInput" type="search" placeholder="Ej: squat, lactato, bike..." data-i18n-placeholder="searchPlaceholder" autocomplete="off" />
         </label>
 
-        <div class="filter-tabs" id="filterTabs" aria-label="Filtrar por objetivo">
-          <button class="active" type="button" data-filter="todos">Todos</button>
-          <button type="button" data-filter="fuerza"><span class="filter-dot fuerza"></span>Fuerza</button>
-          <button type="button" data-filter="potencia"><span class="filter-dot potencia"></span>Potencia</button>
-          <button type="button" data-filter="lactato"><span class="filter-dot lactato"></span>Lactato</button>
-          <button type="button" data-filter="isometría"><span class="filter-dot isometría"></span>Isometría</button>
+        <div class="filter-tabs" id="filterTabs" aria-label="Filtrar por objetivo" data-i18n-aria-label="filterByGoal">
+          <button class="active" type="button" data-filter="todos" data-i18n="all">Todos</button>
+          <button type="button" data-filter="fuerza"><span class="filter-dot fuerza"></span><span data-i18n="strength">Fuerza</span></button>
+          <button type="button" data-filter="potencia"><span class="filter-dot potencia"></span><span data-i18n="power">Potencia</span></button>
+          <button type="button" data-filter="lactato"><span class="filter-dot lactato"></span><span data-i18n="lactate">Lactato</span></button>
+          <button type="button" data-filter="isometría"><span class="filter-dot isometría"></span><span data-i18n="isometry">Isometría</span></button>
           <button type="button" data-filter="ground and pound"><span class="filter-dot ground-and-pound"></span>G&P</button>
-          <button type="button" data-filter="recuperación"><span class="filter-dot recuperación"></span>Recuperación</button>
+          <button type="button" data-filter="recuperación"><span class="filter-dot recuperación"></span><span data-i18n="recovery">Recuperación</span></button>
         </div>
       </section>
 
-      <section class="summary-strip" id="summaryStrip" aria-label="Resumen del plan"></section>
+      <section class="summary-strip" id="summaryStrip" aria-label="Resumen del plan" data-i18n-aria-label="planSummary"></section>
 
       <section class="weeks" id="weeksContainer" aria-live="polite"></section>
 
       <section class="routine-placeholder is-hidden" id="routinePlaceholder" aria-live="polite">
-        <h2>Rutina en preparación</h2>
-        <p>Próximamente</p>
+        <h2 data-i18n="routineInPreparation">Rutina en preparación</h2>
+        <p data-i18n="comingSoon">Próximamente</p>
       </section>
 
       <section class="admin-panel is-hidden" id="adminPanel" aria-live="polite">
         <div class="admin-panel-header">
           <div>
-            <span class="kicker">Administrador</span>
-            <h2>Panel de rutinas</h2>
-            <p>Crea y edita rutinas guardadas en Firestore.</p>
+            <span class="kicker" data-i18n="administrator">Administrador</span>
+            <h2 data-i18n="routinePanel">Panel de rutinas</h2>
+            <p data-i18n="routinePanelHelp">Crea y edita rutinas guardadas en Firestore.</p>
           </div>
-          <button class="secondary-button" id="adminClose" type="button">Cerrar panel</button>
+          <button class="secondary-button" id="adminClose" type="button" data-i18n="closePanel">Cerrar panel</button>
         </div>
 
         <section class="admin-editor-card">
           <div class="admin-card-title">
             <div>
-              <small>Usuarios</small>
-              <h3>Asignar rutinas</h3>
+              <small data-i18n="users">Usuarios</small>
+              <h3 data-i18n="assignRoutines">Asignar rutinas</h3>
             </div>
           </div>
           <div class="admin-users" id="adminUsers">
@@ -105,9 +113,19 @@
           </div>
         </section>
 
+        <p class="auth-message" id="adminMessage" role="status" aria-live="polite"></p>
+
+        <section class="admin-editor-card is-hidden" id="adminRoutineEditor">
+          <div class="admin-card-title">
+            <div>
+              <small data-i18n="routine">Rutina</small>
+              <h3 id="adminEditorTitle" data-i18n="routineEditor">Editor de rutina</h3>
+            </div>
+          </div>
+
         <div class="admin-grid">
           <label class="search-box" for="adminRoutineSelect">
-            <span>Rutina</span>
+            <span data-i18n="routine">Rutina</span>
             <select id="adminRoutineSelect"></select>
           </label>
           <label class="search-box" for="adminRoutineId">
@@ -115,35 +133,35 @@
             <input id="adminRoutineId" type="text" placeholder="ej: dario" autocomplete="off" />
           </label>
           <label class="search-box" for="adminRoutineName">
-            <span>Nombre</span>
+            <span data-i18n="name">Nombre</span>
             <input id="adminRoutineName" type="text" placeholder="Dario" autocomplete="off" />
           </label>
           <label class="search-box" for="adminRoutineTitle">
-            <span>Título</span>
+            <span data-i18n="title">Título</span>
             <input id="adminRoutineTitle" type="text" placeholder="RutFit" autocomplete="off" />
           </label>
           <label class="search-box" for="adminRoutineKicker">
-            <span>Etiqueta</span>
+            <span data-i18n="tag">Etiqueta</span>
             <input id="adminRoutineKicker" type="text" placeholder="12 semanas" autocomplete="off" />
           </label>
         </div>
 
         <div class="admin-actions">
-          <button class="primary-button" id="adminSaveRoutine" type="button">Guardar rutina</button>
-          <button class="secondary-button" id="adminNewRoutine" type="button">Nueva rutina</button>
-          <button class="secondary-button" id="adminSeedDario" type="button">Migrar Dario actual</button>
-          <button class="secondary-button" id="adminAddWeek" type="button">Crear semana</button>
-          <button class="danger-button" id="adminDeleteRoutine" type="button">Eliminar rutina</button>
+          <button class="primary-button" id="adminSaveRoutine" type="button" data-i18n="saveRoutine">Guardar rutina</button>
+          <button class="secondary-button" id="adminNewRoutine" type="button" data-i18n="newRoutine">Nueva rutina</button>
+          <button class="secondary-button" id="adminSeedDario" type="button" data-i18n="migrateDario">Migrar Dario actual</button>
+          <button class="secondary-button" id="adminAddWeek" type="button" data-i18n="createWeek">Crear semana</button>
+          <button class="danger-button" id="adminDeleteRoutine" type="button" data-i18n="deleteRoutine">Eliminar rutina</button>
         </div>
 
-        <p class="auth-message" id="adminMessage" role="status" aria-live="polite"></p>
-        <div class="admin-weeks" id="adminWeeks"></div>
+          <div class="admin-weeks" id="adminWeeks"></div>
+        </section>
       </section>
     </main>
 
     <div class="modal" id="exerciseModal" aria-hidden="true" role="dialog" aria-modal="true">
       <div class="modal-panel">
-        <button class="icon-button close-modal" id="closeModal" type="button" aria-label="Cerrar detalle">×</button>
+        <button class="icon-button close-modal" id="closeModal" type="button" aria-label="Cerrar detalle" data-i18n-aria-label="closeDetail">×</button>
 
         <div class="modal-hero">
           <span class="exercise-tag" id="modalObjective"></span>
@@ -154,36 +172,36 @@
         <div class="image-grid">
           <figure>
             <img id="modalImageStart" src="" alt="" />
-            <figcaption>Posición inicial / bajada</figcaption>
+            <figcaption data-i18n="startPosition">Posición inicial / bajada</figcaption>
           </figure>
           <figure>
             <img id="modalImageEnd" src="" alt="" />
-            <figcaption>Posición final / subida</figcaption>
+            <figcaption data-i18n="endPosition">Posición final / subida</figcaption>
           </figure>
         </div>
 
         <div class="detail-grid">
           <div>
-            <span>Series</span>
+            <span data-i18n="sets">Series</span>
             <strong id="modalSets"></strong>
           </div>
           <div>
-            <span>Reps</span>
+            <span data-i18n="reps">Reps</span>
             <strong id="modalReps"></strong>
           </div>
           <div>
-            <span>Descanso</span>
+            <span data-i18n="rest">Descanso</span>
             <strong id="modalRest"></strong>
           </div>
         </div>
 
         <section class="detail-section">
-          <h3>Técnica</h3>
+          <h3 data-i18n="technique">Técnica</h3>
           <p id="modalTechnique"></p>
         </section>
 
         <section class="detail-section">
-          <h3>Errores comunes</h3>
+          <h3 data-i18n="commonMistakes">Errores comunes</h3>
           <ul id="modalMistakes"></ul>
         </section>
 
@@ -191,8 +209,8 @@
           <button class="primary-button" id="doneButton" type="button">Marcar como hecho</button>
           <div class="rest-timer">
             <span id="timerDisplay">00:00</span>
-            <button id="startTimer" type="button">Iniciar descanso</button>
-            <button id="resetTimer" type="button">Reiniciar</button>
+            <button id="startTimer" type="button" data-i18n="startRest">Iniciar descanso</button>
+            <button id="resetTimer" type="button" data-i18n="reset">Reiniciar</button>
           </div>
         </div>
       </div>

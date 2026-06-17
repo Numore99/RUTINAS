@@ -154,6 +154,36 @@ button:disabled {
   gap: 0.85rem;
 }
 
+.language-picker {
+  display: grid;
+  gap: 0.45rem;
+  margin-bottom: 0.9rem;
+}
+
+.language-picker span {
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.language-picker select {
+  width: 100%;
+  border: 1px solid rgba(214, 31, 31, 0.3);
+  border-radius: 16px;
+  padding: 0.95rem 1rem;
+  background: rgba(20, 20, 20, 0.86);
+  color: var(--text);
+  font: inherit;
+  font-weight: 900;
+  outline: none;
+}
+
+.language-picker select:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(214, 31, 31, 0.16);
+}
+
 .remember-session {
   display: flex;
   align-items: center;
@@ -764,11 +794,29 @@ main {
 
 .admin-user-card {
   display: grid;
-  gap: 0.75rem;
+  gap: 0;
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: var(--radius);
-  padding: 0.85rem;
+  padding: 0;
   background: rgba(17, 17, 17, 0.9);
+  overflow: hidden;
+}
+
+.admin-user-card.open {
+  border-color: rgba(214, 31, 31, 0.32);
+}
+
+.admin-user-toggle {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  gap: 0.7rem;
+  align-items: center;
+  width: 100%;
+  border: 0;
+  padding: 0.9rem;
+  background: transparent;
+  color: var(--text);
+  text-align: left;
 }
 
 .admin-user-main {
@@ -803,6 +851,22 @@ main {
   font-size: 0.68rem;
   font-weight: 900;
   text-transform: uppercase;
+}
+
+.admin-user-status {
+  max-width: 9rem;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 900;
+  line-height: 1.15;
+  overflow-wrap: anywhere;
+  text-align: right;
+}
+
+.admin-user-panel {
+  display: grid;
+  gap: 0.75rem;
+  padding: 0 0.9rem 0.9rem;
 }
 
 .admin-editor-card {
@@ -1137,11 +1201,6 @@ main {
   .admin-grid,
   .admin-exercise-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .admin-user-card {
-    grid-template-columns: minmax(0, 1fr) minmax(240px, 0.8fr) auto;
-    align-items: end;
   }
 
   .admin-panel-header > div {
