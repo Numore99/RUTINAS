@@ -1462,6 +1462,66 @@ changeRoutine.addEventListener("click", async () => {
   await firebase.auth().signOut();
 });
 
+function installTouchScrollFallback() {
+  let startY = 0;
+  let lastY = 0;
+  let moved = false;
+  const interactiveSelector = "input, textarea, select, option, [contenteditable='true']";
+
+  document.addEventListener(
+    "touchstart",
+    (event) => {
+      if (event.touches.length !== 1 || event.target.closest(interactiveSelector)) return;
+      startY = event.touches[0].clientY;
+      lastY = startY;
+      moved = false;
+    },
+    { passive: true }
+  );
+
+  document.addEventListener(
+    "touchmove",
+    (event) => {
+      if (event.touches.length !== 1 || event.target.closest(interactiveSelector)) return;
+
+      const modalPanel = event.target.closest(".modal-panel");
+      if (modal.classList.contains("open") && modalPanel) return;
+
+      const currentY = event.touches[0].clientY;
+      const delta = lastY - currentY;
+      lastY = currentY;
+
+      if (Math.abs(currentY - startY) < 6) return;
+      moved = true;
+
+      const maxScroll = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+      const currentScroll = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
+      const nextScroll = Math.min(maxScroll, Math.max(0, currentScroll + delta));
+
+      if (nextScroll !== currentScroll) {
+        event.preventDefault();
+        window.scrollTo(0, nextScroll);
+      }
+    },
+    { passive: false }
+  );
+
+  document.addEventListener(
+    "click",
+    (event) => {
+      if (!moved) return;
+      moved = false;
+      if (Math.abs(lastY - startY) > 10) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+    },
+    true
+  );
+}
+
+installTouchScrollFallback();
+
 if (!window.firebase || !isFirebaseConfigured()) {
   showAuthScreen("Falta configurar Firebase en firebase-config.js.");
   setAuthBusy(true);
