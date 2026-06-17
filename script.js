@@ -528,6 +528,7 @@ const translations = {
     addRoutine: "Agregar rutina",
     editCurrentRoutine: "Editar rutina actual",
     removeRoutine: "Quitar rutina",
+    backToUsers: "← Volver a usuarios",
     newRoutineFor: "Nueva rutina para {name}",
     editingRoutine: "Editando {name}",
     newRoutineOption: "Rutina nueva",
@@ -671,6 +672,7 @@ const translations = {
     addRoutine: "Add routine",
     editCurrentRoutine: "Edit current routine",
     removeRoutine: "Remove routine",
+    backToUsers: "← Back to users",
     newRoutineFor: "New routine for {name}",
     editingRoutine: "Editing {name}",
     newRoutineOption: "New routine",
@@ -814,6 +816,7 @@ const translations = {
     addRoutine: "Adicionar rotina",
     editCurrentRoutine: "Editar rotina atual",
     removeRoutine: "Remover rotina",
+    backToUsers: "← Voltar aos usuários",
     newRoutineFor: "Nova rotina para {name}",
     editingRoutine: "Editando {name}",
     newRoutineOption: "Nova rotina",
@@ -1173,7 +1176,7 @@ function startAdminUsersListener() {
         state.adminDraft = null;
       }
       if (state.adminPanelOpen) {
-        renderAdminUsers();
+        renderAdminPanel();
       }
     },
     (error) => {
@@ -1215,7 +1218,24 @@ function renderAdminUsers() {
     return;
   }
 
-  adminUsers.innerHTML = state.adminUsers
+  const visibleUsers = state.selectedAdminUserId
+    ? state.adminUsers.filter((user) => user.uid === state.selectedAdminUserId)
+    : state.adminUsers;
+
+  if (state.selectedAdminUserId && !visibleUsers.length) {
+    state.selectedAdminUserId = "";
+    state.adminEditorMode = "";
+    state.pendingAssignUserId = "";
+    state.adminDraft = null;
+    renderAdminUsers();
+    return;
+  }
+
+  adminUsers.innerHTML = [
+    state.selectedAdminUserId
+      ? `<button class="secondary-button admin-back-button" type="button" data-admin-users-back>${t("backToUsers")}</button>`
+      : "",
+    ...visibleUsers
     .map((user) => {
       const displayName = user.displayName || getDisplayNameFromEmail(user.email || "");
       const currentRoutine = user.routineId || "";
@@ -1261,7 +1281,7 @@ function renderAdminUsers() {
         </article>
       `;
     })
-    .join("");
+  ].join("");
 }
 
 async function saveRoutineToFirestore(routine) {
@@ -2114,6 +2134,17 @@ adminUsers.addEventListener("change", async (event) => {
 });
 
 adminUsers.addEventListener("click", async (event) => {
+  const backButton = event.target.closest("[data-admin-users-back]");
+  if (backButton) {
+    state.selectedAdminUserId = "";
+    state.adminEditorMode = "";
+    state.pendingAssignUserId = "";
+    state.adminDraft = null;
+    setAdminMessage("");
+    renderAdminPanel();
+    return;
+  }
+
   const toggle = event.target.closest("[data-user-toggle]");
   if (toggle) {
     const card = toggle.closest("[data-user-id]");
@@ -2461,10 +2492,17 @@ document.addEventListener("visibilitychange", () => {
 });
 
 initializeRememberSession();
+applyTranslations();
 
 if (rememberSession) {
   rememberSession.addEventListener("change", () => {
     localStorage.setItem(AUTH_PERSISTENCE_KEY, rememberSession.checked ? "local" : "session");
+  });
+}
+
+if (languageSelect) {
+  languageSelect.addEventListener("change", (event) => {
+    setLanguage(event.target.value);
   });
 }
 
