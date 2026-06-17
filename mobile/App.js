@@ -2,7 +2,26 @@ import React, { useState } from "react";
 import { ActivityIndicator, Image, Pressable, StatusBar, StyleSheet, Text, View } from "react-native";
 import { WebView } from "react-native-webview";
 
-const APP_URL = "https://numore99.github.io/RUTINAS/?apk=scroll-native";
+const APP_URL = "https://numore99.github.io/RUTINAS/?apk=scroll-v2";
+const SCROLL_FIX_SCRIPT = `
+  (function () {
+    var html = document.documentElement;
+    var body = document.body;
+    if (html) {
+      html.style.overflowX = "hidden";
+      html.style.overflowY = "auto";
+      html.style.touchAction = "auto";
+      html.style.webkitOverflowScrolling = "touch";
+    }
+    if (body) {
+      body.style.overflowX = "hidden";
+      body.style.overflowY = "auto";
+      body.style.touchAction = "auto";
+      body.style.webkitOverflowScrolling = "touch";
+    }
+  })();
+  true;
+`;
 
 function LoadingScreen() {
   return (
@@ -53,12 +72,14 @@ export default function App() {
           cacheEnabled={false}
           mixedContentMode="always"
           setSupportMultipleWindows={false}
-          nestedScrollEnabled
+          androidLayerType="hardware"
           overScrollMode="never"
           showsVerticalScrollIndicator={false}
           scalesPageToFit={false}
           setBuiltInZoomControls={false}
           setDisplayZoomControls={false}
+          injectedJavaScript={SCROLL_FIX_SCRIPT}
+          injectedJavaScriptBeforeContentLoaded={SCROLL_FIX_SCRIPT}
           startInLoadingState
           renderLoading={LoadingScreen}
           onError={() => setOffline(true)}
