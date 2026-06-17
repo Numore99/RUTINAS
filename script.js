@@ -1394,10 +1394,12 @@ async function applyUserData(userData) {
   }
 
   if (routines[routineId]) {
-    selectRoutine(routineId);
-  } else {
-    selectRoutine("pending");
-  }
+  console.log("Rutina cargada:", routines[routineId]);
+  selectRoutine(routineId);
+} else {
+  console.log("No encontró rutina. routineId:", routineId);
+  selectRoutine("pending");
+}
 }
 
 function startCurrentUserListener(user) {
@@ -1787,25 +1789,42 @@ function renderAdminPanel() {
             })
             .join("");
 
-          return `
-            <div class="admin-day" data-week-index="${weekIndex}" data-day-index="${dayIndex}">
-              <div class="admin-card-title">
-                <h4>${t("dayNumber", { number: dayIndex + 1 })}</h4>
-                <button class="danger-button" type="button" data-admin-action="delete-day">${t("deleteDay")}</button>
-              </div>
-              <div class="admin-exercise-grid">
-                <label class="search-box"><span>${t("dayTitle")}</span><input class="admin-field" data-day-field="title" value="${escapeHtml(day.title || "")}" /></label>
-                <label class="search-box"><span>${t("focus")}</span><input class="admin-field" data-day-field="focus" value="${escapeHtml(day.focus || "")}" /></label>
-              </div>
-              <div class="admin-row-actions">
-                <button class="secondary-button" type="button" data-admin-action="add-exercise">${t("createExercise")}</button>
-              </div>
-              ${exercises ? `<div class="admin-exercise-list"><small>${t("savedExercises")}</small>${exercises}</div>` : `<div class="empty-state">${t("emptyDay")}</div>`}
-            </div>
+          const isDayCollapsed = day.collapsed === true;
+
+return `
+  <div class="admin-day ${isDayCollapsed ? "collapsed" : ""}" data-week-index="${weekIndex}" data-day-index="${dayIndex}">
+    <div class="admin-card-title">
+      <div>
+        <h4>${escapeHtml(day.title || t("dayNumber", { number: dayIndex + 1 }))}</h4>
+        <small>${(day.exercises || []).length} ejercicios guardados</small>
+      </div>
+
+      <div class="admin-row-actions">
+        ${isDayCollapsed
+          ? `<button class="secondary-button" type="button" data-admin-action="edit-day">Editar día</button>`
+          : `<button class="primary-button" type="button" data-admin-action="save-day">Guardar día</button>`
+        }
+        <button class="danger-button" type="button" data-admin-action="delete-day">${t("deleteDay")}</button>
+      </div>
+    </div>
+
+    ${isDayCollapsed ? "" : `
+      <div class="admin-exercise-grid">
+        <label class="search-box"><span>${t("dayTitle")}</span><input class="admin-field" data-day-field="title" value="${escapeHtml(day.title || "")}" /></label>
+        <label class="search-box"><span>${t("focus")}</span><input class="admin-field" data-day-field="focus" value="${escapeHtml(day.focus || "")}" /></label>
+      </div>
+
+      <div class="admin-row-actions">
+        <button class="secondary-button" type="button" data-admin-action="add-exercise">${t("createExercise")}</button>
+      </div>
+
+      ${exercises ? `<div class="admin-exercise-list"><small>${t("savedExercises")}</small>${exercises}</div>` : `<div class="empty-state">${t("emptyDay")}</div>`}
+    `}
+  </div>
           `;
         })
         .join("");
-
+        const isWeekCollapsed = week.collapsed === true;
       return `
         <article class="admin-editor-card" data-week-index="${weekIndex}">
           <div class="admin-card-title">
@@ -1813,18 +1832,29 @@ function renderAdminPanel() {
               <small>${t("week")}</small>
               <h3>${escapeHtml(week.number || weekIndex + 1)}: ${escapeHtml(phase.name || t("noPhase"))}</h3>
             </div>
-            <button class="danger-button" type="button" data-admin-action="delete-week">${t("deleteWeek")}</button>
-          </div>
-          <div class="admin-exercise-grid">
-            <label class="search-box"><span>${t("number")}</span><input class="admin-field" data-week-field="number" value="${escapeHtml(week.number || weekIndex + 1)}" /></label>
-            <label class="search-box"><span>${t("phase")}</span><input class="admin-field" data-week-field="phase.name" value="${escapeHtml(phase.name || "")}" /></label>
-            <label class="search-box"><span>${t("badge")}</span><input class="admin-field" data-week-field="phase.badge" value="${escapeHtml(phase.badge || "")}" /></label>
-            <label class="search-box"><span>${t("instructions")}</span><input class="admin-field" data-week-field="phase.modifier" value="${escapeHtml(phase.modifier || "")}" /></label>
-          </div>
-          <div class="admin-row-actions">
-            <button class="secondary-button" type="button" data-admin-action="add-day">${t("createDay")}</button>
-          </div>
-          ${days || `<div class="empty-state">${t("emptyWeek")}</div>`}
+            <div class="admin-row-actions">
+  ${isWeekCollapsed
+  ? `<button class="secondary-button" type="button" data-admin-action="edit-week">Editar semana</button>`
+  : `<button class="primary-button" type="button" data-admin-action="save-week">Guardar semana</button>`
+}
+  <button class="danger-button" type="button" data-admin-action="delete-week">${t("deleteWeek")}</button>
+</div>
+          ${isWeekCollapsed ? `
+  <div class="empty-state">
+    Semana guardada - ${(week.days || []).length} días guardados
+  </div>
+` : `
+  <div class="admin-exercise-grid">
+    <label class="search-box"><span>${t("number")}</span><input class="admin-field" data-week-field="number" value="${escapeHtml(week.number || weekIndex + 1)}" /></label>
+    <label class="search-box"><span>${t("phase")}</span><input class="admin-field" data-week-field="phase.name" value="${escapeHtml(phase.name || "")}" /></label>
+    <label class="search-box"><span>${t("badge")}</span><input class="admin-field" data-week-field="phase.badge" value="${escapeHtml(phase.badge || "")}" /></label>
+    <label class="search-box"><span>${t("instructions")}</span><input class="admin-field" data-week-field="phase.modifier" value="${escapeHtml(phase.modifier || "")}" /></label>
+  </div>
+  <div class="admin-row-actions">
+    <button class="secondary-button" type="button" data-admin-action="add-day">${t("createDay")}</button>
+  </div>
+  ${days || `<div class="empty-state">${t("emptyWeek")}</div>`}
+`}
         </article>
       `;
     })
@@ -1878,21 +1908,56 @@ async function handleAdminAction(button) {
   }
 
   if (action === "save-exercise") {
-    try {
-      await saveAdminDraftAndAssignment();
-      state.adminEditingExerciseKey = "";
-      setAdminMessage(t("exerciseSaved"), "success");
-      renderAdminPanel();
-    } catch (error) {
-      setAdminMessage(getAuthErrorMessage(error), "error");
-    }
-    return;
-  }
-
-  if (action === "delete-week") {
-    state.adminDraft.plan.splice(weekIndex, 1);
+  try {
+    await saveAdminDraftAndAssignment();
     state.adminEditingExerciseKey = "";
+    setAdminMessage(t("exerciseSaved"), "success");
+    renderAdminPanel();
+  } catch (error) {
+    setAdminMessage(getAuthErrorMessage(error), "error");
   }
+  return;
+}
+
+if (action === "save-day") {
+  state.adminDraft.plan[weekIndex].days[dayIndex].collapsed = true;
+  renderAdminPanel();
+  return;
+}
+
+if (action === "edit-day") {
+  state.adminDraft.plan[weekIndex].days.forEach((day, index) => {
+    day.collapsed = index !== dayIndex;
+  });
+  renderAdminPanel();
+  return;
+}
+
+if (action === "save-week") {
+  state.adminDraft.plan[weekIndex].collapsed = true;
+
+  state.adminDraft.plan[weekIndex].days.forEach((day) => {
+    day.collapsed = true;
+  });
+
+  renderAdminPanel();
+  return;
+}
+
+if (action === "edit-week") {
+  state.adminDraft.plan.forEach((week, index) => {
+    week.collapsed = index !== weekIndex;
+  });
+
+  state.adminDraft.plan[weekIndex].collapsed = false;
+
+  renderAdminPanel();
+  return;
+}
+if (action === "delete-week") {
+  state.adminDraft.plan.splice(weekIndex, 1);
+  state.adminEditingExerciseKey = "";
+}
 
   if (action === "add-day") {
     state.adminDraft.plan[weekIndex].days = state.adminDraft.plan[weekIndex].days || [];
