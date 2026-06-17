@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { ActivityIndicator, Image, Pressable, StatusBar, StyleSheet, Text, View } from "react-native";
 import { WebView } from "react-native-webview";
 
-const APP_URL = "https://numore99.github.io/RUTINAS/";
+const APP_URL = "https://numore99.github.io/RUTINAS/?apk=scroll-native";
 
 function LoadingScreen() {
   return (
@@ -50,6 +50,7 @@ export default function App() {
           domStorageEnabled
           sharedCookiesEnabled
           thirdPartyCookiesEnabled
+          cacheEnabled={false}
           mixedContentMode="always"
           setSupportMultipleWindows={false}
           nestedScrollEnabled

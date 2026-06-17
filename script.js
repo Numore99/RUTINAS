@@ -1546,7 +1546,9 @@ function installTouchScrollFallback() {
   );
 }
 
-installTouchScrollFallback();
+if (new URLSearchParams(window.location.search).get("manualScroll") === "1") {
+  installTouchScrollFallback();
+}
 
 if (!window.firebase || !isFirebaseConfigured()) {
   showAuthScreen("Falta configurar Firebase en firebase-config.js.");
