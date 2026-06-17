@@ -388,6 +388,7 @@ const state = {
   adminPanelOpen: false,
   adminRoutineId: "",
   adminDraft: null,
+  adminUsers: [],
   currentExerciseKey: null,
   timerSeconds: 0,
   timerInterval: null
@@ -399,6 +400,8 @@ let progress = {};
 let collapsedWeeks = {};
 let db = null;
 let storage = null;
+let unsubscribeCurrentUser = null;
+let unsubscribeAdminUsers = null;
 
 const routineSelect = document.querySelector("#routineSelect");
 const appHeader = document.querySelector("#appHeader");
@@ -437,6 +440,7 @@ const adminAddWeek = document.querySelector("#adminAddWeek");
 const adminDeleteRoutine = document.querySelector("#adminDeleteRoutine");
 const adminMessage = document.querySelector("#adminMessage");
 const adminWeeks = document.querySelector("#adminWeeks");
+const adminUsers = document.querySelector("#adminUsers");
 
 const modal = document.querySelector("#exerciseModal");
 const closeModal = document.querySelector("#closeModal");
@@ -565,12 +569,14 @@ function getAuthErrorMessage(error) {
 }
 
 function showAuthScreen(message = "") {
+  stopUserSubscriptions();
   state.selectedRoutine = "";
   state.currentUser = null;
   state.currentUserData = null;
   state.isAdmin = false;
   state.adminPanelOpen = false;
   state.adminDraft = null;
+  state.adminUsers = [];
   closeExercise();
   routineSelect.classList.remove("is-hidden");
   appHeader.classList.add("is-hidden");
@@ -578,6 +584,17 @@ function showAuthScreen(message = "") {
   adminToggle.classList.add("is-hidden");
   adminPanel.classList.add("is-hidden");
   if (message) setAuthMessage(message);
+}
+
+function stopUserSubscriptions() {
+  if (unsubscribeCurrentUser) {
+    unsubscribeCurrentUser();
+    unsubscribeCurrentUser = null;
+  }
+  if (unsubscribeAdminUsers) {
+    unsubscribeAdminUsers();
+    unsubscribeAdminUsers = null;
+  }
 }
 
 async function ensureUserDocument(user) {
@@ -659,6 +676,81 @@ async function loadFirestoreRoutinesForAdmin() {
   }
 }
 
+function startAdminUsersListener() {
+  if (!state.isAdmin || unsubscribeAdminUsers) return;
+  unsubscribeAdminUsers = db.collection("users").onSnapshot(
+    (snapshot) => {
+      state.adminUsers = snapshot.docs
+        .map((doc) => ({
+          uid: doc.id,
+          ...doc.data()
+        }))
+        .sort((a, b) => String(a.email || a.displayName || "").localeCompare(String(b.email || b.displayName || "")));
+      if (state.adminPanelOpen) {
+        renderAdminUsers();
+      }
+    },
+    (error) => {
+      console.error("Admin users listener error:", error);
+      if (adminUsers) {
+        adminUsers.innerHTML = `<div class="empty-state">No se pudieron cargar usuarios. Revisa reglas de Firestore.</div>`;
+      }
+    }
+  );
+}
+
+async function updateUserRoutine(uid, routineId) {
+  if (!state.isAdmin || !uid) return;
+  await db.collection("users").doc(uid).set(
+    {
+      routineId,
+      updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+      updatedBy: normalizeEmail(state.currentUser?.email || "")
+    },
+    { merge: true }
+  );
+}
+
+function renderAdminUsers() {
+  if (!adminUsers) return;
+  const routineIds = getAdminRoutineIds();
+
+  if (!state.adminUsers.length) {
+    adminUsers.innerHTML = `<div class="empty-state">Todavía no hay usuarios con perfil en Firestore.</div>`;
+    return;
+  }
+
+  adminUsers.innerHTML = state.adminUsers
+    .map((user) => {
+      const displayName = user.displayName || getDisplayNameFromEmail(user.email || "");
+      const currentRoutine = user.routineId || "";
+      const routineOptions = [
+        `<option value="" ${!currentRoutine ? "selected" : ""}>Sin rutina</option>`,
+        ...routineIds.map((id) => `<option value="${escapeHtml(id)}" ${id === currentRoutine ? "selected" : ""}>${escapeHtml(routines[id].name || id)}</option>`),
+        currentRoutine && !routineIds.includes(currentRoutine)
+          ? `<option value="${escapeHtml(currentRoutine)}" selected>Rutina no disponible: ${escapeHtml(currentRoutine)}</option>`
+          : ""
+      ].join("");
+      return `
+        <article class="admin-user-card" data-user-id="${escapeHtml(user.uid)}">
+          <div class="admin-user-main">
+            <strong>${escapeHtml(displayName || "Usuario")}</strong>
+            <span>${escapeHtml(user.email || "Sin email")}</span>
+            <small>${escapeHtml(user.role || "user")}</small>
+          </div>
+          <label class="search-box admin-user-routine">
+            <span>Rutina</span>
+            <select data-user-routine>
+              ${routineOptions}
+            </select>
+          </label>
+          <button class="danger-button" type="button" data-user-clear>Quitar rutina</button>
+        </article>
+      `;
+    })
+    .join("");
+}
+
 async function saveRoutineToFirestore(routine) {
   const data = serializeRoutine(routine);
   await db.collection("routines").doc(data.id).set(
@@ -674,6 +766,22 @@ async function saveRoutineToFirestore(routine) {
 
 async function deleteRoutineFromFirestore(routineId) {
   await db.collection("routines").doc(routineId).delete();
+  const assignedUsers = await db.collection("users").where("routineId", "==", routineId).get();
+  if (!assignedUsers.empty) {
+    const batch = db.batch();
+    assignedUsers.forEach((doc) => {
+      batch.set(
+        doc.ref,
+        {
+          routineId: "",
+          updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+          updatedBy: normalizeEmail(state.currentUser?.email || "")
+        },
+        { merge: true }
+      );
+    });
+    await batch.commit();
+  }
   delete routines[routineId];
 }
 
@@ -688,6 +796,57 @@ function selectRoutine(routineId) {
   renderApp();
 }
 
+async function applyUserData(userData) {
+  state.currentUserData = userData;
+  state.isAdmin = userData.role === "admin" || isAdminEmail(state.currentUser?.email);
+  if (state.isAdmin) {
+    await loadFirestoreRoutinesForAdmin();
+    startAdminUsersListener();
+  } else if (unsubscribeAdminUsers) {
+    unsubscribeAdminUsers();
+    unsubscribeAdminUsers = null;
+    state.adminUsers = [];
+  }
+
+  const routineId = userData.routineId || "";
+  const firestoreRoutine = routineId ? await loadRoutineFromFirestore(routineId) : null;
+  if (firestoreRoutine) {
+    routines[firestoreRoutine.id] = firestoreRoutine;
+  }
+
+  if (routines[routineId]) {
+    selectRoutine(routineId);
+  } else {
+    selectRoutine("pending");
+  }
+}
+
+function startCurrentUserListener(user) {
+  if (unsubscribeCurrentUser) {
+    unsubscribeCurrentUser();
+    unsubscribeCurrentUser = null;
+  }
+
+  unsubscribeCurrentUser = db.collection("users").doc(user.uid).onSnapshot(
+    async (snapshot) => {
+      if (!snapshot.exists) {
+        await ensureUserDocument(user);
+        return;
+      }
+      try {
+        await applyUserData(snapshot.data());
+      } catch (error) {
+        console.error("User data refresh error:", error);
+        showAuthScreen(getAuthErrorMessage(error));
+      }
+    },
+    (error) => {
+      console.error("Current user listener error:", error);
+      showAuthScreen(getAuthErrorMessage(error));
+    }
+  );
+}
+
 async function handleAuthenticatedUser(user) {
   if (!user?.email) {
     showAuthScreen();
@@ -698,18 +857,8 @@ async function handleAuthenticatedUser(user) {
   setAuthMessage("Cargando rutina...");
 
   try {
-    const userData = await ensureUserDocument(user);
-    state.currentUserData = userData;
-    state.isAdmin = userData.role === "admin" || isAdminEmail(user.email);
-    if (state.isAdmin) {
-      await loadFirestoreRoutinesForAdmin();
-    }
-    const routineId = userData.routineId;
-    const firestoreRoutine = routineId ? await loadRoutineFromFirestore(routineId) : null;
-    if (firestoreRoutine) {
-      routines[firestoreRoutine.id] = firestoreRoutine;
-    }
-    selectRoutine(routines[routineId] ? routineId : "pending");
+    await ensureUserDocument(user);
+    startCurrentUserListener(user);
   } catch (error) {
     await firebase.auth().signOut();
     showAuthScreen("No se pudo cargar tu usuario. Revisa Firestore.");
@@ -719,9 +868,8 @@ async function handleAuthenticatedUser(user) {
 }
 
 function renderApp() {
-  const routine = getActiveRoutine();
+  const routine = getActiveRoutine() || routines.pending;
   if (!routine) {
-    showRoutineSelector();
     return;
   }
 
@@ -969,6 +1117,7 @@ function renderAdminPanel() {
   if (!state.adminDraft) {
     setAdminDraftFromRoutine(state.selectedRoutine === "pending" ? "dario" : state.selectedRoutine);
   }
+  renderAdminUsers();
 
   const draft = state.adminDraft;
   adminRoutineSelect.innerHTML = getAdminRoutineIds()
@@ -1406,6 +1555,44 @@ adminWeeks.addEventListener("click", (event) => {
   handleAdminAction(button);
 });
 
+adminUsers.addEventListener("change", async (event) => {
+  const select = event.target.closest("[data-user-routine]");
+  if (!select) return;
+  const card = select.closest("[data-user-id]");
+  const uid = card?.dataset.userId;
+  if (!uid) return;
+
+  select.disabled = true;
+  setAdminMessage("Actualizando usuario...");
+  try {
+    await updateUserRoutine(uid, select.value);
+    setAdminMessage(select.value ? "Rutina asignada al usuario." : "Usuario sin rutina asignada.", "success");
+  } catch (error) {
+    setAdminMessage(getAuthErrorMessage(error), "error");
+  } finally {
+    select.disabled = false;
+  }
+});
+
+adminUsers.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-user-clear]");
+  if (!button) return;
+  const card = button.closest("[data-user-id]");
+  const uid = card?.dataset.userId;
+  if (!uid) return;
+
+  button.disabled = true;
+  setAdminMessage("Quitando rutina...");
+  try {
+    await updateUserRoutine(uid, "");
+    setAdminMessage("Rutina quitada. El usuario verá Próximamente.", "success");
+  } catch (error) {
+    setAdminMessage(getAuthErrorMessage(error), "error");
+  } finally {
+    button.disabled = false;
+  }
+});
+
 adminAddWeek.addEventListener("click", () => {
   if (!state.adminDraft) state.adminDraft = createEmptyRoutine("nueva-rutina");
   state.adminDraft.plan.push({
@@ -1648,6 +1835,26 @@ function installTouchScrollFallback() {
 if (new URLSearchParams(window.location.search).get("manualScroll") === "1") {
   installTouchScrollFallback();
 }
+
+function primeNativeScroll() {
+  try {
+    window.dispatchEvent(new Event("resize"));
+    const y = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
+    window.scrollTo(0, y + 1);
+    window.scrollTo(0, y);
+  } catch (error) {
+    console.warn("No se pudo inicializar el scroll nativo.", error);
+  }
+}
+
+window.addEventListener("load", () => {
+  setTimeout(primeNativeScroll, 100);
+  setTimeout(primeNativeScroll, 350);
+});
+
+document.addEventListener("visibilitychange", () => {
+  if (!document.hidden) setTimeout(primeNativeScroll, 80);
+});
 
 initializeRememberSession();
 

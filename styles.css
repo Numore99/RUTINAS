@@ -24,17 +24,20 @@
 }
 
 html {
+  height: 100%;
   min-height: 100%;
   scroll-behavior: auto;
   overflow-x: hidden;
   overflow-y: auto;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
+  touch-action: pan-y;
   scrollbar-width: none;
 }
 
 body {
   margin: 0;
+  height: 100%;
   min-height: 100vh;
   background:
     radial-gradient(circle at 18% 0%, rgba(139, 0, 0, 0.22), transparent 30rem),
@@ -46,6 +49,7 @@ body {
   overflow-y: auto;
   scrollbar-width: none;
   -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
 }
 
 html::-webkit-scrollbar,
@@ -753,6 +757,54 @@ main {
   gap: 0.9rem;
 }
 
+.admin-users {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.admin-user-card {
+  display: grid;
+  gap: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius);
+  padding: 0.85rem;
+  background: rgba(17, 17, 17, 0.9);
+}
+
+.admin-user-main {
+  display: grid;
+  gap: 0.2rem;
+  min-width: 0;
+}
+
+.admin-user-main strong,
+.admin-user-main span,
+.admin-user-main small {
+  overflow-wrap: anywhere;
+}
+
+.admin-user-main strong {
+  color: var(--text);
+  font-size: 1rem;
+  font-weight: 900;
+}
+
+.admin-user-main span {
+  color: var(--soft);
+  font-size: 0.88rem;
+}
+
+.admin-user-main small {
+  width: fit-content;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  padding: 0.2rem 0.5rem;
+  color: var(--muted);
+  font-size: 0.68rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
 .admin-editor-card {
   display: grid;
   gap: 0.85rem;
@@ -1085,6 +1137,11 @@ main {
   .admin-grid,
   .admin-exercise-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .admin-user-card {
+    grid-template-columns: minmax(0, 1fr) minmax(240px, 0.8fr) auto;
+    align-items: end;
   }
 
   .admin-panel-header > div {

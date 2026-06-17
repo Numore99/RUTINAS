@@ -2,23 +2,49 @@ import React, { useState } from "react";
 import { ActivityIndicator, Image, Pressable, StatusBar, StyleSheet, Text, View } from "react-native";
 import { WebView } from "react-native-webview";
 
-const APP_URL = "https://numore99.github.io/RUTINAS/?apk=scroll-v2";
+const APP_URL = "https://numore99.github.io/RUTINAS/?apk=scroll-v3";
 const SCROLL_FIX_SCRIPT = `
   (function () {
+    if (window.__rutfitScrollFixInstalled) return true;
+    window.__rutfitScrollFixInstalled = true;
+
     var html = document.documentElement;
     var body = document.body;
     if (html) {
+      html.style.height = "100%";
+      html.style.minHeight = "100%";
       html.style.overflowX = "hidden";
       html.style.overflowY = "auto";
-      html.style.touchAction = "auto";
+      html.style.touchAction = "pan-y";
       html.style.webkitOverflowScrolling = "touch";
     }
     if (body) {
+      body.style.height = "100%";
+      body.style.minHeight = "100vh";
       body.style.overflowX = "hidden";
       body.style.overflowY = "auto";
-      body.style.touchAction = "auto";
+      body.style.touchAction = "pan-y";
       body.style.webkitOverflowScrolling = "touch";
     }
+
+    function primeScroll() {
+      try {
+        window.dispatchEvent(new Event("resize"));
+        var y = window.scrollY || html.scrollTop || body.scrollTop || 0;
+        window.scrollTo(0, y + 1);
+        window.scrollTo(0, y);
+      } catch (error) {}
+    }
+
+    setTimeout(primeScroll, 50);
+    setTimeout(primeScroll, 150);
+    setTimeout(primeScroll, 400);
+    window.addEventListener("load", function () {
+      setTimeout(primeScroll, 100);
+    });
+    document.addEventListener("visibilitychange", function () {
+      if (!document.hidden) setTimeout(primeScroll, 80);
+    });
   })();
   true;
 `;
@@ -73,6 +99,9 @@ export default function App() {
           mixedContentMode="always"
           setSupportMultipleWindows={false}
           androidLayerType="hardware"
+          nestedScrollEnabled
+          scrollEnabled
+          bounces={false}
           overScrollMode="never"
           showsVerticalScrollIndicator={false}
           scalesPageToFit={false}
