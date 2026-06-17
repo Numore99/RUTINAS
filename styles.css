@@ -768,6 +768,62 @@ main {
   background: rgba(9, 9, 9, 0.72);
 }
 
+.admin-image-uploader {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.admin-image-uploader > span {
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.admin-image-preview,
+.admin-image-empty {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  background: rgba(20, 20, 20, 0.9);
+}
+
+.admin-image-preview {
+  display: block;
+  object-fit: cover;
+}
+
+.admin-image-empty {
+  display: grid;
+  place-items: center;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.file-button {
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(214, 31, 31, 0.45);
+  border-radius: 14px;
+  padding: 0.9rem 1rem;
+  background: rgba(139, 0, 0, 0.22);
+  color: var(--text);
+  font-weight: 900;
+  text-align: center;
+  cursor: pointer;
+}
+
+.file-button input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
 .danger-button {
   border: 1px solid rgba(214, 31, 31, 0.45);
   border-radius: 14px;

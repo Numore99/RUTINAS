@@ -398,6 +398,7 @@ let collapsedWeeksKey = "";
 let progress = {};
 let collapsedWeeks = {};
 let db = null;
+let storage = null;
 
 const routineSelect = document.querySelector("#routineSelect");
 const appHeader = document.querySelector("#appHeader");
@@ -890,6 +891,35 @@ function escapeHtml(value) {
     .replaceAll('"', "&quot;");
 }
 
+function isRemoteImage(src) {
+  return /^https?:\/\//i.test(String(src || ""));
+}
+
+function getFileExtension(file) {
+  const nameExtension = file.name.includes(".") ? file.name.split(".").pop().toLowerCase() : "";
+  if (nameExtension) return nameExtension.replace(/[^a-z0-9]/g, "") || "jpg";
+  const mimeExtension = file.type.split("/")[1] || "jpg";
+  return mimeExtension.replace(/[^a-z0-9]/g, "") || "jpg";
+}
+
+async function uploadExerciseImage(file, exerciseKey, imageIndex) {
+  if (!storage) throw new Error("Firebase Storage no está inicializado.");
+  if (!file?.type?.startsWith("image/")) throw new Error("Selecciona un archivo de imagen.");
+  const routineId = state.adminDraft?.id || adminRoutineId.value || "rutina";
+  const slot = imageIndex === 0 ? "start" : "end";
+  const extension = getFileExtension(file);
+  const path = `routines/${slugify(routineId)}/exercises/${slugify(exerciseKey)}/${slot}-${Date.now()}.${extension}`;
+  const snapshot = await storage.ref(path).put(file, {
+    contentType: file.type,
+    customMetadata: {
+      routineId: slugify(routineId),
+      exerciseKey,
+      slot
+    }
+  });
+  return snapshot.ref.getDownloadURL();
+}
+
 function setAdminMessage(message, type = "") {
   adminMessage.textContent = message;
   adminMessage.classList.toggle("error", type === "error");
@@ -938,6 +968,12 @@ function renderAdminPanel() {
             .map((exerciseKey) => {
               const exercise = draft.exerciseLibrary[exerciseKey] || {};
               const images = exercise.images || ["", ""];
+              const startPreview = images[0]
+                ? `<img class="admin-image-preview" src="${escapeHtml(images[0])}" alt="Vista previa inicial" />`
+                : `<div class="admin-image-empty">Sin imagen inicial</div>`;
+              const endPreview = images[1]
+                ? `<img class="admin-image-preview" src="${escapeHtml(images[1])}" alt="Vista previa final" />`
+                : `<div class="admin-image-empty">Sin imagen final</div>`;
               return `
                 <div class="admin-exercise" data-week-index="${weekIndex}" data-day-index="${dayIndex}" data-exercise-key="${escapeHtml(exerciseKey)}">
                   <div class="admin-card-title">
@@ -950,8 +986,24 @@ function renderAdminPanel() {
                     <label class="search-box"><span>Series</span><input class="admin-field" data-exercise-field="baseSets" value="${escapeHtml(exercise.baseSets || "")}" /></label>
                     <label class="search-box"><span>Reps</span><input class="admin-field" data-exercise-field="baseReps" value="${escapeHtml(exercise.baseReps || "")}" /></label>
                     <label class="search-box"><span>Descanso</span><input class="admin-field" data-exercise-field="rest" value="${escapeHtml(exercise.rest || "")}" /></label>
-                    <label class="search-box"><span>Imagen inicial</span><input class="admin-field" data-exercise-field="imageStart" value="${escapeHtml(images[0] || "")}" /></label>
-                    <label class="search-box"><span>Imagen final</span><input class="admin-field" data-exercise-field="imageEnd" value="${escapeHtml(images[1] || "")}" /></label>
+                    <div class="admin-image-uploader">
+                      <span>Imagen inicial</span>
+                      ${startPreview}
+                      <input class="admin-field" data-exercise-field="imageStart" value="${escapeHtml(images[0] || "")}" />
+                      <label class="file-button">
+                        Subir imagen inicial
+                        <input type="file" accept="image/*" data-image-upload="0" />
+                      </label>
+                    </div>
+                    <div class="admin-image-uploader">
+                      <span>Imagen final</span>
+                      ${endPreview}
+                      <input class="admin-field" data-exercise-field="imageEnd" value="${escapeHtml(images[1] || "")}" />
+                      <label class="file-button">
+                        Subir imagen final
+                        <input type="file" accept="image/*" data-image-upload="1" />
+                      </label>
+                    </div>
                   </div>
                   <label class="search-box"><span>Objetivo técnico</span><textarea class="admin-textarea" data-exercise-field="goal">${escapeHtml(exercise.goal || "")}</textarea></label>
                   <label class="search-box"><span>Técnica</span><textarea class="admin-textarea" data-exercise-field="technique">${escapeHtml(exercise.technique || "")}</textarea></label>
@@ -1303,6 +1355,31 @@ adminWeeks.addEventListener("input", (event) => {
   updateAdminDraftFromInput(event.target);
 });
 
+adminWeeks.addEventListener("change", async (event) => {
+  const input = event.target.closest("[data-image-upload]");
+  if (!input) return;
+  const file = input.files?.[0];
+  if (!file) return;
+  const exerciseContainer = input.closest("[data-exercise-key]");
+  const exerciseKey = exerciseContainer?.dataset.exerciseKey;
+  const imageIndex = Number(input.dataset.imageUpload);
+  if (!exerciseKey || Number.isNaN(imageIndex)) return;
+
+  setAdminMessage("Subiendo imagen...");
+  try {
+    const url = await uploadExerciseImage(file, exerciseKey, imageIndex);
+    const exercise = state.adminDraft.exerciseLibrary[exerciseKey];
+    exercise.images = exercise.images || ["", ""];
+    exercise.images[imageIndex] = url;
+    setAdminMessage("Imagen cargada. Toca Guardar rutina para guardar el cambio.", "success");
+    renderAdminPanel();
+  } catch (error) {
+    setAdminMessage(error?.message || getAuthErrorMessage(error), "error");
+  } finally {
+    input.value = "";
+  }
+});
+
 adminWeeks.addEventListener("click", (event) => {
   const button = event.target.closest("[data-admin-action]");
   if (!button) return;
@@ -1556,6 +1633,7 @@ if (!window.firebase || !isFirebaseConfigured()) {
 } else {
   firebase.initializeApp(window.FIREBASE_CONFIG);
   db = firebase.firestore(firebase.app());
+  storage = firebase.storage(firebase.app());
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
       handleAuthenticatedUser(user);
