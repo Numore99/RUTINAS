@@ -578,6 +578,7 @@ const translations = {
     userLoadError: "No se pudo cargar tu usuario. Revisa Firestore.",
     uploadingImage: "Subiendo imagen...",
     imageLoaded: "Imagen cargada. Toca Guardar rutina para guardar el cambio.",
+    imageStoredInRoutine: "Firebase Storage falló, pero guardé la imagen comprimida dentro de la rutina.",
     updatingUser: "Actualizando usuario...",
     assignedRoutine: "Rutina asignada al usuario.",
     userWithoutRoutine: "Usuario sin rutina asignada.",
@@ -731,6 +732,7 @@ const translations = {
     userLoadError: "Could not load your user. Check Firestore.",
     uploadingImage: "Uploading image...",
     imageLoaded: "Image uploaded. Tap Save routine to save the change.",
+    imageStoredInRoutine: "Firebase Storage failed, but I saved the compressed image inside the routine.",
     updatingUser: "Updating user...",
     assignedRoutine: "Routine assigned to user.",
     userWithoutRoutine: "User has no assigned routine.",
@@ -884,6 +886,7 @@ const translations = {
     userLoadError: "Não foi possível carregar seu usuário. Revise o Firestore.",
     uploadingImage: "Enviando imagem...",
     imageLoaded: "Imagem carregada. Toque em Salvar rotina para salvar a alteração.",
+    imageStoredInRoutine: "Firebase Storage falhou, mas salvei a imagem comprimida dentro da rotina.",
     updatingUser: "Atualizando usuário...",
     assignedRoutine: "Rotina atribuída ao usuário.",
     userWithoutRoutine: "Usuário sem rotina atribuída.",
@@ -1642,6 +1645,55 @@ function isRemoteImage(src) {
   return /^https?:\/\//i.test(String(src || ""));
 }
 
+function createImagePlaceholder(label = "RutFit") {
+  const safeLabel = escapeHtml(label || "RutFit");
+  const svg = `
+    <svg xmlns="http://www.w3.org/2000/svg" width="900" height="675" viewBox="0 0 900 675">
+      <defs>
+        <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#1b1b1b"/>
+          <stop offset="1" stop-color="#070707"/>
+        </linearGradient>
+      </defs>
+      <rect width="900" height="675" rx="34" fill="url(#bg)"/>
+      <rect x="28" y="28" width="844" height="619" rx="28" fill="none" stroke="#8B0000" stroke-width="4"/>
+      <text x="50%" y="47%" text-anchor="middle" fill="#F5F5F5" font-family="Arial, sans-serif" font-size="48" font-weight="800">RutFit</text>
+      <text x="50%" y="57%" text-anchor="middle" fill="#9A9A9A" font-family="Arial, sans-serif" font-size="28">${safeLabel}</text>
+    </svg>
+  `;
+  return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
+}
+
+function resolveExerciseImage(src, label) {
+  const value = String(src || "").trim();
+  if (!value || value.includes("placeholder-")) return createImagePlaceholder(label);
+  return value;
+}
+
+function compressImageFile(file, maxSize = 900, quality = 0.78) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onerror = () => reject(reader.error || new Error(t("selectImageFile")));
+    reader.onload = () => {
+      const image = new Image();
+      image.onerror = () => reject(new Error(t("selectImageFile")));
+      image.onload = () => {
+        const scale = Math.min(1, maxSize / Math.max(image.width, image.height));
+        const width = Math.max(1, Math.round(image.width * scale));
+        const height = Math.max(1, Math.round(image.height * scale));
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        const context = canvas.getContext("2d");
+        context.drawImage(image, 0, 0, width, height);
+        resolve(canvas.toDataURL("image/jpeg", quality));
+      };
+      image.src = reader.result;
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
 function getFileExtension(file) {
   const nameExtension = file.name.includes(".") ? file.name.split(".").pop().toLowerCase() : "";
   if (nameExtension) return nameExtension.replace(/[^a-z0-9]/g, "") || "jpg";
@@ -1732,10 +1784,10 @@ function renderAdminPanel() {
               const isEditingExercise = state.adminEditingExerciseKey === exerciseKey;
               const images = exercise.images || ["", ""];
               const startPreview = images[0]
-                ? `<img class="admin-image-preview" src="${escapeHtml(images[0])}" alt="${t("startImage")}" />`
+                ? `<img class="admin-image-preview" src="${escapeHtml(resolveExerciseImage(images[0], t("startImage")))}" alt="${t("startImage")}" />`
                 : `<div class="admin-image-empty">${t("noStartImage")}</div>`;
               const endPreview = images[1]
-                ? `<img class="admin-image-preview" src="${escapeHtml(images[1])}" alt="${t("endImage")}" />`
+                ? `<img class="admin-image-preview" src="${escapeHtml(resolveExerciseImage(images[1], t("endImage")))}" alt="${t("endImage")}" />`
                 : `<div class="admin-image-empty">${t("noEndImage")}</div>`;
               return `
                 <div class="admin-exercise ${isEditingExercise ? "is-editing" : ""}" data-week-index="${weekIndex}" data-day-index="${dayIndex}" data-exercise-key="${escapeHtml(exerciseKey)}">
@@ -2120,10 +2172,10 @@ function openExercise(weekNumber, dayIndex, exerciseKey) {
   document.querySelector("#modalTechnique").textContent = exercise.technique;
   document.querySelector("#modalMistakes").innerHTML = exercise.mistakes.map((mistake) => `<li>${mistake}</li>`).join("");
 
-  const [startImage, endImage] = exercise.images;
-  document.querySelector("#modalImageStart").src = startImage;
+  const [startImage, endImage] = Array.isArray(exercise.images) ? exercise.images : ["", ""];
+  document.querySelector("#modalImageStart").src = resolveExerciseImage(startImage, t("startPosition"));
   document.querySelector("#modalImageStart").alt = t("startImageAlt", { name: exercise.name });
-  document.querySelector("#modalImageEnd").src = endImage;
+  document.querySelector("#modalImageEnd").src = resolveExerciseImage(endImage, t("endPosition"));
   document.querySelector("#modalImageEnd").alt = t("endImageAlt", { name: exercise.name });
 
   doneButton.classList.toggle("done", Boolean(progress[id]));
@@ -2253,14 +2305,24 @@ adminWeeks.addEventListener("change", async (event) => {
       throw new Error("No se encontró el ejercicio para guardar la imagen");
     }
 
-    const url = await uploadExerciseImage(file, exerciseKey, imageIndex);
+    let url = "";
+    let usedFirestoreFallback = false;
+
+    try {
+      url = await uploadExerciseImage(file, exerciseKey, imageIndex);
+    } catch (storageError) {
+      console.warn("Firebase Storage upload failed. Using compressed Firestore image fallback.", storageError);
+      url = await compressImageFile(file);
+      usedFirestoreFallback = true;
+    }
+
     exercise.images = Array.isArray(exercise.images) ? exercise.images : ["", ""];
     exercise.images[imageIndex] = url;
     state.adminEditingExerciseKey = exerciseKey;
 
     await saveAdminDraftAndAssignment();
 
-    setAdminMessage(t("imageLoaded"), "success");
+    setAdminMessage(usedFirestoreFallback ? t("imageStoredInRoutine") : t("imageLoaded"), "success");
     renderAdminPanel();
   } catch (error) {
     setAdminMessage(`${getAuthErrorMessage(error)} ${error?.message || ""}`.trim(), "error");
