@@ -420,12 +420,9 @@ const languageSelect = document.querySelector("#languageSelect");
 const registerButton = document.querySelector("#registerButton");
 const resetPasswordButton = document.querySelector("#resetPasswordButton");
 const authMessage = document.querySelector("#authMessage");
-const routineControls = document.querySelector(".controls");
 const routinePlaceholder = document.querySelector("#routinePlaceholder");
 const weeksContainer = document.querySelector("#weeksContainer");
 const summaryStrip = document.querySelector("#summaryStrip");
-const searchInput = document.querySelector("#searchInput");
-const filterTabs = document.querySelector("#filterTabs");
 const progressPercent = document.querySelector("#progressPercent");
 const progressRing = document.querySelector(".progress-ring");
 const appKicker = document.querySelector(".app-header .kicker");
@@ -1372,8 +1369,6 @@ function selectRoutine(routineId) {
   state.selectedRoutine = routineId;
   state.search = "";
   state.filter = "todos";
-  searchInput.value = "";
-  filterTabs.querySelectorAll("button").forEach((tab) => tab.classList.toggle("active", tab.dataset.filter === "todos"));
   loadRoutineStorage(routineId);
   renderApp();
 }
@@ -1469,7 +1464,6 @@ function renderApp() {
   }
 
   const hasPlan = routine.plan.length > 0;
-  routineControls.classList.toggle("is-hidden", !hasPlan);
   summaryStrip.classList.toggle("is-hidden", !hasPlan);
   weeksContainer.classList.toggle("is-hidden", !hasPlan);
   routinePlaceholder.classList.toggle("is-hidden", hasPlan);
@@ -1570,13 +1564,7 @@ function normalize(text) {
 }
 
 function matchesFilters(exercise) {
-  const query = normalize(state.search.trim());
-  const filter = normalize(state.filter);
-  const haystack = normalize(`${exercise.name} ${exercise.objective} ${exercise.goal}`);
-  const objective = normalize(exercise.objective);
-  const filterMatch = filter === "todos" || objective === filter;
-  const searchMatch = !query || haystack.includes(query);
-  return filterMatch && searchMatch;
+  return Boolean(exercise);
 }
 
 function phasePrescription(exercise, weekNumber) {
@@ -2242,19 +2230,6 @@ weeksContainer.addEventListener("click", (event) => {
   const card = event.target.closest(".exercise-card");
   if (!card) return;
   openExercise(Number(card.dataset.week), Number(card.dataset.day), card.dataset.exercise);
-});
-
-searchInput.addEventListener("input", (event) => {
-  state.search = event.target.value;
-  renderPlan();
-});
-
-filterTabs.addEventListener("click", (event) => {
-  const button = event.target.closest("button");
-  if (!button) return;
-  state.filter = button.dataset.filter;
-  filterTabs.querySelectorAll("button").forEach((tab) => tab.classList.toggle("active", tab === button));
-  renderPlan();
 });
 
 adminToggle.addEventListener("click", () => {
