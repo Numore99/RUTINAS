@@ -1394,12 +1394,10 @@ async function applyUserData(userData) {
   }
 
   if (routines[routineId]) {
-  console.log("Rutina cargada:", routines[routineId]);
-  selectRoutine(routineId);
-} else {
-  console.log("No encontró rutina. routineId:", routineId);
-  selectRoutine("pending");
-}
+    selectRoutine(routineId);
+  } else {
+    selectRoutine("pending");
+  }
 }
 
 function startCurrentUserListener(user) {
@@ -1733,7 +1731,6 @@ function renderAdminPanel() {
               const exercise = draft.exerciseLibrary[exerciseKey] || {};
               const isEditingExercise = state.adminEditingExerciseKey === exerciseKey;
               const images = exercise.images || ["", ""];
-              console.log("Preview images:", images);
               const startPreview = images[0]
                 ? `<img class="admin-image-preview" src="${escapeHtml(images[0])}" alt="${t("startImage")}" />`
                 : `<div class="admin-image-empty">${t("noStartImage")}</div>`;
@@ -1921,8 +1918,14 @@ async function handleAdminAction(button) {
 }
 
 if (action === "save-day") {
-  state.adminDraft.plan[weekIndex].days[dayIndex].collapsed = true;
-  renderAdminPanel();
+  try {
+    state.adminDraft.plan[weekIndex].days[dayIndex].collapsed = true;
+    await saveAdminDraftAndAssignment();
+    renderAdminPanel();
+  } catch (error) {
+    state.adminDraft.plan[weekIndex].days[dayIndex].collapsed = false;
+    setAdminMessage(`${getAuthErrorMessage(error)} ${error?.message || ""}`.trim(), "error");
+  }
   return;
 }
 
@@ -1935,13 +1938,19 @@ if (action === "edit-day") {
 }
 
 if (action === "save-week") {
-  state.adminDraft.plan[weekIndex].collapsed = true;
+  try {
+    state.adminDraft.plan[weekIndex].collapsed = true;
 
-  state.adminDraft.plan[weekIndex].days.forEach((day) => {
-    day.collapsed = true;
-  });
+    state.adminDraft.plan[weekIndex].days.forEach((day) => {
+      day.collapsed = true;
+    });
 
-  renderAdminPanel();
+    await saveAdminDraftAndAssignment();
+    renderAdminPanel();
+  } catch (error) {
+    state.adminDraft.plan[weekIndex].collapsed = false;
+    setAdminMessage(`${getAuthErrorMessage(error)} ${error?.message || ""}`.trim(), "error");
+  }
   return;
 }
 
@@ -2237,35 +2246,27 @@ adminWeeks.addEventListener("change", async (event) => {
 
   setAdminMessage(t("uploadingImage"));
 
-try {
-  const url = await uploadExerciseImage(file, exerciseKey, imageIndex);
+  try {
+    const exercise = state.adminDraft.exerciseLibrary[exerciseKey];
 
-  console.log("URL:", url);
+    if (!exercise) {
+      throw new Error("No se encontró el ejercicio para guardar la imagen");
+    }
 
-  const exercise = state.adminDraft.exerciseLibrary[exerciseKey];
+    const url = await uploadExerciseImage(file, exerciseKey, imageIndex);
+    exercise.images = Array.isArray(exercise.images) ? exercise.images : ["", ""];
+    exercise.images[imageIndex] = url;
+    state.adminEditingExerciseKey = exerciseKey;
 
-  if (!exercise) {
-    throw new Error("No se encontró el ejercicio para guardar la imagen");
+    await saveAdminDraftAndAssignment();
+
+    setAdminMessage(t("imageLoaded"), "success");
+    renderAdminPanel();
+  } catch (error) {
+    setAdminMessage(`${getAuthErrorMessage(error)} ${error?.message || ""}`.trim(), "error");
+  } finally {
+    input.value = "";
   }
-
-  exercise.images = Array.isArray(exercise.images)
-    ? exercise.images
-    : ["", ""];
-
-  exercise.images[imageIndex] = url;
-
-  await saveAdminDraftAndAssignment();
-
-  console.log("URL subida:", url);
-  console.log("exercise.images:", exercise.images);
-
-  setAdminMessage(t("imageLoaded"), "success");
-  renderAdminPanel();
-} catch (error) {
-  setAdminMessage(error?.message || getAuthErrorMessage(error), "error");
-} finally {
-  input.value = "";
-}
 });
 
 adminWeeks.addEventListener("click", async (event) => {
