@@ -1645,8 +1645,7 @@ function isRemoteImage(src) {
   return /^https?:\/\//i.test(String(src || ""));
 }
 
-function createImagePlaceholder(label = "RutFit") {
-  const safeLabel = escapeHtml(label || "RutFit");
+function createImagePlaceholder() {
   const svg = `
     <svg xmlns="http://www.w3.org/2000/svg" width="900" height="675" viewBox="0 0 900 675">
       <defs>
@@ -1656,9 +1655,7 @@ function createImagePlaceholder(label = "RutFit") {
         </linearGradient>
       </defs>
       <rect width="900" height="675" rx="34" fill="url(#bg)"/>
-      <rect x="28" y="28" width="844" height="619" rx="28" fill="none" stroke="#8B0000" stroke-width="4"/>
-      <text x="50%" y="47%" text-anchor="middle" fill="#F5F5F5" font-family="Arial, sans-serif" font-size="48" font-weight="800">RutFit</text>
-      <text x="50%" y="57%" text-anchor="middle" fill="#9A9A9A" font-family="Arial, sans-serif" font-size="28">${safeLabel}</text>
+      <text x="50%" y="52%" text-anchor="middle" fill="#F5F5F5" font-family="Arial, sans-serif" font-size="48" font-weight="800">RutFit</text>
     </svg>
   `;
   return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
