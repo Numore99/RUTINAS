@@ -1603,6 +1603,13 @@ function phasePrescription(exercise, weekNumber) {
   return { sets: exercise.baseSets, reps: exercise.baseReps, rest: exercise.rest };
 }
 
+const summaryIcons = {
+  sessions: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 2v4"/><path d="M16 2v4"/><path d="M3 10h18"/><rect x="3" y="4" width="18" height="18" rx="3"/><path d="M8 15h.01"/><path d="M12 15h.01"/><path d="M16 15h.01"/></svg>`,
+  exercises: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 7v10"/><path d="M18 7v10"/><path d="M3 9v6"/><path d="M21 9v6"/><path d="M6 12h12"/></svg>`,
+  completed: `<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8.5 12.5 2.2 2.2 4.8-5.4"/></svg>`,
+  weeks: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3v3"/><path d="M17 3v3"/><rect x="4" y="5" width="16" height="16" rx="3"/><path d="M4 10h16"/><path d="M8 14h3"/><path d="M13 14h3"/><path d="M8 18h3"/></svg>`
+};
+
 function renderSummary() {
   const routine = getActiveRoutine();
   const totalSessions = getRoutineTotalSessions(routine);
@@ -1612,12 +1619,22 @@ function renderSummary() {
   progressRing.style.setProperty("--progress", `${percent}%`);
 
   summaryStrip.innerHTML = [
-    [totalSessions, t("sessions")],
-    [Object.keys(routine.exerciseLibrary).length, t("exercises")],
-    [doneCount, t("completed")],
-    [routine.plan.length, t("weeks")]
+    [totalSessions, t("sessions"), "sessions"],
+    [Object.keys(routine.exerciseLibrary).length, t("exercises"), "exercises"],
+    [doneCount, t("completed"), "completed"],
+    [routine.plan.length, t("weeks"), "weeks"]
   ]
-    .map(([value, label]) => `<div class="summary-item"><strong>${value}</strong><span>${label}</span></div>`)
+    .map(
+      ([value, label, icon]) => `
+        <div class="summary-item">
+          <div>
+            <strong>${value}</strong>
+            <span>${label}</span>
+          </div>
+          <span class="summary-icon">${summaryIcons[icon]}</span>
+        </div>
+      `
+    )
     .join("");
 }
 
