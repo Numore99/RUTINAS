@@ -1733,6 +1733,7 @@ function renderAdminPanel() {
               const exercise = draft.exerciseLibrary[exerciseKey] || {};
               const isEditingExercise = state.adminEditingExerciseKey === exerciseKey;
               const images = exercise.images || ["", ""];
+              console.log("Preview images:", images);
               const startPreview = images[0]
                 ? `<img class="admin-image-preview" src="${escapeHtml(images[0])}" alt="${t("startImage")}" />`
                 : `<div class="admin-image-empty">${t("noStartImage")}</div>`;
@@ -2237,11 +2238,33 @@ adminWeeks.addEventListener("change", async (event) => {
   setAdminMessage(t("uploadingImage"));
   try {
     const url = await uploadExerciseImage(file, exerciseKey, imageIndex);
-    const exercise = state.adminDraft.exerciseLibrary[exerciseKey];
-    exercise.images = exercise.images || ["", ""];
-    exercise.images[imageIndex] = url;
-    setAdminMessage(t("imageLoaded"), "success");
-    renderAdminPanel();
+    alert("URL: " + url);
+    console.log("URL:", url);
+
+const exercise = state.adminDraft.exerciseLibrary[exerciseKey];
+
+if (!exercise) {
+  throw new Error("No se encontró el ejercicio para guardar la imagen");
+}
+
+exercise.images = Array.isArray(exercise.images) ? exercise.images : ["", ""];
+exercise.images[imageIndex] = url;
+console.log("URL subida:", url);
+console.log("exercise.images:", exercise.images);
+console.log("images[0]:", exercise.images[0]);
+console.log("images[1]:", exercise.images[1]);
+console.log("IMAGES:", exercise.images);
+
+if (imageIndex === 0) {
+  exercise.imageStart = url;
+} else {
+  exercise.imageEnd = url;
+}
+
+await saveAdminDraftAndAssignment();
+
+setAdminMessage(t("imageLoaded"), "success");
+renderAdminPanel();
   } catch (error) {
     setAdminMessage(error?.message || getAuthErrorMessage(error), "error");
   } finally {
