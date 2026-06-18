@@ -1670,7 +1670,7 @@ function resolveExerciseImage(src, label) {
   return value;
 }
 
-function compressImageFile(file, maxSize = 900, quality = 0.78) {
+function compressImageFile(file, maxSize = 520, quality = 0.68) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onerror = () => reject(reader.error || new Error(t("selectImageFile")));
@@ -2305,6 +2305,12 @@ adminWeeks.addEventListener("change", async (event) => {
       throw new Error("No se encontró el ejercicio para guardar la imagen");
     }
 
+    const localPreviewUrl = await compressImageFile(file);
+    exercise.images = Array.isArray(exercise.images) ? exercise.images : ["", ""];
+    exercise.images[imageIndex] = localPreviewUrl;
+    state.adminEditingExerciseKey = exerciseKey;
+    renderAdminPanel();
+
     let url = "";
     let usedFirestoreFallback = false;
 
@@ -2312,11 +2318,10 @@ adminWeeks.addEventListener("change", async (event) => {
       url = await uploadExerciseImage(file, exerciseKey, imageIndex);
     } catch (storageError) {
       console.warn("Firebase Storage upload failed. Using compressed Firestore image fallback.", storageError);
-      url = await compressImageFile(file);
+      url = localPreviewUrl;
       usedFirestoreFallback = true;
     }
 
-    exercise.images = Array.isArray(exercise.images) ? exercise.images : ["", ""];
     exercise.images[imageIndex] = url;
     state.adminEditingExerciseKey = exerciseKey;
 
