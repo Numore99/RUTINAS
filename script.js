@@ -2236,10 +2236,10 @@ adminWeeks.addEventListener("change", async (event) => {
   if (!exerciseKey || Number.isNaN(imageIndex)) return;
 
   setAdminMessage(t("uploadingImage"));
-  try {
+
+try {
   const url = await uploadExerciseImage(file, exerciseKey, imageIndex);
 
-  alert("URL: " + url);
   console.log("URL:", url);
 
   const exercise = state.adminDraft.exerciseLibrary[exerciseKey];
@@ -2261,20 +2261,11 @@ adminWeeks.addEventListener("change", async (event) => {
 
   setAdminMessage(t("imageLoaded"), "success");
   renderAdminPanel();
-
 } catch (error) {
   setAdminMessage(error?.message || getAuthErrorMessage(error), "error");
+} finally {
+  input.value = "";
 }
-
-await saveAdminDraftAndAssignment();
-
-setAdminMessage(t("imageLoaded"), "success");
-renderAdminPanel();
-  } catch (error) {
-    setAdminMessage(error?.message || getAuthErrorMessage(error), "error");
-  } finally {
-    input.value = "";
-  }
 });
 
 adminWeeks.addEventListener("click", async (event) => {
