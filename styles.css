@@ -1050,6 +1050,10 @@ main {
   padding: 0 1.1rem 1.1rem;
 }
 
+.image-grid:has(figure.is-hidden) {
+  grid-template-columns: 1fr;
+}
+
 .image-grid figure {
   margin: 0;
 }
@@ -1065,9 +1069,7 @@ main {
 }
 
 .image-grid figcaption {
-  margin-top: 0.35rem;
-  color: var(--muted);
-  font-size: 0.72rem;
+  display: none;
 }
 
 .detail-grid {

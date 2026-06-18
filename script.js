@@ -1667,6 +1667,11 @@ function resolveExerciseImage(src, label) {
   return value;
 }
 
+function hasRealExerciseImage(src) {
+  const value = String(src || "").trim();
+  return Boolean(value && !value.includes("placeholder-"));
+}
+
 function compressImageFile(file, maxSize = 520, quality = 0.68) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -2170,6 +2175,15 @@ function openExercise(weekNumber, dayIndex, exerciseKey) {
   document.querySelector("#modalMistakes").innerHTML = exercise.mistakes.map((mistake) => `<li>${mistake}</li>`).join("");
 
   const [startImage, endImage] = Array.isArray(exercise.images) ? exercise.images : ["", ""];
+  const startFigure = document.querySelector("#modalImageStart").closest("figure");
+  const endFigure = document.querySelector("#modalImageEnd").closest("figure");
+  const hasStartImage = hasRealExerciseImage(startImage);
+  const hasEndImage = hasRealExerciseImage(endImage);
+  const showStartPlaceholder = !hasStartImage && !hasEndImage;
+
+  startFigure.classList.toggle("is-hidden", !hasStartImage && !showStartPlaceholder);
+  endFigure.classList.toggle("is-hidden", !hasEndImage);
+
   document.querySelector("#modalImageStart").src = resolveExerciseImage(startImage, t("startPosition"));
   document.querySelector("#modalImageStart").alt = t("startImageAlt", { name: exercise.name });
   document.querySelector("#modalImageEnd").src = resolveExerciseImage(endImage, t("endPosition"));
