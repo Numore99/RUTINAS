@@ -1952,7 +1952,8 @@ function renderApp() {
   routineSelect.classList.add("is-hidden");
   appHeader.classList.remove("is-hidden");
   appMain.classList.remove("is-hidden");
-  appKicker.textContent = trainerDashboardOnly ? (state.isAdmin ? t("admin") : t("trainer")) : routine.kicker;
+  appKicker.textContent = trainerDashboardOnly ? (state.isAdmin ? t("admin") : t("trainer")) : "";
+  appKicker.classList.toggle("is-hidden", !appKicker.textContent.trim());
   appTitle.textContent = "RutFit";
   const displayName = state.currentUserData?.displayName || getDisplayNameFromEmail(state.currentUser?.email || "");
   userGreeting.textContent = displayName ? t("hello", { name: displayName }) : "";
