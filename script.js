@@ -2626,9 +2626,11 @@ function renderPlan() {
       const collapseId = weekCollapseId(week.number);
       const isCollapsed = isWeekCollapsed(week.number);
       const phase = week.phase || { name: "Semana", badge: "Plan", modifier: "" };
-      const days = week.days
+      const weekDays = week.days || [];
+      const days = weekDays.length
+        ? weekDays
         .map((day, dayIndex) => {
-          const exerciseCards = day.exercises
+          const exerciseCards = (day.exercises || [])
             .map((exerciseKey) => {
               const exercise = library[exerciseKey];
               if (!exercise) return "";
@@ -2650,18 +2652,15 @@ function renderPlan() {
             })
             .join("");
 
-          if (!exerciseCards) return "";
-
           return `
             <article class="day-card">
               <h3>${day.title}<span>${day.focus}</span></h3>
-              <div class="exercise-list">${exerciseCards}</div>
+              <div class="exercise-list">${exerciseCards || `<div class="empty-state">${t("emptyDay")}</div>`}</div>
             </article>
           `;
         })
-        .join("");
-
-      if (!days && !isCollapsed) return "";
+        .join("")
+        : `<div class="empty-state">${t("emptyWeek")}</div>`;
 
       return `
         <article class="week-card ${weekDone ? "week-done" : ""} ${isCollapsed ? "collapsed" : ""}">
@@ -2682,7 +2681,7 @@ function renderPlan() {
     })
     .join("");
 
-  if (!visibleCount) {
+  if (!plan.length && !visibleCount) {
     weeksContainer.innerHTML = `<div class="empty-state">${t("noMatchingExercises")}</div>`;
   }
 
