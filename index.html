@@ -75,6 +75,7 @@
     </header>
 
     <main class="screen-transition is-hidden" id="appMain">
+      <section class="trainer-home is-hidden" id="trainerHome" aria-live="polite"></section>
       <section class="student-invites is-hidden" id="studentInvitesPanel" aria-live="polite"></section>
       <section class="summary-strip" id="summaryStrip" aria-label="Resumen del plan" data-i18n-aria-label="planSummary"></section>
 
@@ -95,7 +96,7 @@
           <button class="secondary-button" id="adminClose" type="button" data-i18n="closePanel">Cerrar panel</button>
         </div>
 
-        <section class="admin-editor-card">
+        <section class="admin-editor-card" id="adminUsersCard">
           <div class="admin-card-title">
             <div>
               <small data-i18n="users">Usuarios</small>
@@ -143,6 +144,7 @@
         <div class="admin-actions">
           <button class="primary-button" id="adminSaveRoutine" type="button" data-i18n="saveRoutine">Guardar rutina</button>
           <button class="secondary-button" id="adminNewRoutine" type="button" data-i18n="newRoutine">Nueva rutina</button>
+          <button class="secondary-button" id="adminEditRoutine" type="button">Editar rutina</button>
           <button class="secondary-button" id="adminSeedDario" type="button" data-i18n="migrateDario">Migrar Dario actual</button>
           <button class="secondary-button" id="adminAddWeek" type="button" data-i18n="createWeek">Crear semana</button>
           <button class="danger-button" id="adminDeleteRoutine" type="button" data-i18n="deleteRoutine">Eliminar rutina</button>
@@ -152,6 +154,13 @@
         </section>
       </section>
     </main>
+
+    <nav class="bottom-nav is-hidden" id="bottomNav" aria-label="Navegación principal">
+      <button type="button" data-view="home">Inicio</button>
+      <button type="button" data-view="students">Alumnos</button>
+      <button type="button" data-view="routines">Rutinas</button>
+      <button type="button" data-view="account">Cuenta</button>
+    </nav>
 
     <div class="modal" id="exerciseModal" aria-hidden="true" role="dialog" aria-modal="true">
       <div class="modal-panel">

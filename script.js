@@ -388,6 +388,7 @@ const state = {
   isAdmin: false,
   isTrainer: false,
   adminPanelOpen: false,
+  activeView: "home",
   adminRoutineId: "",
   adminDraft: null,
   adminUsers: [],
@@ -427,6 +428,7 @@ const resetPasswordButton = document.querySelector("#resetPasswordButton");
 const authMessage = document.querySelector("#authMessage");
 const routinePlaceholder = document.querySelector("#routinePlaceholder");
 const studentInvitesPanel = document.querySelector("#studentInvitesPanel");
+const trainerHome = document.querySelector("#trainerHome");
 const weeksContainer = document.querySelector("#weeksContainer");
 const summaryStrip = document.querySelector("#summaryStrip");
 const progressPercent = document.querySelector("#progressPercent");
@@ -437,6 +439,7 @@ const userGreeting = document.querySelector("#userGreeting");
 const adminToggle = document.querySelector("#adminToggle");
 const adminPanel = document.querySelector("#adminPanel");
 const adminClose = document.querySelector("#adminClose");
+const adminUsersCard = document.querySelector("#adminUsersCard");
 const adminRoutineEditor = document.querySelector("#adminRoutineEditor");
 const adminEditorTitle = document.querySelector("#adminEditorTitle");
 const adminRoutineSelect = document.querySelector("#adminRoutineSelect");
@@ -446,10 +449,12 @@ const adminRoutineTitle = document.querySelector("#adminRoutineTitle");
 const adminRoutineKicker = document.querySelector("#adminRoutineKicker");
 const adminSaveRoutine = document.querySelector("#adminSaveRoutine");
 const adminNewRoutine = document.querySelector("#adminNewRoutine");
+const adminEditRoutine = document.querySelector("#adminEditRoutine");
 const adminSeedDario = document.querySelector("#adminSeedDario");
 const adminAddWeek = document.querySelector("#adminAddWeek");
 const adminDeleteRoutine = document.querySelector("#adminDeleteRoutine");
 const adminMessage = document.querySelector("#adminMessage");
+const bottomNav = document.querySelector("#bottomNav");
 const adminWeeks = document.querySelector("#adminWeeks");
 const adminUsers = document.querySelector("#adminUsers");
 
@@ -1360,6 +1365,7 @@ function startAdminUsersListener() {
       if (state.adminPanelOpen) {
         renderAdminPanel();
       }
+      if (canManageStudents()) renderApp();
     },
     (error) => {
       console.error("Admin users listener error:", error);
@@ -1398,6 +1404,7 @@ function startTrainerInvitesListener() {
         state.adminDraft = null;
       }
       if (state.adminPanelOpen) renderAdminPanel();
+      if (canManageStudents()) renderApp();
     },
     (error) => {
       console.error("Trainer invites listener error:", error);
@@ -1413,6 +1420,7 @@ function startStudentInvitesListener() {
     (snapshot) => {
       state.studentInvites = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })).filter((invite) => invite.status === "pending");
       renderStudentInvites();
+      if (canManageStudents()) renderApp();
     },
     (error) => {
       console.error("Student invites listener error:", error);
@@ -1503,6 +1511,52 @@ async function respondToTrainerInvitation(inviteId, accepted) {
 
 function getAdminUser(uid) {
   return state.adminUsers.find((user) => user.uid === uid) || null;
+}
+
+function getRoutineCountForManager() {
+  return getAdminRoutineIds().length;
+}
+
+function renderTrainerHome() {
+  if (!trainerHome) return;
+  const activeStudents = state.adminUsers.length;
+  const pendingInvites = state.trainerInvites.filter((invite) => invite.status === "pending").length;
+  const routineCount = getRoutineCountForManager();
+  trainerHome.innerHTML = `
+    <div class="home-grid">
+      <article class="home-stat">
+        <strong>${activeStudents}</strong>
+        <span>Alumnos activos</span>
+      </article>
+      <article class="home-stat">
+        <strong>${pendingInvites}</strong>
+        <span>Solicitudes pendientes</span>
+      </article>
+      <article class="home-stat">
+        <strong>${routineCount}</strong>
+        <span>Rutinas creadas</span>
+      </article>
+    </div>
+    <div class="home-actions">
+      <button class="primary-button" type="button" data-home-action="students">Ver alumnos</button>
+      <button class="secondary-button" type="button" data-home-action="new-routine">Crear rutina</button>
+    </div>
+  `;
+}
+
+function setActiveView(view) {
+  state.activeView = view;
+  state.adminPanelOpen = canManageStudents() && ["students", "routines"].includes(view);
+  if (view !== "students") {
+    state.selectedAdminUserId = "";
+  }
+  if (view !== "routines" && state.adminEditorMode !== "create") {
+    state.adminEditorMode = "";
+    state.pendingAssignUserId = "";
+    state.adminEditingExerciseKey = "";
+    state.adminDraft = null;
+  }
+  renderApp();
 }
 
 function createRoutineIdForUser(user) {
@@ -1821,34 +1875,56 @@ function renderApp() {
   if (!routine) {
     return;
   }
-  const trainerDashboardOnly = state.isTrainer && !state.isAdmin && state.selectedRoutine === "pending";
+  const managerMode = canManageStudents();
+  const trainerDashboardOnly = managerMode && ["home", "students", "routines", "account"].includes(state.activeView);
 
   routineSelect.classList.add("is-hidden");
   appHeader.classList.remove("is-hidden");
   appMain.classList.remove("is-hidden");
-  appKicker.textContent = trainerDashboardOnly ? t("trainer") : routine.kicker;
+  appKicker.textContent = trainerDashboardOnly ? (state.isAdmin ? t("admin") : t("trainer")) : routine.kicker;
   appTitle.textContent = "RutFit";
   const displayName = state.currentUserData?.displayName || getDisplayNameFromEmail(state.currentUser?.email || "");
   userGreeting.textContent = displayName ? t("hello", { name: displayName }) : "";
   adminToggle.textContent = state.isAdmin ? t("admin") : t("students");
-  adminToggle.classList.toggle("is-hidden", !canManageStudents());
-  adminPanel.classList.toggle("is-hidden", !canManageStudents() || (!state.adminPanelOpen && !trainerDashboardOnly));
-  if (canManageStudents() && (state.adminPanelOpen || trainerDashboardOnly)) {
+  adminToggle.classList.add("is-hidden");
+  bottomNav?.classList.toggle("is-hidden", !managerMode);
+  renderBottomNav();
+
+  const showAdminPanel = managerMode && ["students", "routines"].includes(state.activeView);
+  state.adminPanelOpen = showAdminPanel;
+  adminPanel.classList.toggle("is-hidden", !showAdminPanel);
+  if (showAdminPanel) {
     renderAdminPanel();
   }
   renderStudentInvites();
+
+  trainerHome?.classList.toggle("is-hidden", !(managerMode && state.activeView === "home"));
+  if (managerMode && state.activeView === "home") renderTrainerHome();
+  studentInvitesPanel?.classList.toggle("is-hidden", !(state.activeView === "students" && state.studentInvites.length));
+
+  const showAccount = managerMode && state.activeView === "account";
+  changeRoutine.classList.toggle("is-hidden", managerMode && !showAccount);
+  progressRing.classList.toggle("is-hidden", managerMode || !(routine.plan.length > 0));
 
   const hasPlan = routine.plan.length > 0 && !trainerDashboardOnly;
   summaryStrip.classList.toggle("is-hidden", !hasPlan);
   weeksContainer.classList.toggle("is-hidden", !hasPlan);
   routinePlaceholder.classList.toggle("is-hidden", hasPlan || trainerDashboardOnly);
-  progressRing.classList.toggle("is-hidden", !hasPlan);
 
   if (hasPlan) {
     renderPlan();
   } else {
+    weeksContainer.innerHTML = "";
+    summaryStrip.innerHTML = "";
     stopTimer();
   }
+}
+
+function renderBottomNav() {
+  if (!bottomNav) return;
+  bottomNav.querySelectorAll("[data-view]").forEach((button) => {
+    button.classList.toggle("active", button.dataset.view === state.activeView);
+  });
 }
 
 function getPhase(weekNumber) {
@@ -2122,9 +2198,15 @@ function renderAdminPanel() {
   const panelTitle = adminPanel.querySelector("[data-i18n='routinePanel']");
   const panelHelp = adminPanel.querySelector("[data-i18n='routinePanelHelp']");
   const usersTitle = adminPanel.querySelector("[data-i18n='assignRoutines']");
+  const showUsers = state.activeView === "students";
+  const showRoutines = state.activeView === "routines";
+  const isEditingRoutine = Boolean(state.adminDraft && state.adminEditorMode);
+  adminPanel.classList.toggle("students-view", showUsers);
+  adminPanel.classList.toggle("routines-view", showRoutines);
+  adminPanel.classList.toggle("editing-routine", isEditingRoutine);
   if (state.isTrainer && !state.isAdmin) {
-    if (panelTitle) panelTitle.textContent = t("studentPanel");
-    if (panelHelp) panelHelp.textContent = t("studentPanelHelp");
+    if (panelTitle) panelTitle.textContent = showRoutines ? t("routinePanel") : t("studentPanel");
+    if (panelHelp) panelHelp.textContent = showRoutines ? t("routinePanelHelp") : t("studentPanelHelp");
     if (usersTitle) usersTitle.textContent = t("acceptedStudents");
   } else {
     if (panelTitle) panelTitle.textContent = t("routinePanel");
@@ -2132,9 +2214,26 @@ function renderAdminPanel() {
     if (usersTitle) usersTitle.textContent = t("assignRoutines");
   }
   adminSeedDario?.classList.toggle("is-hidden", state.isTrainer && !state.isAdmin);
-  renderAdminUsers();
+  adminEditRoutine?.classList.toggle("is-hidden", !showRoutines || isEditingRoutine);
+  adminUsersCard?.classList.toggle("is-hidden", !showUsers);
+  adminRoutineEditor?.classList.toggle("is-hidden", !showRoutines);
+  if (showUsers) renderAdminUsers();
 
-  if (!state.adminDraft || !state.adminEditorMode) {
+  if (showRoutines && !isEditingRoutine) {
+    const routineIds = getAdminRoutineIds();
+    adminRoutineEditor.classList.remove("is-hidden");
+    adminRoutineSelect.innerHTML = routineIds.length
+      ? routineIds.map((id) => `<option value="${escapeHtml(id)}">${escapeHtml(routines[id].name || id)}</option>`).join("")
+      : `<option value="">${t("newRoutineOption")}</option>`;
+    adminRoutineId.value = "";
+    adminRoutineName.value = "";
+    adminRoutineTitle.value = "";
+    adminRoutineKicker.value = "";
+    adminWeeks.innerHTML = "";
+    return;
+  }
+
+  if (!showRoutines || !state.adminDraft || !state.adminEditorMode) {
     adminRoutineEditor.classList.add("is-hidden");
     adminWeeks.innerHTML = "";
     adminRoutineSelect.innerHTML = "";
@@ -2652,6 +2751,10 @@ adminClose.addEventListener("click", () => {
 });
 
 adminRoutineSelect.addEventListener("change", () => {
+  if (state.activeView === "routines" && !state.adminEditorMode) {
+    setAdminMessage("");
+    return;
+  }
   setAdminDraftFromRoutine(adminRoutineSelect.value);
   setAdminMessage("");
   renderAdminPanel();
@@ -2836,6 +2939,25 @@ adminUsers.addEventListener("click", async (event) => {
   }
 });
 
+bottomNav?.addEventListener("click", (event) => {
+  const button = event.target.closest("[data-view]");
+  if (!button) return;
+  setActiveView(button.dataset.view);
+});
+
+trainerHome?.addEventListener("click", (event) => {
+  const button = event.target.closest("[data-home-action]");
+  if (!button) return;
+  if (button.dataset.homeAction === "students") {
+    setActiveView("students");
+    return;
+  }
+  if (button.dataset.homeAction === "new-routine") {
+    setActiveView("routines");
+    adminNewRoutine.click();
+  }
+});
+
 studentInvitesPanel?.addEventListener("click", async (event) => {
   const button = event.target.closest("[data-student-invite-action]");
   if (!button) return;
@@ -2885,6 +3007,19 @@ adminNewRoutine.addEventListener("click", () => {
   renderAdminPanel();
 });
 
+adminEditRoutine?.addEventListener("click", () => {
+  const routineId = adminRoutineSelect.value || getAdminRoutineIds()[0] || "";
+  if (!routineId || !routines[routineId]) {
+    setAdminMessage(t("newRoutinePrepared"), "error");
+    return;
+  }
+  state.adminEditorMode = "edit";
+  state.pendingAssignUserId = state.selectedAdminUserId || "";
+  setAdminDraftFromRoutine(routineId);
+  setAdminMessage("");
+  renderAdminPanel();
+});
+
 adminSeedDario.addEventListener("click", async () => {
   if (!state.isAdmin) return;
   state.adminDraft = cloneData(serializeRoutine(routines.dario));
@@ -2910,7 +3045,14 @@ adminSaveRoutine.addEventListener("click", async () => {
   try {
     const assignedUserId = await saveAdminDraftAndAssignment();
     setAdminMessage(assignedUserId ? t("routineSavedAssigned") : t("routineSaved"), "success");
+    state.adminEditorMode = "";
+    state.pendingAssignUserId = "";
+    state.adminEditingExerciseKey = "";
+    state.adminDraft = null;
+    state.activeView = "home";
+    state.adminPanelOpen = false;
     renderAdminPanel();
+    renderApp();
   } catch (error) {
     setAdminMessage(getAuthErrorMessage(error), "error");
   }
