@@ -31,6 +31,11 @@ service cloud.firestore {
         && request.auth.uid in resource.data.trainerIds;
     }
 
+    function keepsExistingRole() {
+      return !("role" in resource.data)
+        || request.resource.data.role == resource.data.role;
+    }
+
     match /users/{userId} {
       allow read: if signedIn() && (request.auth.uid == userId || isAdmin() || trainerCanManageUser());
       allow create: if signedIn()
@@ -45,11 +50,11 @@ service cloud.firestore {
           isAdmin()
           || (
             trainerCanManageUser()
-            && request.resource.data.role == resource.data.role
+            && keepsExistingRole()
           )
           || (
             request.auth.uid == userId
-            && request.resource.data.role == resource.data.role
+            && keepsExistingRole()
           )
         );
       allow delete: if isAdmin();

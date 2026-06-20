@@ -1456,7 +1456,7 @@ async function createTrainerInvitation(studentEmail) {
 async function respondToTrainerInvitation(inviteId, accepted) {
   const inviteRef = db.collection("trainerInvitations").doc(inviteId);
   const inviteSnapshot = await inviteRef.get();
-  if (!inviteSnapshot.exists) return;
+  if (!inviteSnapshot.exists) throw new Error(t("actionFailed", { code: "" }));
   const invite = inviteSnapshot.data();
   if (normalizeEmail(invite.studentEmail) !== normalizeEmail(state.currentUser?.email || "")) {
     throw new Error(t("permissionDenied"));
@@ -1482,6 +1482,10 @@ async function respondToTrainerInvitation(inviteId, accepted) {
       { merge: true }
     );
     await batch.commit();
+    state.currentUserData = {
+      ...(state.currentUserData || {}),
+      trainerIds: Array.from(new Set([...(state.currentUserData?.trainerIds || []), invite.trainerId]))
+    };
   } else {
     await inviteRef.set(
       {
@@ -1492,6 +1496,9 @@ async function respondToTrainerInvitation(inviteId, accepted) {
       { merge: true }
     );
   }
+  state.studentInvites = state.studentInvites.filter((item) => item.id !== inviteId);
+  renderStudentInvites();
+  return { ...invite, status: accepted ? "accepted" : "declined" };
 }
 
 function getAdminUser(uid) {
@@ -2834,15 +2841,21 @@ studentInvitesPanel?.addEventListener("click", async (event) => {
   const card = button.closest("[data-invite-id]");
   const inviteId = card?.dataset.inviteId;
   if (!inviteId) return;
-  button.disabled = true;
+  const actionButtons = Array.from(card.querySelectorAll("[data-student-invite-action]"));
+  actionButtons.forEach((item) => {
+    item.disabled = true;
+  });
   try {
     const accepted = button.dataset.studentInviteAction === "accept";
     await respondToTrainerInvitation(inviteId, accepted);
     setAuthMessage(accepted ? t("inviteAccepted") : t("inviteDeclined"), "success");
   } catch (error) {
     setAuthMessage(`${getAuthErrorMessage(error)} ${error?.message || ""}`.trim(), "error");
+    actionButtons.forEach((item) => {
+      item.disabled = false;
+    });
   } finally {
-    button.disabled = false;
+    if (!card.isConnected) return;
   }
 });
 
