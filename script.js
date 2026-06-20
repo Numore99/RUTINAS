@@ -1593,6 +1593,18 @@ function setActiveView(view) {
   renderApp();
 }
 
+function openAcceptedStudentsForAssignment() {
+  state.activeView = "students";
+  state.adminPanelOpen = canManageStudents();
+  state.selectedAdminUserId = state.adminUsers[0]?.uid || "";
+  state.adminEditorMode = "";
+  state.pendingAssignUserId = "";
+  state.adminEditingExerciseKey = "";
+  state.adminDraft = null;
+  setAdminMessage("");
+  renderApp();
+}
+
 function createRoutineIdForUser(user) {
   const baseName = user?.displayName || getDisplayNameFromEmail(user?.email || "") || "usuario";
   return slugify(`rutina-${baseName}-${Date.now()}`);
@@ -2978,8 +2990,12 @@ bottomNav?.addEventListener("click", (event) => {
 trainerHome?.addEventListener("click", (event) => {
   const button = event.target.closest("[data-home-action]");
   if (!button) return;
-  if (button.dataset.homeAction === "new-student" || button.dataset.homeAction === "assign-routine") {
+  if (button.dataset.homeAction === "new-student") {
     setActiveView("students");
+    return;
+  }
+  if (button.dataset.homeAction === "assign-routine") {
+    openAcceptedStudentsForAssignment();
     return;
   }
   if (button.dataset.homeAction === "new-routine") {
