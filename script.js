@@ -1827,7 +1827,7 @@ function renderApp() {
   appHeader.classList.remove("is-hidden");
   appMain.classList.remove("is-hidden");
   appKicker.textContent = trainerDashboardOnly ? t("trainer") : routine.kicker;
-  appTitle.textContent = trainerDashboardOnly ? t("students") : routine.title;
+  appTitle.textContent = "RutFit";
   const displayName = state.currentUserData?.displayName || getDisplayNameFromEmail(state.currentUser?.email || "");
   userGreeting.textContent = displayName ? t("hello", { name: displayName }) : "";
   adminToggle.textContent = state.isAdmin ? t("admin") : t("students");
