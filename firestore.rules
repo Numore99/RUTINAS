@@ -19,18 +19,34 @@ service cloud.firestore {
         );
     }
 
+    function isTrainer() {
+      return signedIn()
+        && exists(/databases/$(database)/documents/users/$(request.auth.uid))
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == "trainer";
+    }
+
+    function trainerCanManageUser() {
+      return isTrainer()
+        && ("trainerIds" in resource.data)
+        && request.auth.uid in resource.data.trainerIds;
+    }
+
     match /users/{userId} {
-      allow read: if signedIn() && (request.auth.uid == userId || isAdmin());
+      allow read: if signedIn() && (request.auth.uid == userId || isAdmin() || trainerCanManageUser());
       allow create: if signedIn()
         && request.auth.uid == userId
         && (
           !("role" in request.resource.data)
-          || request.resource.data.role == "user"
+          || request.resource.data.role in ["user", "student", "trainer"]
           || (adminEmail() && request.resource.data.role == "admin")
         );
       allow update: if signedIn()
         && (
           isAdmin()
+          || (
+            trainerCanManageUser()
+            && request.resource.data.role == resource.data.role
+          )
           || (
             request.auth.uid == userId
             && request.resource.data.role == resource.data.role
@@ -41,7 +57,44 @@ service cloud.firestore {
 
     match /routines/{routineId} {
       allow read: if signedIn();
-      allow create, update, delete: if isAdmin();
+      allow create: if isAdmin()
+        || (
+          isTrainer()
+          && request.resource.data.ownerTrainerId == request.auth.uid
+        );
+      allow update: if isAdmin()
+        || (
+          isTrainer()
+          && resource.data.ownerTrainerId == request.auth.uid
+          && request.resource.data.ownerTrainerId == request.auth.uid
+        );
+      allow delete: if isAdmin()
+        || (
+          isTrainer()
+          && resource.data.ownerTrainerId == request.auth.uid
+        );
+    }
+
+    match /trainerInvitations/{inviteId} {
+      allow read: if signedIn()
+        && (
+          isAdmin()
+          || isTrainer()
+          || resource.data.trainerId == request.auth.uid
+          || resource.data.studentEmail == request.auth.token.email
+        );
+      allow create: if isTrainer()
+        && request.resource.data.trainerId == request.auth.uid
+        && request.resource.data.trainerEmail == request.auth.token.email
+        && request.resource.data.status == "pending";
+      allow update: if signedIn()
+        && (
+          isAdmin()
+          || resource.data.trainerId == request.auth.uid
+          || resource.data.studentEmail == request.auth.token.email
+        );
+      allow delete: if isAdmin()
+        || (isTrainer() && resource.data.trainerId == request.auth.uid);
     }
   }
 }

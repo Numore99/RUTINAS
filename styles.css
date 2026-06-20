@@ -208,6 +208,11 @@ button:disabled {
   accent-color: var(--accent);
 }
 
+.account-role-field select,
+.trainer-tools input {
+  width: 100%;
+}
+
 .remember-session span {
   line-height: 1.25;
 }
@@ -760,6 +765,59 @@ main {
   color: var(--muted);
   text-align: center;
   background: rgba(30, 41, 59, 0.72);
+}
+
+.student-invites,
+.trainer-tools,
+.invite-card {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.student-invites {
+  margin-bottom: 1rem;
+}
+
+.invite-card,
+.trainer-tools {
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 1rem;
+  background: linear-gradient(145deg, rgba(30, 41, 59, 0.82), rgba(15, 23, 42, 0.9));
+  box-shadow: var(--shadow);
+}
+
+.invite-card small,
+.trainer-pending small {
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.invite-card strong {
+  display: block;
+  margin-top: 0.15rem;
+  font-size: 1.1rem;
+}
+
+.invite-card p {
+  margin: 0.35rem 0 0;
+  color: var(--soft);
+}
+
+.trainer-pending {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.trainer-pending-item {
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  border-radius: 12px;
+  padding: 0.72rem;
+  color: var(--soft);
+  background: rgba(15, 23, 42, 0.66);
+  overflow-wrap: anywhere;
 }
 
 .admin-panel {

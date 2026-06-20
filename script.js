@@ -386,10 +386,13 @@ const state = {
   currentUser: null,
   currentUserData: null,
   isAdmin: false,
+  isTrainer: false,
   adminPanelOpen: false,
   adminRoutineId: "",
   adminDraft: null,
   adminUsers: [],
+  trainerInvites: [],
+  studentInvites: [],
   selectedAdminUserId: "",
   adminEditorMode: "",
   pendingAssignUserId: "",
@@ -407,6 +410,8 @@ let db = null;
 let storage = null;
 let unsubscribeCurrentUser = null;
 let unsubscribeAdminUsers = null;
+let unsubscribeTrainerInvites = null;
+let unsubscribeStudentInvites = null;
 
 const routineSelect = document.querySelector("#routineSelect");
 const appHeader = document.querySelector("#appHeader");
@@ -416,11 +421,13 @@ const authForm = document.querySelector("#authForm");
 const authEmail = document.querySelector("#authEmail");
 const authPassword = document.querySelector("#authPassword");
 const rememberSession = document.querySelector("#rememberSession");
+const accountRole = document.querySelector("#accountRole");
 const languageSelect = document.querySelector("#languageSelect");
 const registerButton = document.querySelector("#registerButton");
 const resetPasswordButton = document.querySelector("#resetPasswordButton");
 const authMessage = document.querySelector("#authMessage");
 const routinePlaceholder = document.querySelector("#routinePlaceholder");
+const studentInvitesPanel = document.querySelector("#studentInvitesPanel");
 const weeksContainer = document.querySelector("#weeksContainer");
 const summaryStrip = document.querySelector("#summaryStrip");
 const progressPercent = document.querySelector("#progressPercent");
@@ -455,6 +462,7 @@ const resetTimer = document.querySelector("#resetTimer");
 const timerDisplay = document.querySelector("#timerDisplay");
 const AUTH_PERSISTENCE_KEY = "rutfit-auth-persistence";
 const LANGUAGE_KEY = "rutfit-language";
+const PENDING_ACCOUNT_ROLE_KEY = "rutfit-pending-account-role";
 const DEFAULT_LANGUAGE = "es";
 
 const translations = {
@@ -468,6 +476,9 @@ const translations = {
     loginButton: "Iniciar sesión",
     createAccount: "Crear cuenta",
     resetPassword: "Recuperar contraseña por mail",
+    accountType: "Tipo de cuenta",
+    student: "Alumno",
+    trainer: "Entrenador",
     admin: "Admin",
     logout: "Cerrar sesión",
     totalProgress: "Progreso total",
@@ -491,6 +502,24 @@ const translations = {
     closePanel: "Cerrar panel",
     users: "Usuarios",
     loadingUsers: "Cargando usuarios...",
+    students: "Alumnos",
+    studentPanel: "Panel de alumnos",
+    studentPanelHelp: "Invita alumnos, espera su aceptación y asígnales rutinas.",
+    inviteStudent: "Invitar alumno",
+    studentEmail: "Email del alumno",
+    sendInvite: "Enviar solicitud",
+    pendingInvites: "Solicitudes pendientes",
+    acceptedStudents: "Alumnos aceptados",
+    noStudents: "Todavía no tienes alumnos aceptados.",
+    noPendingInvites: "No hay solicitudes pendientes.",
+    inviteSent: "Solicitud enviada. El alumno la verá al crear cuenta o iniciar sesión.",
+    inviteExists: "Ya existe una solicitud pendiente o aceptada para ese email.",
+    invitationForYou: "Solicitud de entrenador",
+    invitationHelp: "{name} quiere asignarte rutinas en RutFit.",
+    acceptInvite: "Aceptar",
+    declineInvite: "Rechazar",
+    inviteAccepted: "Solicitud aceptada.",
+    inviteDeclined: "Solicitud rechazada.",
     assignRoutines: "Asignar rutinas",
     routine: "Rutina",
     routineEditor: "Editor de rutina",
@@ -622,6 +651,9 @@ const translations = {
     loginButton: "Sign in",
     createAccount: "Create account",
     resetPassword: "Reset password by email",
+    accountType: "Account type",
+    student: "Student",
+    trainer: "Trainer",
     admin: "Admin",
     logout: "Sign out",
     totalProgress: "Total progress",
@@ -645,6 +677,24 @@ const translations = {
     closePanel: "Close panel",
     users: "Users",
     loadingUsers: "Loading users...",
+    students: "Students",
+    studentPanel: "Student panel",
+    studentPanelHelp: "Invite students, wait for acceptance, and assign routines.",
+    inviteStudent: "Invite student",
+    studentEmail: "Student email",
+    sendInvite: "Send request",
+    pendingInvites: "Pending requests",
+    acceptedStudents: "Accepted students",
+    noStudents: "You do not have accepted students yet.",
+    noPendingInvites: "There are no pending requests.",
+    inviteSent: "Request sent. The student will see it after creating an account or signing in.",
+    inviteExists: "There is already a pending or accepted request for that email.",
+    invitationForYou: "Trainer request",
+    invitationHelp: "{name} wants to assign routines to you in RutFit.",
+    acceptInvite: "Accept",
+    declineInvite: "Decline",
+    inviteAccepted: "Request accepted.",
+    inviteDeclined: "Request declined.",
     assignRoutines: "Assign routines",
     routine: "Routine",
     routineEditor: "Routine editor",
@@ -776,6 +826,9 @@ const translations = {
     loginButton: "Entrar",
     createAccount: "Criar conta",
     resetPassword: "Recuperar senha por email",
+    accountType: "Tipo de conta",
+    student: "Aluno",
+    trainer: "Treinador",
     admin: "Admin",
     logout: "Sair",
     totalProgress: "Progresso total",
@@ -799,6 +852,24 @@ const translations = {
     closePanel: "Fechar painel",
     users: "Usuários",
     loadingUsers: "Carregando usuários...",
+    students: "Alunos",
+    studentPanel: "Painel de alunos",
+    studentPanelHelp: "Convide alunos, espere a aceitação e atribua rotinas.",
+    inviteStudent: "Convidar aluno",
+    studentEmail: "Email do aluno",
+    sendInvite: "Enviar solicitação",
+    pendingInvites: "Solicitações pendentes",
+    acceptedStudents: "Alunos aceitos",
+    noStudents: "Você ainda não tem alunos aceitos.",
+    noPendingInvites: "Não há solicitações pendentes.",
+    inviteSent: "Solicitação enviada. O aluno verá ao criar conta ou entrar.",
+    inviteExists: "Já existe uma solicitação pendente ou aceita para esse email.",
+    invitationForYou: "Solicitação de treinador",
+    invitationHelp: "{name} quer atribuir rotinas para você no RutFit.",
+    acceptInvite: "Aceitar",
+    declineInvite: "Recusar",
+    inviteAccepted: "Solicitação aceita.",
+    inviteDeclined: "Solicitação recusada.",
     assignRoutines: "Atribuir rotinas",
     routine: "Rotina",
     routineEditor: "Editor de rotina",
@@ -951,6 +1022,9 @@ function setAuthBusy(isBusy) {
   if (rememberSession) {
     rememberSession.disabled = isBusy;
   }
+  if (accountRole) {
+    accountRole.disabled = isBusy;
+  }
 }
 
 function isFirebaseConfigured() {
@@ -1045,6 +1119,8 @@ function serializeRoutine(routine) {
     name: routine.name,
     title: routine.title,
     kicker: routine.kicker,
+    ownerTrainerId: routine.ownerTrainerId || "",
+    ownerTrainerEmail: routine.ownerTrainerEmail || "",
     exerciseLibrary: routine.exerciseLibrary || {},
     plan: routine.plan || []
   };
@@ -1057,6 +1133,25 @@ function getDisplayNameFromEmail(email) {
 function getDefaultRoutineForUser(user) {
   const emailDefault = (window.EMAIL_ROUTINE_DEFAULTS || {})[normalizeEmail(user.email || "")];
   return emailDefault || window.DEFAULT_ROUTINE_ID || "";
+}
+
+function getPendingAccountRole() {
+  const role = localStorage.getItem(PENDING_ACCOUNT_ROLE_KEY) || accountRole?.value || "student";
+  return role === "trainer" ? "trainer" : "student";
+}
+
+function canManageStudents() {
+  return state.isAdmin || state.isTrainer;
+}
+
+function canManageUser(uid) {
+  if (state.isAdmin) return true;
+  if (!state.isTrainer || !uid) return false;
+  return state.adminUsers.some((user) => user.uid === uid);
+}
+
+function getTrainerDisplayName() {
+  return state.currentUserData?.displayName || getDisplayNameFromEmail(state.currentUser?.email || "") || t("trainer");
 }
 
 function getAuthErrorMessage(error) {
@@ -1082,9 +1177,12 @@ function showAuthScreen(message = "") {
   state.currentUser = null;
   state.currentUserData = null;
   state.isAdmin = false;
+  state.isTrainer = false;
   state.adminPanelOpen = false;
   state.adminDraft = null;
   state.adminUsers = [];
+  state.trainerInvites = [];
+  state.studentInvites = [];
   state.selectedAdminUserId = "";
   state.adminEditorMode = "";
   state.pendingAssignUserId = "";
@@ -1095,6 +1193,7 @@ function showAuthScreen(message = "") {
   appMain.classList.add("is-hidden");
   adminToggle.classList.add("is-hidden");
   adminPanel.classList.add("is-hidden");
+  studentInvitesPanel?.classList.add("is-hidden");
   if (message) setAuthMessage(message);
 }
 
@@ -1107,6 +1206,14 @@ function stopUserSubscriptions() {
     unsubscribeAdminUsers();
     unsubscribeAdminUsers = null;
   }
+  if (unsubscribeTrainerInvites) {
+    unsubscribeTrainerInvites();
+    unsubscribeTrainerInvites = null;
+  }
+  if (unsubscribeStudentInvites) {
+    unsubscribeStudentInvites();
+    unsubscribeStudentInvites = null;
+  }
 }
 
 async function ensureUserDocument(user) {
@@ -1116,15 +1223,18 @@ async function ensureUserDocument(user) {
   if (!snapshot.exists) {
     const routineId = getDefaultRoutineForUser(user);
     const displayName = getDisplayNameFromEmail(user.email);
+    const selectedRole = isAdmin ? "admin" : getPendingAccountRole();
     await ref.set({
       email: normalizeEmail(user.email),
       displayName,
       routineId,
-      role: isAdmin ? "admin" : "user",
+      role: selectedRole,
+      trainerIds: [],
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
       updatedAt: firebase.firestore.FieldValue.serverTimestamp()
     });
-    return { email: normalizeEmail(user.email), displayName, routineId, role: isAdmin ? "admin" : "user" };
+    localStorage.removeItem(PENDING_ACCOUNT_ROLE_KEY);
+    return { email: normalizeEmail(user.email), displayName, routineId, role: selectedRole, trainerIds: [] };
   }
 
   const data = snapshot.data();
@@ -1162,6 +1272,8 @@ async function loadRoutineFromFirestore(routineId) {
     name: data.name || routineId,
     title: data.title || data.name || routineId,
     kicker: data.kicker || "",
+    ownerTrainerId: data.ownerTrainerId || "",
+    ownerTrainerEmail: data.ownerTrainerEmail || "",
     exerciseLibrary: data.exerciseLibrary || {},
     plan: data.plan || []
   };
@@ -1178,6 +1290,8 @@ async function loadFirestoreRoutinesForAdmin() {
         name: data.name || doc.id,
         title: data.title || data.name || doc.id,
         kicker: data.kicker || "",
+        ownerTrainerId: data.ownerTrainerId || "",
+        ownerTrainerEmail: data.ownerTrainerEmail || "",
         exerciseLibrary: data.exerciseLibrary || {},
         plan: data.plan || []
       };
@@ -1185,6 +1299,27 @@ async function loadFirestoreRoutinesForAdmin() {
   } catch (error) {
     console.warn("No se pudieron cargar rutinas Firestore para admin.", error);
     setAuthMessage(t("adminRulesNotice"), "error");
+  }
+}
+
+async function loadFirestoreRoutinesForTrainer() {
+  if (!state.isTrainer || !state.currentUser?.uid) return;
+  try {
+    const snapshot = await db.collection("routines").where("ownerTrainerId", "==", state.currentUser.uid).get();
+    snapshot.forEach((doc) => {
+      const data = doc.data();
+      routines[doc.id] = {
+        id: data.id || doc.id,
+        name: data.name || doc.id,
+        title: data.title || data.name || doc.id,
+        kicker: data.kicker || "",
+        ownerTrainerId: data.ownerTrainerId || "",
+        exerciseLibrary: data.exerciseLibrary || {},
+        plan: data.plan || []
+      };
+    });
+  } catch (error) {
+    console.warn("No se pudieron cargar rutinas Firestore para entrenador.", error);
   }
 }
 
@@ -1218,8 +1353,55 @@ function startAdminUsersListener() {
   );
 }
 
+function startTrainerInvitesListener() {
+  if (!state.isTrainer || state.isAdmin || unsubscribeTrainerInvites || !state.currentUser?.uid) return;
+  unsubscribeTrainerInvites = db.collection("trainerInvitations").where("trainerId", "==", state.currentUser.uid).onSnapshot(
+    async (snapshot) => {
+      state.trainerInvites = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+      const accepted = state.trainerInvites.filter((invite) => invite.status === "accepted" && invite.studentId);
+      const students = await Promise.all(
+        accepted.map(async (invite) => {
+          const studentDoc = await db.collection("users").doc(invite.studentId).get();
+          return studentDoc.exists ? { uid: studentDoc.id, inviteId: invite.id, ...studentDoc.data() } : null;
+        })
+      );
+      state.adminUsers = students
+        .filter(Boolean)
+        .sort((a, b) => String(a.email || a.displayName || "").localeCompare(String(b.email || b.displayName || "")));
+      if (state.selectedAdminUserId && !state.adminUsers.some((user) => user.uid === state.selectedAdminUserId)) {
+        state.selectedAdminUserId = "";
+        state.adminEditorMode = "";
+        state.pendingAssignUserId = "";
+        state.adminEditingExerciseKey = "";
+        state.adminDraft = null;
+      }
+      if (state.adminPanelOpen) renderAdminPanel();
+    },
+    (error) => {
+      console.error("Trainer invites listener error:", error);
+      if (adminUsers) adminUsers.innerHTML = `<div class="empty-state">${t("usersLoadError")}</div>`;
+    }
+  );
+}
+
+function startStudentInvitesListener() {
+  if (!state.currentUser?.email || unsubscribeStudentInvites) return;
+  const email = normalizeEmail(state.currentUser.email);
+  unsubscribeStudentInvites = db.collection("trainerInvitations").where("studentEmail", "==", email).onSnapshot(
+    (snapshot) => {
+      state.studentInvites = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })).filter((invite) => invite.status === "pending");
+      renderStudentInvites();
+    },
+    (error) => {
+      console.error("Student invites listener error:", error);
+      state.studentInvites = [];
+      renderStudentInvites();
+    }
+  );
+}
+
 async function updateUserRoutine(uid, routineId) {
-  if (!state.isAdmin || !uid) return;
+  if (!canManageUser(uid)) return;
   await db.collection("users").doc(uid).set(
     {
       routineId,
@@ -1228,6 +1410,66 @@ async function updateUserRoutine(uid, routineId) {
     },
     { merge: true }
   );
+}
+
+async function createTrainerInvitation(studentEmail) {
+  if (!state.isTrainer || state.isAdmin || !state.currentUser?.uid) return;
+  const email = normalizeEmail(studentEmail);
+  if (!email) throw new Error(t("invalidEmail"));
+  const inviteId = `${state.currentUser.uid}_${slugify(email)}`;
+  const inviteRef = db.collection("trainerInvitations").doc(inviteId);
+  const existing = await inviteRef.get();
+  if (existing.exists && ["pending", "accepted"].includes(existing.data().status)) throw new Error(t("inviteExists"));
+  await inviteRef.set({
+    trainerId: state.currentUser.uid,
+    trainerEmail: normalizeEmail(state.currentUser.email || ""),
+    trainerName: getTrainerDisplayName(),
+    studentEmail: email,
+    status: "pending",
+    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+  });
+}
+
+async function respondToTrainerInvitation(inviteId, accepted) {
+  const inviteRef = db.collection("trainerInvitations").doc(inviteId);
+  const inviteSnapshot = await inviteRef.get();
+  if (!inviteSnapshot.exists) return;
+  const invite = inviteSnapshot.data();
+  if (normalizeEmail(invite.studentEmail) !== normalizeEmail(state.currentUser?.email || "")) {
+    throw new Error(t("permissionDenied"));
+  }
+  if (accepted) {
+    const batch = db.batch();
+    batch.set(
+      inviteRef,
+      {
+        status: "accepted",
+        studentId: state.currentUser.uid,
+        acceptedAt: firebase.firestore.FieldValue.serverTimestamp(),
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+      },
+      { merge: true }
+    );
+    batch.set(
+      db.collection("users").doc(state.currentUser.uid),
+      {
+        trainerIds: firebase.firestore.FieldValue.arrayUnion(invite.trainerId),
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+      },
+      { merge: true }
+    );
+    await batch.commit();
+  } else {
+    await inviteRef.set(
+      {
+        status: "declined",
+        declinedAt: firebase.firestore.FieldValue.serverTimestamp(),
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+      },
+      { merge: true }
+    );
+  }
 }
 
 function getAdminUser(uid) {
@@ -1239,11 +1481,64 @@ function createRoutineIdForUser(user) {
   return slugify(`rutina-${baseName}-${Date.now()}`);
 }
 
+function renderStudentInvites() {
+  if (!studentInvitesPanel) return;
+  const invites = state.studentInvites || [];
+  studentInvitesPanel.classList.toggle("is-hidden", !invites.length);
+  if (!invites.length) {
+    studentInvitesPanel.innerHTML = "";
+    return;
+  }
+  studentInvitesPanel.innerHTML = invites
+    .map((invite) => {
+      const trainerName = invite.trainerName || invite.trainerEmail || t("trainer");
+      return `
+        <article class="invite-card" data-invite-id="${escapeHtml(invite.id)}">
+          <div>
+            <small>${t("invitationForYou")}</small>
+            <strong>${escapeHtml(trainerName)}</strong>
+            <p>${escapeHtml(t("invitationHelp", { name: trainerName }))}</p>
+          </div>
+          <div class="admin-row-actions">
+            <button class="primary-button" type="button" data-student-invite-action="accept">${t("acceptInvite")}</button>
+            <button class="secondary-button" type="button" data-student-invite-action="decline">${t("declineInvite")}</button>
+          </div>
+        </article>
+      `;
+    })
+    .join("");
+}
+
+function renderTrainerInviteTools() {
+  const pending = state.trainerInvites.filter((invite) => invite.status === "pending");
+  return `
+    <section class="trainer-tools">
+      <label class="search-box">
+        <span>${t("studentEmail")}</span>
+        <input id="trainerInviteEmail" type="email" placeholder="alumno@email.com" autocomplete="off" />
+      </label>
+      <button class="primary-button" type="button" data-trainer-action="invite">${t("sendInvite")}</button>
+      <div class="trainer-pending">
+        <small>${t("pendingInvites")}</small>
+        ${pending.length
+          ? pending.map((invite) => `<div class="trainer-pending-item">${escapeHtml(invite.studentEmail)}</div>`).join("")
+          : `<div class="empty-state">${t("noPendingInvites")}</div>`
+        }
+      </div>
+    </section>
+  `;
+}
+
 function renderAdminUsers() {
   if (!adminUsers) return;
   const routineIds = getAdminRoutineIds();
 
-  if (!state.adminUsers.length) {
+  if (state.isTrainer && !state.isAdmin) {
+    if (!state.adminUsers.length) {
+      adminUsers.innerHTML = `${renderTrainerInviteTools()}<div class="empty-state">${t("noStudents")}</div>`;
+      return;
+    }
+  } else if (!state.adminUsers.length) {
     adminUsers.innerHTML = `<div class="empty-state">${t("noUsers")}</div>`;
     return;
   }
@@ -1263,6 +1558,7 @@ function renderAdminUsers() {
   }
 
   adminUsers.innerHTML = [
+    state.isTrainer && !state.isAdmin && !state.selectedAdminUserId ? renderTrainerInviteTools() : "",
     state.selectedAdminUserId
       ? `<button class="secondary-button admin-back-button" type="button" data-admin-users-back>${t("backToUsers")}</button>`
       : "",
@@ -1317,6 +1613,10 @@ function renderAdminUsers() {
 
 async function saveRoutineToFirestore(routine) {
   const data = serializeRoutine(routine);
+  if (state.isTrainer && !state.isAdmin) {
+    data.ownerTrainerId = state.currentUser.uid;
+    data.ownerTrainerEmail = normalizeEmail(state.currentUser.email || "");
+  }
   await db.collection("routines").doc(data.id).set(
     {
       ...data,
@@ -1344,13 +1644,33 @@ async function saveAdminDraftAndAssignment() {
 }
 
 async function deleteRoutineFromFirestore(routineId) {
+  if (state.isTrainer && !state.isAdmin && routines[routineId]?.ownerTrainerId !== state.currentUser?.uid) {
+    throw new Error(t("permissionDenied"));
+  }
   await db.collection("routines").doc(routineId).delete();
-  const assignedUsers = await db.collection("users").where("routineId", "==", routineId).get();
-  if (!assignedUsers.empty) {
+  if (state.isAdmin) {
+    const assignedUsers = await db.collection("users").where("routineId", "==", routineId).get();
+    if (!assignedUsers.empty) {
+      const batch = db.batch();
+      assignedUsers.forEach((doc) => {
+        batch.set(
+          doc.ref,
+          {
+            routineId: "",
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+            updatedBy: normalizeEmail(state.currentUser?.email || "")
+          },
+          { merge: true }
+        );
+      });
+      await batch.commit();
+    }
+  } else {
+    const assignedUsers = state.adminUsers.filter((user) => user.routineId === routineId);
     const batch = db.batch();
-    assignedUsers.forEach((doc) => {
+    assignedUsers.forEach((user) => {
       batch.set(
-        doc.ref,
+        db.collection("users").doc(user.uid),
         {
           routineId: "",
           updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
@@ -1359,7 +1679,7 @@ async function deleteRoutineFromFirestore(routineId) {
         { merge: true }
       );
     });
-    await batch.commit();
+    if (assignedUsers.length) await batch.commit();
   }
   delete routines[routineId];
 }
@@ -1376,14 +1696,30 @@ function selectRoutine(routineId) {
 async function applyUserData(userData) {
   state.currentUserData = userData;
   state.isAdmin = userData.role === "admin" || isAdminEmail(state.currentUser?.email);
+  state.isTrainer = userData.role === "trainer";
   if (state.isAdmin) {
     await loadFirestoreRoutinesForAdmin();
     startAdminUsersListener();
-  } else if (unsubscribeAdminUsers) {
-    unsubscribeAdminUsers();
-    unsubscribeAdminUsers = null;
+  } else if (state.isTrainer) {
+    if (unsubscribeAdminUsers) {
+      unsubscribeAdminUsers();
+      unsubscribeAdminUsers = null;
+    }
+    await loadFirestoreRoutinesForTrainer();
+    startTrainerInvitesListener();
+  } else {
+    if (unsubscribeAdminUsers) {
+      unsubscribeAdminUsers();
+      unsubscribeAdminUsers = null;
+    }
+    if (unsubscribeTrainerInvites) {
+      unsubscribeTrainerInvites();
+      unsubscribeTrainerInvites = null;
+    }
     state.adminUsers = [];
+    state.trainerInvites = [];
   }
+  startStudentInvitesListener();
 
   const routineId = userData.routineId || "";
   const firestoreRoutine = routineId ? await loadRoutineFromFirestore(routineId) : null;
@@ -1457,11 +1793,13 @@ function renderApp() {
   appTitle.textContent = routine.title;
   const displayName = state.currentUserData?.displayName || getDisplayNameFromEmail(state.currentUser?.email || "");
   userGreeting.textContent = displayName ? t("hello", { name: displayName }) : "";
-  adminToggle.classList.toggle("is-hidden", !state.isAdmin);
-  adminPanel.classList.toggle("is-hidden", !state.isAdmin || !state.adminPanelOpen);
-  if (state.isAdmin && state.adminPanelOpen) {
+  adminToggle.textContent = state.isAdmin ? t("admin") : t("students");
+  adminToggle.classList.toggle("is-hidden", !canManageStudents());
+  adminPanel.classList.toggle("is-hidden", !canManageStudents() || !state.adminPanelOpen);
+  if (canManageStudents() && state.adminPanelOpen) {
     renderAdminPanel();
   }
+  renderStudentInvites();
 
   const hasPlan = routine.plan.length > 0;
   summaryStrip.classList.toggle("is-hidden", !hasPlan);
@@ -1733,7 +2071,11 @@ function setAdminMessage(message, type = "") {
 }
 
 function getAdminRoutineIds() {
-  return Object.keys(routines).filter((id) => id !== "pending");
+  return Object.keys(routines).filter((id) => {
+    if (id === "pending") return false;
+    if (state.isTrainer && !state.isAdmin) return routines[id]?.ownerTrainerId === state.currentUser?.uid;
+    return true;
+  });
 }
 
 function setAdminDraftFromRoutine(routineId) {
@@ -1753,6 +2095,19 @@ function readAdminBasics() {
 }
 
 function renderAdminPanel() {
+  const panelTitle = adminPanel.querySelector("[data-i18n='routinePanel']");
+  const panelHelp = adminPanel.querySelector("[data-i18n='routinePanelHelp']");
+  const usersTitle = adminPanel.querySelector("[data-i18n='assignRoutines']");
+  if (state.isTrainer && !state.isAdmin) {
+    if (panelTitle) panelTitle.textContent = t("studentPanel");
+    if (panelHelp) panelHelp.textContent = t("studentPanelHelp");
+    if (usersTitle) usersTitle.textContent = t("acceptedStudents");
+  } else {
+    if (panelTitle) panelTitle.textContent = t("routinePanel");
+    if (panelHelp) panelHelp.textContent = t("routinePanelHelp");
+    if (usersTitle) usersTitle.textContent = t("assignRoutines");
+  }
+  adminSeedDario?.classList.toggle("is-hidden", state.isTrainer && !state.isAdmin);
   renderAdminUsers();
 
   if (!state.adminDraft || !state.adminEditorMode) {
@@ -2250,7 +2605,7 @@ weeksContainer.addEventListener("click", (event) => {
 });
 
 adminToggle.addEventListener("click", () => {
-  if (!state.isAdmin) return;
+  if (!canManageStudents()) return;
   state.adminPanelOpen = !state.adminPanelOpen;
   if (!state.adminPanelOpen) {
     state.selectedAdminUserId = "";
@@ -2372,6 +2727,23 @@ adminUsers.addEventListener("change", async (event) => {
 });
 
 adminUsers.addEventListener("click", async (event) => {
+  const trainerAction = event.target.closest("[data-trainer-action='invite']");
+  if (trainerAction) {
+    const input = adminUsers.querySelector("#trainerInviteEmail");
+    trainerAction.disabled = true;
+    setAdminMessage(t("inviteStudent"));
+    try {
+      await createTrainerInvitation(input?.value || "");
+      if (input) input.value = "";
+      setAdminMessage(t("inviteSent"), "success");
+    } catch (error) {
+      setAdminMessage(`${getAuthErrorMessage(error)} ${error?.message || ""}`.trim(), "error");
+    } finally {
+      trainerAction.disabled = false;
+    }
+    return;
+  }
+
   const backButton = event.target.closest("[data-admin-users-back]");
   if (backButton) {
     state.selectedAdminUserId = "";
@@ -2456,6 +2828,24 @@ adminUsers.addEventListener("click", async (event) => {
   }
 });
 
+studentInvitesPanel?.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-student-invite-action]");
+  if (!button) return;
+  const card = button.closest("[data-invite-id]");
+  const inviteId = card?.dataset.inviteId;
+  if (!inviteId) return;
+  button.disabled = true;
+  try {
+    const accepted = button.dataset.studentInviteAction === "accept";
+    await respondToTrainerInvitation(inviteId, accepted);
+    setAuthMessage(accepted ? t("inviteAccepted") : t("inviteDeclined"), "success");
+  } catch (error) {
+    setAuthMessage(`${getAuthErrorMessage(error)} ${error?.message || ""}`.trim(), "error");
+  } finally {
+    button.disabled = false;
+  }
+});
+
 adminAddWeek.addEventListener("click", () => {
   if (!state.adminDraft) state.adminDraft = createEmptyRoutine("nueva-rutina");
   state.adminDraft.plan.push({
@@ -2497,7 +2887,7 @@ adminSeedDario.addEventListener("click", async () => {
 });
 
 adminSaveRoutine.addEventListener("click", async () => {
-  if (!state.isAdmin || !state.adminDraft) return;
+  if (!canManageStudents() || !state.adminDraft) return;
   readAdminBasics();
   if (!state.adminDraft.id) {
     setAdminMessage(t("routineNeedsId"), "error");
@@ -2513,18 +2903,23 @@ adminSaveRoutine.addEventListener("click", async () => {
 });
 
 adminDeleteRoutine.addEventListener("click", async () => {
-  if (!state.isAdmin || !state.adminDraft?.id) return;
+  if (!canManageStudents() || !state.adminDraft?.id) return;
   const deletedId = state.adminDraft.id;
   if (!confirm(t("deleteRoutineConfirm", { name: state.adminDraft.name || state.adminDraft.id }))) return;
   try {
     await deleteRoutineFromFirestore(deletedId);
     setAdminMessage(t("routineDeleted"), "success");
     state.adminDraft = null;
-    const nextRoutineId = getAdminRoutineIds()[0] || "dario";
-    if (!routines[nextRoutineId]) {
+    const nextRoutineId = getAdminRoutineIds()[0] || (state.isAdmin ? "dario" : "");
+    if (nextRoutineId && !routines[nextRoutineId]) {
       routines[nextRoutineId] = createEmptyRoutine(nextRoutineId);
     }
-    setAdminDraftFromRoutine(nextRoutineId);
+    if (nextRoutineId) {
+      setAdminDraftFromRoutine(nextRoutineId);
+    } else {
+      state.adminEditorMode = "";
+      state.adminRoutineId = "";
+    }
     if (state.selectedRoutine === deletedId) {
       selectRoutine(routines[nextRoutineId] ? nextRoutineId : "pending");
     }
@@ -2587,6 +2982,7 @@ registerButton.addEventListener("click", async () => {
 
   try {
     await applyAuthPersistence();
+    localStorage.setItem(PENDING_ACCOUNT_ROLE_KEY, accountRole?.value === "trainer" ? "trainer" : "student");
     await firebase.auth().createUserWithEmailAndPassword(email, password);
   } catch (error) {
     setAuthMessage(getAuthErrorMessage(error), "error");

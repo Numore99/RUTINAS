@@ -19,9 +19,15 @@ service firebase.storage {
         );
     }
 
+    function ownsRoutine(routineId) {
+      return signedIn()
+        && firestore.exists(/databases/(default)/documents/routines/$(routineId))
+        && firestore.get(/databases/(default)/documents/routines/$(routineId)).data.ownerTrainerId == request.auth.uid;
+    }
+
     match /routines/{routineId}/exercises/{exerciseId}/{fileName} {
       allow read: if signedIn();
-      allow write: if isAdmin()
+      allow write: if (isAdmin() || ownsRoutine(routineId))
         && request.resource.size < 10 * 1024 * 1024
         && request.resource.contentType.matches("image/.*");
     }
