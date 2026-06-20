@@ -3001,18 +3001,22 @@ adminUsers.addEventListener("click", async (event) => {
     if (actionButton.dataset.userAction === "add-routine") {
       const routineNumber = getNextRoutineNumber();
       const routineId = createRoutineDraftId(routineNumber);
+      state.activeView = "routines";
       state.selectedAdminUserId = uid;
       state.pendingAssignUserId = uid;
       state.adminEditorMode = "create";
       state.adminEditingExerciseKey = "";
       state.adminDraft = createEmptyRoutine(routineId);
       state.adminDraft.name = `Rutina ${routineNumber}`;
+      state.adminDraft.title = "";
+      state.adminDraft.kicker = "";
       setAdminMessage(t("newRoutinePreparedAssign"), "success");
       renderAdminPanel();
       return;
     }
 
     if (actionButton.dataset.userAction === "edit-routine" && user.routineId && routines[user.routineId]) {
+      state.activeView = "routines";
       state.selectedAdminUserId = uid;
       state.pendingAssignUserId = uid;
       state.adminEditorMode = "edit";
