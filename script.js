@@ -502,7 +502,7 @@ const translations = {
     comingSoon: "Próximamente",
     administrator: "Administrador",
     routinePanel: "Panel de rutinas",
-    routinePanelHelp: "Crea y edita rutinas guardadas en Firestore.",
+    routinePanelHelp: "Crea y edita rutinas.",
     closePanel: "Cerrar panel",
     users: "Usuarios",
     loadingUsers: "Cargando usuarios...",
@@ -551,8 +551,8 @@ const translations = {
     exercises: "ejercicios",
     completed: "completados",
     weeks: "semanas",
-    noUsers: "Todavía no hay usuarios con perfil en Firestore.",
-    usersLoadError: "No se pudieron cargar usuarios. Revisa reglas de Firestore.",
+    noUsers: "Todavía no hay usuarios.",
+    usersLoadError: "No se pudieron cargar usuarios.",
     noRoutine: "Sin rutina",
     unavailableRoutine: "Rutina no disponible: {id}",
     user: "Usuario",
@@ -610,8 +610,8 @@ const translations = {
     restLower: "descanso",
     hello: "Hola, {name}",
     loadingRoutine: "Cargando rutina...",
-    adminRulesNotice: "Entraste como admin. Para editar rutinas, publica las reglas nuevas de Firestore.",
-    userLoadError: "No se pudo cargar tu usuario. Revisa Firestore.",
+    adminRulesNotice: "Entraste como admin.",
+    userLoadError: "No se pudo cargar tu usuario.",
     uploadingImage: "Guardando imagen...",
     imageLoaded: "Imagen comprimida y guardada en la rutina.",
     imageStoredInRoutine: "Imagen comprimida y guardada en la rutina.",
@@ -622,12 +622,12 @@ const translations = {
     removingRoutine: "Quitando rutina...",
     routineRemoved: "Rutina quitada. El usuario verá Próximamente.",
     newRoutinePrepared: "Nueva rutina preparada. Edita los datos y guárdala.",
-    darioMigrated: "Rutina Dario migrada a Firestore.",
+    darioMigrated: "Rutina Dario migrada.",
     darioMigratedAssigned: "Rutina Dario migrada y asignada al usuario.",
     routineNeedsId: "La rutina necesita un ID.",
-    routineSaved: "Rutina guardada en Firestore.",
+    routineSaved: "Rutina guardada.",
     routineSavedAssigned: "Rutina guardada y asignada al usuario.",
-    deleteRoutineConfirm: "¿Eliminar la rutina \"{name}\" de Firestore?",
+    deleteRoutineConfirm: "¿Eliminar la rutina \"{name}\"?",
     routineDeleted: "Rutina eliminada.",
     signingIn: "Ingresando...",
     creatingAccount: "Creando cuenta...",
@@ -648,7 +648,7 @@ const translations = {
     firestoreUnavailable: "Firestore no está disponible ahora. Revisa conexión o configuración.",
     networkFailed: "No hay conexión. Inténtalo de nuevo.",
     actionFailed: "No se pudo completar la acción{code}.",
-    storageNotReady: "El guardado de imagenes usa Firestore, no Firebase Storage.",
+    storageNotReady: "La imagen se guarda dentro de la rutina.",
     selectImageFile: "Selecciona un archivo de imagen."
   },
   en: {
@@ -683,7 +683,7 @@ const translations = {
     comingSoon: "Coming soon",
     administrator: "Administrator",
     routinePanel: "Routine panel",
-    routinePanelHelp: "Create and edit routines stored in Firestore.",
+    routinePanelHelp: "Create and edit routines.",
     closePanel: "Close panel",
     users: "Users",
     loadingUsers: "Loading users...",
@@ -732,8 +732,8 @@ const translations = {
     exercises: "exercises",
     completed: "completed",
     weeks: "weeks",
-    noUsers: "There are no users with a Firestore profile yet.",
-    usersLoadError: "Could not load users. Check Firestore rules.",
+    noUsers: "There are no users yet.",
+    usersLoadError: "Could not load users.",
     noRoutine: "No routine",
     unavailableRoutine: "Routine unavailable: {id}",
     user: "User",
@@ -791,8 +791,8 @@ const translations = {
     restLower: "rest",
     hello: "Hi, {name}",
     loadingRoutine: "Loading routine...",
-    adminRulesNotice: "You entered as admin. To edit routines, publish the new Firestore rules.",
-    userLoadError: "Could not load your user. Check Firestore.",
+    adminRulesNotice: "You are signed in as admin.",
+    userLoadError: "Could not load your user.",
     uploadingImage: "Saving image...",
     imageLoaded: "Image compressed and saved in the routine.",
     imageStoredInRoutine: "Image compressed and saved in the routine.",
@@ -803,12 +803,12 @@ const translations = {
     removingRoutine: "Removing routine...",
     routineRemoved: "Routine removed. The user will see Coming soon.",
     newRoutinePrepared: "New routine prepared. Edit it and save.",
-    darioMigrated: "Dario routine migrated to Firestore.",
+    darioMigrated: "Dario routine migrated.",
     darioMigratedAssigned: "Dario routine migrated and assigned to user.",
     routineNeedsId: "The routine needs an ID.",
-    routineSaved: "Routine saved in Firestore.",
+    routineSaved: "Routine saved.",
     routineSavedAssigned: "Routine saved and assigned to user.",
-    deleteRoutineConfirm: "Delete routine \"{name}\" from Firestore?",
+    deleteRoutineConfirm: "Delete routine \"{name}\"?",
     routineDeleted: "Routine deleted.",
     signingIn: "Signing in...",
     creatingAccount: "Creating account...",
@@ -829,7 +829,7 @@ const translations = {
     firestoreUnavailable: "Firestore is unavailable right now. Check connection or configuration.",
     networkFailed: "No connection. Try again.",
     actionFailed: "Could not complete the action{code}.",
-    storageNotReady: "Image saving uses Firestore, not Firebase Storage.",
+    storageNotReady: "Image is saved inside the routine.",
     selectImageFile: "Select an image file."
   },
   pt: {
@@ -864,7 +864,7 @@ const translations = {
     comingSoon: "Em breve",
     administrator: "Administrador",
     routinePanel: "Painel de rotinas",
-    routinePanelHelp: "Crie e edite rotinas salvas no Firestore.",
+    routinePanelHelp: "Crie e edite rotinas.",
     closePanel: "Fechar painel",
     users: "Usuários",
     loadingUsers: "Carregando usuários...",
@@ -913,8 +913,8 @@ const translations = {
     exercises: "exercícios",
     completed: "concluídos",
     weeks: "semanas",
-    noUsers: "Ainda não há usuários com perfil no Firestore.",
-    usersLoadError: "Não foi possível carregar usuários. Revise as regras do Firestore.",
+    noUsers: "Ainda não há usuários.",
+    usersLoadError: "Não foi possível carregar usuários.",
     noRoutine: "Sem rotina",
     unavailableRoutine: "Rotina indisponível: {id}",
     user: "Usuário",
@@ -972,8 +972,8 @@ const translations = {
     restLower: "descanso",
     hello: "Olá, {name}",
     loadingRoutine: "Carregando rotina...",
-    adminRulesNotice: "Você entrou como admin. Para editar rotinas, publique as novas regras do Firestore.",
-    userLoadError: "Não foi possível carregar seu usuário. Revise o Firestore.",
+    adminRulesNotice: "Você entrou como admin.",
+    userLoadError: "Não foi possível carregar seu usuário.",
     uploadingImage: "Salvando imagem...",
     imageLoaded: "Imagem comprimida e salva na rotina.",
     imageStoredInRoutine: "Imagem comprimida e salva na rotina.",
@@ -984,12 +984,12 @@ const translations = {
     removingRoutine: "Removendo rotina...",
     routineRemoved: "Rotina removida. O usuário verá Em breve.",
     newRoutinePrepared: "Nova rotina preparada. Edite os dados e salve.",
-    darioMigrated: "Rotina Dario migrada para Firestore.",
+    darioMigrated: "Rotina Dario migrada.",
     darioMigratedAssigned: "Rotina Dario migrada e atribuída ao usuário.",
     routineNeedsId: "A rotina precisa de um ID.",
-    routineSaved: "Rotina salva no Firestore.",
+    routineSaved: "Rotina salva.",
     routineSavedAssigned: "Rotina salva e atribuída ao usuário.",
-    deleteRoutineConfirm: "Excluir a rotina \"{name}\" do Firestore?",
+    deleteRoutineConfirm: "Excluir a rotina \"{name}\"?",
     routineDeleted: "Rotina excluída.",
     signingIn: "Entrando...",
     creatingAccount: "Criando conta...",
@@ -1010,7 +1010,7 @@ const translations = {
     firestoreUnavailable: "Firestore não está disponível agora. Revise conexão ou configuração.",
     networkFailed: "Sem conexão. Tente novamente.",
     actionFailed: "Não foi possível concluir a ação{code}.",
-    storageNotReady: "O salvamento de imagens usa Firestore, nao Firebase Storage.",
+    storageNotReady: "A imagem e salva dentro da rotina.",
     selectImageFile: "Selecione um arquivo de imagem."
   }
 };
@@ -1517,12 +1517,35 @@ function getRoutineCountForManager() {
   return getAdminRoutineIds().length;
 }
 
+function getRecentActivityItems() {
+  const accepted = state.trainerInvites
+    .filter((invite) => invite.status === "accepted")
+    .slice(-2)
+    .map((invite) => {
+      const student = state.adminUsers.find((user) => user.uid === invite.studentId);
+      const name = student?.displayName || getDisplayNameFromEmail(invite.studentEmail || "") || invite.studentEmail || "Alumno";
+      return `${name} aceptó tu invitación`;
+    });
+  const routinesUpdated = getAdminRoutineIds()
+    .slice(0, 2)
+    .map((id) => `Rutina ${routines[id]?.name || id} disponible`);
+  return [...accepted, ...routinesUpdated].slice(0, 3);
+}
+
 function renderTrainerHome() {
   if (!trainerHome) return;
   const activeStudents = state.adminUsers.length;
   const pendingInvites = state.trainerInvites.filter((invite) => invite.status === "pending").length;
   const routineCount = getRoutineCountForManager();
+  const displayName = state.currentUserData?.displayName || getDisplayNameFromEmail(state.currentUser?.email || "");
+  const recentItems = getRecentActivityItems();
   trainerHome.innerHTML = `
+    <section class="home-welcome">
+      <span>Inicio</span>
+      <h2>Hola, ${escapeHtml(displayName || "entrenador")}</h2>
+    </section>
+
+    <div class="home-section-title">Resumen</div>
     <div class="home-grid">
       <article class="home-stat">
         <strong>${activeStudents}</strong>
@@ -1537,10 +1560,21 @@ function renderTrainerHome() {
         <span>Rutinas creadas</span>
       </article>
     </div>
+
+    <div class="home-section-title">Acciones rápidas</div>
     <div class="home-actions">
-      <button class="primary-button" type="button" data-home-action="students">Ver alumnos</button>
-      <button class="secondary-button" type="button" data-home-action="new-routine">Crear rutina</button>
+      <button class="primary-button" type="button" data-home-action="new-student">+ Nuevo alumno</button>
+      <button class="secondary-button" type="button" data-home-action="new-routine">📋 Nueva rutina</button>
+      <button class="secondary-button" type="button" data-home-action="assign-routine">↻ Asignar rutina</button>
     </div>
+
+    <section class="home-activity">
+      <div class="home-section-title">Actividad reciente</div>
+      ${recentItems.length
+        ? recentItems.map((item) => `<div class="activity-item">${escapeHtml(item)}</div>`).join("")
+        : `<div class="empty-state">Sin actividad reciente.</div>`
+      }
+    </section>
   `;
 }
 
@@ -2944,7 +2978,7 @@ bottomNav?.addEventListener("click", (event) => {
 trainerHome?.addEventListener("click", (event) => {
   const button = event.target.closest("[data-home-action]");
   if (!button) return;
-  if (button.dataset.homeAction === "students") {
+  if (button.dataset.homeAction === "new-student" || button.dataset.homeAction === "assign-routine") {
     setActiveView("students");
     return;
   }
