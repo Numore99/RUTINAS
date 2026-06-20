@@ -1127,9 +1127,9 @@ function slugify(text) {
 function createEmptyRoutine(id = "") {
   return {
     id,
-    name: id || "Nueva rutina",
-    title: id || "RutFit",
-    kicker: "Nueva",
+    name: "",
+    title: "",
+    kicker: "",
     exerciseLibrary: {},
     plan: []
   };
@@ -2188,8 +2188,8 @@ function setAdminDraftFromRoutine(routineId) {
 function readAdminBasics() {
   const id = slugify(adminRoutineId.value || state.adminDraft?.id || "");
   state.adminDraft.id = id;
-  state.adminDraft.name = adminRoutineName.value.trim() || id;
-  state.adminDraft.title = adminRoutineTitle.value.trim() || state.adminDraft.name;
+  state.adminDraft.name = adminRoutineName.value.trim();
+  state.adminDraft.title = adminRoutineTitle.value.trim();
   state.adminDraft.kicker = adminRoutineKicker.value.trim();
   state.adminRoutineId = id;
 }
@@ -2246,7 +2246,7 @@ function renderAdminPanel() {
   const selectedUserName = selectedUser?.displayName || getDisplayNameFromEmail(selectedUser?.email || "");
   adminEditorTitle.textContent = state.adminEditorMode === "create"
     ? t("newRoutineFor", { name: selectedUserName || t("user") })
-    : t("editingRoutine", { name: draft.name || draft.id });
+    : t("editingRoutine", { name: draft.name || t("newRoutineOption") });
 
   const routineIds = getAdminRoutineIds();
   adminRoutineSelect.innerHTML = [
@@ -2380,7 +2380,7 @@ return `
   </div>
 ` : `
   <div class="admin-exercise-grid">
-    <label class="search-box"><span>${t("number")}</span><input class="admin-field" data-week-field="number" value="${escapeHtml(week.number || weekIndex + 1)}" /></label>
+    <label class="search-box"><span>${t("number")}</span><input class="admin-field" data-week-field="number" value="${escapeHtml(week.number || "")}" /></label>
     <label class="search-box"><span>${t("phase")}</span><input class="admin-field" data-week-field="phase.name" value="${escapeHtml(phase.name || "")}" /></label>
     <label class="search-box"><span>${t("badge")}</span><input class="admin-field" data-week-field="phase.badge" value="${escapeHtml(phase.badge || "")}" /></label>
     <label class="search-box"><span>${t("instructions")}</span><input class="admin-field" data-week-field="phase.modifier" value="${escapeHtml(phase.modifier || "")}" /></label>
@@ -2508,7 +2508,7 @@ if (action === "delete-week") {
 
   if (action === "add-day") {
     state.adminDraft.plan[weekIndex].days = state.adminDraft.plan[weekIndex].days || [];
-    state.adminDraft.plan[weekIndex].days.push({ title: t("dayNumber", { number: state.adminDraft.plan[weekIndex].days.length + 1 }), focus: "", exercises: [] });
+    state.adminDraft.plan[weekIndex].days.push({ title: "", focus: "", exercises: [] });
   }
 
   if (action === "delete-day") {
@@ -2518,15 +2518,15 @@ if (action === "delete-week") {
   if (action === "add-exercise") {
     const key = `ejercicio-${Date.now()}`;
     state.adminDraft.exerciseLibrary[key] = {
-      name: t("newExercise"),
-      objective: "fuerza",
+      name: "",
+      objective: "",
       goal: "",
       baseSets: "",
       baseReps: "",
-      rest: "1:00",
+      rest: "",
       technique: "",
       mistakes: [],
-      images: ["img/placeholder-1.jpg", "img/placeholder-2.jpg"]
+      images: ["", ""]
     };
     state.adminDraft.plan[weekIndex].days[dayIndex].exercises.push(key);
     state.adminEditingExerciseKey = key;
@@ -2890,15 +2890,11 @@ adminUsers.addEventListener("click", async (event) => {
 
     if (actionButton.dataset.userAction === "add-routine") {
       const routineId = createRoutineIdForUser(user);
-      const displayName = user.displayName || getDisplayNameFromEmail(user.email || "");
       state.selectedAdminUserId = uid;
       state.pendingAssignUserId = uid;
       state.adminEditorMode = "create";
       state.adminEditingExerciseKey = "";
       state.adminDraft = createEmptyRoutine(routineId);
-      state.adminDraft.name = `Rutina ${displayName || t("user")}`;
-      state.adminDraft.title = "RutFit";
-      state.adminDraft.kicker = "Nueva";
       setAdminMessage(t("newRoutinePreparedAssign"), "success");
       renderAdminPanel();
       return;
@@ -2985,8 +2981,8 @@ studentInvitesPanel?.addEventListener("click", async (event) => {
 adminAddWeek.addEventListener("click", () => {
   if (!state.adminDraft) state.adminDraft = createEmptyRoutine("nueva-rutina");
   state.adminDraft.plan.push({
-    number: state.adminDraft.plan.length + 1,
-    phase: { name: t("newPhase"), badge: "Plan", modifier: "" },
+    number: "",
+    phase: { name: "", badge: "", modifier: "" },
     days: []
   });
   renderAdminPanel();
@@ -2998,10 +2994,6 @@ adminNewRoutine.addEventListener("click", () => {
   state.pendingAssignUserId = user?.uid || "";
   state.adminEditorMode = user ? "create" : "edit";
   state.adminDraft = createEmptyRoutine(routineId);
-  if (user) {
-    const displayName = user.displayName || getDisplayNameFromEmail(user.email || "");
-    state.adminDraft.name = `Rutina ${displayName || t("user")}`;
-  }
   state.adminRoutineId = state.adminDraft.id;
   setAdminMessage(user ? t("newRoutinePreparedAssign") : t("newRoutinePrepared"), "success");
   renderAdminPanel();
