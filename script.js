@@ -464,6 +464,10 @@ const doneButton = document.querySelector("#doneButton");
 const startTimer = document.querySelector("#startTimer");
 const resetTimer = document.querySelector("#resetTimer");
 const timerDisplay = document.querySelector("#timerDisplay");
+const confirmModal = document.querySelector("#confirmModal");
+const confirmMessage = document.querySelector("#confirmMessage");
+const confirmCancel = document.querySelector("#confirmCancel");
+const confirmAccept = document.querySelector("#confirmAccept");
 const AUTH_PERSISTENCE_KEY = "rutfit-auth-persistence";
 const LANGUAGE_KEY = "rutfit-language";
 const PENDING_ACCOUNT_ROLE_KEY = "rutfit-pending-account-role";
@@ -2754,6 +2758,42 @@ function closeExercise() {
   stopTimer();
 }
 
+function showConfirmDialog(message) {
+  if (!confirmModal || !confirmMessage || !confirmCancel || !confirmAccept) {
+    return Promise.resolve(window.confirm(message));
+  }
+
+  confirmMessage.textContent = message;
+  confirmModal.classList.add("open");
+  confirmModal.setAttribute("aria-hidden", "false");
+
+  return new Promise((resolve) => {
+    const finish = (confirmed) => {
+      confirmModal.classList.remove("open");
+      confirmModal.setAttribute("aria-hidden", "true");
+      confirmCancel.removeEventListener("click", onCancel);
+      confirmAccept.removeEventListener("click", onAccept);
+      confirmModal.removeEventListener("click", onBackdrop);
+      document.removeEventListener("keydown", onKeydown);
+      resolve(confirmed);
+    };
+
+    const onCancel = () => finish(false);
+    const onAccept = () => finish(true);
+    const onBackdrop = (event) => {
+      if (event.target === confirmModal) finish(false);
+    };
+    const onKeydown = (event) => {
+      if (event.key === "Escape") finish(false);
+    };
+
+    confirmCancel.addEventListener("click", onCancel);
+    confirmAccept.addEventListener("click", onAccept);
+    confirmModal.addEventListener("click", onBackdrop);
+    document.addEventListener("keydown", onKeydown);
+  });
+}
+
 function toggleDone() {
   if (!state.currentExerciseKey) return;
   const { id, weekNumber } = state.currentExerciseKey;
@@ -3131,7 +3171,8 @@ adminSaveRoutine.addEventListener("click", async () => {
 adminDeleteRoutine.addEventListener("click", async () => {
   if (!canManageStudents() || !state.adminDraft?.id) return;
   const deletedId = state.adminDraft.id;
-  if (!confirm(t("deleteRoutineConfirm", { name: state.adminDraft.name || state.adminDraft.id }))) return;
+  const confirmed = await showConfirmDialog(t("deleteRoutineConfirm", { name: state.adminDraft.name || state.adminDraft.id }));
+  if (!confirmed) return;
   try {
     await deleteRoutineFromFirestore(deletedId);
     setAdminMessage(t("routineDeleted"), "success");

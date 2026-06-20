@@ -1088,6 +1088,50 @@ main {
   display: flex;
 }
 
+.confirm-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  display: none;
+  place-items: center;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.76);
+  backdrop-filter: blur(10px);
+}
+
+.confirm-modal.open {
+  display: grid;
+}
+
+.confirm-panel {
+  width: min(360px, 100%);
+  border: 1px solid rgba(167, 139, 250, 0.25);
+  border-radius: 22px;
+  padding: 1rem;
+  background: linear-gradient(180deg, rgba(30, 41, 59, 0.98) 0%, rgba(15, 23, 42, 0.99) 100%);
+  box-shadow: var(--shadow);
+}
+
+.confirm-panel p {
+  margin: 0 0 1rem;
+  color: var(--text);
+  font-size: 0.98rem;
+  line-height: 1.45;
+}
+
+.confirm-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.65rem;
+}
+
+.confirm-actions .primary-button,
+.confirm-actions .secondary-button {
+  min-height: 2.75rem;
+  justify-content: center;
+  padding: 0.75rem 0.9rem;
+}
+
 .modal-panel {
   position: relative;
   width: min(720px, 100%);
