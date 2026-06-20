@@ -3037,6 +3037,9 @@ adminUsers.addEventListener("click", async (event) => {
   setAdminMessage(t("removingRoutine"));
   try {
     await updateUserRoutine(uid, "");
+    state.adminUsers = state.adminUsers.map((user) =>
+      user.uid === uid ? { ...user, routineId: "" } : user
+    );
     if (state.pendingAssignUserId === uid) {
       state.adminEditorMode = "";
       state.pendingAssignUserId = "";
@@ -3044,6 +3047,7 @@ adminUsers.addEventListener("click", async (event) => {
       state.adminDraft = null;
     }
     setAdminMessage(t("routineRemoved"), "success");
+    renderAdminPanel();
   } catch (error) {
     setAdminMessage(getAuthErrorMessage(error), "error");
   } finally {
