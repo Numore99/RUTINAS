@@ -407,7 +407,6 @@ let collapsedWeeksKey = "";
 let progress = {};
 let collapsedWeeks = {};
 let db = null;
-let storage = null;
 let unsubscribeCurrentUser = null;
 let unsubscribeAdminUsers = null;
 let unsubscribeTrainerInvites = null;
@@ -568,6 +567,12 @@ const translations = {
     editExercise: "Editar ejercicio",
     saveExercise: "Guardar ejercicio",
     exerciseSaved: "Ejercicio guardado.",
+    savedExercisesCount: "{count} ejercicios guardados",
+    editDay: "Editar día",
+    saveDay: "Guardar día",
+    editWeek: "Editar semana",
+    saveWeek: "Guardar semana",
+    weekSavedSummary: "Semana guardada - {count} días guardados",
     deleteExercise: "Eliminar ejercicio",
     objective: "Objetivo",
     startImage: "Imagen inicial",
@@ -602,9 +607,9 @@ const translations = {
     loadingRoutine: "Cargando rutina...",
     adminRulesNotice: "Entraste como admin. Para editar rutinas, publica las reglas nuevas de Firestore.",
     userLoadError: "No se pudo cargar tu usuario. Revisa Firestore.",
-    uploadingImage: "Subiendo imagen...",
-    imageLoaded: "Imagen cargada. Toca Guardar rutina para guardar el cambio.",
-    imageStoredInRoutine: "Firebase Storage falló, pero guardé la imagen comprimida dentro de la rutina.",
+    uploadingImage: "Guardando imagen...",
+    imageLoaded: "Imagen comprimida y guardada en la rutina.",
+    imageStoredInRoutine: "Imagen comprimida y guardada en la rutina.",
     updatingUser: "Actualizando usuario...",
     assignedRoutine: "Rutina asignada al usuario.",
     userWithoutRoutine: "Usuario sin rutina asignada.",
@@ -638,7 +643,7 @@ const translations = {
     firestoreUnavailable: "Firestore no está disponible ahora. Revisa conexión o configuración.",
     networkFailed: "No hay conexión. Inténtalo de nuevo.",
     actionFailed: "No se pudo completar la acción{code}.",
-    storageNotReady: "Firebase Storage no está inicializado.",
+    storageNotReady: "El guardado de imagenes usa Firestore, no Firebase Storage.",
     selectImageFile: "Selecciona un archivo de imagen."
   },
   en: {
@@ -743,6 +748,12 @@ const translations = {
     editExercise: "Edit exercise",
     saveExercise: "Save exercise",
     exerciseSaved: "Exercise saved.",
+    savedExercisesCount: "{count} saved exercises",
+    editDay: "Edit day",
+    saveDay: "Save day",
+    editWeek: "Edit week",
+    saveWeek: "Save week",
+    weekSavedSummary: "Week saved - {count} saved days",
     deleteExercise: "Delete exercise",
     objective: "Goal",
     startImage: "Start image",
@@ -777,9 +788,9 @@ const translations = {
     loadingRoutine: "Loading routine...",
     adminRulesNotice: "You entered as admin. To edit routines, publish the new Firestore rules.",
     userLoadError: "Could not load your user. Check Firestore.",
-    uploadingImage: "Uploading image...",
-    imageLoaded: "Image uploaded. Tap Save routine to save the change.",
-    imageStoredInRoutine: "Firebase Storage failed, but I saved the compressed image inside the routine.",
+    uploadingImage: "Saving image...",
+    imageLoaded: "Image compressed and saved in the routine.",
+    imageStoredInRoutine: "Image compressed and saved in the routine.",
     updatingUser: "Updating user...",
     assignedRoutine: "Routine assigned to user.",
     userWithoutRoutine: "User has no assigned routine.",
@@ -813,7 +824,7 @@ const translations = {
     firestoreUnavailable: "Firestore is unavailable right now. Check connection or configuration.",
     networkFailed: "No connection. Try again.",
     actionFailed: "Could not complete the action{code}.",
-    storageNotReady: "Firebase Storage is not initialized.",
+    storageNotReady: "Image saving uses Firestore, not Firebase Storage.",
     selectImageFile: "Select an image file."
   },
   pt: {
@@ -918,6 +929,12 @@ const translations = {
     editExercise: "Editar exercício",
     saveExercise: "Salvar exercício",
     exerciseSaved: "Exercício salvo.",
+    savedExercisesCount: "{count} exercícios salvos",
+    editDay: "Editar dia",
+    saveDay: "Salvar dia",
+    editWeek: "Editar semana",
+    saveWeek: "Salvar semana",
+    weekSavedSummary: "Semana salva - {count} dias salvos",
     deleteExercise: "Excluir exercício",
     objective: "Objetivo",
     startImage: "Imagem inicial",
@@ -952,9 +969,9 @@ const translations = {
     loadingRoutine: "Carregando rotina...",
     adminRulesNotice: "Você entrou como admin. Para editar rotinas, publique as novas regras do Firestore.",
     userLoadError: "Não foi possível carregar seu usuário. Revise o Firestore.",
-    uploadingImage: "Enviando imagem...",
-    imageLoaded: "Imagem carregada. Toque em Salvar rotina para salvar a alteração.",
-    imageStoredInRoutine: "Firebase Storage falhou, mas salvei a imagem comprimida dentro da rotina.",
+    uploadingImage: "Salvando imagem...",
+    imageLoaded: "Imagem comprimida e salva na rotina.",
+    imageStoredInRoutine: "Imagem comprimida e salva na rotina.",
     updatingUser: "Atualizando usuário...",
     assignedRoutine: "Rotina atribuída ao usuário.",
     userWithoutRoutine: "Usuário sem rotina atribuída.",
@@ -988,7 +1005,7 @@ const translations = {
     firestoreUnavailable: "Firestore não está disponível agora. Revise conexão ou configuração.",
     networkFailed: "Sem conexão. Tente novamente.",
     actionFailed: "Não foi possível concluir a ação{code}.",
-    storageNotReady: "Firebase Storage não está inicializado.",
+    storageNotReady: "O salvamento de imagens usa Firestore, nao Firebase Storage.",
     selectImageFile: "Selecione um arquivo de imagem."
   }
 };
@@ -1361,8 +1378,13 @@ function startTrainerInvitesListener() {
       const accepted = state.trainerInvites.filter((invite) => invite.status === "accepted" && invite.studentId);
       const students = await Promise.all(
         accepted.map(async (invite) => {
-          const studentDoc = await db.collection("users").doc(invite.studentId).get();
-          return studentDoc.exists ? { uid: studentDoc.id, inviteId: invite.id, ...studentDoc.data() } : null;
+          try {
+            const studentDoc = await db.collection("users").doc(invite.studentId).get();
+            return studentDoc.exists ? { uid: studentDoc.id, inviteId: invite.id, ...studentDoc.data() } : null;
+          } catch (error) {
+            console.warn("No se pudo cargar un alumno aceptado.", error);
+            return null;
+          }
         })
       );
       state.adminUsers = students
@@ -1722,7 +1744,13 @@ async function applyUserData(userData) {
   startStudentInvitesListener();
 
   const routineId = userData.routineId || "";
-  const firestoreRoutine = routineId ? await loadRoutineFromFirestore(routineId) : null;
+  let firestoreRoutine = null;
+  try {
+    firestoreRoutine = routineId ? await loadRoutineFromFirestore(routineId) : null;
+  } catch (error) {
+    console.warn("No se pudo cargar la rutina asignada.", error);
+    setAuthMessage(getAuthErrorMessage(error), "error");
+  }
   if (firestoreRoutine) {
     routines[firestoreRoutine.id] = firestoreRoutine;
   }
@@ -1750,7 +1778,8 @@ function startCurrentUserListener(user) {
         await applyUserData(snapshot.data());
       } catch (error) {
         console.error("User data refresh error:", error);
-        showAuthScreen(getAuthErrorMessage(error));
+        setAuthMessage(getAuthErrorMessage(error), "error");
+        selectRoutine("pending");
       }
     },
     (error) => {
@@ -2046,22 +2075,9 @@ function getFileExtension(file) {
   return mimeExtension.replace(/[^a-z0-9]/g, "") || "jpg";
 }
 
-async function uploadExerciseImage(file, exerciseKey, imageIndex) {
-  if (!storage) throw new Error(t("storageNotReady"));
+async function createExerciseImageDataUrl(file) {
   if (!file?.type?.startsWith("image/")) throw new Error(t("selectImageFile"));
-  const routineId = state.adminDraft?.id || adminRoutineId.value || "rutina";
-  const slot = imageIndex === 0 ? "start" : "end";
-  const extension = getFileExtension(file);
-  const path = `routines/${slugify(routineId)}/exercises/${slugify(exerciseKey)}/${slot}-${Date.now()}.${extension}`;
-  const snapshot = await storage.ref(path).put(file, {
-    contentType: file.type,
-    customMetadata: {
-      routineId: slugify(routineId),
-      exerciseKey,
-      slot
-    }
-  });
-  return snapshot.ref.getDownloadURL();
+  return compressImageFile(file);
 }
 
 function setAdminMessage(message, type = "") {
@@ -2208,13 +2224,13 @@ return `
     <div class="admin-card-title">
       <div>
         <h4>${escapeHtml(day.title || t("dayNumber", { number: dayIndex + 1 }))}</h4>
-        <small>${(day.exercises || []).length} ejercicios guardados</small>
+        <small>${t("savedExercisesCount", { count: (day.exercises || []).length })}</small>
       </div>
 
       <div class="admin-row-actions">
         ${isDayCollapsed
-          ? `<button class="secondary-button" type="button" data-admin-action="edit-day">Editar día</button>`
-          : `<button class="primary-button" type="button" data-admin-action="save-day">Guardar día</button>`
+          ? `<button class="secondary-button" type="button" data-admin-action="edit-day">${t("editDay")}</button>`
+          : `<button class="primary-button" type="button" data-admin-action="save-day">${t("saveDay")}</button>`
         }
         <button class="danger-button" type="button" data-admin-action="delete-day">${t("deleteDay")}</button>
       </div>
@@ -2246,14 +2262,14 @@ return `
             </div>
             <div class="admin-row-actions">
   ${isWeekCollapsed
-  ? `<button class="secondary-button" type="button" data-admin-action="edit-week">Editar semana</button>`
-  : `<button class="primary-button" type="button" data-admin-action="save-week">Guardar semana</button>`
+  ? `<button class="secondary-button" type="button" data-admin-action="edit-week">${t("editWeek")}</button>`
+  : `<button class="primary-button" type="button" data-admin-action="save-week">${t("saveWeek")}</button>`
 }
   <button class="danger-button" type="button" data-admin-action="delete-week">${t("deleteWeek")}</button>
 </div>
           ${isWeekCollapsed ? `
   <div class="empty-state">
-    Semana guardada - ${(week.days || []).length} días guardados
+    ${t("weekSavedSummary", { count: (week.days || []).length })}
   </div>
 ` : `
   <div class="admin-exercise-grid">
@@ -2653,42 +2669,26 @@ adminWeeks.addEventListener("change", async (event) => {
   const exerciseKey = exerciseContainer?.dataset.exerciseKey;
   const imageIndex = Number(input.dataset.imageUpload);
   if (!exerciseKey || Number.isNaN(imageIndex)) return;
-
   setAdminMessage(t("uploadingImage"));
 
   try {
     const exercise = state.adminDraft.exerciseLibrary[exerciseKey];
 
     if (!exercise) {
-      throw new Error("No se encontró el ejercicio para guardar la imagen");
+      throw new Error("No se encontro el ejercicio para guardar la imagen");
     }
 
-    const localPreviewUrl = await compressImageFile(file);
+    const imageDataUrl = await createExerciseImageDataUrl(file);
     exercise.images = Array.isArray(exercise.images) ? exercise.images : ["", ""];
-    exercise.images[imageIndex] = localPreviewUrl;
-    state.adminEditingExerciseKey = exerciseKey;
-    renderAdminPanel();
-
-    let url = "";
-    let usedFirestoreFallback = false;
-
-    try {
-      url = await uploadExerciseImage(file, exerciseKey, imageIndex);
-    } catch (storageError) {
-      console.warn("Firebase Storage upload failed. Using compressed Firestore image fallback.", storageError);
-      url = localPreviewUrl;
-      usedFirestoreFallback = true;
-    }
-
-    exercise.images[imageIndex] = url;
+    exercise.images[imageIndex] = imageDataUrl;
     state.adminEditingExerciseKey = exerciseKey;
 
     await saveAdminDraftAndAssignment();
 
-    setAdminMessage(usedFirestoreFallback ? t("imageStoredInRoutine") : t("imageLoaded"), "success");
+    setAdminMessage(t("imageLoaded"), "success");
     renderAdminPanel();
   } catch (error) {
-    setAdminMessage(`${getAuthErrorMessage(error)} ${error?.message || ""}`.trim(), "error");
+    setAdminMessage((getAuthErrorMessage(error) + " " + (error?.message || "")).trim(), "error");
   } finally {
     input.value = "";
   }
@@ -3144,7 +3144,6 @@ if (!window.firebase || !isFirebaseConfigured()) {
 } else {
   firebase.initializeApp(window.FIREBASE_CONFIG);
   db = firebase.firestore(firebase.app());
-  storage = firebase.storage(firebase.app());
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
       handleAuthenticatedUser(user);

@@ -21,13 +21,13 @@
     <section class="routine-select screen-transition" id="routineSelect">
       <div class="routine-select-panel">
         <span class="kicker" data-i18n="privateAccess">Acceso privado</span>
-        <h1 data-i18n="loginTitle">Iniciar sesiÃ³n</h1>
+        <h1 data-i18n="loginTitle">Iniciar sesión</h1>
         <label class="language-picker" for="languageSelect">
           <span data-i18n="languageLabel">Idioma</span>
           <select id="languageSelect" aria-label="Idioma">
-            <option value="es">EspaÃ±ol ðŸ‡ªðŸ‡¸</option>
-            <option value="en">English ðŸ‡¬ðŸ‡§</option>
-            <option value="pt">PortuguÃªs ðŸ‡§ðŸ‡·</option>
+            <option value="es">Español</option>
+            <option value="en">English</option>
+            <option value="pt">Português</option>
           </select>
         </label>
         <form class="auth-form" id="authForm">
@@ -36,12 +36,12 @@
             <input id="authEmail" type="email" placeholder="tu@email.com" autocomplete="email" required />
           </label>
           <label class="search-box" for="authPassword">
-            <span data-i18n="password">ContraseÃ±a</span>
-            <input id="authPassword" type="password" placeholder="MÃ­nimo 6 caracteres" data-i18n-placeholder="passwordPlaceholder" autocomplete="current-password" required />
+            <span data-i18n="password">Contraseña</span>
+            <input id="authPassword" type="password" placeholder="Mínimo 6 caracteres" data-i18n-placeholder="passwordPlaceholder" autocomplete="current-password" required />
           </label>
           <label class="remember-session" for="rememberSession">
             <input id="rememberSession" type="checkbox" />
-            <span data-i18n="rememberSession">Mantener sesiÃ³n iniciada</span>
+            <span data-i18n="rememberSession">Mantener sesión iniciada</span>
           </label>
           <label class="search-box account-role-field" for="accountRole">
             <span data-i18n="accountType">Tipo de cuenta</span>
@@ -51,10 +51,10 @@
             </select>
           </label>
           <div class="auth-actions">
-            <button class="primary-button" id="loginButton" type="submit" data-i18n="loginButton">Iniciar sesiÃ³n</button>
+            <button class="primary-button" id="loginButton" type="submit" data-i18n="loginButton">Iniciar sesión</button>
             <button class="secondary-button" id="registerButton" type="button" data-i18n="createAccount">Crear cuenta</button>
           </div>
-          <button class="link-button" id="resetPasswordButton" type="button" data-i18n="resetPassword">Recuperar contraseÃ±a por mail</button>
+          <button class="link-button" id="resetPasswordButton" type="button" data-i18n="resetPassword">Recuperar contraseña por mail</button>
           <p class="auth-message" id="authMessage" role="status" aria-live="polite"></p>
         </form>
       </div>
@@ -63,11 +63,11 @@
     <header class="app-header screen-transition is-hidden" id="appHeader">
       <div class="brand-block">
         <span class="kicker">12 semanas</span>
-        <h1>Rutina PreparaciÃ³n FÃ­sica MMA</h1>
+        <h1>Rutina Preparación Física MMA</h1>
         <p class="user-greeting" id="userGreeting"></p>
       </div>
       <button class="admin-toggle is-hidden" id="adminToggle" type="button" data-i18n="admin">Admin</button>
-      <button class="change-routine-button" id="changeRoutine" type="button" data-i18n="logout">Cerrar sesiÃ³n</button>
+      <button class="change-routine-button" id="changeRoutine" type="button" data-i18n="logout">Cerrar sesión</button>
       <div class="progress-ring" aria-label="Progreso total" data-i18n-aria-label="totalProgress">
         <span id="progressPercent">0%</span>
         <small data-i18n="doneShort">hecho</small>
@@ -81,8 +81,8 @@
       <section class="weeks" id="weeksContainer" aria-live="polite"></section>
 
       <section class="routine-placeholder is-hidden" id="routinePlaceholder" aria-live="polite">
-        <h2 data-i18n="routineInPreparation">Rutina en preparaciÃ³n</h2>
-        <p data-i18n="comingSoon">PrÃ³ximamente</p>
+        <h2 data-i18n="routineInPreparation">Rutina en preparación</h2>
+        <p data-i18n="comingSoon">Próximamente</p>
       </section>
 
       <section class="admin-panel is-hidden" id="adminPanel" aria-live="polite">
@@ -131,7 +131,7 @@
             <input id="adminRoutineName" type="text" placeholder="Dario" autocomplete="off" />
           </label>
           <label class="search-box" for="adminRoutineTitle">
-            <span data-i18n="title">TÃ­tulo</span>
+            <span data-i18n="title">Título</span>
             <input id="adminRoutineTitle" type="text" placeholder="RutFit" autocomplete="off" />
           </label>
           <label class="search-box" for="adminRoutineKicker">
@@ -155,7 +155,7 @@
 
     <div class="modal" id="exerciseModal" aria-hidden="true" role="dialog" aria-modal="true">
       <div class="modal-panel">
-        <button class="icon-button close-modal" id="closeModal" type="button" aria-label="Cerrar detalle" data-i18n-aria-label="closeDetail">Ã—</button>
+        <button class="icon-button close-modal" id="closeModal" type="button" aria-label="Cerrar detalle" data-i18n-aria-label="closeDetail">×</button>
 
         <div class="modal-hero">
           <span class="exercise-tag" id="modalObjective"></span>
@@ -166,11 +166,11 @@
         <div class="image-grid">
           <figure>
             <img id="modalImageStart" src="" alt="" />
-            <figcaption data-i18n="startPosition">PosiciÃ³n inicial / bajada</figcaption>
+            <figcaption data-i18n="startPosition">Posición inicial / bajada</figcaption>
           </figure>
           <figure>
             <img id="modalImageEnd" src="" alt="" />
-            <figcaption data-i18n="endPosition">PosiciÃ³n final / subida</figcaption>
+            <figcaption data-i18n="endPosition">Posición final / subida</figcaption>
           </figure>
         </div>
 
@@ -190,7 +190,7 @@
         </div>
 
         <section class="detail-section">
-          <h3 data-i18n="technique">TÃ©cnica</h3>
+          <h3 data-i18n="technique">Técnica</h3>
           <p id="modalTechnique"></p>
         </section>
 
@@ -213,7 +213,6 @@
     <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-storage-compat.js"></script>
     <script src="firebase-config.js"></script>
     <script src="script.js"></script>
     <script>
