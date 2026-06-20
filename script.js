@@ -1821,26 +1821,27 @@ function renderApp() {
   if (!routine) {
     return;
   }
+  const trainerDashboardOnly = state.isTrainer && !state.isAdmin && state.selectedRoutine === "pending";
 
   routineSelect.classList.add("is-hidden");
   appHeader.classList.remove("is-hidden");
   appMain.classList.remove("is-hidden");
-  appKicker.textContent = routine.kicker;
-  appTitle.textContent = routine.title;
+  appKicker.textContent = trainerDashboardOnly ? t("trainer") : routine.kicker;
+  appTitle.textContent = trainerDashboardOnly ? t("students") : routine.title;
   const displayName = state.currentUserData?.displayName || getDisplayNameFromEmail(state.currentUser?.email || "");
   userGreeting.textContent = displayName ? t("hello", { name: displayName }) : "";
   adminToggle.textContent = state.isAdmin ? t("admin") : t("students");
   adminToggle.classList.toggle("is-hidden", !canManageStudents());
-  adminPanel.classList.toggle("is-hidden", !canManageStudents() || !state.adminPanelOpen);
-  if (canManageStudents() && state.adminPanelOpen) {
+  adminPanel.classList.toggle("is-hidden", !canManageStudents() || (!state.adminPanelOpen && !trainerDashboardOnly));
+  if (canManageStudents() && (state.adminPanelOpen || trainerDashboardOnly)) {
     renderAdminPanel();
   }
   renderStudentInvites();
 
-  const hasPlan = routine.plan.length > 0;
+  const hasPlan = routine.plan.length > 0 && !trainerDashboardOnly;
   summaryStrip.classList.toggle("is-hidden", !hasPlan);
   weeksContainer.classList.toggle("is-hidden", !hasPlan);
-  routinePlaceholder.classList.toggle("is-hidden", hasPlan);
+  routinePlaceholder.classList.toggle("is-hidden", hasPlan || trainerDashboardOnly);
   progressRing.classList.toggle("is-hidden", !hasPlan);
 
   if (hasPlan) {
