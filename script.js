@@ -1594,9 +1594,23 @@ function setActiveView(view) {
 }
 
 function openAcceptedStudentsForAssignment() {
+  const timestampValue = (value) => {
+    if (!value) return 0;
+    if (typeof value.toMillis === "function") return value.toMillis();
+    if (typeof value.seconds === "number") return value.seconds * 1000;
+    return 0;
+  };
+  const acceptedInvites = state.trainerInvites
+    .filter((invite) => invite.status === "accepted" && invite.studentId)
+    .sort((a, b) =>
+      timestampValue(a.acceptedAt || a.updatedAt || a.createdAt) -
+      timestampValue(b.acceptedAt || b.updatedAt || b.createdAt)
+    );
+  const lastAcceptedId = acceptedInvites[acceptedInvites.length - 1]?.studentId || "";
+  const fallbackId = state.adminUsers[state.adminUsers.length - 1]?.uid || "";
   state.activeView = "students";
   state.adminPanelOpen = canManageStudents();
-  state.selectedAdminUserId = state.adminUsers[0]?.uid || "";
+  state.selectedAdminUserId = lastAcceptedId || fallbackId;
   state.adminEditorMode = "";
   state.pendingAssignUserId = "";
   state.adminEditingExerciseKey = "";
@@ -1605,9 +1619,16 @@ function openAcceptedStudentsForAssignment() {
   renderApp();
 }
 
-function createRoutineIdForUser(user) {
-  const baseName = user?.displayName || getDisplayNameFromEmail(user?.email || "") || "usuario";
-  return slugify(`rutina-${baseName}-${Date.now()}`);
+function getNextRoutineNumber() {
+  const numbers = getAdminRoutineIds()
+    .map((id) => routines[id]?.name || "")
+    .map((name) => Number(String(name).match(/^Rutina\s+(\d+)$/i)?.[1] || 0))
+    .filter(Boolean);
+  return numbers.length ? Math.max(...numbers) + 1 : getAdminRoutineIds().length + 1;
+}
+
+function createRoutineDraftId(number = getNextRoutineNumber()) {
+  return slugify(`rutina-${number}-${Date.now()}`);
 }
 
 function renderStudentInvites() {
@@ -2868,6 +2889,9 @@ adminUsers.addEventListener("change", async (event) => {
   setAdminMessage(t("updatingUser"));
   try {
     await updateUserRoutine(uid, select.value);
+    state.adminUsers = state.adminUsers.map((user) =>
+      user.uid === uid ? { ...user, routineId: select.value } : user
+    );
     if (state.pendingAssignUserId === uid || state.selectedAdminUserId === uid) {
       state.adminEditorMode = "";
       state.pendingAssignUserId = "";
@@ -2935,12 +2959,14 @@ adminUsers.addEventListener("click", async (event) => {
     if (!uid || !user) return;
 
     if (actionButton.dataset.userAction === "add-routine") {
-      const routineId = createRoutineIdForUser(user);
+      const routineNumber = getNextRoutineNumber();
+      const routineId = createRoutineDraftId(routineNumber);
       state.selectedAdminUserId = uid;
       state.pendingAssignUserId = uid;
       state.adminEditorMode = "create";
       state.adminEditingExerciseKey = "";
       state.adminDraft = createEmptyRoutine(routineId);
+      state.adminDraft.name = `Rutina ${routineNumber}`;
       setAdminMessage(t("newRoutinePreparedAssign"), "success");
       renderAdminPanel();
       return;
@@ -3040,10 +3066,12 @@ adminAddWeek.addEventListener("click", () => {
 
 adminNewRoutine.addEventListener("click", () => {
   const user = getAdminUser(state.selectedAdminUserId);
-  const routineId = user ? createRoutineIdForUser(user) : `rutina-${Date.now()}`;
+  const routineNumber = getNextRoutineNumber();
+  const routineId = createRoutineDraftId(routineNumber);
   state.pendingAssignUserId = user?.uid || "";
   state.adminEditorMode = user ? "create" : "edit";
   state.adminDraft = createEmptyRoutine(routineId);
+  state.adminDraft.name = `Rutina ${routineNumber}`;
   state.adminRoutineId = state.adminDraft.id;
   setAdminMessage(user ? t("newRoutinePreparedAssign") : t("newRoutinePrepared"), "success");
   renderAdminPanel();
