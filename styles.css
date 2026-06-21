@@ -769,7 +769,9 @@ main {
 
 .student-invites,
 .trainer-tools,
-.invite-card {
+.invite-card,
+.account-panel,
+.student-panel-card {
   display: grid;
   gap: 0.85rem;
 }
@@ -778,13 +780,53 @@ main {
   margin-bottom: 1rem;
 }
 
+.student-panel-card {
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  border-radius: 18px;
+  padding: 0.9rem;
+  background: rgba(30, 41, 59, 0.72);
+}
+
 .invite-card,
-.trainer-tools {
+.trainer-tools,
+.account-card {
   border: 1px solid var(--line);
   border-radius: 18px;
   padding: 1rem;
   background: linear-gradient(145deg, rgba(30, 41, 59, 0.82), rgba(15, 23, 42, 0.9));
   box-shadow: var(--shadow);
+}
+
+.account-card strong,
+.account-card span,
+.account-card small,
+.invite-card span {
+  display: block;
+  overflow-wrap: anywhere;
+}
+
+.account-card span,
+.invite-card span,
+.account-help {
+  color: var(--muted);
+}
+
+.account-card small,
+.student-role-pill {
+  width: fit-content;
+  margin-top: 0.4rem;
+  border: 1px solid rgba(167, 139, 250, 0.32);
+  border-radius: 999px;
+  padding: 0.2rem 0.55rem;
+  color: var(--soft);
+  font-size: 0.68rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.account-help {
+  margin: 0;
+  font-size: 0.88rem;
 }
 
 .invite-card small,

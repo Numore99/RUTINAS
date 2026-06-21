@@ -428,6 +428,7 @@ const resetPasswordButton = document.querySelector("#resetPasswordButton");
 const authMessage = document.querySelector("#authMessage");
 const routinePlaceholder = document.querySelector("#routinePlaceholder");
 const studentInvitesPanel = document.querySelector("#studentInvitesPanel");
+const accountPanel = document.querySelector("#accountPanel");
 const trainerHome = document.querySelector("#trainerHome");
 const weeksContainer = document.querySelector("#weeksContainer");
 const summaryStrip = document.querySelector("#summaryStrip");
@@ -518,6 +519,14 @@ const translations = {
     sendInvite: "Enviar solicitud",
     pendingInvites: "Solicitudes pendientes",
     acceptedStudents: "Alumnos aceptados",
+    routinesNav: "Rutinas",
+    professorsNav: "Profesores",
+    accountNav: "Cuenta",
+    yourProfessors: "Tus profesores",
+    acceptedProfessors: "Profesores aceptados",
+    noProfessors: "Todavía no tienes profesores aceptados.",
+    accountPanelTitle: "Cuenta",
+    accountPanelHelp: "Gestiona tu sesión en RutFit.",
     noStudents: "Todavía no tienes alumnos aceptados.",
     noPendingInvites: "No hay solicitudes pendientes.",
     inviteSent: "Solicitud enviada. El alumno la verá al crear cuenta o iniciar sesión.",
@@ -699,6 +708,14 @@ const translations = {
     sendInvite: "Send request",
     pendingInvites: "Pending requests",
     acceptedStudents: "Accepted students",
+    routinesNav: "Routines",
+    professorsNav: "Trainers",
+    accountNav: "Account",
+    yourProfessors: "Your trainers",
+    acceptedProfessors: "Accepted trainers",
+    noProfessors: "You do not have accepted trainers yet.",
+    accountPanelTitle: "Account",
+    accountPanelHelp: "Manage your RutFit session.",
     noStudents: "You do not have accepted students yet.",
     noPendingInvites: "There are no pending requests.",
     inviteSent: "Request sent. The student will see it after creating an account or signing in.",
@@ -880,6 +897,14 @@ const translations = {
     sendInvite: "Enviar solicitação",
     pendingInvites: "Solicitações pendentes",
     acceptedStudents: "Alunos aceitos",
+    routinesNav: "Rotinas",
+    professorsNav: "Professores",
+    accountNav: "Conta",
+    yourProfessors: "Seus professores",
+    acceptedProfessors: "Professores aceitos",
+    noProfessors: "Você ainda não tem professores aceitos.",
+    accountPanelTitle: "Conta",
+    accountPanelHelp: "Gerencie sua sessão no RutFit.",
     noStudents: "Você ainda não tem alunos aceitos.",
     noPendingInvites: "Não há solicitações pendentes.",
     inviteSent: "Solicitação enviada. O aluno verá ao criar conta ou entrar.",
@@ -1422,14 +1447,14 @@ function startStudentInvitesListener() {
   const email = normalizeEmail(state.currentUser.email);
   unsubscribeStudentInvites = db.collection("trainerInvitations").where("studentEmail", "==", email).onSnapshot(
     (snapshot) => {
-      state.studentInvites = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })).filter((invite) => invite.status === "pending");
-      renderStudentInvites();
-      if (canManageStudents()) renderApp();
+      state.studentInvites = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+      renderStudentProfessorsPanel();
+      renderApp();
     },
     (error) => {
       console.error("Student invites listener error:", error);
       state.studentInvites = [];
-      renderStudentInvites();
+      renderStudentProfessorsPanel();
     }
   );
 }
@@ -1508,8 +1533,10 @@ async function respondToTrainerInvitation(inviteId, accepted) {
       { merge: true }
     );
   }
-  state.studentInvites = state.studentInvites.filter((item) => item.id !== inviteId);
-  renderStudentInvites();
+  state.studentInvites = accepted
+    ? state.studentInvites.map((item) => (item.id === inviteId ? { ...item, status: "accepted" } : item))
+    : state.studentInvites.filter((item) => item.id !== inviteId);
+  renderStudentProfessorsPanel();
   return { ...invite, status: accepted ? "accepted" : "declined" };
 }
 
@@ -1635,16 +1662,16 @@ function createRoutineDraftId(number = getNextRoutineNumber()) {
   return slugify(`rutina-${number}-${Date.now()}`);
 }
 
-function renderStudentInvites() {
+function renderStudentProfessorsPanel() {
   if (!studentInvitesPanel) return;
   const invites = state.studentInvites || [];
-  studentInvitesPanel.classList.toggle("is-hidden", !invites.length);
-  if (!invites.length) {
-    studentInvitesPanel.innerHTML = "";
-    return;
-  }
-  studentInvitesPanel.innerHTML = invites
-    .map((invite) => {
+  const pendingInvites = invites.filter((invite) => invite.status === "pending");
+  const acceptedInvites = invites.filter((invite) => invite.status === "accepted");
+  const pendingHtml = pendingInvites.length
+    ? `
+      <div class="home-section-title">${t("pendingInvites")}</div>
+      ${pendingInvites
+        .map((invite) => {
       const trainerName = invite.trainerName || invite.trainerEmail || t("trainer");
       return `
         <article class="invite-card" data-invite-id="${escapeHtml(invite.id)}">
@@ -1660,7 +1687,36 @@ function renderStudentInvites() {
         </article>
       `;
     })
-    .join("");
+        .join("")}
+    `
+    : `<div class="empty-state">${t("noPendingInvites")}</div>`;
+  const acceptedHtml = acceptedInvites.length
+    ? `
+      <div class="home-section-title">${t("acceptedProfessors")}</div>
+      ${acceptedInvites
+        .map((invite) => {
+          const trainerName = invite.trainerName || invite.trainerEmail || t("trainer");
+          return `
+            <article class="invite-card">
+              <div>
+                <strong>${escapeHtml(trainerName)}</strong>
+                <span>${escapeHtml(invite.trainerEmail || "")}</span>
+              </div>
+              <span class="student-role-pill">${t("trainer")}</span>
+            </article>
+          `;
+        })
+        .join("")}
+    `
+    : `<div class="empty-state">${t("noProfessors")}</div>`;
+
+  studentInvitesPanel.innerHTML = `
+    <section class="student-panel-card">
+      <div class="home-section-title">${t("yourProfessors")}</div>
+      ${pendingHtml}
+      ${acceptedHtml}
+    </section>
+  `;
 }
 
 function renderTrainerInviteTools() {
@@ -1947,7 +2003,14 @@ function renderApp() {
     return;
   }
   const managerMode = canManageStudents();
+  if (managerMode && !["home", "students", "routines", "account"].includes(state.activeView)) {
+    state.activeView = "home";
+  }
+  if (!managerMode && !["routines", "professors", "account"].includes(state.activeView)) {
+    state.activeView = "routines";
+  }
   const trainerDashboardOnly = managerMode && ["home", "students", "routines", "account"].includes(state.activeView);
+  const studentMode = !managerMode;
 
   routineSelect.classList.add("is-hidden");
   appHeader.classList.remove("is-hidden");
@@ -1959,7 +2022,7 @@ function renderApp() {
   userGreeting.textContent = displayName ? t("hello", { name: displayName }) : "";
   adminToggle.textContent = state.isAdmin ? t("admin") : t("students");
   adminToggle.classList.add("is-hidden");
-  bottomNav?.classList.toggle("is-hidden", !managerMode);
+  bottomNav?.classList.remove("is-hidden");
   renderBottomNav();
 
   const showAdminPanel = managerMode && ["students", "routines"].includes(state.activeView);
@@ -1968,20 +2031,23 @@ function renderApp() {
   if (showAdminPanel) {
     renderAdminPanel();
   }
-  renderStudentInvites();
+  renderStudentProfessorsPanel();
 
   trainerHome?.classList.toggle("is-hidden", !(managerMode && state.activeView === "home"));
   if (managerMode && state.activeView === "home") renderTrainerHome();
-  studentInvitesPanel?.classList.toggle("is-hidden", !(state.activeView === "students" && state.studentInvites.length));
+  studentInvitesPanel?.classList.toggle("is-hidden", !(studentMode && state.activeView === "professors"));
 
-  const showAccount = managerMode && state.activeView === "account";
-  changeRoutine.classList.toggle("is-hidden", managerMode && !showAccount);
-  progressRing.classList.toggle("is-hidden", managerMode || !(routine.plan.length > 0));
+  const showAccount = state.activeView === "account";
+  renderAccountPanel();
+  accountPanel?.classList.toggle("is-hidden", !showAccount);
+  changeRoutine.classList.add("is-hidden");
+  progressRing.classList.toggle("is-hidden", showAccount || managerMode || state.activeView !== "routines" || !(routine.plan.length > 0));
 
-  const hasPlan = routine.plan.length > 0 && !trainerDashboardOnly;
+  const showRoutineView = studentMode && state.activeView === "routines";
+  const hasPlan = routine.plan.length > 0 && showRoutineView;
   summaryStrip.classList.toggle("is-hidden", !hasPlan);
   weeksContainer.classList.toggle("is-hidden", !hasPlan);
-  routinePlaceholder.classList.toggle("is-hidden", hasPlan || trainerDashboardOnly);
+  routinePlaceholder.classList.toggle("is-hidden", hasPlan || !showRoutineView);
 
   if (hasPlan) {
     renderPlan();
@@ -1994,9 +2060,46 @@ function renderApp() {
 
 function renderBottomNav() {
   if (!bottomNav) return;
+  const items = canManageStudents()
+    ? [
+        ["home", "Inicio"],
+        ["students", t("students")],
+        ["routines", t("routinesNav")],
+        ["account", t("accountNav")]
+      ]
+    : [
+        ["routines", t("routinesNav")],
+        ["professors", t("professorsNav")],
+        ["account", t("accountNav")]
+      ];
+  bottomNav.style.gridTemplateColumns = `repeat(${items.length}, 1fr)`;
+  bottomNav.innerHTML = items
+    .map(([view, label]) => `<button type="button" data-view="${view}">${label}</button>`)
+    .join("");
   bottomNav.querySelectorAll("[data-view]").forEach((button) => {
     button.classList.toggle("active", button.dataset.view === state.activeView);
   });
+}
+
+function renderAccountPanel() {
+  if (!accountPanel) return;
+  const email = state.currentUser?.email || "";
+  const displayName = state.currentUserData?.displayName || getDisplayNameFromEmail(email);
+  const role = state.isAdmin ? t("admin") : state.isTrainer ? t("trainer") : t("student");
+  accountPanel.innerHTML = `
+    <section class="student-panel-card">
+      <div class="home-section-title">${t("accountPanelTitle")}</div>
+      <article class="account-card">
+        <div>
+          <strong>${escapeHtml(displayName || t("user"))}</strong>
+          <span>${escapeHtml(email || t("noEmail"))}</span>
+          <small>${escapeHtml(role)}</small>
+        </div>
+      </article>
+      <p class="account-help">${t("accountPanelHelp")}</p>
+      <button class="primary-button" type="button" data-account-logout>${t("logout")}</button>
+    </section>
+  `;
 }
 
 function getPhase(weekNumber) {
@@ -3059,6 +3162,11 @@ bottomNav?.addEventListener("click", (event) => {
   const button = event.target.closest("[data-view]");
   if (!button) return;
   setActiveView(button.dataset.view);
+});
+
+accountPanel?.addEventListener("click", async (event) => {
+  if (!event.target.closest("[data-account-logout]")) return;
+  await firebase.auth().signOut();
 });
 
 trainerHome?.addEventListener("click", (event) => {
