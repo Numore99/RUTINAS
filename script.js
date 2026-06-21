@@ -527,6 +527,19 @@ const translations = {
     noProfessors: "Todavía no tienes profesores aceptados.",
     accountPanelTitle: "Cuenta",
     accountPanelHelp: "Gestiona tu sesión en RutFit.",
+    profile: "Perfil",
+    editProfile: "Editar perfil",
+    saveProfile: "Guardar perfil",
+    profileSaved: "Perfil guardado.",
+    photo: "Foto",
+    changePhoto: "Cambiar foto",
+    weight: "Peso",
+    height: "Altura",
+    age: "Edad",
+    goal: "Objetivo",
+    memberSince: "Miembro desde",
+    trainerLabel: "Entrenador",
+    notCompleted: "Sin completar",
     noStudents: "Todavía no tienes alumnos aceptados.",
     noPendingInvites: "No hay solicitudes pendientes.",
     inviteSent: "Solicitud enviada. El alumno la verá al crear cuenta o iniciar sesión.",
@@ -716,6 +729,19 @@ const translations = {
     noProfessors: "You do not have accepted trainers yet.",
     accountPanelTitle: "Account",
     accountPanelHelp: "Manage your RutFit session.",
+    profile: "Profile",
+    editProfile: "Edit profile",
+    saveProfile: "Save profile",
+    profileSaved: "Profile saved.",
+    photo: "Photo",
+    changePhoto: "Change photo",
+    weight: "Weight",
+    height: "Height",
+    age: "Age",
+    goal: "Goal",
+    memberSince: "Member since",
+    trainerLabel: "Trainer",
+    notCompleted: "Not completed",
     noStudents: "You do not have accepted students yet.",
     noPendingInvites: "There are no pending requests.",
     inviteSent: "Request sent. The student will see it after creating an account or signing in.",
@@ -905,6 +931,19 @@ const translations = {
     noProfessors: "Você ainda não tem professores aceitos.",
     accountPanelTitle: "Conta",
     accountPanelHelp: "Gerencie sua sessão no RutFit.",
+    profile: "Perfil",
+    editProfile: "Editar perfil",
+    saveProfile: "Salvar perfil",
+    profileSaved: "Perfil salvo.",
+    photo: "Foto",
+    changePhoto: "Trocar foto",
+    weight: "Peso",
+    height: "Altura",
+    age: "Idade",
+    goal: "Objetivo",
+    memberSince: "Membro desde",
+    trainerLabel: "Treinador",
+    notCompleted: "Sem preencher",
     noStudents: "Você ainda não tem alunos aceitos.",
     noPendingInvites: "Não há solicitações pendentes.",
     inviteSent: "Solicitação enviada. O aluno verá ao criar conta ou entrar.",
@@ -1203,6 +1242,50 @@ function canManageUser(uid) {
 
 function getTrainerDisplayName() {
   return state.currentUserData?.displayName || getDisplayNameFromEmail(state.currentUser?.email || "") || t("trainer");
+}
+
+function getUserPhoto(user = {}) {
+  return user.photoDataUrl || user.photoUrl || "";
+}
+
+function getProfileInitials(user = {}) {
+  const source = user.displayName || user.email || "RF";
+  return source
+    .split(/[\s.@_-]+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0]?.toUpperCase() || "")
+    .join("") || "RF";
+}
+
+function renderUserAvatar(user = {}, className = "profile-avatar") {
+  const photo = getUserPhoto(user);
+  if (photo) {
+    return `<img class="${className}" src="${escapeHtml(photo)}" alt="${escapeHtml(user.displayName || t("profile"))}" />`;
+  }
+  return `<div class="${className} profile-avatar-empty">${escapeHtml(getProfileInitials(user))}</div>`;
+}
+
+function getProfileStats(user = {}) {
+  return [
+    user.weight ? `${user.weight} kg` : "",
+    user.height ? `${user.height} m` : "",
+    user.age ? `${user.age} años` : ""
+  ].filter(Boolean);
+}
+
+function formatMemberSince(value) {
+  if (!value) return t("notCompleted");
+  const date = typeof value.toDate === "function"
+    ? value.toDate()
+    : typeof value.seconds === "number"
+      ? new Date(value.seconds * 1000)
+      : new Date(value);
+  if (Number.isNaN(date.getTime())) return t("notCompleted");
+  return date.toLocaleDateString(state.language === "en" ? "en-US" : state.language === "pt" ? "pt-BR" : "es-ES", {
+    month: "long",
+    year: "numeric"
+  });
 }
 
 function getAuthErrorMessage(error) {
@@ -1788,6 +1871,7 @@ function renderAdminUsers() {
     ...visibleUsers
     .map((user) => {
       const displayName = user.displayName || getDisplayNameFromEmail(user.email || "");
+      const profileStats = getProfileStats(user);
       const currentRoutine = user.routineId || "";
       const currentRoutineName = currentRoutine && routines[currentRoutine]
         ? routines[currentRoutine].name || currentRoutine
@@ -1805,9 +1889,11 @@ function renderAdminUsers() {
       return `
         <article class="admin-user-card ${isOpen ? "open" : ""}" data-user-id="${escapeHtml(user.uid)}">
           <button class="admin-user-toggle" type="button" data-user-toggle aria-expanded="${isOpen}">
+            ${renderUserAvatar(user, "student-list-avatar")}
             <span class="admin-user-main">
               <strong>${escapeHtml(displayName || t("user"))}</strong>
               <span>${escapeHtml(user.email || t("noEmail"))}</span>
+              ${profileStats.length ? `<span>${profileStats.map(escapeHtml).join(" · ")}</span>` : ""}
               <small>${escapeHtml(user.role || "user")}</small>
             </span>
             <span class="admin-user-status">${escapeHtml(currentRoutineName)}</span>
@@ -1815,6 +1901,24 @@ function renderAdminUsers() {
           </button>
           ${isOpen ? `
             <div class="admin-user-panel">
+              <section class="student-profile-card">
+                <div class="home-section-title">${t("profile")}</div>
+                <div class="student-profile-head">
+                  ${renderUserAvatar(user)}
+                  <div>
+                    <strong>${escapeHtml(displayName || t("user"))}</strong>
+                    <p>${profileStats.length ? profileStats.map(escapeHtml).join(" · ") : t("notCompleted")}</p>
+                  </div>
+                </div>
+                <div class="student-profile-list">
+                  <span>${t("goal")}</span>
+                  <strong>${escapeHtml(user.goal || t("notCompleted"))}</strong>
+                  <span>${t("trainerLabel")}</span>
+                  <strong>${escapeHtml(getTrainerDisplayName())}</strong>
+                  <span>${t("memberSince")}</span>
+                  <strong>${escapeHtml(formatMemberSince(user.createdAt))}</strong>
+                </div>
+              </section>
               <label class="search-box admin-user-routine">
                 <span>${t("assignExistingRoutine")}</span>
                 <select data-user-routine>
@@ -2113,19 +2217,52 @@ function getNavIcon(view) {
 function renderAccountPanel() {
   if (!accountPanel) return;
   const email = state.currentUser?.email || "";
-  const displayName = state.currentUserData?.displayName || getDisplayNameFromEmail(email);
+  const userData = state.currentUserData || {};
+  const displayName = userData.displayName || getDisplayNameFromEmail(email);
   const role = state.isAdmin ? t("admin") : state.isTrainer ? t("trainer") : t("student");
+  const stats = getProfileStats(userData);
   accountPanel.innerHTML = `
     <section class="student-panel-card">
-      <div class="home-section-title">${t("accountPanelTitle")}</div>
-      <article class="account-card">
+      <div class="home-section-title">${t("profile")}</div>
+      <article class="profile-card">
+        ${renderUserAvatar(userData)}
         <div>
           <strong>${escapeHtml(displayName || t("user"))}</strong>
           <span>${escapeHtml(email || t("noEmail"))}</span>
           <small>${escapeHtml(role)}</small>
+          ${stats.length ? `<p>${stats.map(escapeHtml).join(" · ")}</p>` : ""}
         </div>
       </article>
+      <div class="profile-form">
+        <label class="search-box">
+          <span>${t("name")}</span>
+          <input type="text" data-profile-field="displayName" value="${escapeHtml(displayName || "")}" autocomplete="name" />
+        </label>
+        <div class="profile-grid">
+          <label class="search-box">
+            <span>${t("weight")}</span>
+            <input type="number" inputmode="decimal" data-profile-field="weight" value="${escapeHtml(userData.weight || "")}" placeholder="78" />
+          </label>
+          <label class="search-box">
+            <span>${t("height")}</span>
+            <input type="number" inputmode="decimal" step="0.01" data-profile-field="height" value="${escapeHtml(userData.height || "")}" placeholder="1.75" />
+          </label>
+          <label class="search-box">
+            <span>${t("age")}</span>
+            <input type="number" inputmode="numeric" data-profile-field="age" value="${escapeHtml(userData.age || "")}" placeholder="24" />
+          </label>
+        </div>
+        <label class="search-box">
+          <span>${t("goal")}</span>
+          <textarea data-profile-field="goal" rows="2" placeholder="${t("goal")}">${escapeHtml(userData.goal || "")}</textarea>
+        </label>
+        <label class="file-button profile-photo-button">
+          ${t("changePhoto")}
+          <input type="file" accept="image/*" data-profile-photo hidden />
+        </label>
+      </div>
       <p class="account-help">${t("accountPanelHelp")}</p>
+      <button class="secondary-button" type="button" data-profile-save>${t("saveProfile")}</button>
       <button class="primary-button" type="button" data-account-logout>${t("logout")}</button>
     </section>
   `;
@@ -2366,6 +2503,32 @@ function getFileExtension(file) {
 async function createExerciseImageDataUrl(file) {
   if (!file?.type?.startsWith("image/")) throw new Error(t("selectImageFile"));
   return compressImageFile(file);
+}
+
+async function createProfileImageDataUrl(file) {
+  if (!file?.type?.startsWith("image/")) throw new Error(t("selectImageFile"));
+  return compressImageFile(file, 360, 0.72);
+}
+
+function readProfileForm() {
+  const payload = {};
+  accountPanel?.querySelectorAll("[data-profile-field]").forEach((field) => {
+    payload[field.dataset.profileField] = field.value.trim();
+  });
+  return payload;
+}
+
+async function saveCurrentUserProfile(extra = {}) {
+  if (!state.currentUser?.uid) return;
+  const payload = {
+    ...readProfileForm(),
+    ...extra,
+    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+  };
+  await db.collection("users").doc(state.currentUser.uid).set(payload, { merge: true });
+  state.currentUserData = { ...(state.currentUserData || {}), ...payload };
+  setAuthMessage(t("profileSaved"), "success");
+  renderApp();
 }
 
 function setAdminMessage(message, type = "") {
@@ -3194,8 +3357,34 @@ bottomNav?.addEventListener("click", (event) => {
 });
 
 accountPanel?.addEventListener("click", async (event) => {
+  const saveButton = event.target.closest("[data-profile-save]");
+  if (saveButton) {
+    saveButton.disabled = true;
+    try {
+      await saveCurrentUserProfile();
+    } catch (error) {
+      setAuthMessage(`${getAuthErrorMessage(error)} ${error?.message || ""}`.trim(), "error");
+    } finally {
+      saveButton.disabled = false;
+    }
+    return;
+  }
   if (!event.target.closest("[data-account-logout]")) return;
   await firebase.auth().signOut();
+});
+
+accountPanel?.addEventListener("change", async (event) => {
+  const input = event.target.closest("[data-profile-photo]");
+  if (!input?.files?.[0]) return;
+  try {
+    setAuthMessage(t("uploadingImage"));
+    const photoDataUrl = await createProfileImageDataUrl(input.files[0]);
+    await saveCurrentUserProfile({ photoDataUrl });
+  } catch (error) {
+    setAuthMessage(`${getAuthErrorMessage(error)} ${error?.message || ""}`.trim(), "error");
+  } finally {
+    input.value = "";
+  }
 });
 
 trainerHome?.addEventListener("click", (event) => {
