@@ -1068,6 +1068,32 @@ main {
   font-weight: 900;
 }
 
+.admin-user-name-row {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-width: 0;
+}
+
+.user-delete-button {
+  display: inline-grid;
+  place-items: center;
+  width: 1.45rem;
+  height: 1.45rem;
+  flex: 0 0 auto;
+  border: 1px solid rgba(248, 113, 113, 0.42);
+  border-radius: 999px;
+  background: rgba(127, 29, 29, 0.36);
+  color: #fecaca;
+  font-size: 1rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.user-delete-button:disabled {
+  opacity: 0.5;
+}
+
 .admin-user-main span {
   color: var(--soft);
   font-size: 0.88rem;

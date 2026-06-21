@@ -655,6 +655,10 @@ const translations = {
     routineSavedAssigned: "Rutina guardada y asignada al usuario.",
     deleteRoutineConfirm: "¿Eliminar la rutina \"{name}\"?",
     routineDeleted: "Rutina eliminada.",
+    deleteUser: "Eliminar usuario",
+    deleteUserConfirm: "¿Eliminar el usuario \"{name}\" de RutFit?",
+    userDeleted: "Usuario eliminado.",
+    cannotDeleteSelf: "No puedes eliminar tu propio usuario admin desde aquí.",
     signingIn: "Ingresando...",
     creatingAccount: "Creando cuenta...",
     writeEmailForReset: "Escribe tu email para recuperar la contraseña.",
@@ -857,6 +861,10 @@ const translations = {
     routineSavedAssigned: "Routine saved and assigned to user.",
     deleteRoutineConfirm: "Delete routine \"{name}\"?",
     routineDeleted: "Routine deleted.",
+    deleteUser: "Delete user",
+    deleteUserConfirm: "Delete user \"{name}\" from RutFit?",
+    userDeleted: "User deleted.",
+    cannotDeleteSelf: "You cannot delete your own admin user here.",
     signingIn: "Signing in...",
     creatingAccount: "Creating account...",
     writeEmailForReset: "Enter your email to reset the password.",
@@ -1059,6 +1067,10 @@ const translations = {
     routineSavedAssigned: "Rotina salva e atribuída ao usuário.",
     deleteRoutineConfirm: "Excluir a rotina \"{name}\"?",
     routineDeleted: "Rotina excluída.",
+    deleteUser: "Excluir usuário",
+    deleteUserConfirm: "Excluir o usuário \"{name}\" do RutFit?",
+    userDeleted: "Usuário excluído.",
+    cannotDeleteSelf: "Você não pode excluir seu próprio usuário admin aqui.",
     signingIn: "Entrando...",
     creatingAccount: "Criando conta...",
     writeEmailForReset: "Digite seu email para recuperar a senha.",
@@ -1568,6 +1580,34 @@ async function updateUserRoutine(uid, routineId) {
   );
 }
 
+async function deleteRutfitUser(user) {
+  if (!state.isAdmin || !user?.uid) return;
+  if (user.uid === state.currentUser?.uid) {
+    throw new Error(t("cannotDeleteSelf"));
+  }
+  const batch = db.batch();
+  batch.delete(db.collection("users").doc(user.uid));
+
+  const invitationQueries = [
+    db.collection("trainerInvitations").where("studentId", "==", user.uid).get(),
+    db.collection("trainerInvitations").where("trainerId", "==", user.uid).get()
+  ];
+  if (user.email) {
+    invitationQueries.push(db.collection("trainerInvitations").where("studentEmail", "==", normalizeEmail(user.email)).get());
+  }
+  const snapshots = await Promise.all(invitationQueries);
+  const seen = new Set();
+  snapshots.forEach((snapshot) => {
+    snapshot.docs.forEach((doc) => {
+      if (seen.has(doc.id)) return;
+      seen.add(doc.id);
+      batch.delete(doc.ref);
+    });
+  });
+
+  await batch.commit();
+}
+
 async function createTrainerInvitation(studentEmail) {
   if (!state.isTrainer || state.isAdmin || !state.currentUser?.uid) return;
   const email = normalizeEmail(studentEmail);
@@ -1882,6 +1922,7 @@ function renderAdminUsers() {
       const displayName = user.displayName || getDisplayNameFromEmail(user.email || "");
       const profileStats = getProfileStats(user);
       const currentRoutine = user.routineId || "";
+      const canDeleteUser = state.isAdmin && user.uid !== state.currentUser?.uid;
       const currentRoutineName = currentRoutine && routines[currentRoutine]
         ? routines[currentRoutine].name || currentRoutine
         : currentRoutine
@@ -1900,7 +1941,10 @@ function renderAdminUsers() {
           <button class="admin-user-toggle ${isOpen ? "is-hidden" : ""}" type="button" data-user-toggle aria-expanded="${isOpen}">
             ${renderUserAvatar(user, "student-list-avatar")}
             <span class="admin-user-main">
-              <strong>${escapeHtml(displayName || t("user"))}</strong>
+              <span class="admin-user-name-row">
+                <strong>${escapeHtml(displayName || t("user"))}</strong>
+                ${canDeleteUser ? `<button class="user-delete-button" type="button" data-user-delete aria-label="${t("deleteUser")}">×</button>` : ""}
+              </span>
               <span>${escapeHtml(user.email || t("noEmail"))}</span>
               ${profileStats.length ? `<span>${profileStats.map(escapeHtml).join(" · ")}</span>` : ""}
               <small>${escapeHtml(user.role || "user")}</small>
@@ -1915,7 +1959,10 @@ function renderAdminUsers() {
                 <div class="student-profile-head">
                   ${renderUserAvatar(user)}
                   <div>
-                    <strong>${escapeHtml(displayName || t("user"))}</strong>
+                    <span class="admin-user-name-row">
+                      <strong>${escapeHtml(displayName || t("user"))}</strong>
+                      ${canDeleteUser ? `<button class="user-delete-button" type="button" data-user-delete aria-label="${t("deleteUser")}">×</button>` : ""}
+                    </span>
                     <p>${profileStats.length ? profileStats.map(escapeHtml).join(" · ") : t("notCompleted")}</p>
                   </div>
                 </div>
@@ -3257,6 +3304,36 @@ adminUsers.addEventListener("change", async (event) => {
 });
 
 adminUsers.addEventListener("click", async (event) => {
+  const deleteButton = event.target.closest("[data-user-delete]");
+  if (deleteButton) {
+    const card = deleteButton.closest("[data-user-id]");
+    const uid = card?.dataset.userId;
+    const user = getAdminUser(uid);
+    if (!uid || !user) return;
+    const name = user.displayName || user.email || uid;
+    const confirmed = await showConfirmDialog(t("deleteUserConfirm", { name }));
+    if (!confirmed) return;
+    deleteButton.disabled = true;
+    try {
+      await deleteRutfitUser(user);
+      state.adminUsers = state.adminUsers.filter((item) => item.uid !== uid);
+      if (state.selectedAdminUserId === uid) {
+        state.selectedAdminUserId = "";
+        state.adminEditorMode = "";
+        state.pendingAssignUserId = "";
+        state.adminEditingExerciseKey = "";
+        state.adminDraft = null;
+      }
+      setAdminMessage(t("userDeleted"), "success");
+      renderAdminPanel();
+    } catch (error) {
+      setAdminMessage(`${getAuthErrorMessage(error)} ${error?.message || ""}`.trim(), "error");
+    } finally {
+      deleteButton.disabled = false;
+    }
+    return;
+  }
+
   const trainerAction = event.target.closest("[data-trainer-action='invite']");
   if (trainerAction) {
     const input = adminUsers.querySelector("#trainerInviteEmail");
