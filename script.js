@@ -1910,7 +1910,6 @@ function renderAdminUsers() {
           </button>
           ${isOpen ? `
             <div class="admin-user-panel">
-              <button class="secondary-button compact-profile-back" type="button" data-user-toggle>← ${t("backToUsers").replace("← ", "")}</button>
               <section class="student-profile-card">
                 <div class="home-section-title">${t("profile")}</div>
                 <div class="student-profile-head">

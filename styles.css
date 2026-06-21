@@ -841,11 +841,6 @@ main {
   color: var(--success);
 }
 
-.compact-profile-back {
-  justify-content: center;
-  min-height: 2.45rem;
-}
-
 .profile-card,
 .student-profile-head {
   display: grid;
