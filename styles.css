@@ -2095,3 +2095,401 @@ body:has(.bottom-nav:not(.is-hidden)) main {
     display: none !important;
   }
 }
+
+/* RutFit mobile app skin inspired by the native mockups */
+:root {
+  --bg: #020817;
+  --panel: #071126;
+  --panel-2: #0b1730;
+  --card: #0d1b36;
+  --line: rgba(119, 141, 183, 0.2);
+  --text: #f8fbff;
+  --muted: #8fa2c5;
+  --soft: #c7d2ee;
+  --primary: #6d3df7;
+  --secondary: #c026d3;
+  --accent: #7c3cff;
+  --accent-dark: #4f46e5;
+  --accent-2: #ec4899;
+  --accent-3: #22d3ee;
+  --warning: #f59e0b;
+  --success: #22c55e;
+  --danger: #ef4444;
+  --radius: 18px;
+  --shadow: 0 18px 42px rgba(0, 0, 0, 0.34);
+  --app-width: 430px;
+}
+
+body {
+  background:
+    radial-gradient(circle at 16% 0%, rgba(124, 60, 255, 0.34), transparent 18rem),
+    radial-gradient(circle at 100% 8%, rgba(34, 211, 238, 0.16), transparent 18rem),
+    linear-gradient(180deg, #020817 0%, #071126 46%, #020817 100%);
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.028) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.028) 1px, transparent 1px);
+  background-size: 22px 22px;
+  mask-image: linear-gradient(to bottom, black, transparent 72%);
+}
+
+.app-header,
+main {
+  width: min(var(--app-width), 100%);
+  margin-inline: auto;
+}
+
+.app-header {
+  position: relative;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+  padding: 1.35rem 1rem 0.7rem;
+}
+
+.app-header .brand-block {
+  grid-column: 1;
+}
+
+.brand-block h1 {
+  font-size: clamp(2.45rem, 12vw, 3.4rem);
+  letter-spacing: -0.02em;
+  text-shadow: 0 10px 30px rgba(124, 60, 255, 0.28);
+}
+
+.brand-block p,
+.user-greeting {
+  color: var(--soft) !important;
+  font-size: 0.88rem;
+}
+
+.kicker,
+.exercise-tag {
+  border: 0;
+  background: linear-gradient(135deg, rgba(124, 60, 255, 0.9), rgba(192, 38, 211, 0.65));
+  color: #ffffff;
+  box-shadow: 0 10px 25px rgba(124, 60, 255, 0.24);
+}
+
+.progress-ring {
+  width: 4.55rem;
+  border-color: rgba(124, 60, 255, 0.5);
+  background:
+    radial-gradient(circle at center, #08142b 56%, transparent 58%),
+    conic-gradient(var(--accent) var(--progress, 0%), rgba(34, 211, 238, 0.16) 0);
+  box-shadow: 0 0 0 1px rgba(124, 60, 255, 0.2), 0 16px 32px rgba(0, 0, 0, 0.3);
+}
+
+main {
+  padding-inline: 1rem;
+}
+
+.routine-select {
+  width: min(var(--app-width), 100%);
+  margin-inline: auto;
+}
+
+.routine-select-panel,
+.routine-placeholder,
+.student-panel-card,
+.admin-panel-header,
+.admin-editor-card,
+.week-card,
+.day-card,
+.invite-card,
+.trainer-tools,
+.profile-card,
+.home-welcome,
+.home-stat,
+.activity-item,
+.summary-item,
+.exercise-card,
+.admin-user-card,
+.admin-grid,
+.admin-day,
+.admin-exercise,
+.modal-panel,
+.confirm-panel {
+  border-color: rgba(125, 150, 199, 0.18);
+  background:
+    linear-gradient(145deg, rgba(13, 27, 54, 0.94), rgba(7, 17, 38, 0.98));
+  box-shadow: 0 16px 38px rgba(0, 0, 0, 0.26);
+}
+
+.routine-select-panel,
+.admin-editor-card,
+.student-panel-card,
+.week-card {
+  border-radius: 22px;
+}
+
+.search-box input,
+.search-box select,
+.admin-field,
+.admin-textarea,
+.language-picker select,
+.remember-session {
+  border-color: rgba(125, 150, 199, 0.22);
+  background: rgba(7, 17, 38, 0.92);
+  min-height: 2.9rem;
+}
+
+.search-box input:focus,
+.search-box select:focus,
+.admin-field:focus,
+.admin-textarea:focus,
+.language-picker select:focus {
+  border-color: rgba(124, 60, 255, 0.82);
+  box-shadow: 0 0 0 3px rgba(124, 60, 255, 0.18);
+}
+
+.primary-button,
+.admin-toggle {
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3cff 48%, #d026d3 100%);
+  box-shadow: 0 14px 30px rgba(124, 60, 255, 0.34);
+}
+
+.secondary-button,
+.change-routine-button,
+.danger-button,
+.file-button,
+.rest-timer button {
+  border-color: rgba(125, 150, 199, 0.22);
+  background: rgba(13, 27, 54, 0.86);
+}
+
+.danger-button {
+  color: #ff7a7a;
+}
+
+.home-welcome {
+  position: relative;
+  min-height: 7.6rem;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 88% 22%, rgba(34, 211, 238, 0.36), transparent 5.5rem),
+    linear-gradient(135deg, rgba(79, 70, 229, 0.98), rgba(126, 34, 206, 0.94) 48%, rgba(15, 23, 42, 0.98));
+}
+
+.home-welcome h2::after {
+  content: "Vamos por tus objetivos";
+  display: block;
+  color: #ffffff;
+  font-size: clamp(1.25rem, 6vw, 1.8rem);
+}
+
+.home-welcome h2 {
+  font-size: 0;
+}
+
+.home-welcome::after {
+  content: "";
+  position: absolute;
+  right: 1.1rem;
+  top: 1rem;
+  width: 4.8rem;
+  height: 4.8rem;
+  border-radius: 1.4rem;
+  background:
+    radial-gradient(circle at 60% 35%, #fff 0 0.22rem, transparent 0.24rem),
+    linear-gradient(135deg, #22d3ee, #7c3cff 48%, #ec4899);
+  clip-path: polygon(52% 0, 74% 20%, 100% 58%, 66% 52%, 52% 100%, 38% 52%, 4% 58%, 30% 20%);
+  filter: drop-shadow(0 18px 28px rgba(124, 60, 255, 0.5));
+  transform: rotate(18deg);
+}
+
+.home-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.home-stat {
+  min-height: 5.4rem;
+  background: rgba(8, 19, 42, 0.86);
+}
+
+.home-stat strong {
+  color: #ffffff;
+}
+
+.home-stat span {
+  color: var(--muted);
+  text-transform: none;
+}
+
+.home-actions {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.home-actions .primary-button,
+.home-actions .secondary-button {
+  min-height: 4.85rem;
+  display: grid;
+  place-items: center;
+  gap: 0.35rem;
+  padding: 0.72rem 0.45rem;
+  border: 0;
+  font-size: 0.72rem;
+  line-height: 1.1;
+  text-align: center;
+}
+
+.home-actions button::before {
+  display: block;
+  font-size: 1.28rem;
+  line-height: 1;
+}
+
+.home-actions button:nth-child(1)::before {
+  content: "+";
+  font-size: 1.55rem;
+}
+
+.home-actions button:nth-child(2)::before {
+  content: "▣";
+}
+
+.home-actions button:nth-child(3)::before {
+  content: "↻";
+}
+
+.home-actions .secondary-button:nth-child(2) {
+  background: linear-gradient(135deg, #ef4444, #ec4899);
+  box-shadow: 0 14px 30px rgba(236, 72, 153, 0.25);
+}
+
+.home-actions .secondary-button:nth-child(3) {
+  background: linear-gradient(135deg, #0891b2, #22d3ee);
+  box-shadow: 0 14px 30px rgba(34, 211, 238, 0.22);
+}
+
+.action-icon,
+.summary-icon,
+.admin-user-toggle::before {
+  color: #ffffff;
+}
+
+.action-icon svg {
+  width: 1.22rem;
+  height: 1.22rem;
+  fill: currentColor;
+}
+
+.activity-item {
+  position: relative;
+  padding-left: 1.65rem;
+  font-size: 0.8rem;
+}
+
+.activity-item::before {
+  content: "";
+  position: absolute;
+  left: 0.78rem;
+  top: 50%;
+  width: 0.42rem;
+  height: 0.42rem;
+  border-radius: 999px;
+  background: var(--success);
+  transform: translateY(-50%);
+}
+
+.summary-strip {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.summary-item {
+  min-height: 4.2rem;
+}
+
+.week-header {
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+}
+
+.week-header::after,
+.day-card h3::after,
+.admin-user-toggle::after {
+  content: "›";
+  color: var(--accent);
+  font-size: 1.7rem;
+  line-height: 1;
+}
+
+.week-actions {
+  grid-column: 1 / -1;
+}
+
+.day-card h3 {
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+
+.exercise-card {
+  border-radius: 16px;
+  background: rgba(8, 19, 42, 0.86);
+}
+
+.objective-dot {
+  width: 2.3rem;
+  border-radius: 14px;
+  box-shadow: none;
+}
+
+.bottom-nav {
+  left: 50%;
+  width: min(var(--app-width), 100%);
+  right: auto;
+  transform: translateX(-50%);
+  border: 1px solid rgba(125, 150, 199, 0.16);
+  border-bottom: 0;
+  border-radius: 22px 22px 0 0;
+  background: rgba(4, 12, 28, 0.92);
+}
+
+.bottom-nav button {
+  min-height: 3.1rem;
+  color: #8192b4;
+}
+
+.bottom-nav button.active {
+  background: radial-gradient(circle at 50% 0%, rgba(236, 72, 153, 0.42), transparent 72%), linear-gradient(135deg, #4f46e5, #7c3cff);
+}
+
+.admin-user-card.open,
+.admin-exercise.is-editing,
+.week-card.week-done {
+  border-color: rgba(124, 60, 255, 0.56);
+}
+
+.profile-avatar,
+.student-list-avatar {
+  border: 2px solid rgba(124, 60, 255, 0.7);
+  box-shadow: 0 0 0 4px rgba(124, 60, 255, 0.12);
+}
+
+.admin-image-preview,
+.admin-image-empty,
+.image-grid img {
+  aspect-ratio: 16 / 9;
+  max-height: 11rem;
+}
+
+.modal-panel {
+  width: min(var(--app-width), 100%);
+  border-radius: 24px 24px 0 0;
+}
+
+@media (min-width: 760px) {
+  .app-header {
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    padding-inline: 1rem;
+  }
+
+  main {
+    padding-inline: 1rem;
+  }
+}
