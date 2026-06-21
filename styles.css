@@ -3999,3 +3999,470 @@ main {
     padding-left: 0.72rem;
   }
 }
+
+/* QA visual pass 3: consistency, alignment and compact mobile polish */
+*,
+*::before,
+*::after {
+  min-width: 0;
+}
+
+html {
+  background: #020817;
+}
+
+body {
+  color: var(--text);
+  text-rendering: optimizeLegibility;
+}
+
+.app-shell,
+main,
+.trainer-home,
+.student-home,
+.student-progress,
+.student-invites,
+.admin-panel,
+.account-panel,
+.weeks {
+  width: 100%;
+}
+
+.app-header > *,
+.brand-block,
+.routine-list-main,
+.admin-user-main,
+.student-list-main,
+.exercise-card > div,
+.modal-hero,
+.profile-card,
+.student-panel-card,
+.admin-editor-card,
+.admin-grid,
+.admin-day,
+.admin-week,
+.admin-exercise,
+.home-welcome,
+.home-stat {
+  min-width: 0;
+}
+
+.brand-block h1,
+.brand-block p,
+.home-welcome h2,
+.home-welcome p,
+.routine-list-main strong,
+.routine-list-main small,
+.admin-user-main strong,
+.admin-user-main span,
+.student-list-main strong,
+.student-list-main span,
+.week-header h2,
+.week-header p,
+.day-card h3,
+.exercise-card strong,
+.exercise-card small,
+.profile-card strong,
+.profile-card span,
+.modal-hero h2,
+.modal-hero p {
+  overflow-wrap: anywhere;
+}
+
+.app-header {
+  max-width: var(--app-width);
+  margin-inline: auto;
+}
+
+main {
+  max-width: var(--app-width);
+  margin-inline: auto;
+}
+
+.trainer-home::before,
+.student-progress::before,
+.student-invites::before,
+.account-panel::before,
+.weeks::before,
+.admin-panel.students-view::before,
+.admin-panel.routines-view::before {
+  line-height: 1.12;
+}
+
+.home-section-title,
+.section-title,
+.admin-card-title small,
+.search-box span,
+.language-picker span,
+.admin-image-uploader > span,
+.detail-grid span,
+.detail-section h3 {
+  color: #b8c4dd;
+  letter-spacing: 0;
+  line-height: 1.15;
+}
+
+.primary-button,
+.secondary-button,
+.danger-button,
+.change-routine-button,
+.admin-toggle,
+.file-button,
+.rest-timer button,
+.home-actions button,
+.confirm-actions button,
+.profile-photo-button,
+.settings-list button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  line-height: 1.08;
+  white-space: normal;
+  text-align: center;
+}
+
+.primary-button,
+.secondary-button,
+.danger-button,
+.change-routine-button,
+.admin-toggle,
+.file-button {
+  min-height: 2.55rem;
+}
+
+.home-actions {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.home-actions .primary-button,
+.home-actions .secondary-button {
+  min-height: 4rem;
+  padding-inline: 0.48rem;
+}
+
+.home-actions .secondary-button::before,
+.home-actions .primary-button::before {
+  flex: 0 0 auto;
+}
+
+.home-actions button:nth-child(2)::before {
+  content: "R";
+}
+
+.home-actions button:nth-child(3)::before {
+  content: "A";
+}
+
+.summary-strip,
+.home-grid,
+.detail-grid {
+  align-items: stretch;
+}
+
+.summary-item,
+.home-stat,
+.detail-grid > div {
+  display: grid;
+  align-content: center;
+}
+
+.routine-list-card,
+.admin-user-toggle,
+.exercise-card,
+.progress-row,
+.settings-list button,
+.invite-card {
+  transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+}
+
+.routine-list-card:active,
+.admin-user-toggle:active,
+.exercise-card:active,
+.settings-list button:active {
+  transform: scale(0.99);
+}
+
+.routine-list-main,
+.student-list-main,
+.admin-user-main {
+  display: grid;
+  gap: 0.16rem;
+}
+
+.routine-list-main strong,
+.student-list-main strong,
+.admin-user-main strong {
+  line-height: 1.12;
+}
+
+.routine-list-main small,
+.student-list-main span,
+.admin-user-main span {
+  line-height: 1.22;
+}
+
+.routine-mini-ring,
+.mini-progress,
+.progress-ring,
+.student-profile-photo,
+.student-list-avatar {
+  flex: 0 0 auto;
+}
+
+.week-header,
+.day-card h3,
+.next-training-card,
+.admin-user-toggle {
+  grid-template-columns: auto minmax(0, 1fr) auto;
+}
+
+.week-header::after,
+.day-card h3::after,
+.admin-user-toggle::after,
+.next-training-card::after {
+  content: ">";
+  font-family: Arial, sans-serif;
+  color: var(--accent);
+  font-size: 1.08rem;
+  line-height: 1;
+}
+
+.week-chevron {
+  font-size: 0;
+}
+
+.week-chevron::before {
+  content: "-";
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.week-card.collapsed .week-chevron::before {
+  content: "+";
+}
+
+.done-mark {
+  display: grid;
+  place-items: center;
+  font-size: 0;
+}
+
+.exercise-card.done .done-mark::before {
+  content: "";
+  width: 0.42rem;
+  height: 0.72rem;
+  border-right: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+  transform: rotate(45deg);
+}
+
+.exercise-card {
+  grid-template-columns: auto minmax(0, 1fr) auto;
+}
+
+.exercise-thumb,
+.objective-dot {
+  flex: 0 0 2.55rem;
+}
+
+.admin-card-title,
+.admin-week-header,
+.admin-day-header,
+.admin-exercise-summary,
+.profile-card-header,
+.student-dashboard-card,
+.student-current-card,
+.progress-hero {
+  gap: 0.58rem;
+}
+
+.admin-card-title h3,
+.admin-week-header strong,
+.admin-day-header strong,
+.admin-exercise-summary strong,
+.profile-card strong {
+  line-height: 1.12;
+}
+
+.admin-row-actions,
+.auth-actions,
+.confirm-actions {
+  gap: 0.55rem;
+}
+
+.admin-grid,
+.profile-form,
+.admin-exercise-grid {
+  gap: 0.62rem;
+}
+
+.admin-image-uploader {
+  gap: 0.42rem;
+}
+
+.admin-image-preview {
+  max-height: 9.4rem;
+  min-height: 6.2rem;
+  border-radius: 14px;
+}
+
+.admin-image-preview strong {
+  font-size: 1.06rem;
+}
+
+.admin-image-preview span {
+  display: none;
+}
+
+.admin-panel.routines-view.editing-routine #adminSaveRoutine::before,
+.admin-panel.routines-view.editing-routine #adminAddWeek::before,
+.admin-panel.routines-view.editing-routine .admin-row-actions .primary-button::before {
+  content: "";
+  display: none;
+}
+
+.search-box input,
+.search-box select,
+.admin-field,
+.admin-textarea,
+.language-picker select,
+.remember-session {
+  width: 100%;
+  font-size: 0.86rem;
+  line-height: 1.2;
+}
+
+.admin-textarea {
+  min-height: 4.2rem;
+  resize: vertical;
+}
+
+.modal-panel {
+  width: min(var(--app-width), 100%);
+  overflow-x: hidden;
+}
+
+.image-grid {
+  gap: 0.55rem;
+}
+
+.image-card {
+  min-height: 12rem;
+  border-radius: 16px;
+}
+
+.detail-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.detail-grid > div {
+  min-height: 3.2rem;
+}
+
+.rest-timer {
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  gap: 0.45rem;
+}
+
+.timer-display {
+  min-height: 2.5rem;
+  border-radius: 13px;
+  font-size: 0.98rem;
+}
+
+.rest-timer button {
+  min-height: 2.5rem;
+  padding-inline: 0.66rem;
+  font-size: 0.78rem;
+}
+
+.bottom-nav {
+  max-width: var(--app-width);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+}
+
+.bottom-nav button {
+  overflow: hidden;
+  padding-inline: 0.18rem;
+}
+
+.bottom-nav button span:last-child {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.bottom-nav .nav-icon {
+  flex: 0 0 auto;
+}
+
+.confirm-panel h3,
+.confirm-panel p {
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 430px) {
+  .auth-card {
+    width: min(100%, 22.5rem);
+    padding: 1.05rem;
+    border-radius: 20px;
+  }
+
+  .auth-card h1 {
+    font-size: clamp(2rem, 13vw, 3rem);
+    line-height: 0.98;
+  }
+
+  .auth-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .home-actions .primary-button,
+  .home-actions .secondary-button {
+    min-height: 3.75rem;
+    font-size: 0.62rem;
+  }
+
+  .detail-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .rest-timer {
+    grid-template-columns: 1fr;
+  }
+
+  .rest-timer button {
+    width: 100%;
+  }
+
+  .image-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .image-card {
+    min-height: 11.2rem;
+  }
+}
+
+@media (min-width: 700px) {
+  .auth-card,
+  .modal-panel {
+    border-radius: 24px;
+  }
+
+  .modal-panel {
+    max-width: 680px;
+  }
+
+  .image-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .rest-timer {
+    grid-template-columns: minmax(0, 1fr) auto auto;
+  }
+}
