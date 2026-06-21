@@ -2220,7 +2220,8 @@ function renderAccountPanel() {
   const userData = state.currentUserData || {};
   const displayName = userData.displayName || getDisplayNameFromEmail(email);
   const role = state.isAdmin ? t("admin") : state.isTrainer ? t("trainer") : t("student");
-  const stats = getProfileStats(userData);
+  const isStudentProfile = !state.isAdmin && !state.isTrainer;
+  const stats = isStudentProfile ? getProfileStats(userData) : [];
   accountPanel.innerHTML = `
     <section class="student-panel-card">
       <div class="home-section-title">${t("profile")}</div>
@@ -2238,7 +2239,7 @@ function renderAccountPanel() {
           <span>${t("name")}</span>
           <input type="text" data-profile-field="displayName" value="${escapeHtml(displayName || "")}" autocomplete="name" />
         </label>
-        <div class="profile-grid">
+        ${isStudentProfile ? `<div class="profile-grid">
           <label class="search-box">
             <span>${t("weight")}</span>
             <input type="number" inputmode="decimal" data-profile-field="weight" value="${escapeHtml(userData.weight || "")}" placeholder="78" />
@@ -2255,7 +2256,7 @@ function renderAccountPanel() {
         <label class="search-box">
           <span>${t("goal")}</span>
           <textarea data-profile-field="goal" rows="2" placeholder="${t("goal")}">${escapeHtml(userData.goal || "")}</textarea>
-        </label>
+        </label>` : ""}
         <label class="file-button profile-photo-button">
           ${t("changePhoto")}
           <input type="file" accept="image/*" data-profile-photo hidden />
