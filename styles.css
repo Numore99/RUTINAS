@@ -2453,6 +2453,12 @@ main {
 .bottom-nav button {
   min-height: 3.1rem;
   color: #8192b4;
+  font-size: 0.68rem;
+}
+
+.bottom-nav .nav-icon {
+  width: 1rem;
+  height: 1rem;
 }
 
 .bottom-nav button.active {
@@ -2481,6 +2487,177 @@ main {
 .modal-panel {
   width: min(var(--app-width), 100%);
   border-radius: 24px 24px 0 0;
+}
+
+.student-home,
+.student-progress {
+  display: grid;
+  gap: 0.85rem;
+  padding: 0.25rem 0 1rem;
+}
+
+.student-dashboard-card,
+.student-current-card,
+.progress-hero,
+.progress-chart {
+  border: 1px solid rgba(125, 150, 199, 0.18);
+  border-radius: 22px;
+  background:
+    linear-gradient(145deg, rgba(13, 27, 54, 0.94), rgba(7, 17, 38, 0.98));
+  box-shadow: 0 16px 38px rgba(0, 0, 0, 0.26);
+}
+
+.student-dashboard-card,
+.progress-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 1rem;
+  align-items: center;
+  padding: 1rem;
+}
+
+.student-dashboard-card h2,
+.progress-hero h2 {
+  margin: 0.55rem 0 0.15rem;
+  font-size: 1.55rem;
+  line-height: 1.05;
+}
+
+.student-dashboard-card p,
+.progress-hero p,
+.student-current-card span {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.86rem;
+}
+
+.student-current-card {
+  display: grid;
+  gap: 0.28rem;
+  padding: 0.95rem;
+}
+
+.student-current-card small {
+  color: var(--muted);
+  font-size: 0.68rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.student-current-card strong {
+  font-size: 1.05rem;
+}
+
+.mini-progress {
+  display: grid;
+  place-items: center;
+  width: 4.3rem;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at center, #071126 56%, transparent 58%),
+    conic-gradient(var(--accent) var(--progress, 0%), rgba(125, 150, 199, 0.16) 0);
+  box-shadow: inset 0 0 0 1px rgba(124, 60, 255, 0.28), 0 14px 30px rgba(124, 60, 255, 0.18);
+}
+
+.mini-progress.large {
+  width: 5.25rem;
+}
+
+.mini-progress strong {
+  font-size: 0.95rem;
+}
+
+.wide-action {
+  min-height: 3rem;
+}
+
+.progress-chart {
+  display: grid;
+  gap: 0.65rem;
+  padding: 0.95rem;
+}
+
+.progress-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.45rem 0.75rem;
+  align-items: center;
+  padding: 0.75rem;
+  border: 1px solid rgba(125, 150, 199, 0.14);
+  border-radius: 16px;
+  background: rgba(8, 19, 42, 0.76);
+}
+
+.progress-row span {
+  font-weight: 850;
+}
+
+.progress-row strong {
+  color: var(--accent-3);
+}
+
+.progress-line {
+  grid-column: 1 / -1;
+  height: 0.42rem;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(125, 150, 199, 0.14);
+}
+
+.progress-line span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+}
+
+.trainer-market-fields {
+  grid-template-columns: 1fr 1fr;
+}
+
+.professor-market-preview {
+  display: grid;
+  gap: 0.7rem;
+  padding: 0.9rem;
+  border: 1px solid rgba(34, 211, 238, 0.18);
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at top right, rgba(34, 211, 238, 0.16), transparent 60%),
+    rgba(8, 19, 42, 0.86);
+}
+
+.professor-market-preview strong,
+.professor-market-preview span,
+.professor-market-preview small {
+  display: block;
+}
+
+.professor-market-preview span {
+  margin-top: 0.18rem;
+  color: var(--muted);
+  font-size: 0.84rem;
+}
+
+.professor-market-preview small {
+  width: fit-content;
+  border-radius: 999px;
+  padding: 0.24rem 0.55rem;
+  background: rgba(124, 60, 255, 0.18);
+  color: var(--accent-3);
+  font-size: 0.68rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.market-filter-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.55rem;
+}
+
+.market-filter-grid input:disabled {
+  opacity: 0.82;
 }
 
 @media (min-width: 760px) {

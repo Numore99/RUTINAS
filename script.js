@@ -430,6 +430,8 @@ const routinePlaceholder = document.querySelector("#routinePlaceholder");
 const studentInvitesPanel = document.querySelector("#studentInvitesPanel");
 const accountPanel = document.querySelector("#accountPanel");
 const trainerHome = document.querySelector("#trainerHome");
+const studentHome = document.querySelector("#studentHome");
+const studentProgress = document.querySelector("#studentProgress");
 const weeksContainer = document.querySelector("#weeksContainer");
 const summaryStrip = document.querySelector("#summaryStrip");
 const progressPercent = document.querySelector("#progressPercent");
@@ -1344,6 +1346,8 @@ function showAuthScreen(message = "") {
   bottomNav?.classList.add("is-hidden");
   if (bottomNav) bottomNav.innerHTML = "";
   trainerHome?.classList.add("is-hidden");
+  studentHome?.classList.add("is-hidden");
+  studentProgress?.classList.add("is-hidden");
   studentInvitesPanel?.classList.add("is-hidden");
   accountPanel?.classList.add("is-hidden");
   routinePlaceholder?.classList.add("is-hidden");
@@ -1352,6 +1356,8 @@ function showAuthScreen(message = "") {
   if (adminUsers) adminUsers.innerHTML = "";
   if (adminWeeks) adminWeeks.innerHTML = "";
   if (trainerHome) trainerHome.innerHTML = "";
+  if (studentHome) studentHome.innerHTML = "";
+  if (studentProgress) studentProgress.innerHTML = "";
   if (studentInvitesPanel) studentInvitesPanel.innerHTML = "";
   if (accountPanel) accountPanel.innerHTML = "";
   setAuthMessage(message);
@@ -1787,6 +1793,115 @@ function openAcceptedStudentsForAssignment() {
   renderApp();
 }
 
+function getRoutineProgressStats(routine = getActiveRoutine()) {
+  const totalSessions = getRoutineTotalSessions(routine);
+  const doneCount = Object.values(progress).filter(Boolean).length;
+  const percent = totalSessions ? Math.round((doneCount / totalSessions) * 100) : 0;
+  const totalExercises = routine ? Object.keys(routine.exerciseLibrary || {}).length : 0;
+  const totalWeeks = routine?.plan?.length || 0;
+  return { totalSessions, doneCount, percent, totalExercises, totalWeeks };
+}
+
+function getNextTrainingLabel(routine = getActiveRoutine()) {
+  if (!routine?.plan?.length) return t("routineInPreparation");
+  for (const week of routine.plan) {
+    for (let dayIndex = 0; dayIndex < (week.days || []).length; dayIndex += 1) {
+      const day = week.days[dayIndex];
+      const ids = (day.exercises || []).map((exerciseKey) => progressId(week.number, dayIndex, exerciseKey));
+      if (ids.some((id) => !progress[id])) return `${t("week")} ${week.number} · ${day.title}`;
+    }
+  }
+  return t("completeWeek");
+}
+
+function renderStudentHome() {
+  if (!studentHome) return;
+  const routine = getActiveRoutine();
+  const stats = getRoutineProgressStats(routine);
+  const displayName = state.currentUserData?.displayName || getDisplayNameFromEmail(state.currentUser?.email || "");
+  studentHome.innerHTML = `
+    <section class="student-dashboard-card">
+      <div>
+        <span class="kicker">Alumno</span>
+        <h2>Hola, ${escapeHtml(displayName || t("user"))}</h2>
+        <p>${escapeHtml(routine?.name || t("noRoutine"))}</p>
+      </div>
+      <div class="mini-progress" style="--progress:${stats.percent}%">
+        <strong>${stats.percent}%</strong>
+      </div>
+    </section>
+    <section class="student-current-card">
+      <small>Rutina actual</small>
+      <strong>${escapeHtml(routine?.name || t("routineInPreparation"))}</strong>
+      <span>${escapeHtml(getNextTrainingLabel(routine))}</span>
+    </section>
+    <div class="home-section-title">Resumen de hoy</div>
+    <div class="home-grid student-stat-grid">
+      <article class="home-stat">
+        <strong>${stats.totalExercises}</strong>
+        <span>Ejercicios</span>
+      </article>
+      <article class="home-stat">
+        <strong>${stats.doneCount}</strong>
+        <span>Completados</span>
+      </article>
+      <article class="home-stat">
+        <strong>${stats.totalWeeks}</strong>
+        <span>Semanas</span>
+      </article>
+    </div>
+    <button class="primary-button wide-action" type="button" data-student-home-action="routine">Ver rutina</button>
+  `;
+}
+
+function renderStudentProgress() {
+  if (!studentProgress) return;
+  const routine = getActiveRoutine();
+  const stats = getRoutineProgressStats(routine);
+  const weekRows = (routine?.plan || []).map((week) => {
+    const ids = getWeekExerciseIds(week);
+    const done = ids.filter((id) => progress[id]).length;
+    const percent = ids.length ? Math.round((done / ids.length) * 100) : 0;
+    return `
+      <article class="progress-row">
+        <span>${t("week")} ${week.number}</span>
+        <strong>${percent}%</strong>
+        <div class="progress-line"><span style="width:${percent}%"></span></div>
+      </article>
+    `;
+  }).join("");
+  studentProgress.innerHTML = `
+    <section class="progress-hero">
+      <div>
+        <span class="kicker">Progreso</span>
+        <h2>${stats.percent}%</h2>
+        <p>Cumplimiento total</p>
+      </div>
+      <div class="mini-progress large" style="--progress:${stats.percent}%">
+        <strong>${stats.percent}%</strong>
+      </div>
+    </section>
+    <div class="home-grid student-stat-grid">
+      <article class="home-stat">
+        <strong>${stats.totalSessions}</strong>
+        <span>Sesiones</span>
+      </article>
+      <article class="home-stat">
+        <strong>${stats.doneCount}</strong>
+        <span>Hechas</span>
+      </article>
+      <article class="home-stat">
+        <strong>${stats.totalExercises}</strong>
+        <span>Ejercicios</span>
+      </article>
+    </div>
+    <section class="progress-chart">
+      <div class="home-section-title">Semanas</div>
+      ${weekRows || `<div class="empty-state">${t("routineInPreparation")}</div>`}
+    </section>
+  `;
+}
+
 function getNextRoutineNumber() {
   const numbers = getAdminRoutineIds()
     .map((id) => routines[id]?.name || "")
@@ -1858,6 +1973,23 @@ function renderStudentProfessorsPanel() {
   studentInvitesPanel.innerHTML = `
     <section class="student-panel-card">
       <div class="home-section-title">${t("yourProfessors")}</div>
+      <section class="professor-market-preview">
+        <div>
+          <strong>Buscar profesores</strong>
+          <span>Filtra por precio, especialidad y disponibilidad.</span>
+        </div>
+        <div class="market-filter-grid">
+          <label class="search-box">
+            <span>Precio maximo</span>
+            <input type="number" inputmode="decimal" placeholder="Ej: 15000" disabled />
+          </label>
+          <label class="search-box">
+            <span>Especialidad</span>
+            <input type="text" placeholder="MMA, fuerza, grappling" disabled />
+          </label>
+        </div>
+        <small>Proximamente</small>
+      </section>
       ${pendingHtml}
       ${acceptedHtml}
     </section>
@@ -2179,8 +2311,8 @@ function renderApp() {
   if (managerMode && !["home", "students", "routines", "account"].includes(state.activeView)) {
     state.activeView = "home";
   }
-  if (!managerMode && !["routines", "professors", "account"].includes(state.activeView)) {
-    state.activeView = "routines";
+  if (!managerMode && !["home", "routines", "progress", "professors", "account"].includes(state.activeView)) {
+    state.activeView = "home";
   }
   const trainerDashboardOnly = managerMode && ["home", "students", "routines", "account"].includes(state.activeView);
   const studentMode = !managerMode;
@@ -2208,6 +2340,10 @@ function renderApp() {
 
   trainerHome?.classList.toggle("is-hidden", !(managerMode && state.activeView === "home"));
   if (managerMode && state.activeView === "home") renderTrainerHome();
+  studentHome?.classList.toggle("is-hidden", !(studentMode && state.activeView === "home"));
+  if (studentMode && state.activeView === "home") renderStudentHome();
+  studentProgress?.classList.toggle("is-hidden", !(studentMode && state.activeView === "progress"));
+  if (studentMode && state.activeView === "progress") renderStudentProgress();
   studentInvitesPanel?.classList.toggle("is-hidden", !(studentMode && state.activeView === "professors"));
 
   const showAccount = state.activeView === "account";
@@ -2241,9 +2377,11 @@ function renderBottomNav() {
         ["account", t("accountNav")]
       ]
     : [
-        ["routines", t("routinesNav")],
+        ["home", "Inicio"],
+        ["routines", "Rutina"],
+        ["progress", "Progreso"],
         ["professors", t("professorsNav")],
-        ["account", t("accountNav")]
+        ["account", "Perfil"]
       ];
   bottomNav.style.gridTemplateColumns = `repeat(${items.length}, 1fr)`;
   bottomNav.innerHTML = items
@@ -2264,6 +2402,7 @@ function getNavIcon(view) {
     home: '<svg viewBox="0 0 24 24"><path d="M3 10.8 12 3l9 7.8v9.7a.5.5 0 0 1-.5.5H15v-6H9v6H3.5a.5.5 0 0 1-.5-.5v-9.7Z"/></svg>',
     students: '<svg viewBox="0 0 24 24"><path d="M8.5 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm7 1a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7ZM2 20.5C2 16.9 4.9 14 8.5 14s6.5 2.9 6.5 6.5V21H2v-.5Zm13.5.5h6.5v-.4c0-3.1-2.3-5.7-5.3-6.1a8 8 0 0 1 1.8 5v1.5Z"/></svg>',
     routines: '<svg viewBox="0 0 24 24"><path d="M6 3h12a2 2 0 0 1 2 2v15.5a.5.5 0 0 1-.75.43L12 16.7l-7.25 4.23A.5.5 0 0 1 4 20.5V5a2 2 0 0 1 2-2Zm2.5 5h7v2h-7V8Zm0 4h5v2h-5v-2Z"/></svg>',
+    progress: '<svg viewBox="0 0 24 24"><path d="M4 19h16v2H4v-2Zm2-8h3v6H6v-6Zm5-6h3v12h-3V5Zm5 3h3v9h-3V8Z"/></svg>',
     professors: '<svg viewBox="0 0 24 24"><path d="M12 3 2 8l10 5 10-5-10-5Zm-7 8.1v4.2c0 2.2 3.1 4.7 7 4.7s7-2.5 7-4.7v-4.2l-7 3.5-7-3.5Z"/></svg>',
     account: '<svg viewBox="0 0 24 24"><path d="M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10Zm-9 9a9 9 0 0 1 18 0v1H3v-1Z"/></svg>'
   };
@@ -2295,6 +2434,16 @@ function renderAccountPanel() {
           <span>${t("name")}</span>
           <input type="text" data-profile-field="displayName" value="${escapeHtml(displayName || "")}" autocomplete="name" />
         </label>
+        ${canManageStudents() ? `<div class="profile-grid trainer-market-fields">
+          <label class="search-box">
+            <span>Precio</span>
+            <input type="number" inputmode="decimal" data-profile-field="trainerPrice" value="${escapeHtml(userData.trainerPrice || "")}" placeholder="Ej: 15000" />
+          </label>
+          <label class="search-box">
+            <span>Especialidad</span>
+            <input type="text" data-profile-field="trainerSpecialty" value="${escapeHtml(userData.trainerSpecialty || "")}" placeholder="MMA, fuerza" />
+          </label>
+        </div>` : ""}
         ${isStudentProfile ? `<div class="profile-grid">
           <label class="search-box">
             <span>${t("weight")}</span>
@@ -3493,6 +3642,14 @@ trainerHome?.addEventListener("click", (event) => {
   if (button.dataset.homeAction === "new-routine") {
     setActiveView("routines");
     adminNewRoutine.click();
+  }
+});
+
+studentHome?.addEventListener("click", (event) => {
+  const button = event.target.closest("[data-student-home-action]");
+  if (!button) return;
+  if (button.dataset.studentHomeAction === "routine") {
+    setActiveView("routines");
   }
 });
 
