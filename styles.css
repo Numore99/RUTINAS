@@ -2047,8 +2047,59 @@ body:has(.bottom-nav:not(.is-hidden)) main {
 .admin-panel.routines-view:not(.editing-routine) #adminSaveRoutine,
 .admin-panel.routines-view:not(.editing-routine) #adminAddWeek,
 .admin-panel.routines-view:not(.editing-routine) #adminDeleteRoutine,
-.admin-panel.routines-view:not(.editing-routine) #adminSeedDario,
-.admin-panel.routines-view:not(.editing-routine) #adminWeeks {
+.admin-panel.routines-view:not(.editing-routine) #adminSeedDario {
+  display: none;
+}
+
+.admin-panel.routines-view:not(.editing-routine) .admin-editor-card {
+  position: relative;
+  gap: 0.78rem;
+  padding-top: 1.2rem;
+}
+
+.admin-panel.routines-view:not(.editing-routine) .admin-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+.admin-panel.routines-view:not(.editing-routine) label[for="adminRoutineSelect"] span {
+  display: none;
+}
+
+.admin-panel.routines-view:not(.editing-routine) #adminRoutineSelect {
+  min-height: 2.8rem;
+  padding-left: 2.75rem;
+  background:
+    linear-gradient(90deg, rgba(143, 162, 197, 0.4), rgba(143, 162, 197, 0.4)) 1rem 50% / 0.85rem 0.85rem no-repeat,
+    rgba(7, 17, 38, 0.92);
+}
+
+.admin-panel.routines-view:not(.editing-routine) .admin-actions {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  display: block;
+}
+
+.admin-panel.routines-view:not(.editing-routine) #adminNewRoutine {
+  width: 2.9rem;
+  height: 2.9rem;
+  min-height: 0;
+  padding: 0;
+  border-radius: 14px;
+  font-size: 0;
+}
+
+.admin-panel.routines-view:not(.editing-routine) #adminNewRoutine::before {
+  content: "+";
+  font-size: 1.6rem;
+  line-height: 1;
+}
+
+.admin-panel.routines-view:not(.editing-routine) #adminEditRoutine {
   display: none;
 }
 
@@ -2150,11 +2201,46 @@ main {
   position: relative;
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: start;
-  padding: 1.35rem 1rem 0.7rem;
+  min-height: 9.4rem;
+  padding: 1.35rem 6.2rem 0.7rem 1rem;
 }
 
 .app-header .brand-block {
   grid-column: 1;
+}
+
+.app-header::before {
+  content: "";
+  position: absolute;
+  top: 1.05rem;
+  right: 4.8rem;
+  width: 1.65rem;
+  height: 1.65rem;
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 72% 22%, #ff2b66 0 0.28rem, transparent 0.3rem),
+    linear-gradient(145deg, rgba(13, 27, 54, 0.9), rgba(7, 17, 38, 0.98));
+  box-shadow: inset 0 0 0 1px rgba(125, 150, 199, 0.22), 0 12px 24px rgba(0, 0, 0, 0.28);
+}
+
+.app-header::after {
+  content: "";
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 3.15rem;
+  height: 3.15rem;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 50% 28%, #ffd9bc 0 0.7rem, transparent 0.72rem),
+    radial-gradient(circle at 50% 68%, #1f2937 0 1.05rem, transparent 1.08rem),
+    linear-gradient(135deg, #7c3cff, #ec4899);
+  box-shadow: 0 0 0 3px rgba(124, 60, 255, 0.22), 0 16px 30px rgba(0, 0, 0, 0.35);
+}
+
+.app-header:has(.progress-ring:not(.is-hidden))::before,
+.app-header:has(.progress-ring:not(.is-hidden))::after {
+  display: none;
 }
 
 .brand-block h1 {
@@ -2434,9 +2520,38 @@ main {
 }
 
 .objective-dot {
-  width: 2.3rem;
+  width: 2.9rem;
+  height: 2.9rem;
   border-radius: 14px;
   box-shadow: none;
+  overflow: hidden;
+}
+
+.exercise-thumb {
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 0.22), transparent 32%),
+    linear-gradient(135deg, var(--accent), var(--accent-2));
+}
+
+.exercise-thumb::before {
+  content: "";
+  width: 1rem;
+  height: 1rem;
+  border-radius: 0.25rem;
+  border: 2px solid rgba(255, 255, 255, 0.82);
+  transform: rotate(45deg);
+}
+
+.exercise-thumb:has(img)::before {
+  display: none;
+}
+
+.exercise-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .bottom-nav {
@@ -2469,6 +2584,132 @@ main {
 .admin-exercise.is-editing,
 .week-card.week-done {
   border-color: rgba(124, 60, 255, 0.56);
+}
+
+.routine-card-list {
+  display: grid;
+  gap: 0.78rem;
+}
+
+.routine-list-card {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
+  gap: 0.8rem;
+  align-items: center;
+  min-height: 5rem;
+  border: 1px solid rgba(125, 150, 199, 0.16);
+  border-radius: 18px;
+  padding: 0.82rem;
+  background:
+    linear-gradient(145deg, rgba(13, 27, 54, 0.98), rgba(8, 19, 42, 0.96));
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
+.routine-list-card:active {
+  transform: scale(0.985);
+}
+
+.routine-list-icon {
+  display: grid;
+  place-items: center;
+  width: 2.8rem;
+  height: 2.8rem;
+  border-radius: 14px;
+  color: #fff;
+  background: linear-gradient(135deg, #0284c7, #22d3ee);
+  box-shadow: 0 12px 24px rgba(34, 211, 238, 0.18);
+}
+
+.routine-list-icon::before {
+  font-size: 1.3rem;
+  line-height: 1;
+}
+
+.routine-list-icon.calendar::before {
+  content: "▦";
+}
+
+.routine-list-icon.clipboard {
+  background: linear-gradient(135deg, #a16207, #f59e0b);
+}
+
+.routine-list-icon.clipboard::before {
+  content: "▤";
+}
+
+.routine-list-icon.dumbbell {
+  background: linear-gradient(135deg, #7e22ce, #ec4899);
+}
+
+.routine-list-icon.dumbbell::before {
+  content: "H";
+  font-weight: 950;
+}
+
+.routine-list-icon.bolt {
+  background: linear-gradient(135deg, #be123c, #ef4444);
+}
+
+.routine-list-icon.bolt::before {
+  content: "!";
+  font-weight: 950;
+}
+
+.routine-list-icon.fire {
+  background: linear-gradient(135deg, #ea580c, #f97316);
+}
+
+.routine-list-icon.fire::before {
+  content: "^";
+  font-weight: 950;
+}
+
+.routine-list-main {
+  display: grid;
+  gap: 0.2rem;
+  min-width: 0;
+}
+
+.routine-list-main strong,
+.routine-list-main small {
+  overflow-wrap: anywhere;
+}
+
+.routine-list-main strong {
+  font-size: 0.98rem;
+}
+
+.routine-list-main small {
+  color: var(--muted);
+  font-size: 0.75rem;
+  font-weight: 750;
+}
+
+.routine-mini-ring {
+  display: grid;
+  place-items: center;
+  width: 2.6rem;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at center, #071126 54%, transparent 56%),
+    conic-gradient(var(--accent-3) var(--progress, 0%), rgba(125, 150, 199, 0.14) 0);
+  color: #ffffff;
+  font-size: 0.7rem;
+  font-weight: 900;
+}
+
+.routine-menu-button {
+  display: grid;
+  place-items: center;
+  width: 1.6rem;
+  height: 2.4rem;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 1.25rem;
 }
 
 .profile-avatar,

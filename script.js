@@ -2771,6 +2771,42 @@ function readAdminBasics() {
   state.adminRoutineId = id;
 }
 
+function getRoutineAssignedCount(routineId) {
+  return state.adminUsers.filter((user) => user.routineId === routineId).length;
+}
+
+function getRoutineCardIcon(index) {
+  const icons = ["calendar", "clipboard", "dumbbell", "bolt", "fire"];
+  return icons[index % icons.length];
+}
+
+function renderRoutineCatalog(routineIds) {
+  if (!routineIds.length) {
+    return `<div class="empty-state">${t("newRoutinePrepared")}</div>`;
+  }
+  return `
+    <div class="routine-card-list">
+      ${routineIds.map((id, index) => {
+        const routine = routines[id] || {};
+        const totalWeeks = routine.plan?.length || 0;
+        const assigned = getRoutineAssignedCount(id);
+        const progressValue = totalWeeks ? Math.min(95, Math.max(30, Math.round(100 / Math.max(1, totalWeeks)))) : 0;
+        return `
+          <article class="routine-list-card" data-routine-card="${escapeHtml(id)}">
+            <span class="routine-list-icon ${getRoutineCardIcon(index)}"></span>
+            <span class="routine-list-main">
+              <strong>${escapeHtml(routine.name || id)}</strong>
+              <small>${totalWeeks} semanas · ${assigned} alumnos</small>
+            </span>
+            <span class="routine-mini-ring" style="--progress:${progressValue}%">${progressValue}%</span>
+            <button class="routine-menu-button" type="button" data-routine-card-edit="${escapeHtml(id)}" aria-label="Editar rutina">⋮</button>
+          </article>
+        `;
+      }).join("")}
+    </div>
+  `;
+}
+
 function renderAdminPanel() {
   const panelTitle = adminPanel.querySelector("[data-i18n='routinePanel']");
   const panelHelp = adminPanel.querySelector("[data-i18n='routinePanelHelp']");
@@ -2807,7 +2843,7 @@ function renderAdminPanel() {
     adminRoutineName.value = "";
     adminRoutineTitle.value = "";
     adminRoutineKicker.value = "";
-    adminWeeks.innerHTML = "";
+    adminWeeks.innerHTML = renderRoutineCatalog(routineIds);
     return;
   }
 
@@ -3146,9 +3182,12 @@ function renderPlan() {
               const id = progressId(week.number, dayIndex, exerciseKey);
               const prescription = phasePrescription(exercise, week.number);
               const objectiveClass = normalize(exercise.objective).replaceAll(" ", "-");
+              const thumb = Array.isArray(exercise.images) && hasRealExerciseImage(exercise.images[0])
+                ? `<img src="${escapeHtml(resolveExerciseImage(exercise.images[0], exercise.name))}" alt="${escapeHtml(exercise.name)}" />`
+                : "";
               return `
                 <button class="exercise-card ${progress[id] ? "done" : ""}" type="button" data-week="${week.number}" data-day="${dayIndex}" data-exercise="${exerciseKey}">
-                  <span class="objective-dot ${objectiveClass}"></span>
+                  <span class="exercise-thumb objective-dot ${objectiveClass}">${thumb}</span>
                   <span>
                     <strong>${exercise.name}</strong>
                     <small>${exercise.objective} · ${prescription.sets} x ${prescription.reps} · ${t("restLower")} ${prescription.rest}</small>
@@ -3419,6 +3458,17 @@ adminWeeks.addEventListener("change", async (event) => {
 });
 
 adminWeeks.addEventListener("click", async (event) => {
+  const routineCardButton = event.target.closest("[data-routine-card-edit], [data-routine-card]");
+  if (routineCardButton && !event.target.closest("[data-admin-action]")) {
+    const routineId = routineCardButton.dataset.routineCardEdit || routineCardButton.dataset.routineCard || "";
+    if (routineId && routines[routineId]) {
+      state.adminEditorMode = "edit";
+      setAdminDraftFromRoutine(routineId);
+      setAdminMessage("");
+      renderAdminPanel();
+    }
+    return;
+  }
   const button = event.target.closest("[data-admin-action]");
   if (!button) return;
   await handleAdminAction(button);
