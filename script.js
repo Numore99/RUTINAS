@@ -2642,6 +2642,7 @@ function renderAdminPanel() {
     if (usersTitle) usersTitle.textContent = t("assignRoutines");
   }
   adminSeedDario?.classList.toggle("is-hidden", state.isTrainer && !state.isAdmin);
+  adminNewRoutine?.classList.toggle("is-hidden", !showRoutines || isEditingRoutine);
   adminEditRoutine?.classList.toggle("is-hidden", !showRoutines || isEditingRoutine);
   adminUsersCard?.classList.toggle("is-hidden", !showUsers);
   adminRoutineEditor?.classList.toggle("is-hidden", !showRoutines);

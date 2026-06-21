@@ -2052,6 +2052,7 @@ body:has(.bottom-nav:not(.is-hidden)) main {
   display: none;
 }
 
+.admin-panel.routines-view.editing-routine label[for="adminRoutineSelect"],
 .admin-panel.routines-view.editing-routine label[for="adminRoutineId"],
 .admin-panel.routines-view.editing-routine #adminEditRoutine {
   display: none;
