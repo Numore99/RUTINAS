@@ -3580,3 +3580,422 @@ main {
     min-height: 4.45rem;
   }
 }
+
+/* Visual polish pass: tighter mobile proportions matching the reference boards */
+:root {
+  --app-width: 390px;
+  --radius: 16px;
+  --shadow: 0 14px 30px rgba(0, 0, 0, 0.34);
+}
+
+body {
+  font-size: 13px;
+  background:
+    radial-gradient(circle at 50% -10%, rgba(124, 60, 255, 0.18), transparent 16rem),
+    linear-gradient(180deg, #020817 0%, #030a18 100%);
+}
+
+.app-header {
+  min-height: 8.15rem;
+  padding: 1rem 5.45rem 0.45rem 0.9rem;
+  border-radius: 0;
+}
+
+.app-header::before {
+  top: 0.9rem;
+  right: 4.25rem;
+  width: 1.42rem;
+  height: 1.42rem;
+}
+
+.app-header::after {
+  top: 0.85rem;
+  right: 0.9rem;
+  width: 2.9rem;
+  height: 2.9rem;
+}
+
+.brand-block h1 {
+  margin-top: 0.18rem;
+  font-size: 2.28rem;
+}
+
+.brand-block p,
+.user-greeting {
+  font-size: 0.82rem;
+}
+
+.kicker,
+.exercise-tag {
+  padding: 0.24rem 0.5rem;
+  font-size: 0.62rem;
+}
+
+main {
+  padding: 0 0.85rem 4.6rem;
+}
+
+.trainer-home,
+.student-home,
+.student-progress,
+.student-invites,
+.admin-panel,
+.account-panel,
+.weeks {
+  gap: 0.72rem;
+}
+
+.trainer-home::before,
+.student-progress::before,
+.student-invites::before,
+.account-panel::before,
+.weeks::before,
+.admin-panel.students-view::before,
+.admin-panel.routines-view::before {
+  margin-bottom: 0.25rem;
+  font-size: 1.18rem;
+}
+
+.routine-select-panel,
+.routine-placeholder,
+.student-panel-card,
+.admin-panel-header,
+.admin-editor-card,
+.week-card,
+.day-card,
+.invite-card,
+.trainer-tools,
+.profile-card,
+.home-welcome,
+.home-stat,
+.activity-item,
+.summary-item,
+.exercise-card,
+.admin-user-card,
+.admin-grid,
+.admin-day,
+.admin-exercise,
+.student-dashboard-card,
+.student-current-card,
+.progress-hero,
+.progress-chart,
+.modal-panel,
+.confirm-panel {
+  border-color: rgba(75, 96, 142, 0.34);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.28);
+}
+
+.home-welcome {
+  min-height: 6.65rem;
+  border-radius: 18px;
+  padding: 0.95rem;
+}
+
+.home-welcome::after {
+  right: 0.9rem;
+  top: 0.8rem;
+  width: 4.25rem;
+  height: 4.25rem;
+}
+
+.home-grid {
+  gap: 0.45rem;
+}
+
+.home-stat {
+  min-height: 4.85rem;
+  border-radius: 14px;
+  padding: 0.66rem;
+}
+
+.home-stat strong {
+  font-size: 1.28rem;
+}
+
+.home-stat span {
+  margin-top: 0.28rem;
+  font-size: 0.58rem;
+  line-height: 1.18;
+}
+
+.home-actions {
+  gap: 0.48rem;
+}
+
+.home-actions .primary-button,
+.home-actions .secondary-button {
+  min-height: 4.2rem;
+  border-radius: 14px;
+  font-size: 0.67rem;
+}
+
+.activity-item {
+  padding: 0.58rem 0.75rem 0.58rem 1.45rem;
+  font-size: 0.74rem;
+}
+
+.activity-item::before {
+  left: 0.62rem;
+}
+
+.search-box {
+  gap: 0.28rem;
+}
+
+.search-box span,
+.language-picker span,
+.admin-image-uploader > span,
+.admin-card-title small {
+  font-size: 0.6rem;
+}
+
+.search-box input,
+.search-box select,
+.admin-field,
+.admin-textarea,
+.language-picker select,
+.remember-session {
+  min-height: 2.55rem;
+  border-radius: 12px;
+  padding: 0.68rem 0.78rem;
+}
+
+.primary-button,
+.secondary-button,
+.change-routine-button,
+.admin-toggle,
+.danger-button,
+.file-button,
+.rest-timer button {
+  min-height: 2.45rem;
+  border-radius: 12px;
+  padding: 0.6rem 0.74rem;
+  font-size: 0.82rem;
+}
+
+.admin-editor-card,
+.student-panel-card {
+  border-radius: 18px;
+  padding: 0.78rem;
+}
+
+.routine-list-card {
+  min-height: 4.45rem;
+  border-radius: 16px;
+  padding: 0.68rem;
+  gap: 0.65rem;
+}
+
+.routine-list-icon {
+  width: 2.42rem;
+  height: 2.42rem;
+  border-radius: 12px;
+}
+
+.routine-list-main strong {
+  font-size: 0.9rem;
+}
+
+.routine-list-main small {
+  font-size: 0.68rem;
+}
+
+.routine-mini-ring {
+  width: 2.36rem;
+  font-size: 0.62rem;
+}
+
+.admin-user-toggle {
+  min-height: 4.35rem;
+  padding: 0.68rem;
+}
+
+.student-list-avatar {
+  width: 2.35rem;
+  height: 2.35rem;
+}
+
+.admin-user-main strong {
+  font-size: 0.9rem;
+}
+
+.admin-user-main span {
+  font-size: 0.76rem;
+}
+
+.week-card,
+.day-card {
+  border-radius: 16px;
+}
+
+.week-header {
+  min-height: 4.45rem;
+  padding: 0.78rem;
+}
+
+.week-header h2 {
+  font-size: 0.94rem;
+}
+
+.week-header p,
+.day-card h3 span {
+  font-size: 0.68rem;
+}
+
+.week-badge,
+.week-done-label {
+  padding: 0.28rem 0.48rem;
+  font-size: 0.62rem;
+}
+
+.days {
+  gap: 0.6rem;
+  padding: 0.72rem;
+}
+
+.day-card h3 {
+  min-height: 3.9rem;
+  padding: 0.72rem;
+  font-size: 0.9rem;
+}
+
+.day-card h3::before {
+  width: 2.1rem;
+  height: 2.1rem;
+  border-radius: 11px;
+}
+
+.exercise-list {
+  padding: 0 0.65rem 0.65rem;
+}
+
+.exercise-card {
+  min-height: 4rem;
+  padding: 0.62rem 0;
+  gap: 0.62rem;
+}
+
+.exercise-card strong {
+  font-size: 0.82rem;
+}
+
+.exercise-card small {
+  font-size: 0.68rem;
+}
+
+.objective-dot,
+.exercise-thumb {
+  width: 2.55rem;
+  height: 2.55rem;
+  border-radius: 12px;
+}
+
+.done-mark {
+  width: 1.35rem;
+  font-size: 0.72rem;
+}
+
+.student-dashboard-card,
+.progress-hero {
+  min-height: 7.4rem;
+  border-radius: 18px;
+  padding: 0.85rem;
+}
+
+.student-dashboard-card h2,
+.progress-hero h2 {
+  font-size: 1.35rem;
+}
+
+.student-current-card {
+  border-radius: 16px;
+  padding: 0.78rem;
+}
+
+.mini-progress {
+  width: 3.85rem;
+}
+
+.mini-progress.large {
+  width: 4.65rem;
+}
+
+.mock-tabs span {
+  min-height: 1.95rem;
+  font-size: 0.66rem;
+}
+
+.progress-row {
+  min-height: 3.65rem;
+  padding: 0.62rem;
+}
+
+.settings-list {
+  border-radius: 16px;
+}
+
+.settings-list button {
+  min-height: 3rem;
+  font-size: 0.8rem;
+}
+
+.bottom-nav {
+  border-radius: 18px 18px 0 0;
+  padding: 0.42rem 0.45rem calc(0.42rem + env(safe-area-inset-bottom));
+}
+
+.bottom-nav button {
+  min-height: 2.72rem;
+  border-radius: 12px;
+  font-size: 0.58rem;
+}
+
+.bottom-nav .nav-icon {
+  width: 0.92rem;
+  height: 0.92rem;
+}
+
+.modal {
+  padding: 0;
+}
+
+.modal-panel {
+  max-height: 95vh;
+  border-radius: 22px 22px 0 0;
+}
+
+.modal-hero {
+  min-height: 4.65rem;
+  padding: 0.88rem 2.8rem 0.62rem 0.88rem;
+}
+
+.modal-hero h2 {
+  font-size: 1.24rem;
+}
+
+.detail-grid {
+  gap: 0.45rem;
+}
+
+.detail-grid > div {
+  padding: 0.65rem;
+  border-radius: 14px;
+}
+
+.detail-section {
+  padding: 0.75rem 0.88rem;
+}
+
+.modal-actions {
+  padding: 0.65rem 0.78rem;
+}
+
+@media (max-width: 390px) {
+  main {
+    padding-inline: 0.7rem;
+  }
+
+  .app-header {
+    padding-left: 0.72rem;
+  }
+}
