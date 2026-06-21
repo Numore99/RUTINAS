@@ -1778,6 +1778,9 @@ main {
 }
 
 .bottom-nav button {
+  display: grid;
+  place-items: center;
+  gap: 0.16rem;
   min-height: 2.45rem;
   border: 0;
   border-radius: 12px;
@@ -1785,6 +1788,19 @@ main {
   color: var(--muted);
   font-size: 0.75rem;
   font-weight: 900;
+}
+
+.bottom-nav .nav-icon {
+  display: grid;
+  place-items: center;
+  width: 1.05rem;
+  height: 1.05rem;
+}
+
+.bottom-nav .nav-icon svg {
+  width: 100%;
+  height: 100%;
+  fill: currentColor;
 }
 
 .bottom-nav button.active {

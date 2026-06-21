@@ -1238,14 +1238,28 @@ function showAuthScreen(message = "") {
   state.adminEditorMode = "";
   state.pendingAssignUserId = "";
   state.adminEditingExerciseKey = "";
+  state.activeView = "routines";
   closeExercise();
+  stopTimer();
   routineSelect.classList.remove("is-hidden");
   appHeader.classList.add("is-hidden");
   appMain.classList.add("is-hidden");
   adminToggle.classList.add("is-hidden");
   adminPanel.classList.add("is-hidden");
+  bottomNav?.classList.add("is-hidden");
+  if (bottomNav) bottomNav.innerHTML = "";
+  trainerHome?.classList.add("is-hidden");
   studentInvitesPanel?.classList.add("is-hidden");
-  if (message) setAuthMessage(message);
+  accountPanel?.classList.add("is-hidden");
+  routinePlaceholder?.classList.add("is-hidden");
+  if (summaryStrip) summaryStrip.innerHTML = "";
+  if (weeksContainer) weeksContainer.innerHTML = "";
+  if (adminUsers) adminUsers.innerHTML = "";
+  if (adminWeeks) adminWeeks.innerHTML = "";
+  if (trainerHome) trainerHome.innerHTML = "";
+  if (studentInvitesPanel) studentInvitesPanel.innerHTML = "";
+  if (accountPanel) accountPanel.innerHTML = "";
+  setAuthMessage(message);
 }
 
 function stopUserSubscriptions() {
@@ -1572,8 +1586,7 @@ function renderTrainerHome() {
   const recentItems = getRecentActivityItems();
   trainerHome.innerHTML = `
     <section class="home-welcome">
-      <span>Inicio</span>
-      <h2>Hola, ${escapeHtml(displayName || "entrenador")}</h2>
+      <h2>Inicio</h2>
     </section>
 
     <div class="home-section-title">Resumen</div>
@@ -2074,11 +2087,27 @@ function renderBottomNav() {
       ];
   bottomNav.style.gridTemplateColumns = `repeat(${items.length}, 1fr)`;
   bottomNav.innerHTML = items
-    .map(([view, label]) => `<button type="button" data-view="${view}">${label}</button>`)
+    .map(([view, label]) => `
+      <button type="button" data-view="${view}">
+        <span class="nav-icon" aria-hidden="true">${getNavIcon(view)}</span>
+        <span>${label}</span>
+      </button>
+    `)
     .join("");
   bottomNav.querySelectorAll("[data-view]").forEach((button) => {
     button.classList.toggle("active", button.dataset.view === state.activeView);
   });
+}
+
+function getNavIcon(view) {
+  const icons = {
+    home: '<svg viewBox="0 0 24 24"><path d="M3 10.8 12 3l9 7.8v9.7a.5.5 0 0 1-.5.5H15v-6H9v6H3.5a.5.5 0 0 1-.5-.5v-9.7Z"/></svg>',
+    students: '<svg viewBox="0 0 24 24"><path d="M8.5 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm7 1a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7ZM2 20.5C2 16.9 4.9 14 8.5 14s6.5 2.9 6.5 6.5V21H2v-.5Zm13.5.5h6.5v-.4c0-3.1-2.3-5.7-5.3-6.1a8 8 0 0 1 1.8 5v1.5Z"/></svg>',
+    routines: '<svg viewBox="0 0 24 24"><path d="M6 3h12a2 2 0 0 1 2 2v15.5a.5.5 0 0 1-.75.43L12 16.7l-7.25 4.23A.5.5 0 0 1 4 20.5V5a2 2 0 0 1 2-2Zm2.5 5h7v2h-7V8Zm0 4h5v2h-5v-2Z"/></svg>',
+    professors: '<svg viewBox="0 0 24 24"><path d="M12 3 2 8l10 5 10-5-10-5Zm-7 8.1v4.2c0 2.2 3.1 4.7 7 4.7s7-2.5 7-4.7v-4.2l-7 3.5-7-3.5Z"/></svg>',
+    account: '<svg viewBox="0 0 24 24"><path d="M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10Zm-9 9a9 9 0 0 1 18 0v1H3v-1Z"/></svg>'
+  };
+  return icons[view] || icons.routines;
 }
 
 function renderAccountPanel() {
