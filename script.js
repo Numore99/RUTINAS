@@ -1850,6 +1850,17 @@ function renderStudentHome() {
         <span>Semanas</span>
       </article>
     </div>
+    <section class="student-current-card next-training-card">
+      <small>Proximo entrenamiento</small>
+      <strong>${escapeHtml(getNextTrainingLabel(routine))}</strong>
+      <span>Manana · 18:00</span>
+    </section>
+    <section class="student-current-card streak-card">
+      <small>Racha</small>
+      <strong>12</strong>
+      <span>Dias seguidos</span>
+      <div class="flame-row" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+    </section>
     <button class="primary-button wide-action" type="button" data-student-home-action="routine">Ver rutina</button>
   `;
 }
@@ -1881,6 +1892,11 @@ function renderStudentProgress() {
         <strong>${stats.percent}%</strong>
       </div>
     </section>
+    <div class="mock-tabs">
+      <span class="active">Resumen</span>
+      <span>Entrenamientos</span>
+      <span>Medidas</span>
+    </div>
     <div class="home-grid student-stat-grid">
       <article class="home-stat">
         <strong>${stats.totalSessions}</strong>
@@ -1898,6 +1914,11 @@ function renderStudentProgress() {
     <section class="progress-chart">
       <div class="home-section-title">Semanas</div>
       ${weekRows || `<div class="empty-state">${t("routineInPreparation")}</div>`}
+    </section>
+    <section class="student-current-card streak-card">
+      <small>Racha de entrenamiento</small>
+      <strong>12 dias seguidos</strong>
+      <div class="flame-row" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
     </section>
   `;
 }
@@ -2468,6 +2489,12 @@ function renderAccountPanel() {
         </label>
       </div>
       <p class="account-help">${t("accountPanelHelp")}</p>
+      <section class="settings-list">
+        <button type="button"><span>Informacion personal</span><strong>›</strong></button>
+        <button type="button"><span>Objetivos</span><strong>›</strong></button>
+        <button type="button"><span>Preferencias</span><strong>›</strong></button>
+        <button type="button"><span>Centro de ayuda</span><strong>›</strong></button>
+      </section>
       <p class="account-status" id="accountStatus" aria-live="polite"></p>
       <button class="secondary-button" type="button" data-profile-save>${t("saveProfile")}</button>
       <button class="primary-button" type="button" data-account-logout>${t("logout")}</button>

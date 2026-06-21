@@ -2911,3 +2911,672 @@ main {
     padding-inline: 1rem;
   }
 }
+
+/* Mockup parity layer: stronger native-app composition */
+@media (min-width: 760px) {
+  body {
+    background: #000;
+  }
+
+  .routine-select,
+  .app-header,
+  main,
+  .bottom-nav {
+    box-shadow: 0 0 0 1px rgba(36, 52, 92, 0.7), 0 30px 80px rgba(0, 0, 0, 0.65);
+  }
+}
+
+.app-header,
+main {
+  background:
+    radial-gradient(circle at 90% 0%, rgba(124, 60, 255, 0.14), transparent 14rem),
+    linear-gradient(180deg, rgba(4, 12, 28, 0.98), rgba(3, 10, 24, 0.98));
+}
+
+.app-header {
+  border-radius: 0 0 24px 24px;
+}
+
+main {
+  min-height: calc(100vh - 9.4rem);
+}
+
+.trainer-home::before,
+.student-progress::before,
+.student-invites::before,
+.account-panel::before,
+.weeks::before {
+  display: block;
+  margin: 0 0 0.7rem;
+  color: #ffffff;
+  font-size: 1.28rem;
+  font-weight: 950;
+  letter-spacing: -0.01em;
+}
+
+.trainer-home::before {
+  content: "Inicio";
+}
+
+.student-progress::before {
+  content: "Progreso";
+}
+
+.student-invites::before {
+  content: "Profesores";
+}
+
+.account-panel::before {
+  content: "Mi cuenta";
+}
+
+.weeks::before {
+  content: "Mi Rutina";
+}
+
+.home-section-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0.25rem 0 0;
+  letter-spacing: 0.02em;
+}
+
+.home-section-title::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  margin-left: 0.65rem;
+  background: linear-gradient(90deg, rgba(125, 150, 199, 0.2), transparent);
+}
+
+.home-welcome p::after {
+  content: " 💪";
+}
+
+.home-activity,
+.progress-chart,
+.student-panel-card,
+.admin-editor-card,
+.admin-user-card,
+.week-card,
+.day-card,
+.student-current-card {
+  backdrop-filter: blur(18px);
+}
+
+.home-activity {
+  border: 1px solid rgba(125, 150, 199, 0.14);
+  border-radius: 20px;
+  padding: 0.8rem;
+  background: rgba(8, 19, 42, 0.58);
+}
+
+.activity-item {
+  border-radius: 12px;
+  padding-block: 0.62rem;
+  background: transparent;
+  box-shadow: none;
+  border-color: rgba(125, 150, 199, 0.1);
+}
+
+.activity-item:not(:last-child) {
+  border-bottom: 1px solid rgba(125, 150, 199, 0.1);
+}
+
+.admin-panel-header {
+  position: relative;
+}
+
+.admin-panel.students-view::before,
+.admin-panel.routines-view::before {
+  display: block;
+  margin-bottom: 0.6rem;
+  color: #ffffff;
+  font-size: 1.28rem;
+  font-weight: 950;
+}
+
+.admin-panel.students-view::before {
+  content: "Alumnos";
+}
+
+.admin-panel.routines-view::before {
+  content: "Rutinas";
+}
+
+.admin-panel.routines-view.editing-routine::before {
+  content: "Editar rutina";
+}
+
+.admin-panel.routines-view.editing-routine #adminRoutineEditor::before,
+.admin-panel.students-view #adminUsersCard::before {
+  content: "";
+  display: block;
+  height: 0.35rem;
+}
+
+.admin-card-title h3,
+.admin-card-title small {
+  margin: 0;
+}
+
+.admin-card-title h3 {
+  font-size: 1rem;
+}
+
+.admin-panel.routines-view:not(.editing-routine) .admin-card-title {
+  padding-right: 3.4rem;
+}
+
+.admin-panel.routines-view:not(.editing-routine) .admin-card-title h3 {
+  font-size: 1.45rem;
+}
+
+.routine-card-list::before {
+  content: "Todas    Activas    Archivadas";
+  display: inline-flex;
+  width: fit-content;
+  max-width: 100%;
+  margin-bottom: 0.1rem;
+  border-radius: 999px;
+  padding: 0.58rem 0.9rem;
+  background: linear-gradient(135deg, rgba(124, 60, 255, 0.95), rgba(126, 34, 206, 0.72));
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 900;
+  white-space: pre;
+  box-shadow: 0 12px 26px rgba(124, 60, 255, 0.25);
+}
+
+.admin-user-toggle {
+  min-height: 4.9rem;
+}
+
+.admin-user-card:not(.open) .admin-user-status {
+  color: var(--success);
+}
+
+.admin-user-card:not(.open) .admin-user-status::before {
+  content: "Activo";
+  display: inline-grid;
+  place-items: center;
+  min-width: 3.4rem;
+  border-radius: 999px;
+  padding: 0.32rem 0.55rem;
+  background: rgba(34, 197, 94, 0.14);
+  color: var(--success);
+  font-size: 0.68rem;
+}
+
+.admin-user-card:not(.open) .admin-user-status {
+  font-size: 0;
+}
+
+.admin-user-panel {
+  gap: 0.85rem;
+}
+
+.student-profile-card {
+  border-radius: 20px;
+  background:
+    radial-gradient(circle at top left, rgba(124, 60, 255, 0.12), transparent 60%),
+    rgba(8, 19, 42, 0.76);
+}
+
+.student-profile-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.55rem;
+}
+
+.student-profile-list span,
+.student-profile-list strong {
+  margin: 0;
+}
+
+.student-profile-list span {
+  grid-row: 1;
+}
+
+.student-profile-list strong {
+  grid-row: 2;
+}
+
+.admin-row-actions.compact,
+.admin-user-panel .admin-row-actions {
+  grid-template-columns: 1fr 1fr;
+}
+
+.week-card {
+  overflow: visible;
+}
+
+.week-header {
+  min-height: 5.1rem;
+  border-bottom: 0;
+}
+
+.week-header h2 {
+  font-size: 1.02rem;
+}
+
+.week-header p {
+  color: var(--muted);
+}
+
+.week-badge {
+  color: #fff;
+  background: linear-gradient(135deg, rgba(124, 60, 255, 0.95), rgba(192, 38, 211, 0.78));
+}
+
+.week-done-label {
+  color: var(--success);
+  background: rgba(34, 197, 94, 0.14);
+}
+
+.days {
+  padding-top: 0;
+}
+
+.day-card {
+  overflow: hidden;
+}
+
+.day-card h3 {
+  min-height: 4.4rem;
+  padding: 0.9rem;
+  background: rgba(125, 150, 199, 0.04);
+}
+
+.day-card h3::before {
+  content: "";
+  width: 2.45rem;
+  height: 2.45rem;
+  grid-row: 1 / 3;
+  border-radius: 13px;
+  background:
+    radial-gradient(circle at 50% 30%, rgba(255, 255, 255, 0.25), transparent 38%),
+    linear-gradient(135deg, #0f766e, #22c55e);
+}
+
+.day-card h3 {
+  grid-template-columns: auto minmax(0, 1fr) auto;
+}
+
+.day-card h3 > span {
+  grid-column: 2;
+}
+
+.exercise-list {
+  gap: 0;
+}
+
+.exercise-card {
+  border-radius: 0;
+  border-inline: 0;
+  border-bottom: 1px solid rgba(125, 150, 199, 0.1);
+  background: transparent;
+  box-shadow: none;
+}
+
+.exercise-card:first-child {
+  border-top: 1px solid rgba(125, 150, 199, 0.1);
+}
+
+.done-mark {
+  border-color: rgba(125, 150, 199, 0.26);
+}
+
+.exercise-card.done .done-mark {
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: #fff;
+}
+
+.modal {
+  background: rgba(0, 0, 0, 0.78);
+}
+
+.modal-panel {
+  border: 1px solid rgba(125, 150, 199, 0.18);
+  background:
+    radial-gradient(circle at top, rgba(124, 60, 255, 0.16), transparent 20rem),
+    #050f22;
+}
+
+.modal-hero {
+  min-height: 5.5rem;
+}
+
+.image-grid {
+  padding-inline: 0.9rem;
+}
+
+.image-grid figure {
+  border-radius: 20px;
+  overflow: hidden;
+  background: rgba(8, 19, 42, 0.9);
+}
+
+.detail-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  padding: 0.85rem;
+}
+
+.detail-grid > div,
+.rest-timer {
+  background: rgba(8, 19, 42, 0.76);
+  border-color: rgba(125, 150, 199, 0.14);
+}
+
+.rest-timer {
+  grid-template-columns: 1fr auto auto;
+  border-radius: 16px;
+  padding: 0.45rem;
+}
+
+.rest-timer span {
+  color: var(--accent);
+}
+
+.profile-card {
+  position: relative;
+  grid-template-columns: 1fr;
+  justify-items: center;
+  text-align: center;
+  padding-top: 1.25rem;
+}
+
+.profile-card .profile-avatar,
+.profile-card .profile-avatar-empty {
+  width: 5.7rem;
+  height: 5.7rem;
+}
+
+.profile-card small {
+  margin-inline: auto;
+}
+
+.profile-form {
+  border: 1px solid rgba(125, 150, 199, 0.14);
+  border-radius: 20px;
+  padding: 0.85rem;
+  background: rgba(8, 19, 42, 0.56);
+}
+
+.profile-form .search-box {
+  border-bottom: 1px solid rgba(125, 150, 199, 0.1);
+  padding-bottom: 0.65rem;
+}
+
+.profile-form .search-box:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.profile-photo-button {
+  background: linear-gradient(135deg, #4f46e5, #c026d3);
+}
+
+.account-panel .secondary-button[data-profile-save] {
+  background: linear-gradient(135deg, #4f46e5, #c026d3);
+  border: 0;
+}
+
+.account-panel .primary-button[data-account-logout] {
+  border: 1px solid rgba(239, 68, 68, 0.35);
+  background: transparent;
+  color: #ff7a7a;
+  box-shadow: none;
+}
+
+.progress-hero {
+  min-height: 8.2rem;
+}
+
+.progress-chart::after {
+  content: "";
+  display: block;
+  height: 8rem;
+  border-radius: 18px;
+  background:
+    linear-gradient(180deg, rgba(124, 60, 255, 0.34), rgba(124, 60, 255, 0.02)),
+    linear-gradient(135deg, transparent 8%, rgba(124, 60, 255, 0.9) 8% 10%, transparent 10% 22%, rgba(124, 60, 255, 0.9) 22% 24%, transparent 24% 38%, rgba(124, 60, 255, 0.9) 38% 40%, transparent 40% 55%, rgba(124, 60, 255, 0.9) 55% 57%, transparent 57%);
+  opacity: 0.78;
+}
+
+.mock-tabs {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.35rem;
+  padding: 0.28rem;
+  border: 1px solid rgba(125, 150, 199, 0.12);
+  border-radius: 999px;
+  background: rgba(8, 19, 42, 0.76);
+}
+
+.mock-tabs span {
+  display: grid;
+  place-items: center;
+  min-height: 2.2rem;
+  border-radius: 999px;
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 900;
+}
+
+.mock-tabs .active {
+  color: #fff;
+  background: linear-gradient(135deg, var(--accent), var(--secondary));
+  box-shadow: 0 12px 24px rgba(124, 60, 255, 0.24);
+}
+
+.flame-row {
+  display: flex;
+  align-items: center;
+  gap: 0.42rem;
+  margin-top: 0.45rem;
+}
+
+.flame-row span {
+  width: 1.05rem;
+  height: 1.05rem;
+  border-radius: 50% 50% 50% 0;
+  background: linear-gradient(135deg, #a855f7, #7c3cff);
+  transform: rotate(-45deg);
+  box-shadow: 0 0 16px rgba(124, 60, 255, 0.42);
+}
+
+.settings-list {
+  display: grid;
+  overflow: hidden;
+  border: 1px solid rgba(125, 150, 199, 0.14);
+  border-radius: 20px;
+  background: rgba(8, 19, 42, 0.72);
+}
+
+.settings-list button {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  min-height: 3.35rem;
+  border: 0;
+  border-bottom: 1px solid rgba(125, 150, 199, 0.1);
+  padding: 0 0.9rem;
+  background: transparent;
+  color: var(--text);
+  text-align: left;
+  font-size: 0.88rem;
+  font-weight: 800;
+}
+
+.settings-list button:last-child {
+  border-bottom: 0;
+}
+
+.settings-list strong {
+  color: var(--muted);
+  font-size: 1.25rem;
+}
+
+.next-training-card {
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+
+.next-training-card::after {
+  content: "›";
+  justify-self: end;
+  grid-row: 1 / 4;
+  grid-column: 2;
+  color: var(--warning);
+  font-size: 1.8rem;
+}
+
+.streak-card {
+  background:
+    radial-gradient(circle at right, rgba(124, 60, 255, 0.18), transparent 58%),
+    linear-gradient(145deg, rgba(13, 27, 54, 0.94), rgba(7, 17, 38, 0.98));
+}
+
+.student-dashboard-card {
+  min-height: 8.9rem;
+  background:
+    radial-gradient(circle at 88% 22%, rgba(124, 60, 255, 0.36), transparent 6rem),
+    linear-gradient(145deg, rgba(13, 27, 54, 0.96), rgba(4, 12, 28, 0.98));
+}
+
+.student-dashboard-card::after {
+  content: "";
+  position: absolute;
+}
+
+.student-home {
+  position: relative;
+}
+
+.student-home .student-dashboard-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.student-home .student-dashboard-card::before {
+  content: "";
+  position: absolute;
+  right: 1rem;
+  bottom: -1.1rem;
+  width: 6rem;
+  height: 6rem;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(124, 60, 255, 0.38), transparent 68%);
+}
+
+.student-home .student-dashboard-card .mini-progress {
+  position: relative;
+  z-index: 1;
+}
+
+.progress-hero {
+  background:
+    radial-gradient(circle at 82% 20%, rgba(124, 60, 255, 0.28), transparent 7rem),
+    linear-gradient(145deg, rgba(13, 27, 54, 0.96), rgba(4, 12, 28, 0.98));
+}
+
+.progress-row {
+  min-height: 4.1rem;
+}
+
+.progress-row strong {
+  font-size: 0.86rem;
+}
+
+.progress-line {
+  height: 0.32rem;
+}
+
+.admin-exercise-grid {
+  gap: 0.62rem;
+}
+
+.admin-exercise-grid .search-box {
+  gap: 0.3rem;
+}
+
+.admin-exercise-form {
+  border-radius: 18px;
+  padding: 0.75rem;
+  background: rgba(4, 12, 28, 0.52);
+}
+
+.admin-day,
+.admin-week {
+  background:
+    linear-gradient(145deg, rgba(13, 27, 54, 0.9), rgba(8, 19, 42, 0.96));
+}
+
+.admin-week-header,
+.admin-day-header,
+.admin-exercise-summary {
+  border-radius: 16px;
+}
+
+.admin-panel.routines-view.editing-routine .admin-card-title h3 {
+  font-size: 1.35rem;
+}
+
+.admin-panel.routines-view.editing-routine .admin-grid {
+  background: rgba(8, 19, 42, 0.58);
+}
+
+.admin-panel.routines-view.editing-routine #adminSaveRoutine::before,
+.admin-panel.routines-view.editing-routine #adminAddWeek::before,
+.admin-panel.routines-view.editing-routine .admin-row-actions .primary-button::before {
+  content: "▣";
+  margin-right: 0.4rem;
+}
+
+.admin-panel.routines-view.editing-routine #adminDeleteRoutine {
+  border-color: rgba(239, 68, 68, 0.35);
+}
+
+.confirm-panel {
+  width: min(360px, calc(100% - 2rem));
+  border-radius: 26px;
+  background: #151b1a;
+}
+
+.confirm-panel p {
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 1rem;
+}
+
+.confirm-actions {
+  grid-template-columns: 1fr 1fr;
+}
+
+.confirm-actions .secondary-button,
+.confirm-actions .primary-button {
+  border: 0;
+  background: transparent;
+  color: #b8f0ac;
+  box-shadow: none;
+}
+
+@media (max-width: 430px) {
+  .app-header {
+    padding-right: 5.8rem;
+  }
+
+  .bottom-nav {
+    gap: 0.12rem;
+    padding-inline: 0.35rem;
+  }
+
+  .bottom-nav button {
+    font-size: 0.59rem;
+  }
+
+  .home-actions .primary-button,
+  .home-actions .secondary-button {
+    min-height: 4.45rem;
+  }
+}
