@@ -1580,6 +1580,7 @@ async function createTrainerInvitation(studentEmail) {
     trainerId: state.currentUser.uid,
     trainerEmail: normalizeEmail(state.currentUser.email || ""),
     trainerName: getTrainerDisplayName(),
+    trainerPhotoDataUrl: state.currentUserData?.photoDataUrl || "",
     studentEmail: email,
     status: "pending",
     createdAt: firebase.firestore.FieldValue.serverTimestamp(),
@@ -1761,6 +1762,23 @@ function createRoutineDraftId(number = getNextRoutineNumber()) {
 function renderStudentProfessorsPanel() {
   if (!studentInvitesPanel) return;
   const invites = state.studentInvites || [];
+  const renderTrainerCard = (invite) => {
+    const trainer = {
+      displayName: invite.trainerName || invite.trainerEmail || t("trainer"),
+      email: invite.trainerEmail || "",
+      photoDataUrl: invite.trainerPhotoDataUrl || ""
+    };
+    return `
+      <article class="profile-card">
+        ${renderUserAvatar(trainer)}
+        <div>
+          <strong>${escapeHtml(trainer.displayName)}</strong>
+          <span>${escapeHtml(trainer.email)}</span>
+          <small>${t("trainer")}</small>
+        </div>
+      </article>
+    `;
+  };
   const pendingInvites = invites.filter((invite) => invite.status === "pending");
   const acceptedInvites = invites.filter((invite) => invite.status === "accepted");
   const pendingHtml = pendingInvites.length
@@ -1791,16 +1809,7 @@ function renderStudentProfessorsPanel() {
       <div class="home-section-title">${t("acceptedProfessors")}</div>
       ${acceptedInvites
         .map((invite) => {
-          const trainerName = invite.trainerName || invite.trainerEmail || t("trainer");
-          return `
-            <article class="invite-card">
-              <div>
-                <strong>${escapeHtml(trainerName)}</strong>
-                <span>${escapeHtml(invite.trainerEmail || "")}</span>
-              </div>
-              <span class="student-role-pill">${t("trainer")}</span>
-            </article>
-          `;
+          return renderTrainerCard(invite);
         })
         .join("")}
     `
@@ -1888,7 +1897,7 @@ function renderAdminUsers() {
       ].join("");
       return `
         <article class="admin-user-card ${isOpen ? "open" : ""}" data-user-id="${escapeHtml(user.uid)}">
-          <button class="admin-user-toggle" type="button" data-user-toggle aria-expanded="${isOpen}">
+          <button class="admin-user-toggle ${isOpen ? "is-hidden" : ""}" type="button" data-user-toggle aria-expanded="${isOpen}">
             ${renderUserAvatar(user, "student-list-avatar")}
             <span class="admin-user-main">
               <strong>${escapeHtml(displayName || t("user"))}</strong>
@@ -1901,6 +1910,7 @@ function renderAdminUsers() {
           </button>
           ${isOpen ? `
             <div class="admin-user-panel">
+              <button class="secondary-button compact-profile-back" type="button" data-user-toggle>← ${t("backToUsers").replace("← ", "")}</button>
               <section class="student-profile-card">
                 <div class="home-section-title">${t("profile")}</div>
                 <div class="student-profile-head">
@@ -2263,6 +2273,7 @@ function renderAccountPanel() {
         </label>
       </div>
       <p class="account-help">${t("accountPanelHelp")}</p>
+      <p class="account-status" id="accountStatus" aria-live="polite"></p>
       <button class="secondary-button" type="button" data-profile-save>${t("saveProfile")}</button>
       <button class="primary-button" type="button" data-account-logout>${t("logout")}</button>
     </section>
@@ -2530,6 +2541,9 @@ async function saveCurrentUserProfile(extra = {}) {
   state.currentUserData = { ...(state.currentUserData || {}), ...payload };
   setAuthMessage(t("profileSaved"), "success");
   renderApp();
+  accountPanel?.querySelector("#accountStatus")?.classList.add("success");
+  const status = accountPanel?.querySelector("#accountStatus");
+  if (status) status.textContent = t("profileSaved");
 }
 
 function setAdminMessage(message, type = "") {
