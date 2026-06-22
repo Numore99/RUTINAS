@@ -400,6 +400,8 @@ const state = {
   adminEditingExerciseKey: "",
   accountSubView: "profile",
   progressSubView: "summary",
+  progressHistoryFilter: "all",
+  progressMeasureTab: "summary",
   currentExerciseKey: null,
   timerSeconds: 0,
   timerInterval: null
@@ -1904,6 +1906,14 @@ function renderStudentProgress() {
   const minutes = Math.max(45, Math.round(weekWorkouts * 11.25));
   const kcal = Math.max(320, Math.round(minutes * 26.7));
   const currentTab = state.progressSubView || "summary";
+  if (currentTab === "history") {
+    studentProgress.innerHTML = renderProgressHistory(routine);
+    return;
+  }
+  if (currentTab === "measures") {
+    studentProgress.innerHTML = renderProgressMeasures();
+    return;
+  }
   studentProgress.innerHTML = `
     <section class="student-progress-screen">
       <div class="screen-topbar progress-topbar">
@@ -1918,7 +1928,7 @@ function renderStudentProgress() {
         <button type="button" data-progress-tab="measures" class="${currentTab === "measures" ? "active" : ""}">Medidas</button>
       </div>
 
-      ${currentTab === "history" ? renderProgressHistory(routine) : currentTab === "measures" ? renderProgressMeasures() : renderProgressSummary({
+      ${renderProgressSummary({
         weekWorkouts,
         percent: stats.percent,
         kcal,
@@ -1978,46 +1988,95 @@ function renderProgressSummary({ weekWorkouts, percent, kcal }) {
 }
 
 function renderProgressHistory(routine) {
-  const rows = (routine?.plan || []).flatMap((week) =>
+  const filter = state.progressHistoryFilter || "all";
+  const allRows = (routine?.plan || []).flatMap((week) =>
     (week.days || []).map((day, index) => {
       const ids = (day.exercises || []).map((exerciseKey) => progressId(week.number, index, exerciseKey));
       const done = ids.filter((id) => progress[id]).length;
       const percent = ids.length ? Math.round((done / ids.length) * 100) : 0;
+      const completed = percent >= 100;
+      const pending = percent < 100;
+      if (filter === "completed" && !completed) return "";
+      if (filter === "pending" && !pending) return "";
+      const iconClass = completed ? "calendar" : percent >= 80 ? "fire" : "dumbbell";
+      const date = completed ? "Hoy" : "Ayer";
+      const minutes = Math.max(40, Math.round(ids.length * 7.5));
       return `
         <article class="history-row">
-          <span class="routine-list-icon ${percent >= 100 ? "calendar" : "dumbbell"}"></span>
+          <span class="routine-list-icon ${iconClass}"></span>
           <div>
             <strong>${escapeHtml(day.title || `Día ${index + 1}`)}</strong>
-            <small>${t("week")} ${week.number} · ${ids.length} ejercicios</small>
+            <small>${date} · ${minutes} min</small>
           </div>
           <b>${percent}%</b>
         </article>
       `;
     })
-  ).join("");
-  return `<section class="progress-list-card">${rows || `<div class="empty-state">${t("routineInPreparation")}</div>`}</section>`;
+  ).filter(Boolean);
+  const rows = allRows.length ? allRows.join("") : `<div class="empty-state">${t("routineInPreparation")}</div>`;
+  return `
+    <section class="student-progress-screen progress-history-screen">
+      <div class="screen-topbar progress-topbar">
+        <button class="icon-button ghost-icon" type="button" data-progress-back aria-label="Volver">‹</button>
+        <h2>Historial</h2>
+        <button class="icon-button ghost-icon filter-icon" type="button" data-progress-action="cycle-history" aria-label="Filtrar">${getInlineIcon("filter")}</button>
+      </div>
+      <div class="mock-tabs progress-tabs history-filter-tabs">
+        <button type="button" data-history-filter="all" class="${filter === "all" ? "active" : ""}">Todos</button>
+        <button type="button" data-history-filter="completed" class="${filter === "completed" ? "active" : ""}">Completados</button>
+        <button type="button" data-history-filter="pending" class="${filter === "pending" ? "active" : ""}">Pendientes</button>
+      </div>
+      <section class="progress-list-card history-list-card">${rows}</section>
+    </section>
+  `;
 }
 
 function renderProgressMeasures() {
   const userData = state.currentUserData || {};
   const weight = userData.weight || "--";
-  const height = userData.height || "--";
-  const age = userData.age || "--";
+  const bodyFat = userData.bodyFat || "15.2";
+  const muscleMass = userData.muscleMass || "66.6";
+  const tab = state.progressMeasureTab || "summary";
   return `
-    <section class="progress-list-card measure-card">
-      <div class="progress-section-title">Actuales</div>
-      <div class="progress-stat-grid">
-        <article><strong>${escapeHtml(weight)}</strong><span>Peso kg</span></article>
-        <article><strong>${escapeHtml(height)}</strong><span>Altura m</span></article>
-        <article><strong>${escapeHtml(age)}</strong><span>Edad</span></article>
+    <section class="student-progress-screen progress-measures-screen">
+      <div class="screen-topbar progress-topbar">
+        <button class="icon-button ghost-icon" type="button" data-progress-back aria-label="Volver">‹</button>
+        <h2>Medidas</h2>
+        <span></span>
       </div>
-      <div class="performance-chart compact-chart">
-        <svg viewBox="0 0 320 120" preserveAspectRatio="none" aria-hidden="true">
-          <path d="M20 35 L75 48 L130 55 L190 70 L250 82 L304 95" fill="none" stroke="#a855f7" stroke-width="5" stroke-linecap="round"/>
-          <path d="M20 35 L75 48 L130 55 L190 70 L250 82 L304 95 L304 116 L20 116 Z" fill="rgba(124,60,255,.2)"/>
-        </svg>
+      <div class="mock-tabs progress-tabs measure-tabs">
+        <button type="button" data-measure-tab="summary" class="${tab === "summary" ? "active" : ""}">Resumen</button>
+        <button type="button" data-measure-tab="weight" class="${tab === "weight" ? "active" : ""}">Peso</button>
+        <button type="button" data-measure-tab="photos" class="${tab === "photos" ? "active" : ""}">Fotos</button>
       </div>
-      <button class="secondary-button" type="button" data-progress-action="edit-profile">Registrar medida</button>
+      <section class="progress-list-card measure-card">
+        <div class="progress-section-title">Actuales</div>
+        ${tab === "photos" ? `
+          <div class="measure-photo-empty">
+            ${renderUserAvatar(userData)}
+            <span>No hay fotos registradas.</span>
+          </div>
+        ` : `
+          <div class="progress-stat-grid measure-stat-grid">
+            <article><span>Peso</span><strong>${escapeHtml(weight)}</strong><small>kg</small></article>
+            <article><span>Grasa corporal</span><strong>${escapeHtml(bodyFat)}</strong><small>%</small></article>
+            <article><span>Masa muscular</span><strong>${escapeHtml(muscleMass)}</strong><small>kg</small></article>
+          </div>
+          <div class="progress-section-title">Histórico</div>
+          <div class="performance-chart compact-chart measure-chart">
+            <span class="axis top">80</span>
+            <span class="axis mid">78</span>
+            <span class="axis bottom">74</span>
+            <svg viewBox="0 0 320 120" preserveAspectRatio="none" aria-hidden="true">
+              <path d="M20 32 L76 50 L132 54 L188 55 L244 75 L304 92" fill="none" stroke="#a855f7" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M20 32 L76 50 L132 54 L188 55 L244 75 L304 92 L304 116 L20 116 Z" fill="rgba(124,60,255,.22)"/>
+              <g fill="#c084fc"><circle cx="20" cy="32" r="4"/><circle cx="76" cy="50" r="4"/><circle cx="132" cy="54" r="4"/><circle cx="188" cy="55" r="4"/><circle cx="244" cy="75" r="4"/><circle cx="304" cy="92" r="4"/></g>
+            </svg>
+            <div class="chart-days"><span>15/04</span><span>22/04</span><span>29/04</span><span>06/05</span><span>13/05</span><span>20/05</span></div>
+          </div>
+        `}
+        <button class="secondary-button measure-register-button" type="button" data-progress-action="edit-profile">+ Registrar medida</button>
+      </section>
     </section>
   `;
 }
@@ -3109,7 +3168,8 @@ function getInlineIcon(name) {
     user: '<svg viewBox="0 0 24 24"><path d="M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10Zm-9 9a9 9 0 0 1 18 0v1H3v-1Z"/></svg>',
     heart: '<svg viewBox="0 0 24 24"><path d="M12 21s-8-4.8-8-11a5 5 0 0 1 8-4 5 5 0 0 1 8 4c0 6.2-8 11-8 11Z"/></svg>',
     info: '<svg viewBox="0 0 24 24"><path d="M11 10h2v8h-2v-8Zm0-4h2v2h-2V6Zm1 16a10 10 0 1 0 0-20 10 10 0 0 0 0 20Z"/></svg>',
-    logout: '<svg viewBox="0 0 24 24"><path d="M10 4H4v16h6v-2H6V6h4V4Zm5.5 3.5L14 9l2 2H9v2h7l-2 2 1.5 1.5L20 12l-4.5-4.5Z"/></svg>'
+    logout: '<svg viewBox="0 0 24 24"><path d="M10 4H4v16h6v-2H6V6h4V4Zm5.5 3.5L14 9l2 2H9v2h7l-2 2 1.5 1.5L20 12l-4.5-4.5Z"/></svg>',
+    filter: '<svg viewBox="0 0 24 24"><path d="M4 6h16v2H4V6Zm3 5h10v2H7v-2Zm3 5h4v2h-4v-2Z"/></svg>'
   };
   return icons[name] || "";
 }
@@ -3950,9 +4010,30 @@ bottomNav?.addEventListener("click", (event) => {
 });
 
 studentProgress?.addEventListener("click", (event) => {
+  const back = event.target.closest("[data-progress-back]");
+  if (back) {
+    state.progressSubView = "summary";
+    renderStudentProgress();
+    return;
+  }
+
   const tab = event.target.closest("[data-progress-tab]");
   if (tab) {
     state.progressSubView = tab.dataset.progressTab || "summary";
+    renderStudentProgress();
+    return;
+  }
+
+  const historyFilter = event.target.closest("[data-history-filter]");
+  if (historyFilter) {
+    state.progressHistoryFilter = historyFilter.dataset.historyFilter || "all";
+    renderStudentProgress();
+    return;
+  }
+
+  const measureTab = event.target.closest("[data-measure-tab]");
+  if (measureTab) {
+    state.progressMeasureTab = measureTab.dataset.measureTab || "summary";
     renderStudentProgress();
     return;
   }
@@ -3966,6 +4047,13 @@ studentProgress?.addEventListener("click", (event) => {
   }
   if (action.dataset.progressAction === "menu") {
     state.progressSubView = state.progressSubView === "history" ? "summary" : "history";
+    renderStudentProgress();
+    return;
+  }
+  if (action.dataset.progressAction === "cycle-history") {
+    const order = ["all", "completed", "pending"];
+    const index = order.indexOf(state.progressHistoryFilter);
+    state.progressHistoryFilter = order[(index + 1) % order.length];
     renderStudentProgress();
   }
 });
