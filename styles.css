@@ -4984,6 +4984,236 @@ main {
   min-height: 7rem;
 }
 
+/* Student routine screens from supplied mockups */
+.student-routine-screen {
+  display: grid;
+  gap: 0.78rem;
+  color: #f8fbff;
+}
+
+.routine-topbar h2 {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 0.94rem;
+}
+
+.routine-current-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.75rem;
+  border: 1px solid rgba(75, 96, 142, 0.18);
+  border-radius: 18px;
+  background: rgba(5, 15, 34, 0.42);
+  padding: 0.82rem;
+}
+
+.routine-current-card span,
+.routine-current-card small {
+  display: block;
+  color: #8f9db8;
+  font-size: 0.58rem;
+  font-weight: 850;
+  text-transform: uppercase;
+}
+
+.routine-current-card strong {
+  display: block;
+  margin: 0.2rem 0 0.12rem;
+  font-size: 0.9rem;
+  line-height: 1.12;
+}
+
+.routine-current-card small {
+  text-transform: none;
+  font-size: 0.66rem;
+}
+
+.routine-progress-ring {
+  width: 3.45rem;
+}
+
+.routine-progress-ring strong {
+  font-size: 0.78rem;
+}
+
+.routine-tabs {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  min-height: 2.3rem;
+  border: 0;
+  padding: 0.22rem;
+  border-radius: 14px;
+  background: rgba(8, 19, 42, 0.64);
+}
+
+.routine-tabs button {
+  border: 0;
+  border-radius: 12px;
+  background: transparent;
+  color: #9aa8c2;
+  font-size: 0.66rem;
+  font-weight: 900;
+}
+
+.routine-tabs button.active {
+  color: #fff;
+  background: linear-gradient(135deg, #6d35ff, #8b5cf6);
+  box-shadow: 0 10px 22px rgba(124, 60, 255, 0.28);
+}
+
+.routine-week-list,
+.routine-day-list,
+.routine-info-list {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.routine-week-row,
+.routine-day-row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 0.62rem;
+  width: 100%;
+  min-height: 3.72rem;
+  border: 1px solid rgba(75, 96, 142, 0.16);
+  border-radius: 15px;
+  background: rgba(8, 19, 42, 0.62);
+  color: #f8fbff;
+  padding: 0.55rem 0.62rem;
+  text-align: left;
+}
+
+.routine-week-row strong,
+.routine-day-row strong {
+  display: block;
+  font-size: 0.78rem;
+  line-height: 1.1;
+}
+
+.routine-week-row small,
+.routine-day-row small {
+  display: block;
+  margin-top: 0.14rem;
+  color: #8f9db8;
+  font-size: 0.58rem;
+  line-height: 1.15;
+}
+
+.routine-week-row b,
+.routine-day-row b {
+  color: #f8fbff;
+  font-size: 0.7rem;
+  font-weight: 950;
+  text-align: right;
+}
+
+.routine-week-row.complete b,
+.routine-day-row b.complete {
+  color: #22c55e;
+}
+
+.routine-week-row.progress b,
+.routine-day-row b.progress {
+  color: #f59e0b;
+}
+
+.routine-week-row i {
+  color: #22c55e;
+  font-style: normal;
+  font-size: 0.95rem;
+  font-weight: 950;
+}
+
+.routine-info-list article {
+  display: grid;
+  gap: 0.18rem;
+  min-height: 3.15rem;
+  border: 1px solid rgba(75, 96, 142, 0.13);
+  border-radius: 13px;
+  background: rgba(8, 19, 42, 0.6);
+  padding: 0.68rem;
+}
+
+.routine-info-list span {
+  color: #8f9db8;
+  font-size: 0.56rem;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.routine-info-list strong {
+  font-size: 0.74rem;
+  line-height: 1.35;
+}
+
+.week-progress-card {
+  display: grid;
+  gap: 0.48rem;
+  border: 1px solid rgba(75, 96, 142, 0.16);
+  border-radius: 16px;
+  background: rgba(5, 15, 34, 0.42);
+  padding: 0.72rem;
+}
+
+.week-progress-card > div:first-child {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.8rem;
+  color: #8f9db8;
+  font-size: 0.58rem;
+  font-weight: 850;
+}
+
+.week-progress-card strong {
+  color: #f8fbff;
+  font-size: 0.82rem;
+}
+
+.week-progress-bar {
+  height: 0.38rem;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(75, 96, 142, 0.22);
+}
+
+.week-progress-bar span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #6d35ff, #a855f7);
+}
+
+.routine-day-card {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.routine-day-card.open .routine-day-row {
+  border-color: rgba(139, 92, 246, 0.38);
+}
+
+.routine-day-exercises {
+  display: grid;
+  gap: 0.38rem;
+  padding-left: 0.45rem;
+}
+
+.routine-day-exercises .exercise-card {
+  min-height: 3.55rem;
+  border-radius: 14px;
+  padding: 0.48rem;
+}
+
+.routine-day-exercises .exercise-card strong {
+  font-size: 0.72rem;
+}
+
+.routine-day-exercises .exercise-card small {
+  font-size: 0.56rem;
+}
+
 /* Inicio - Alumno: greeting line above the rutina actual card (matches mockup) */
 .sh-greeting {
   margin: 0 0 0.6rem;

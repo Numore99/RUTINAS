@@ -402,6 +402,9 @@ const state = {
   progressSubView: "summary",
   progressHistoryFilter: "all",
   progressMeasureTab: "summary",
+  routineSubView: "weeks",
+  selectedRoutineWeekNumber: 1,
+  selectedRoutineDayIndex: null,
   currentExerciseKey: null,
   timerSeconds: 0,
   timerInterval: null
@@ -2565,7 +2568,7 @@ function renderApp() {
 
   const showRoutineView = studentMode && state.activeView === "routines";
   const hasPlan = routine.plan.length > 0 && showRoutineView;
-  summaryStrip.classList.toggle("is-hidden", !hasPlan);
+  summaryStrip.classList.add("is-hidden");
   weeksContainer.classList.toggle("is-hidden", !hasPlan);
   routinePlaceholder.classList.toggle("is-hidden", hasPlan || !showRoutineView);
 
@@ -3528,6 +3531,21 @@ function renderPlan() {
   const routine = getActiveRoutine();
   const plan = routine.plan;
   const library = routine.exerciseLibrary;
+  if (state.routineSubView === "info") {
+    weeksContainer.innerHTML = renderStudentRoutineInfo(routine);
+    renderSummary();
+    return;
+  }
+  if (state.routineSubView === "week") {
+    const week = plan.find((item) => Number(item.number) === Number(state.selectedRoutineWeekNumber)) || plan[0];
+    weeksContainer.innerHTML = week ? renderStudentRoutineWeek(routine, week) : `<div class="empty-state">${t("routineInPreparation")}</div>`;
+    renderSummary();
+    return;
+  }
+  weeksContainer.innerHTML = renderStudentRoutineOverview(routine);
+  renderSummary();
+  return;
+
   let visibleCount = 0;
 
   weeksContainer.innerHTML = plan
@@ -3606,6 +3624,178 @@ function renderPlan() {
   }
 
   renderSummary();
+}
+
+function getWeekProgressPercent(week) {
+  const ids = getWeekExerciseIds(week);
+  const done = ids.filter((id) => progress[id]).length;
+  return ids.length ? Math.round((done / ids.length) * 100) : 0;
+}
+
+function getCurrentWeekInfo(routine) {
+  const plan = routine?.plan || [];
+  const activeWeek = plan.find((week) => getWeekProgressPercent(week) < 100) || plan[plan.length - 1] || null;
+  return {
+    week: activeWeek,
+    percent: activeWeek ? getWeekProgressPercent(activeWeek) : 0
+  };
+}
+
+function renderRoutineProgressRing(percent) {
+  return `<div class="mini-progress routine-progress-ring" style="--progress:${percent}%"><strong>${percent}%</strong></div>`;
+}
+
+function renderStudentRoutineOverview(routine) {
+  const stats = getRoutineProgressStats(routine);
+  const current = getCurrentWeekInfo(routine);
+  const currentWeek = current.week;
+  const subtitle = currentWeek ? `${t("week")} ${currentWeek.number} de ${routine.plan.length}` : t("routineInPreparation");
+  const weekRows = (routine.plan || []).map((week, index) => {
+    const percent = getWeekProgressPercent(week);
+    const phase = week.phase || {};
+    const iconClass = percent >= 100 ? "calendar" : percent > 0 ? "dumbbell" : "clipboard";
+    const status = percent >= 100 ? "complete" : percent > 0 ? "progress" : "pending";
+    return `
+      <button class="routine-week-row ${status}" type="button" data-routine-week="${week.number}">
+        <span class="routine-list-icon ${iconClass}"></span>
+        <span>
+          <strong>${t("week")} ${week.number}</strong>
+          <small>${escapeHtml(phase.name || `Semana ${index + 1}`)}</small>
+        </span>
+        <b>${percent >= 100 ? "100%" : percent > 0 ? "En progreso" : "0%"}</b>
+        <i>${percent >= 100 ? "✓" : ">"}</i>
+      </button>
+    `;
+  }).join("");
+  return `
+    <section class="student-routine-screen routine-overview-screen">
+      <div class="screen-topbar routine-topbar">
+        <button class="icon-button ghost-icon" type="button" data-routine-back aria-label="Volver">‹</button>
+        <h2>Mi Rutina</h2>
+        <button class="icon-button ghost-icon" type="button" data-routine-menu aria-label="Opciones">⋮</button>
+      </div>
+      <section class="routine-current-card">
+        <div>
+          <span>Rutina actual</span>
+          <strong>${escapeHtml(routine.name || routine.title || t("routine"))}</strong>
+          <small>${escapeHtml(subtitle)}</small>
+        </div>
+        ${renderRoutineProgressRing(stats.percent)}
+      </section>
+      <div class="mock-tabs routine-tabs">
+        <button type="button" data-routine-tab="weeks" class="active">Semanas</button>
+        <button type="button" data-routine-tab="info">Información</button>
+      </div>
+      <section class="routine-week-list">
+        ${weekRows || `<div class="empty-state">${t("routineInPreparation")}</div>`}
+      </section>
+    </section>
+  `;
+}
+
+function renderStudentRoutineInfo(routine) {
+  const stats = getRoutineProgressStats(routine);
+  const current = getCurrentWeekInfo(routine);
+  const title = routine.name || routine.title || t("routine");
+  const description = routine.description || "Rutina enfocada en el desarrollo de fuerza en la parte superior del cuerpo.";
+  return `
+    <section class="student-routine-screen routine-info-screen">
+      <div class="screen-topbar routine-topbar">
+        <button class="icon-button ghost-icon" type="button" data-routine-tab="weeks" aria-label="Volver">‹</button>
+        <h2>Información de Rutina</h2>
+        <span></span>
+      </div>
+      <section class="routine-current-card">
+        <div>
+          <strong>${escapeHtml(title)}</strong>
+          <small>${current.week ? `${t("week")} ${current.week.number} de ${routine.plan.length}` : t("routineInPreparation")}</small>
+        </div>
+        ${renderRoutineProgressRing(stats.percent)}
+      </section>
+      <div class="mock-tabs routine-tabs">
+        <button type="button" data-routine-tab="info" class="active">Información</button>
+        <button type="button" data-routine-tab="notes">Notas</button>
+      </div>
+      <section class="routine-info-list">
+        <article><span>Objetivo</span><strong>${escapeHtml(routine.goal || "Aumentar fuerza y masa muscular")}</strong></article>
+        <article><span>Nivel</span><strong>${escapeHtml(routine.level || "Intermedio")}</strong></article>
+        <article><span>Duración</span><strong>${routine.plan.length || 0} semanas</strong></article>
+        <article><span>Descripción</span><strong>${escapeHtml(description)}</strong></article>
+        <article><span>Frecuencia</span><strong>${escapeHtml(routine.frequency || "4 días por semana")}</strong></article>
+        <article><span>Equipo</span><strong>${escapeHtml(routine.equipment || "Gimnasio")}</strong></article>
+      </section>
+    </section>
+  `;
+}
+
+function renderStudentRoutineWeek(routine, week) {
+  const percent = getWeekProgressPercent(week);
+  const phase = week.phase || {};
+  const days = (week.days || []).map((day, dayIndex) => {
+    const ids = (day.exercises || []).map((exerciseKey) => progressId(week.number, dayIndex, exerciseKey));
+    const done = ids.filter((id) => progress[id]).length;
+    const dayPercent = ids.length ? Math.round((done / ids.length) * 100) : 0;
+    const completed = dayPercent >= 100;
+    const inProgress = dayPercent > 0 && dayPercent < 100;
+    const iconClass = completed ? "calendar" : inProgress ? "fire" : "clipboard";
+    const open = Number(state.selectedRoutineDayIndex) === dayIndex;
+    const exerciseList = open ? renderStudentRoutineDayExercises(routine, week, day, dayIndex) : "";
+    return `
+      <article class="routine-day-card ${open ? "open" : ""}">
+        <button class="routine-day-row" type="button" data-routine-day="${dayIndex}">
+          <span class="routine-list-icon ${iconClass}"></span>
+          <span>
+            <strong>${escapeHtml(day.title || `Día ${dayIndex + 1}`)}</strong>
+            <small>${escapeHtml(day.focus || (completed ? "Completado" : inProgress ? "En progreso" : "Pendiente"))}</small>
+          </span>
+          <b class="${completed ? "complete" : inProgress ? "progress" : ""}">${completed ? "✓" : inProgress ? "▶" : "□"}</b>
+        </button>
+        ${exerciseList}
+      </article>
+    `;
+  }).join("");
+  return `
+    <section class="student-routine-screen routine-week-screen">
+      <div class="screen-topbar routine-topbar">
+        <button class="icon-button ghost-icon" type="button" data-routine-tab="weeks" aria-label="Volver">‹</button>
+        <h2>${t("week")} ${week.number} - ${escapeHtml(phase.name || "Hipertrofia")}</h2>
+        <span></span>
+      </div>
+      <section class="week-progress-card">
+        <div>
+          <span>Progreso de la semana</span>
+          <strong>${percent}%</strong>
+        </div>
+        <div class="week-progress-bar"><span style="width:${percent}%"></span></div>
+      </section>
+      <div class="progress-section-title">Días</div>
+      <section class="routine-day-list">${days || `<div class="empty-state">${t("emptyWeek")}</div>`}</section>
+    </section>
+  `;
+}
+
+function renderStudentRoutineDayExercises(routine, week, day, dayIndex) {
+  const library = routine.exerciseLibrary || {};
+  const items = (day.exercises || []).map((exerciseKey) => {
+    const exercise = library[exerciseKey];
+    if (!exercise) return "";
+    const id = progressId(week.number, dayIndex, exerciseKey);
+    const prescription = phasePrescription(exercise, week.number);
+    const thumb = Array.isArray(exercise.images) && hasRealExerciseImage(exercise.images[0])
+      ? `<img src="${escapeHtml(resolveExerciseImage(exercise.images[0], exercise.name))}" alt="${escapeHtml(exercise.name)}" />`
+      : "";
+    return `
+      <button class="exercise-card ${progress[id] ? "done" : ""}" type="button" data-week="${week.number}" data-day="${dayIndex}" data-exercise="${escapeHtml(exerciseKey)}">
+        <span class="exercise-thumb objective-dot ${normalize(exercise.objective).replaceAll(" ", "-")}">${thumb}</span>
+        <span>
+          <strong>${escapeHtml(exercise.name || t("newExercise"))}</strong>
+          <small>${escapeHtml(exercise.objective || "")} · ${escapeHtml(prescription.sets)} x ${escapeHtml(prescription.reps)}</small>
+        </span>
+        <span class="done-mark">✓</span>
+      </button>
+    `;
+  }).join("");
+  return `<div class="routine-day-exercises">${items || `<div class="empty-state">${t("emptyDay")}</div>`}</div>`;
 }
 
 function parseRestToSeconds(rest) {
@@ -3739,6 +3929,38 @@ function toggleDone() {
 }
 
 weeksContainer.addEventListener("click", (event) => {
+  const routineTab = event.target.closest("[data-routine-tab]");
+  if (routineTab) {
+    const tab = routineTab.dataset.routineTab;
+    state.routineSubView = tab === "info" || tab === "notes" ? "info" : "weeks";
+    state.selectedRoutineDayIndex = null;
+    renderPlan();
+    return;
+  }
+
+  const routineBack = event.target.closest("[data-routine-back]");
+  if (routineBack) {
+    setActiveView("home");
+    return;
+  }
+
+  const routineWeek = event.target.closest("[data-routine-week]");
+  if (routineWeek) {
+    state.selectedRoutineWeekNumber = Number(routineWeek.dataset.routineWeek) || 1;
+    state.selectedRoutineDayIndex = null;
+    state.routineSubView = "week";
+    renderPlan();
+    return;
+  }
+
+  const routineDay = event.target.closest("[data-routine-day]");
+  if (routineDay) {
+    const index = Number(routineDay.dataset.routineDay);
+    state.selectedRoutineDayIndex = state.selectedRoutineDayIndex === index ? null : index;
+    renderPlan();
+    return;
+  }
+
   const weekToggle = event.target.closest(".week-toggle");
   if (weekToggle) {
     const collapseId = weekCollapseId(Number(weekToggle.dataset.week));
@@ -4005,6 +4227,10 @@ bottomNav?.addEventListener("click", (event) => {
   }
   if (button.dataset.view === "progress") {
     state.progressSubView = "summary";
+  }
+  if (button.dataset.view === "routines") {
+    state.routineSubView = "weeks";
+    state.selectedRoutineDayIndex = null;
   }
   setActiveView(button.dataset.view);
 });
