@@ -3603,8 +3603,9 @@ return `
         })
         .join("");
         const isWeekCollapsed = week.collapsed === true;
+        const totalExercises = (week.days || []).reduce((total, day) => total + (day.exercises || []).length, 0);
       return `
-        <article class="admin-editor-card" data-week-index="${weekIndex}">
+        <article class="admin-editor-card ${isWeekCollapsed ? "week-overview-mode" : "week-edit-mode"}" data-week-index="${weekIndex}">
           <div class="admin-card-title">
             <div>
               <small>${t("week")}</small>
@@ -3618,20 +3619,44 @@ return `
   <button class="danger-button" type="button" data-admin-action="delete-week">${t("deleteWeek")}</button>
 </div>
           ${isWeekCollapsed ? `
-  <div class="empty-state">
-    ${t("weekSavedSummary", { count: (week.days || []).length })}
-  </div>
+  <section class="week-overview-panel">
+    <div class="week-progress-card">
+      <span>Progreso de la semana</span>
+      <strong>100%</strong>
+      <i></i>
+    </div>
+    <div class="admin-day-stats week-stats">
+      <article><span>Días</span><strong>${(week.days || []).length}</strong></article>
+      <article><span>Ejercicios</span><strong>${totalExercises}</strong></article>
+      <article><span>Duración</span><strong>3h 20m</strong></article>
+    </div>
+    <div class="week-days-title">
+      <span>Días de entrenamiento</span>
+      <button class="primary-button" type="button" data-admin-action="add-day">+ Nuevo día</button>
+    </div>
+    <div class="week-overview-days">
+      ${(week.days || []).map((day, index) => `
+        <button class="week-overview-day" type="button" data-admin-action="edit-day" data-week-index="${weekIndex}" data-day-index="${index}">
+          <span><strong>${escapeHtml(day.title || `Día ${index + 1}`)}</strong><small>${(day.exercises || []).length} ejercicios</small></span>
+          <b>✓</b>
+        </button>
+      `).join("") || `<div class="empty-state">${t("emptyWeek")}</div>`}
+    </div>
+  </section>
 ` : `
+  <section class="week-edit-panel">
   <div class="admin-exercise-grid">
     <label class="search-box"><span>${t("number")}</span><input class="admin-field" data-week-field="number" value="${escapeHtml(week.number || "")}" /></label>
     <label class="search-box"><span>${t("phase")}</span><input class="admin-field" data-week-field="phase.name" value="${escapeHtml(phase.name || "")}" /></label>
     <label class="search-box"><span>${t("badge")}</span><input class="admin-field" data-week-field="phase.badge" value="${escapeHtml(phase.badge || "")}" /></label>
     <label class="search-box"><span>${t("instructions")}</span><input class="admin-field" data-week-field="phase.modifier" value="${escapeHtml(phase.modifier || "")}" /></label>
   </div>
+  <div class="week-training-days-banner"><strong>Días de entrenamiento</strong><span>${(week.days || []).length} días 🧊</span></div>
   <div class="admin-row-actions">
-    <button class="secondary-button" type="button" data-admin-action="add-day">${t("createDay")}</button>
+    <button class="secondary-button" type="button" data-admin-action="add-day">+ Crear día</button>
   </div>
   ${days || `<div class="empty-state">${t("emptyWeek")}</div>`}
+  </section>
 `}
         </article>
       `;

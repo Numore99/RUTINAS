@@ -6993,6 +6993,233 @@ button.student-current-card {
   background: linear-gradient(135deg, #4b3cff, #c122ee) !important;
 }
 
+/* Exact week overview and edit screens */
+.admin-panel.editing-existing-routine .week-overview-mode {
+  border: 0;
+  border-radius: 18px;
+  background: linear-gradient(180deg, rgba(8, 21, 45, 0.98), rgba(6, 17, 38, 0.99));
+  padding: 0.82rem;
+}
+
+.admin-panel.editing-existing-routine .week-overview-mode > .admin-card-title {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  padding: 0;
+  margin: 0 0 0.82rem;
+}
+
+.admin-panel.editing-existing-routine .week-overview-mode > .admin-card-title::before {
+  content: "‹";
+  color: #fff;
+  font-size: 1.35rem;
+}
+
+.admin-panel.editing-existing-routine .week-overview-mode > .admin-card-title h3 {
+  margin: 0;
+  color: #fff;
+  font-size: 0.88rem;
+  text-align: center;
+}
+
+.admin-panel.editing-existing-routine .week-overview-mode > .admin-card-title h3::after {
+  content: " ⋮";
+  float: right;
+  color: #8f9db8;
+  font-size: 1rem;
+}
+
+.admin-panel.editing-existing-routine .week-overview-mode > .admin-card-title .admin-row-actions {
+  display: none;
+}
+
+.week-progress-card {
+  display: grid;
+  gap: 0.38rem;
+  margin-bottom: 0.72rem;
+  border: 1px solid rgba(75, 96, 142, 0.15);
+  border-radius: 14px;
+  background:
+    radial-gradient(circle at 92% 18%, rgba(168, 85, 247, 0.25), transparent 3.8rem),
+    rgba(8, 19, 42, 0.68);
+  padding: 0.72rem;
+}
+
+.week-progress-card span {
+  color: #92a4c2;
+  font-size: 0.56rem;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.week-progress-card strong {
+  color: #fff;
+  font-size: 1.25rem;
+}
+
+.week-progress-card i {
+  display: block;
+  height: 0.42rem;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #22c55e 0 100%, rgba(75, 96, 142, 0.22) 0);
+  box-shadow: 0 0 16px rgba(34, 197, 94, 0.35);
+}
+
+.week-stats {
+  margin-bottom: 0.75rem;
+}
+
+.week-days-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  margin-bottom: 0.5rem;
+}
+
+.week-days-title span {
+  color: #92a4c2;
+  font-size: 0.58rem;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.week-days-title .primary-button {
+  width: auto;
+  min-height: 1.85rem;
+  padding: 0 0.72rem;
+  border-radius: 999px;
+  font-size: 0.58rem;
+}
+
+.week-overview-days {
+  display: grid;
+  gap: 0.42rem;
+}
+
+.week-overview-day {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.55rem;
+  min-height: 3.55rem;
+  border: 1px solid rgba(75, 96, 142, 0.13);
+  border-radius: 12px;
+  background: rgba(13, 27, 54, 0.72);
+  color: #fff;
+  padding: 0.55rem 0.65rem;
+  text-align: left;
+}
+
+.week-overview-day strong {
+  display: block;
+  font-size: 0.72rem;
+}
+
+.week-overview-day small {
+  display: block;
+  margin-top: 0.14rem;
+  color: #8f9db8;
+  font-size: 0.56rem;
+}
+
+.week-overview-day b {
+  display: grid;
+  place-items: center;
+  width: 1.55rem;
+  height: 1.55rem;
+  border-radius: 7px;
+  background: rgba(34, 197, 94, 0.32);
+  color: #22c55e;
+}
+
+.admin-panel.routines-view.editing-routine .week-edit-mode {
+  border: 0;
+  border-radius: 18px;
+  background: linear-gradient(180deg, rgba(8, 21, 45, 0.98), rgba(6, 17, 38, 0.99));
+  padding: 0.82rem;
+}
+
+.admin-panel.routines-view.editing-routine .week-edit-mode > .admin-card-title {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 0.55rem;
+  align-items: start;
+  margin-bottom: 0.78rem;
+  padding: 0;
+}
+
+.admin-panel.routines-view.editing-routine .week-edit-mode > .admin-card-title::before {
+  content: "‹";
+  color: #fff;
+  font-size: 1.35rem;
+}
+
+.admin-panel.routines-view.editing-routine .week-edit-mode > .admin-card-title h3 {
+  color: #fff;
+  font-size: 0;
+  text-align: center;
+}
+
+.admin-panel.routines-view.editing-routine .week-edit-mode > .admin-card-title h3::before {
+  content: "Editar semana";
+  font-size: 0.92rem;
+}
+
+.admin-panel.routines-view.editing-routine .week-edit-mode > .admin-card-title .admin-row-actions {
+  display: grid;
+  gap: 0.42rem;
+}
+
+.admin-panel.routines-view.editing-routine .week-edit-mode > .admin-card-title .primary-button,
+.admin-panel.routines-view.editing-routine .week-edit-mode > .admin-card-title .danger-button {
+  width: auto;
+  min-height: 2rem;
+  padding: 0 0.68rem;
+  border-radius: 9px;
+  font-size: 0.58rem;
+}
+
+.week-edit-panel .admin-exercise-grid {
+  gap: 0.56rem;
+}
+
+.week-edit-panel .admin-exercise-grid .search-box {
+  min-height: 3.05rem;
+  border-radius: 10px;
+}
+
+.week-training-days-banner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  min-height: 4rem;
+  margin: 0.7rem 0 0.55rem;
+  border-radius: 13px;
+  background:
+    radial-gradient(circle at 86% 40%, rgba(255, 255, 255, 0.24), transparent 2.4rem),
+    linear-gradient(135deg, #4b3cff, #c122ee);
+  padding: 0.72rem;
+}
+
+.week-training-days-banner strong {
+  color: #fff;
+  font-size: 0.84rem;
+}
+
+.week-training-days-banner span {
+  color: #e7dcff;
+  font-size: 0.66rem;
+}
+
+.week-edit-panel > .admin-row-actions .secondary-button {
+  width: 100%;
+  min-height: 2.55rem;
+  border: 0;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #5b35ff, #bf24f2);
+  color: #fff;
+}
+
 /* Inicio - Alumno: greeting line above the rutina actual card (matches mockup) */
 .sh-greeting {
   margin: 0 0 0.6rem;
