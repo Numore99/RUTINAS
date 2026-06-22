@@ -37,7 +37,8 @@ service cloud.firestore {
     }
 
     match /users/{userId} {
-      allow read: if signedIn() && (request.auth.uid == userId || isAdmin() || trainerCanManageUser());
+      allow get: if signedIn() && (request.auth.uid == userId || isAdmin() || trainerCanManageUser());
+      allow list: if isAdmin();
       allow create: if signedIn()
         && request.auth.uid == userId
         && (
@@ -84,7 +85,6 @@ service cloud.firestore {
       allow read: if signedIn()
         && (
           isAdmin()
-          || isTrainer()
           || resource.data.trainerId == request.auth.uid
           || resource.data.studentEmail == request.auth.token.email
         );
