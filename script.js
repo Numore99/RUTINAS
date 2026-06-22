@@ -396,6 +396,7 @@ const state = {
   studentInvites: [],
   selectedAdminUserId: "",
   adminEditorMode: "",
+  adminRoutineBasicsOpen: false,
   pendingAssignUserId: "",
   adminEditingExerciseKey: "",
   adminStudentQuery: "",
@@ -1369,6 +1370,7 @@ function showAuthScreen(message = "") {
   state.studentInvites = [];
   state.selectedAdminUserId = "";
   state.adminEditorMode = "";
+  state.adminRoutineBasicsOpen = false;
   state.pendingAssignUserId = "";
   state.adminEditingExerciseKey = "";
   state.adminWeekEditorIndex = null;
@@ -1540,6 +1542,7 @@ function startAdminUsersListener() {
       if (state.selectedAdminUserId && !state.adminUsers.some((user) => user.uid === state.selectedAdminUserId)) {
         state.selectedAdminUserId = "";
         state.adminEditorMode = "";
+        state.adminRoutineBasicsOpen = false;
         state.pendingAssignUserId = "";
         state.adminEditingExerciseKey = "";
         state.adminDraft = null;
@@ -1581,6 +1584,7 @@ function startTrainerInvitesListener() {
       if (state.selectedAdminUserId && !state.adminUsers.some((user) => user.uid === state.selectedAdminUserId)) {
         state.selectedAdminUserId = "";
         state.adminEditorMode = "";
+        state.adminRoutineBasicsOpen = false;
         state.pendingAssignUserId = "";
         state.adminEditingExerciseKey = "";
         state.adminDraft = null;
@@ -1821,6 +1825,7 @@ function setActiveView(view) {
   }
   if (view !== "routines" && state.adminEditorMode !== "create") {
     state.adminEditorMode = "";
+    state.adminRoutineBasicsOpen = false;
     state.pendingAssignUserId = "";
     state.adminEditingExerciseKey = "";
     state.adminWeekEditorIndex = null;
@@ -1854,6 +1859,7 @@ function openAcceptedStudentsForAssignment() {
   state.assignmentRoutineId = selectedUser?.routineId || getAdminRoutineIds()[0] || "";
   state.assignmentStartDate = state.assignmentStartDate || new Date().toISOString().slice(0, 10);
   state.adminEditorMode = "";
+  state.adminRoutineBasicsOpen = false;
   state.pendingAssignUserId = "";
   state.adminEditingExerciseKey = "";
   state.adminWeekEditorIndex = null;
@@ -2273,6 +2279,7 @@ function startRoutineCreation(userId = "") {
   state.selectedAdminUserId = userId || state.selectedAdminUserId || "";
   state.pendingAssignUserId = userId || "";
   state.adminEditorMode = "create";
+  state.adminRoutineBasicsOpen = true;
   state.adminEditingExerciseKey = "";
   state.adminWeekEditorIndex = null;
   state.adminDayEditorIndex = null;
@@ -2293,6 +2300,7 @@ function startRoutineEditing(routineId, userId = "") {
   state.selectedAdminUserId = userId || state.selectedAdminUserId || "";
   state.pendingAssignUserId = userId || "";
   state.adminEditorMode = "edit";
+  state.adminRoutineBasicsOpen = false;
   state.adminEditingExerciseKey = "";
   state.adminWeekEditorIndex = null;
   state.adminDayEditorIndex = null;
@@ -2444,6 +2452,7 @@ function renderAdminUsers() {
   if (state.selectedAdminUserId && !visibleUsers.length) {
     state.selectedAdminUserId = "";
     state.adminEditorMode = "";
+    state.adminRoutineBasicsOpen = false;
     state.pendingAssignUserId = "";
     state.adminEditingExerciseKey = "";
     state.adminDraft = null;
@@ -2596,6 +2605,57 @@ function renderAdminWeekEditorScreen(week, weekIndex) {
       </div>
       <button class="primary-button native-main-button" type="button" data-admin-action="add-day">+ Crear día</button>
     </article>
+  `;
+}
+
+function renderAdminRoutineDetailScreen(draft) {
+  const weeks = draft.plan || [];
+  const assignedCount = getRoutineAssignedCount(draft.id);
+  const progressValues = [100, 75, 50, 25, 0, 0];
+  const weekRows = weeks.map((week, index) => {
+    const phase = week.phase || {};
+    const progress = progressValues[index] ?? 0;
+    const iconNames = ["calendar", "clipboard", "dumbbell", "bolt", "fire", "settings"];
+    const icon = iconNames[index % iconNames.length];
+    return `
+      <button class="routine-detail-week-row" type="button" data-admin-open-week="true" data-week-index="${index}">
+        <span class="routine-list-icon icon-${icon}">${getInlineIcon(icon)}</span>
+        <span class="routine-detail-week-main">
+          <strong>Semana ${escapeHtml(week.number || index + 1)}</strong>
+          <small>${escapeHtml(phase.name || "Sin fase")}</small>
+        </span>
+        <b class="routine-detail-week-progress progress-${progress}">${progress}%</b>
+        <i aria-hidden="true">&rsaquo;</i>
+      </button>
+    `;
+  }).join("");
+
+  return `
+    <section class="routine-detail-screen">
+      <div class="screen-topbar routine-detail-topbar">
+        <button class="icon-button ghost-icon" type="button" data-admin-action="back-to-routine-list" aria-label="Volver">&lsaquo;</button>
+        <h2>${escapeHtml(draft.name || "Rutina")}</h2>
+        <div class="routine-detail-actions">
+          <button class="icon-button ghost-icon" type="button" data-admin-action="edit-routine-basics" aria-label="Editar">&#9998;</button>
+          <button class="icon-button ghost-icon" type="button" aria-label="Más opciones">&vellip;</button>
+        </div>
+      </div>
+
+      <section class="admin-routine-overview-card routine-detail-summary">
+        <article><span>Duración</span><strong>${weeks.length || 0} semanas</strong></article>
+        <article><span>Alumnos</span><strong>${assignedCount}</strong></article>
+        <div class="mini-progress" style="--progress:75%"><strong>75%</strong></div>
+      </section>
+
+      <div class="admin-routine-weeks-title">
+        <span>Semanas</span>
+        <button class="primary-button" type="button" data-admin-action="add-week">+ Nueva semana</button>
+      </div>
+
+      <section class="routine-detail-week-list">
+        ${weekRows || `<div class="empty-state">${t("createWeekPrompt")}</div>`}
+      </section>
+    </section>
   `;
 }
 
@@ -3728,12 +3788,19 @@ function renderAdminPanel() {
   const showUsers = state.activeView === "students";
   const showRoutines = state.activeView === "routines";
   const isEditingRoutine = Boolean(state.adminDraft && state.adminEditorMode);
+  const isRoutineDetail = showRoutines
+    && isEditingRoutine
+    && state.adminEditorMode === "edit"
+    && !state.adminRoutineBasicsOpen
+    && state.adminWeekEditorIndex === null;
   const isNativeSubscreen = showRoutines && isEditingRoutine && state.adminWeekEditorIndex !== null;
   document.body.classList.toggle("native-admin-subscreen-active", isNativeSubscreen);
   bottomNav?.classList.toggle("is-hidden", isNativeSubscreen);
   adminPanel.classList.toggle("students-view", showUsers);
   adminPanel.classList.toggle("routines-view", showRoutines);
   adminPanel.classList.toggle("editing-routine", isEditingRoutine);
+  adminPanel.classList.toggle("routine-detail-view", isRoutineDetail);
+  adminPanel.classList.toggle("routine-basics-view", isEditingRoutine && (state.adminEditorMode === "create" || state.adminRoutineBasicsOpen));
   adminPanel.classList.toggle("creating-routine", isEditingRoutine && state.adminEditorMode === "create");
   adminPanel.classList.toggle("editing-existing-routine", isEditingRoutine && state.adminEditorMode === "edit");
   adminPanel.classList.toggle("assigning-routine", showUsers && state.adminAssignmentMode);
@@ -3800,20 +3867,6 @@ function renderAdminPanel() {
     button.classList.toggle("active", button.dataset.routineLevel === (draft.level || "Intermedio"));
   });
 
-  const routineOverview = state.adminEditorMode === "edit"
-    ?`
-      <section class="admin-routine-overview-card">
-        <article><span>Duración</span><strong>${draft.plan.length || 0} semanas</strong></article>
-        <article><span>Alumnos</span><strong>${getRoutineAssignedCount(draft.id)}</strong></article>
-        <div class="mini-progress" style="--progress:75%"><strong>75%</strong></div>
-      </section>
-      <div class="admin-routine-weeks-title">
-        <span>Semanas</span>
-        <button class="primary-button" type="button" data-admin-action="add-week">+ Nueva semana</button>
-      </div>
-    `
-    : "";
-
   const focusedWeekIndex = Number(state.adminWeekEditorIndex);
   const focusedDayIndex = Number(state.adminDayEditorIndex);
   if (Number.isInteger(focusedWeekIndex) && draft.plan[focusedWeekIndex]) {
@@ -3842,7 +3895,13 @@ function renderAdminPanel() {
     return;
   }
 
-  adminWeeks.innerHTML = routineOverview + draft.plan
+  if (state.adminEditorMode === "edit" && !state.adminRoutineBasicsOpen) {
+    adminEditorTitle.textContent = draft.name || "Rutina";
+    adminWeeks.innerHTML = renderAdminRoutineDetailScreen(draft);
+    return;
+  }
+
+  adminWeeks.innerHTML = draft.plan
     .map((week, weekIndex) => {
       const phase = week.phase || {};
       const days = (week.days || [])
@@ -4084,6 +4143,29 @@ async function handleAdminAction(button) {
     return;
   }
 
+  if (action === "back-to-routine-list") {
+    state.adminEditorMode = "";
+    state.adminRoutineBasicsOpen = false;
+    state.pendingAssignUserId = "";
+    state.adminEditingExerciseKey = "";
+    state.adminWeekEditorIndex = null;
+    state.adminDayEditorIndex = null;
+    state.adminDraft = null;
+    setAdminMessage("");
+    renderAdminPanel();
+    return;
+  }
+
+  if (action === "edit-routine-basics") {
+    state.adminRoutineBasicsOpen = true;
+    state.adminWeekEditorIndex = null;
+    state.adminDayEditorIndex = null;
+    state.adminEditingExerciseKey = "";
+    setAdminMessage("");
+    renderAdminPanel();
+    return;
+  }
+
   if (action === "back-to-week-edit") {
     const location = getAdminDayLocation(button);
     if (location) {
@@ -4114,6 +4196,7 @@ async function handleAdminAction(button) {
   }
 
   if (action === "add-week") {
+    syncAdminVisibleFields();
     const nextIndex = state.adminDraft.plan.length;
     state.adminDraft.plan.push({
       number: "",
@@ -4877,9 +4960,10 @@ weeksContainer.addEventListener("click", (event) => {
 adminToggle.addEventListener("click", () => {
   if (!canManageStudents()) return;
   state.adminPanelOpen = !state.adminPanelOpen;
-  if (!state.adminPanelOpen) {
+    if (!state.adminPanelOpen) {
     state.selectedAdminUserId = "";
     state.adminEditorMode = "";
+    state.adminRoutineBasicsOpen = false;
     state.pendingAssignUserId = "";
     state.adminEditingExerciseKey = "";
     state.adminWeekEditorIndex = null;
@@ -4893,6 +4977,7 @@ adminClose.addEventListener("click", () => {
   state.adminPanelOpen = false;
   state.selectedAdminUserId = "";
   state.adminEditorMode = "";
+  state.adminRoutineBasicsOpen = false;
   state.pendingAssignUserId = "";
   state.adminEditingExerciseKey = "";
   state.adminDraft = null;
@@ -4992,10 +5077,7 @@ adminWeeks.addEventListener("click", async (event) => {
   if (routineCardButton && !event.target.closest("[data-admin-action]")) {
     const routineId = routineCardButton.dataset.routineCardEdit || routineCardButton.dataset.routineCard || "";
     if (routineId && routines[routineId]) {
-      state.adminEditorMode = "edit";
-      setAdminDraftFromRoutine(routineId);
-      setAdminMessage("");
-      renderAdminPanel();
+      startRoutineEditing(routineId, state.selectedAdminUserId || "");
     }
     return;
   }
@@ -5059,6 +5141,7 @@ adminUsers.addEventListener("change", async (event) => {
     );
     if (state.pendingAssignUserId === uid || state.selectedAdminUserId === uid) {
       state.adminEditorMode = "";
+      state.adminRoutineBasicsOpen = false;
       state.pendingAssignUserId = "";
       state.adminEditingExerciseKey = "";
       state.adminDraft = null;
@@ -5167,6 +5250,7 @@ adminUsers.addEventListener("click", async (event) => {
       if (state.selectedAdminUserId === uid) {
         state.selectedAdminUserId = "";
         state.adminEditorMode = "";
+        state.adminRoutineBasicsOpen = false;
         state.pendingAssignUserId = "";
         state.adminEditingExerciseKey = "";
         state.adminDraft = null;
@@ -5202,6 +5286,7 @@ adminUsers.addEventListener("click", async (event) => {
   if (backButton) {
     state.selectedAdminUserId = "";
     state.adminEditorMode = "";
+    state.adminRoutineBasicsOpen = false;
     state.pendingAssignUserId = "";
     state.adminEditingExerciseKey = "";
     state.adminDraft = null;
@@ -5257,6 +5342,7 @@ adminUsers.addEventListener("click", async (event) => {
     );
     if (state.pendingAssignUserId === uid) {
       state.adminEditorMode = "";
+      state.adminRoutineBasicsOpen = false;
       state.pendingAssignUserId = "";
       state.adminEditingExerciseKey = "";
       state.adminDraft = null;
@@ -5521,6 +5607,7 @@ studentInvitesPanel?.addEventListener("click", async (event) => {
 adminAddWeek.addEventListener("click", () => {
   if (!state.adminDraft) state.adminDraft = createEmptyRoutine("nueva-rutina");
   if (!state.adminEditorMode) state.adminEditorMode = "edit";
+  syncAdminVisibleFields();
   state.activeView = "routines";
   state.adminPanelOpen = true;
   state.adminEditingExerciseKey = "";
@@ -5546,6 +5633,7 @@ adminEditRoutine?.addEventListener("click", () => {
 
 adminEditorBack?.addEventListener("click", () => {
   state.adminEditorMode = "";
+  state.adminRoutineBasicsOpen = false;
   state.pendingAssignUserId = "";
   state.adminEditingExerciseKey = "";
   state.adminWeekEditorIndex = null;
@@ -5582,6 +5670,7 @@ adminSaveRoutine.addEventListener("click", async () => {
     const assignedUserId = await saveAdminDraftAndAssignment();
     setAdminMessage(assignedUserId ?t("routineSavedAssigned") : t("routineSaved"), "success");
     state.adminEditorMode = "edit";
+    state.adminRoutineBasicsOpen = false;
     state.pendingAssignUserId = assignedUserId || "";
     state.adminEditingExerciseKey = "";
     state.adminWeekEditorIndex = null;
@@ -5618,6 +5707,7 @@ adminDeleteRoutine.addEventListener("click", async () => {
       setAdminDraftFromRoutine(nextRoutineId);
     } else {
       state.adminEditorMode = "";
+      state.adminRoutineBasicsOpen = false;
       state.adminRoutineId = "";
     }
     if (state.selectedRoutine === deletedId) {
