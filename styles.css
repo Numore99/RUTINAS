@@ -6904,6 +6904,113 @@ button.student-current-card {
   display: none;
 }
 
+/* Exact routines catalog screen */
+.admin-panel.routines-view:not(.editing-routine) {
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
+}
+
+.admin-panel.routines-view:not(.editing-routine)::before,
+.admin-panel.routines-view:not(.editing-routine) .admin-panel-header,
+.admin-panel.routines-view:not(.editing-routine) #adminRoutineEditor > .admin-card-title,
+.admin-panel.routines-view:not(.editing-routine) .admin-grid,
+.admin-panel.routines-view:not(.editing-routine) .admin-actions {
+  display: none !important;
+}
+
+.admin-panel.routines-view:not(.editing-routine) #adminRoutineEditor {
+  display: block;
+  width: min(100%, var(--app-width));
+  margin: 0 auto;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
+}
+
+.routine-catalog-screen {
+  display: grid;
+  gap: 0.72rem;
+}
+
+.routine-catalog-topbar {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.routine-catalog-topbar h2 {
+  margin: 0;
+  color: #fff;
+  font-size: 1.1rem;
+}
+
+.routine-search {
+  min-height: 2.28rem;
+}
+
+.routine-tabs {
+  margin-top: -0.15rem;
+}
+
+.routine-card-list {
+  display: grid;
+  gap: 0.58rem;
+}
+
+.routine-card-list::before {
+  display: none !important;
+}
+
+.admin-panel.routines-view:not(.editing-routine) .routine-list-card {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 0.62rem;
+  width: 100%;
+  min-height: 4.6rem;
+  border: 1px solid rgba(75, 96, 142, 0.14);
+  border-radius: 13px;
+  background: rgba(8, 19, 42, 0.72);
+  padding: 0.58rem;
+}
+
+.admin-panel.routines-view:not(.editing-routine) .routine-list-icon {
+  width: 2.65rem;
+  height: 2.65rem;
+  border-radius: 10px;
+}
+
+.admin-panel.routines-view:not(.editing-routine) .routine-list-main strong {
+  display: block;
+  color: #fff;
+  font-size: 0.78rem;
+  line-height: 1.1;
+}
+
+.admin-panel.routines-view:not(.editing-routine) .routine-list-main small {
+  display: block;
+  margin-top: 0.18rem;
+  color: #8f9db8;
+  font-size: 0.58rem;
+}
+
+.admin-panel.routines-view:not(.editing-routine) .routine-mini-ring {
+  width: 2.85rem;
+  height: 2.85rem;
+  font-size: 0.64rem;
+}
+
+.admin-panel.routines-view:not(.editing-routine) .routine-menu-button {
+  width: 1.1rem;
+  height: 2.6rem;
+  color: #8f9db8;
+  font-size: 1.1rem;
+}
+
 /* Exact day exercise list and exercise editor */
 .admin-panel.routines-view.editing-routine .admin-day:not(.collapsed) {
   border: 0;

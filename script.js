@@ -3235,28 +3235,60 @@ function getRoutineCardIcon(index) {
 
 function renderRoutineCatalog(routineIds) {
   if (!routineIds.length) {
-    return `<div class="empty-state">${t("newRoutinePrepared")}</div>`;
+    return `
+      <section class="routine-catalog-screen">
+        <div class="routine-catalog-topbar">
+          <h2>Rutinas</h2>
+          <button class="trainer-add-student-button" type="button" data-admin-action="new-routine-card" aria-label="Nueva rutina">+</button>
+        </div>
+        <label class="trainer-student-search routine-search">
+          <span aria-hidden="true">⌕</span>
+          <input type="search" placeholder="Buscar rutinas..." autocomplete="off" />
+        </label>
+        <div class="trainer-student-tabs routine-tabs">
+          <button type="button" class="active">Todas</button>
+          <button type="button">Activas</button>
+          <button type="button">Archivadas</button>
+        </div>
+        <div class="empty-state">${t("newRoutinePrepared")}</div>
+      </section>
+    `;
   }
   return `
-    <div class="routine-card-list">
+    <section class="routine-catalog-screen">
+      <div class="routine-catalog-topbar">
+        <h2>Rutinas</h2>
+        <button class="trainer-add-student-button" type="button" data-admin-action="new-routine-card" aria-label="Nueva rutina">+</button>
+      </div>
+      <label class="trainer-student-search routine-search">
+        <span aria-hidden="true">⌕</span>
+        <input type="search" placeholder="Buscar rutinas..." autocomplete="off" />
+      </label>
+      <div class="trainer-student-tabs routine-tabs">
+        <button type="button" class="active">Todas</button>
+        <button type="button">Activas</button>
+        <button type="button">Archivadas</button>
+      </div>
+      <div class="routine-card-list">
       ${routineIds.map((id, index) => {
         const routine = routines[id] || {};
         const totalWeeks = routine.plan?.length || 0;
         const assigned = getRoutineAssignedCount(id);
-        const progressValue = totalWeeks ? Math.min(95, Math.max(30, Math.round(100 / Math.max(1, totalWeeks)))) : 0;
+        const progressValue = [75, 60, 90, 40, 30][index % 5] || (totalWeeks ? Math.min(95, Math.max(30, Math.round(100 / Math.max(1, totalWeeks)))) : 0);
         return `
           <article class="routine-list-card" data-routine-card="${escapeHtml(id)}">
             <span class="routine-list-icon ${getRoutineCardIcon(index)}"></span>
             <span class="routine-list-main">
               <strong>${escapeHtml(routine.name || id)}</strong>
-              <small>${totalWeeks} semanas Â· ${assigned} alumnos</small>
+              <small>${totalWeeks} semanas · ${assigned} alumnos</small>
             </span>
             <span class="routine-mini-ring" style="--progress:${progressValue}%">${progressValue}%</span>
-            <button class="routine-menu-button" type="button" data-routine-card-edit="${escapeHtml(id)}" aria-label="Editar rutina">â‹®</button>
+            <button class="routine-menu-button" type="button" data-routine-card-edit="${escapeHtml(id)}" aria-label="Editar rutina">⋮</button>
           </article>
         `;
       }).join("")}
-    </div>
+      </div>
+    </section>
   `;
 }
 
@@ -4516,6 +4548,12 @@ adminWeeks.addEventListener("change", async (event) => {
 });
 
 adminWeeks.addEventListener("click", async (event) => {
+  const newRoutineCard = event.target.closest("[data-admin-action='new-routine-card']");
+  if (newRoutineCard) {
+    startRoutineCreation(state.selectedAdminUserId || "");
+    return;
+  }
+
   const routineCardButton = event.target.closest("[data-routine-card-edit], [data-routine-card]");
   if (routineCardButton && !event.target.closest("[data-admin-action]")) {
     const routineId = routineCardButton.dataset.routineCardEdit || routineCardButton.dataset.routineCard || "";
