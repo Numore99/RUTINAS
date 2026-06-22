@@ -3395,7 +3395,8 @@ main {
   background: rgba(8, 19, 42, 0.72);
 }
 
-.settings-list button {
+.settings-list button,
+.settings-list div {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
@@ -3410,7 +3411,8 @@ main {
   font-weight: 800;
 }
 
-.settings-list button:last-child {
+.settings-list button:last-child,
+.settings-list div:last-child {
   border-bottom: 0;
 }
 
@@ -3934,7 +3936,8 @@ main {
   border-radius: 16px;
 }
 
-.settings-list button {
+.settings-list button,
+.settings-list div {
   min-height: 3rem;
   font-size: 0.8rem;
 }

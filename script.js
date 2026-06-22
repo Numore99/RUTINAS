@@ -1335,7 +1335,7 @@ function showAuthScreen(message = "") {
   state.adminEditorMode = "";
   state.pendingAssignUserId = "";
   state.adminEditingExerciseKey = "";
-  state.activeView = "routines";
+  state.activeView = "home";
   closeExercise();
   stopTimer();
   routineSelect.classList.remove("is-hidden");
@@ -1935,6 +1935,38 @@ function createRoutineDraftId(number = getNextRoutineNumber()) {
   return slugify(`rutina-${number}-${Date.now()}`);
 }
 
+function startRoutineCreation(userId = "") {
+  const routineNumber = getNextRoutineNumber();
+  const routineId = createRoutineDraftId(routineNumber);
+  state.activeView = "routines";
+  state.adminPanelOpen = canManageStudents();
+  state.selectedAdminUserId = userId || state.selectedAdminUserId || "";
+  state.pendingAssignUserId = userId || "";
+  state.adminEditorMode = "create";
+  state.adminEditingExerciseKey = "";
+  state.adminDraft = createEmptyRoutine(routineId);
+  state.adminDraft.name = `Rutina ${routineNumber}`;
+  state.adminRoutineId = state.adminDraft.id;
+  setAdminMessage(userId ? t("newRoutinePreparedAssign") : t("newRoutinePrepared"), "success");
+  renderApp();
+}
+
+function startRoutineEditing(routineId, userId = "") {
+  if (!routineId || !routines[routineId]) {
+    setAdminMessage(t("newRoutinePrepared"), "error");
+    return;
+  }
+  state.activeView = "routines";
+  state.adminPanelOpen = canManageStudents();
+  state.selectedAdminUserId = userId || state.selectedAdminUserId || "";
+  state.pendingAssignUserId = userId || "";
+  state.adminEditorMode = "edit";
+  state.adminEditingExerciseKey = "";
+  setAdminDraftFromRoutine(routineId);
+  setAdminMessage("");
+  renderApp();
+}
+
 function renderStudentProfessorsPanel() {
   if (!studentInvitesPanel) return;
   const invites = state.studentInvites || [];
@@ -2489,11 +2521,11 @@ function renderAccountPanel() {
         </label>
       </div>
       <p class="account-help">${t("accountPanelHelp")}</p>
-      <section class="settings-list">
-        <button type="button"><span>Informacion personal</span><strong>›</strong></button>
-        <button type="button"><span>Objetivos</span><strong>›</strong></button>
-        <button type="button"><span>Preferencias</span><strong>›</strong></button>
-        <button type="button"><span>Centro de ayuda</span><strong>›</strong></button>
+      <section class="settings-list" aria-label="${t("accountNav")}">
+        <div><span>Información personal</span><strong>></strong></div>
+        <div><span>Objetivos</span><strong>></strong></div>
+        <div><span>Preferencias</span><strong>></strong></div>
+        <div><span>Centro de ayuda</span><strong>></strong></div>
       </section>
       <p class="account-status" id="accountStatus" aria-live="polite"></p>
       <button class="secondary-button" type="button" data-profile-save>${t("saveProfile")}</button>
@@ -3612,30 +3644,12 @@ adminUsers.addEventListener("click", async (event) => {
     if (!uid || !user) return;
 
     if (actionButton.dataset.userAction === "add-routine") {
-      const routineNumber = getNextRoutineNumber();
-      const routineId = createRoutineDraftId(routineNumber);
-      state.activeView = "routines";
-      state.selectedAdminUserId = uid;
-      state.pendingAssignUserId = uid;
-      state.adminEditorMode = "create";
-      state.adminEditingExerciseKey = "";
-      state.adminDraft = createEmptyRoutine(routineId);
-      state.adminDraft.name = `Rutina ${routineNumber}`;
-      state.adminDraft.title = "";
-      state.adminDraft.kicker = "";
-      setAdminMessage(t("newRoutinePreparedAssign"), "success");
-      renderAdminPanel();
+      startRoutineCreation(uid);
       return;
     }
 
     if (actionButton.dataset.userAction === "edit-routine" && user.routineId && routines[user.routineId]) {
-      state.activeView = "routines";
-      state.selectedAdminUserId = uid;
-      state.pendingAssignUserId = uid;
-      state.adminEditorMode = "edit";
-      setAdminDraftFromRoutine(user.routineId);
-      setAdminMessage("");
-      renderAdminPanel();
+      startRoutineEditing(user.routineId, uid);
       return;
     }
   }
@@ -3717,8 +3731,7 @@ trainerHome?.addEventListener("click", (event) => {
     return;
   }
   if (button.dataset.homeAction === "new-routine") {
-    setActiveView("routines");
-    adminNewRoutine.click();
+    startRoutineCreation();
   }
 });
 
@@ -3765,29 +3778,12 @@ adminAddWeek.addEventListener("click", () => {
 });
 
 adminNewRoutine.addEventListener("click", () => {
-  const user = getAdminUser(state.selectedAdminUserId);
-  const routineNumber = getNextRoutineNumber();
-  const routineId = createRoutineDraftId(routineNumber);
-  state.pendingAssignUserId = user?.uid || "";
-  state.adminEditorMode = user ? "create" : "edit";
-  state.adminDraft = createEmptyRoutine(routineId);
-  state.adminDraft.name = `Rutina ${routineNumber}`;
-  state.adminRoutineId = state.adminDraft.id;
-  setAdminMessage(user ? t("newRoutinePreparedAssign") : t("newRoutinePrepared"), "success");
-  renderAdminPanel();
+  startRoutineCreation(state.selectedAdminUserId || "");
 });
 
 adminEditRoutine?.addEventListener("click", () => {
   const routineId = adminRoutineSelect.value || getAdminRoutineIds()[0] || "";
-  if (!routineId || !routines[routineId]) {
-    setAdminMessage(t("newRoutinePrepared"), "error");
-    return;
-  }
-  state.adminEditorMode = "edit";
-  state.pendingAssignUserId = state.selectedAdminUserId || "";
-  setAdminDraftFromRoutine(routineId);
-  setAdminMessage("");
-  renderAdminPanel();
+  startRoutineEditing(routineId, state.selectedAdminUserId || "");
 });
 
 adminSeedDario.addEventListener("click", async () => {
