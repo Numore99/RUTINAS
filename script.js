@@ -3498,6 +3498,9 @@ function renderAdminPanel() {
               const exercise = draft.exerciseLibrary[exerciseKey] || {};
               const isEditingExercise = state.adminEditingExerciseKey === exerciseKey;
               const images = exercise.images || ["", ""];
+              const thumb = images[0]
+                ? `<img src="${escapeHtml(resolveExerciseImage(images[0], exercise.name || t("newExercise")))}" alt="${escapeHtml(exercise.name || t("newExercise"))}" />`
+                : "";
               const startPreview = images[0]
                 ? `<img class="admin-image-preview" src="${escapeHtml(resolveExerciseImage(images[0], t("startImage")))}" alt="${t("startImage")}" />`
                 : `<div class="admin-image-empty">${t("noStartImage")}</div>`;
@@ -3507,14 +3510,15 @@ function renderAdminPanel() {
               return `
                 <div class="admin-exercise ${isEditingExercise ? "is-editing" : ""}" data-week-index="${weekIndex}" data-day-index="${dayIndex}" data-exercise-key="${escapeHtml(exerciseKey)}">
                   <div class="admin-exercise-summary">
+                    <span class="admin-exercise-thumb">${thumb}</span>
                     <div>
                       <strong>${escapeHtml(exercise.name || t("newExercise"))}</strong>
-                      <small>${escapeHtml([exercise.objective, exercise.baseSets && exercise.baseReps ? `${exercise.baseSets} x ${exercise.baseReps}` : "", exercise.rest].filter(Boolean).join(" Â· "))}</small>
+                      <small>${escapeHtml([
+                        exercise.baseSets && exercise.baseReps ? `${exercise.baseSets} series x ${exercise.baseReps} reps` : "",
+                        exercise.rest ? `Descanso: ${exercise.rest}` : ""
+                      ].filter(Boolean).join(" · "))}</small>
                     </div>
-                    <div class="admin-row-actions compact">
-                      <button class="secondary-button" type="button" data-admin-action="edit-exercise">${t("editExercise")}</button>
-                      <button class="danger-button" type="button" data-admin-action="delete-exercise">${t("deleteExercise")}</button>
-                    </div>
+                    <button class="exercise-kebab" type="button" data-admin-action="edit-exercise" aria-label="${t("editExercise")}">⋮</button>
                   </div>
                   ${isEditingExercise ? `
                     <div class="admin-exercise-form">
@@ -3523,7 +3527,8 @@ function renderAdminPanel() {
                       </div>
                       <div class="admin-exercise-grid">
                         <label class="search-box"><span>${t("name")}</span><input class="admin-field" data-exercise-field="name" value="${escapeHtml(exercise.name || "")}" /></label>
-                        <label class="search-box"><span>${t("objective")}</span><input class="admin-field" data-exercise-field="objective" value="${escapeHtml(exercise.objective || "")}" /></label>
+                        <label class="search-box exercise-field-muscle"><span>Grupo muscular</span><input class="admin-field" data-exercise-field="objective" value="${escapeHtml(exercise.objective || "")}" placeholder="Pecho" /></label>
+                        <label class="search-box exercise-field-equipment"><span>Equipo</span><input class="admin-field" data-exercise-field="equipment" value="${escapeHtml(exercise.equipment || "")}" placeholder="Barra" /></label>
                         <label class="search-box"><span>${t("sets")}</span><input class="admin-field" data-exercise-field="baseSets" value="${escapeHtml(exercise.baseSets || "")}" /></label>
                         <label class="search-box"><span>${t("reps")}</span><input class="admin-field" data-exercise-field="baseReps" value="${escapeHtml(exercise.baseReps || "")}" /></label>
                         <label class="search-box"><span>${t("rest")}</span><input class="admin-field" data-exercise-field="rest" value="${escapeHtml(exercise.rest || "")}" /></label>
@@ -3549,7 +3554,7 @@ function renderAdminPanel() {
                       <label class="search-box"><span>${t("technicalGoal")}</span><textarea class="admin-textarea" data-exercise-field="goal">${escapeHtml(exercise.goal || "")}</textarea></label>
                       <label class="search-box"><span>${t("technique")}</span><textarea class="admin-textarea" data-exercise-field="technique">${escapeHtml(exercise.technique || "")}</textarea></label>
                       <label class="search-box"><span>${t("mistakesOnePerLine")}</span><textarea class="admin-textarea" data-exercise-field="mistakes">${escapeHtml((exercise.mistakes || []).join("\n"))}</textarea></label>
-                      <button class="primary-button" type="button" data-admin-action="save-exercise">${t("saveExercise")}</button>
+                      <button class="primary-button exercise-save-button" type="button" data-admin-action="save-exercise">▣ Guardar cambios</button>
                     </div>
                   ` : ""}
                 </div>
@@ -3577,6 +3582,11 @@ return `
     </div>
 
     ${isDayCollapsed ? "" : `
+      <div class="admin-day-stats">
+        <article><span>Ejercicios</span><strong>${(day.exercises || []).length}</strong></article>
+        <article><span>Series totales</span><strong>${(day.exercises || []).reduce((total, key) => total + (Number(String(draft.exerciseLibrary[key]?.baseSets || "").match(/\d+/)?.[0]) || 0), 0)}</strong></article>
+        <article><span>Duración</span><strong>45 min</strong></article>
+      </div>
       <div class="admin-exercise-grid">
         <label class="search-box"><span>${t("dayTitle")}</span><input class="admin-field" data-day-field="title" value="${escapeHtml(day.title || "")}" /></label>
         <label class="search-box"><span>${t("focus")}</span><input class="admin-field" data-day-field="focus" value="${escapeHtml(day.focus || "")}" /></label>

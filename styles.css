@@ -6776,6 +6776,223 @@ button.student-current-card {
   display: none;
 }
 
+/* Exact day exercise list and exercise editor */
+.admin-panel.routines-view.editing-routine .admin-day:not(.collapsed) {
+  border: 0;
+  border-radius: 18px;
+  background: linear-gradient(180deg, rgba(8, 21, 45, 0.96), rgba(6, 17, 38, 0.98));
+  padding: 0.82rem;
+}
+
+.admin-panel.routines-view.editing-routine .admin-day:not(.collapsed) > .admin-card-title {
+  grid-template-columns: minmax(0, 1fr) auto;
+  margin-bottom: 0.68rem;
+}
+
+.admin-panel.routines-view.editing-routine .admin-day:not(.collapsed) > .admin-card-title::before {
+  content: "‹";
+  color: #fff;
+  font-size: 1.35rem;
+}
+
+.admin-panel.routines-view.editing-routine .admin-day:not(.collapsed) > .admin-card-title h4 {
+  font-size: 0.9rem;
+}
+
+.admin-panel.routines-view.editing-routine .admin-day:not(.collapsed) > .admin-card-title .admin-row-actions {
+  display: none;
+}
+
+.admin-panel.routines-view.editing-routine .admin-day:not(.collapsed) .admin-exercise-grid:first-of-type {
+  display: none;
+}
+
+.admin-day-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.45rem;
+  margin-bottom: 0.7rem;
+}
+
+.admin-day-stats article {
+  display: grid;
+  gap: 0.2rem;
+  min-height: 3.15rem;
+  border: 1px solid rgba(75, 96, 142, 0.13);
+  border-radius: 10px;
+  background: rgba(8, 19, 42, 0.62);
+  padding: 0.55rem;
+}
+
+.admin-day-stats span {
+  color: #8f9db8;
+  font-size: 0.52rem;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.admin-day-stats strong {
+  color: #fff;
+  font-size: 0.96rem;
+}
+
+.admin-panel.routines-view.editing-routine .admin-day:not(.collapsed) > .admin-row-actions {
+  justify-content: end;
+  margin: -0.15rem 0 0.45rem;
+}
+
+.admin-panel.routines-view.editing-routine .admin-day:not(.collapsed) > .admin-row-actions .secondary-button {
+  width: auto;
+  min-height: 1.75rem;
+  padding: 0 0.72rem;
+  border: 0;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #5b35ff, #bf24f2);
+  color: #fff;
+  font-size: 0.58rem;
+}
+
+.admin-panel.routines-view.editing-routine .admin-exercise-list > small {
+  display: block;
+  margin-bottom: 0.45rem;
+  color: #92a4c2;
+  font-size: 0.58rem;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.admin-panel.routines-view.editing-routine .admin-exercise {
+  padding: 0;
+  border-radius: 12px;
+  background: rgba(13, 27, 54, 0.72);
+}
+
+.admin-panel.routines-view.editing-routine .admin-exercise-summary {
+  grid-template-columns: 3.3rem minmax(0, 1fr) auto;
+  gap: 0.55rem;
+  min-height: 4rem;
+  padding: 0.42rem;
+}
+
+.admin-exercise-thumb {
+  display: block;
+  width: 3.3rem;
+  height: 3.3rem;
+  overflow: hidden;
+  border-radius: 9px;
+  background:
+    radial-gradient(circle at center, rgba(124, 60, 255, 0.2), transparent 70%),
+    rgba(4, 12, 28, 0.92);
+}
+
+.admin-exercise-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.admin-panel.routines-view.editing-routine .admin-exercise-summary strong {
+  font-size: 0.72rem;
+  line-height: 1.1;
+}
+
+.admin-panel.routines-view.editing-routine .admin-exercise-summary small {
+  font-size: 0.54rem;
+  line-height: 1.25;
+}
+
+.exercise-kebab {
+  display: grid;
+  place-items: center;
+  width: 1.7rem;
+  height: 2.6rem;
+  border: 0;
+  background: transparent;
+  color: #8f9db8;
+  font-size: 1.2rem;
+}
+
+.admin-panel.routines-view.editing-routine .admin-exercise.is-editing {
+  border-radius: 18px;
+  background: transparent;
+}
+
+.admin-panel.routines-view.editing-routine .admin-exercise.is-editing .admin-exercise-form::before {
+  content: "Editar ejercicio";
+  display: block;
+  margin: 0 0 0.72rem;
+  color: #fff;
+  font-size: 1.02rem;
+  font-weight: 950;
+  text-align: center;
+}
+
+.admin-panel.routines-view.editing-routine .admin-exercise.is-editing .admin-exercise-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.58rem;
+}
+
+.admin-panel.routines-view.editing-routine .admin-exercise.is-editing .admin-exercise-grid .search-box {
+  min-height: 3rem;
+  border-radius: 10px;
+}
+
+.admin-panel.routines-view.editing-routine .admin-exercise.is-editing .admin-exercise-grid .search-box:first-child,
+.admin-panel.routines-view.editing-routine .admin-exercise.is-editing .admin-exercise-grid .exercise-field-muscle,
+.admin-panel.routines-view.editing-routine .admin-exercise.is-editing .admin-exercise-grid .exercise-field-equipment,
+.admin-panel.routines-view.editing-routine .admin-exercise.is-editing .admin-exercise-grid .admin-image-uploader {
+  grid-column: 1 / -1;
+}
+
+.exercise-field-muscle,
+.exercise-field-equipment {
+  position: relative;
+  padding-left: 3rem !important;
+}
+
+.exercise-field-muscle::before,
+.exercise-field-equipment::before,
+.admin-panel.routines-view.editing-routine .admin-exercise.is-editing .admin-exercise-grid label:nth-of-type(4)::before,
+.admin-panel.routines-view.editing-routine .admin-exercise.is-editing .admin-exercise-grid label:nth-of-type(5)::before {
+  position: absolute;
+  left: 0.62rem;
+  top: 50%;
+  transform: translateY(-50%);
+  display: grid;
+  place-items: center;
+  width: 1.65rem;
+  height: 1.65rem;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 0.82rem;
+}
+
+.exercise-field-muscle::before {
+  content: "⌘";
+  background: linear-gradient(135deg, #aa1fdc, #ef2fb4);
+}
+
+.exercise-field-equipment::before {
+  content: "▥";
+  background: linear-gradient(135deg, #0284c7, #06b6d4);
+}
+
+.admin-panel.routines-view.editing-routine .admin-exercise.is-editing .admin-exercise-grid label:nth-of-type(4)::before {
+  content: "⚒";
+  background: linear-gradient(135deg, #5b35ff, #8b5cf6);
+}
+
+.admin-panel.routines-view.editing-routine .admin-exercise.is-editing .admin-exercise-grid label:nth-of-type(5)::before {
+  content: "⏱";
+  background: linear-gradient(135deg, #d97706, #f59e0b);
+}
+
+.exercise-save-button {
+  min-height: 2.85rem !important;
+  border-radius: 11px !important;
+  background: linear-gradient(135deg, #4b3cff, #c122ee) !important;
+}
+
 /* Inicio - Alumno: greeting line above the rutina actual card (matches mockup) */
 .sh-greeting {
   margin: 0 0 0.6rem;
