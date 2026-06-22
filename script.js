@@ -405,6 +405,8 @@ const state = {
   assignmentStudentId: "",
   assignmentRoutineId: "",
   assignmentStartDate: "",
+  adminWeekEditorIndex: null,
+  adminDayEditorIndex: null,
   accountSubView: "profile",
   progressSubView: "summary",
   progressHistoryFilter: "all",
@@ -2263,6 +2265,8 @@ function startRoutineCreation(userId = "") {
   state.pendingAssignUserId = userId || "";
   state.adminEditorMode = "create";
   state.adminEditingExerciseKey = "";
+  state.adminWeekEditorIndex = null;
+  state.adminDayEditorIndex = null;
   state.adminDraft = createEmptyRoutine(routineId);
   state.adminDraft.name = `Rutina ${routineNumber}`;
   state.adminRoutineId = state.adminDraft.id;
@@ -2281,6 +2285,8 @@ function startRoutineEditing(routineId, userId = "") {
   state.pendingAssignUserId = userId || "";
   state.adminEditorMode = "edit";
   state.adminEditingExerciseKey = "";
+  state.adminWeekEditorIndex = null;
+  state.adminDayEditorIndex = null;
   setAdminDraftFromRoutine(routineId);
   state.adminDraft.plan.forEach((week) => {
     week.collapsed = true;
@@ -2533,6 +2539,92 @@ function formatDateDisplay(value) {
   if (!value) return "";
   const [year, month, day] = String(value).split("-");
   return day && month && year ? `${day}/${month}/${year}` : value;
+}
+
+function renderAdminWeekEditorScreen(week, weekIndex) {
+  const phase = week.phase || {};
+  return `
+    <article class="native-edit-screen week-edit-screen" data-week-index="${weekIndex}">
+      <div class="screen-topbar">
+        <button class="icon-button ghost-icon" type="button" data-admin-action="back-to-routine-weeks" aria-label="Volver">‹</button>
+        <h2>Editar semana</h2>
+        <span></span>
+      </div>
+      <div class="week-edit-heading">
+        <div>
+          <small>Semana</small>
+          <strong>${escapeHtml(week.number || weekIndex + 1)}: ${escapeHtml(phase.name || "Adaptación")}</strong>
+        </div>
+        <div>
+          <button class="primary-button tiny-action" type="button" data-admin-action="save-week">Guardar semana</button>
+          <button class="danger-button tiny-action" type="button" data-admin-action="delete-week">Excluir semana</button>
+        </div>
+      </div>
+      <label class="native-field">
+        <span>Número</span>
+        <input class="admin-field" data-week-field="number" value="${escapeHtml(week.number || "")}" />
+      </label>
+      <label class="native-field">
+        <span>Fase</span>
+        <select class="admin-field" data-week-field="phase.name">
+          ${["Adaptación", "Fuerza básica", "Hipertrofia", "Hipertrofia avanzada", "Fuerza máxima"].map((item) =>
+            `<option value="${escapeHtml(item)}" ${item === (phase.name || "") ? "selected" : ""}>${escapeHtml(item)}</option>`
+          ).join("")}
+        </select>
+      </label>
+      <label class="native-field">
+        <span>Etiqueta</span>
+        <input class="admin-field" data-week-field="phase.badge" value="${escapeHtml(phase.badge || "")}" placeholder="Ej: Semana inicial" />
+      </label>
+      <label class="native-field">
+        <span>Indicaciones</span>
+        <textarea class="admin-textarea" data-week-field="phase.modifier" placeholder="Enfocarse en la técnica y en la adaptación al volumen.">${escapeHtml(phase.modifier || "")}</textarea>
+      </label>
+      <div class="week-training-days-banner">
+        <div><strong>Días de entrenamiento</strong><span>${(week.days || []).length} días 🧊</span></div>
+      </div>
+      <button class="primary-button native-main-button" type="button" data-admin-action="add-day">+ Crear día</button>
+    </article>
+  `;
+}
+
+function renderAdminDayEditorScreen(week, day, weekIndex, dayIndex) {
+  const focus = day.focus || "Hipertrofia";
+  return `
+    <article class="native-edit-screen day-edit-screen" data-week-index="${weekIndex}" data-day-index="${dayIndex}">
+      <div class="screen-topbar">
+        <button class="icon-button ghost-icon" type="button" data-admin-action="back-to-week-edit" aria-label="Volver">‹</button>
+        <h2>Crear día ✨</h2>
+        <button class="icon-button ghost-icon" type="button" aria-label="Más">⋮</button>
+      </div>
+      <div class="native-tabs two-tabs">
+        <button class="active" type="button">Información</button>
+        <button type="button">Ejercicios <b>${(day.exercises || []).length}</b></button>
+      </div>
+      <label class="native-field">
+        <span>Nombre del día</span>
+        <input class="admin-field" data-day-field="title" value="${escapeHtml(day.title || "")}" placeholder="Día 1 - Pecho y Tríceps" />
+      </label>
+      <div class="native-field">
+        <span>Foco principal</span>
+        <div class="native-pill-row">
+          ${["Fuerza", "Hipertrofia", "Resistencia"].map((item) => `
+            <button type="button" class="${item === focus ? "active" : ""}" data-day-focus="${escapeHtml(item)}">${escapeHtml(item)}</button>
+          `).join("")}
+        </div>
+      </div>
+      <label class="native-field duration-field">
+        <span>Duración estimada</span>
+        <input class="admin-field" data-day-field="duration" value="${escapeHtml(day.duration || "45")}" />
+        <small>minutos ◷</small>
+      </label>
+      <label class="native-field">
+        <span>Notas</span>
+        <textarea class="admin-textarea" data-day-field="notes" placeholder="Notas o indicaciones especiales para este día...">${escapeHtml(day.notes || "")}</textarea>
+      </label>
+      <button class="primary-button native-main-button" type="button" data-admin-action="save-day">▣ Guardar día</button>
+    </article>
+  `;
 }
 
 function renderTrainerStudentListItem(user) {
@@ -3520,12 +3612,14 @@ function renderAdminPanel() {
   const showUsers = state.activeView === "students";
   const showRoutines = state.activeView === "routines";
   const isEditingRoutine = Boolean(state.adminDraft && state.adminEditorMode);
+  const isNativeSubscreen = showRoutines && isEditingRoutine && state.adminWeekEditorIndex !== null;
   adminPanel.classList.toggle("students-view", showUsers);
   adminPanel.classList.toggle("routines-view", showRoutines);
   adminPanel.classList.toggle("editing-routine", isEditingRoutine);
   adminPanel.classList.toggle("creating-routine", isEditingRoutine && state.adminEditorMode === "create");
   adminPanel.classList.toggle("editing-existing-routine", isEditingRoutine && state.adminEditorMode === "edit");
   adminPanel.classList.toggle("assigning-routine", showUsers && state.adminAssignmentMode);
+  adminPanel.classList.toggle("native-subscreen", isNativeSubscreen);
   if (state.isTrainer && !state.isAdmin) {
     if (panelTitle) panelTitle.textContent = showRoutines ? t("routinePanel") : t("studentPanel");
     if (panelHelp) panelHelp.textContent = showRoutines ? t("routinePanelHelp") : t("studentPanelHelp");
@@ -3601,6 +3695,18 @@ function renderAdminPanel() {
       </div>
     `
     : "";
+
+  const focusedWeekIndex = Number(state.adminWeekEditorIndex);
+  const focusedDayIndex = Number(state.adminDayEditorIndex);
+  if (Number.isInteger(focusedWeekIndex) && draft.plan[focusedWeekIndex]) {
+    const focusedWeek = draft.plan[focusedWeekIndex];
+    if (Number.isInteger(focusedDayIndex) && focusedWeek.days?.[focusedDayIndex]) {
+      adminWeeks.innerHTML = renderAdminDayEditorScreen(focusedWeek, focusedWeek.days[focusedDayIndex], focusedWeekIndex, focusedDayIndex);
+      return;
+    }
+    adminWeeks.innerHTML = renderAdminWeekEditorScreen(focusedWeek, focusedWeekIndex);
+    return;
+  }
 
   adminWeeks.innerHTML = routineOverview + draft.plan
     .map((week, weekIndex) => {
@@ -3818,12 +3924,28 @@ async function handleAdminAction(button) {
   const exerciseKey = button.closest("[data-exercise-key]")?.dataset.exerciseKey;
   const action = button.dataset.adminAction;
 
+  if (action === "back-to-routine-weeks") {
+    state.adminWeekEditorIndex = null;
+    state.adminDayEditorIndex = null;
+    renderAdminPanel();
+    return;
+  }
+
+  if (action === "back-to-week-edit") {
+    state.adminDayEditorIndex = null;
+    renderAdminPanel();
+    return;
+  }
+
   if (action === "add-week") {
+    const nextIndex = state.adminDraft.plan.length;
     state.adminDraft.plan.push({
       number: "",
       phase: { name: "", badge: "", modifier: "" },
       days: []
     });
+    state.adminWeekEditorIndex = nextIndex;
+    state.adminDayEditorIndex = null;
     renderAdminPanel();
     return;
   }
@@ -3850,6 +3972,8 @@ if (action === "save-day") {
   try {
     state.adminDraft.plan[weekIndex].days[dayIndex].collapsed = true;
     await saveAdminDraftAndAssignment();
+    state.adminDayEditorIndex = null;
+    state.adminWeekEditorIndex = weekIndex;
     renderAdminPanel();
   } catch (error) {
     state.adminDraft.plan[weekIndex].days[dayIndex].collapsed = false;
@@ -3862,6 +3986,8 @@ if (action === "edit-day") {
   state.adminDraft.plan[weekIndex].days.forEach((day, index) => {
     day.collapsed = index !== dayIndex;
   });
+  state.adminWeekEditorIndex = weekIndex;
+  state.adminDayEditorIndex = dayIndex;
   renderAdminPanel();
   return;
 }
@@ -3875,6 +4001,8 @@ if (action === "save-week") {
     });
 
     await saveAdminDraftAndAssignment();
+    state.adminWeekEditorIndex = null;
+    state.adminDayEditorIndex = null;
     renderAdminPanel();
   } catch (error) {
     state.adminDraft.plan[weekIndex].collapsed = false;
@@ -3889,6 +4017,8 @@ if (action === "edit-week") {
   });
 
   state.adminDraft.plan[weekIndex].collapsed = false;
+  state.adminWeekEditorIndex = weekIndex;
+  state.adminDayEditorIndex = null;
 
   renderAdminPanel();
   return;
@@ -3896,15 +4026,24 @@ if (action === "edit-week") {
 if (action === "delete-week") {
   state.adminDraft.plan.splice(weekIndex, 1);
   state.adminEditingExerciseKey = "";
+  state.adminWeekEditorIndex = null;
+  state.adminDayEditorIndex = null;
 }
 
   if (action === "add-day") {
-    state.adminDraft.plan[weekIndex].days = state.adminDraft.plan[weekIndex].days || [];
-    state.adminDraft.plan[weekIndex].days.push({ title: "", focus: "", exercises: [] });
+    const week = state.adminDraft.plan[weekIndex];
+    week.days = week.days || [];
+    const nextDayIndex = week.days.length;
+    week.days.push({ title: "", focus: "Hipertrofia", duration: "45", notes: "", exercises: [] });
+    state.adminWeekEditorIndex = weekIndex;
+    state.adminDayEditorIndex = nextDayIndex;
+    renderAdminPanel();
+    return;
   }
 
   if (action === "delete-day") {
     state.adminDraft.plan[weekIndex].days.splice(dayIndex, 1);
+    state.adminDayEditorIndex = null;
   }
 
   if (action === "add-exercise") {
@@ -4596,6 +4735,11 @@ adminWeeks.addEventListener("input", (event) => {
 });
 
 adminWeeks.addEventListener("change", async (event) => {
+  const changedField = event.target.closest(".admin-field, .admin-textarea");
+  if (changedField && !changedField.matches("[data-image-upload]")) {
+    updateAdminDraftFromInput(changedField);
+  }
+
   const input = event.target.closest("[data-image-upload]");
   if (!input) return;
   const file = input.files?.[0];
@@ -4630,6 +4774,18 @@ adminWeeks.addEventListener("change", async (event) => {
 });
 
 adminWeeks.addEventListener("click", async (event) => {
+  const dayFocus = event.target.closest("[data-day-focus]");
+  if (dayFocus && state.adminDraft) {
+    const weekIndex = Number(dayFocus.closest("[data-week-index]")?.dataset.weekIndex);
+    const dayIndex = Number(dayFocus.closest("[data-day-index]")?.dataset.dayIndex);
+    const day = state.adminDraft.plan?.[weekIndex]?.days?.[dayIndex];
+    if (day) {
+      day.focus = dayFocus.dataset.dayFocus || "";
+      renderAdminPanel();
+    }
+    return;
+  }
+
   const newRoutineCard = event.target.closest("[data-admin-action='new-routine-card']");
   if (newRoutineCard) {
     startRoutineCreation(state.selectedAdminUserId || "");

@@ -5807,6 +5807,236 @@ button.student-current-card {
   box-shadow: 0 18px 36px rgba(124, 58, 237, 0.28);
 }
 
+.native-edit-screen {
+  display: grid;
+  gap: 0.76rem;
+  width: min(100%, var(--app-width));
+  min-height: calc(100svh - 5.4rem);
+  margin: 0 auto;
+  padding: 0.82rem;
+  border: 1px solid rgba(63, 82, 124, 0.2);
+  border-radius: 16px;
+  background:
+    radial-gradient(circle at 100% 0%, rgba(124, 58, 237, 0.15), transparent 34%),
+    linear-gradient(180deg, #07162f 0%, #041027 100%);
+  box-shadow: 0 22px 52px rgba(0, 0, 0, 0.38);
+}
+
+.admin-panel.native-subscreen {
+  width: min(100%, var(--app-width));
+  margin: 0 auto;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.admin-panel.native-subscreen::before,
+.admin-panel.native-subscreen .admin-panel-header,
+.admin-panel.native-subscreen #adminRoutineEditor {
+  display: none !important;
+}
+
+.admin-panel.native-subscreen .admin-weeks {
+  display: block;
+  padding: 0;
+}
+
+.native-edit-screen .screen-topbar {
+  min-height: 2rem;
+  margin-bottom: 0.1rem;
+}
+
+.native-edit-screen .screen-topbar h2 {
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 900;
+  text-align: center;
+}
+
+.native-edit-screen .ghost-icon {
+  width: 1.8rem;
+  height: 1.8rem;
+  border: 0;
+  background: transparent;
+  color: #fff;
+  font-size: 1.25rem;
+  box-shadow: none;
+}
+
+.week-edit-heading {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 0.72rem;
+}
+
+.week-edit-heading > div:first-child {
+  min-width: 0;
+}
+
+.week-edit-heading small,
+.native-field > span {
+  display: block;
+  margin-bottom: 0.28rem;
+  color: #91a0bd;
+  font-size: 0.55rem;
+  font-weight: 950;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.week-edit-heading strong {
+  display: block;
+  color: #fff;
+  font-size: 0.78rem;
+  line-height: 1.2;
+}
+
+.week-edit-heading > div:last-child {
+  display: grid;
+  gap: 0.38rem;
+  min-width: 5.3rem;
+}
+
+.tiny-action {
+  min-height: 1.82rem !important;
+  padding: 0 0.56rem !important;
+  border-radius: 8px !important;
+  font-size: 0.55rem !important;
+}
+
+.native-field {
+  position: relative;
+  display: grid;
+  min-width: 0;
+}
+
+.native-field input,
+.native-field select,
+.native-field textarea {
+  width: 100%;
+  min-height: 2.52rem;
+  border: 1px solid rgba(75, 96, 142, 0.15);
+  border-radius: 9px;
+  outline: 0;
+  background: rgba(13, 27, 54, 0.86);
+  color: #f8fafc;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.62rem 0.7rem;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+}
+
+.native-field textarea {
+  min-height: 4.35rem;
+  resize: vertical;
+  line-height: 1.35;
+}
+
+.native-field input:focus,
+.native-field select:focus,
+.native-field textarea:focus {
+  border-color: rgba(139, 92, 246, 0.85);
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.16);
+}
+
+.native-tabs {
+  display: grid;
+  gap: 0.45rem;
+  padding: 0.18rem;
+  border-radius: 11px;
+  background: rgba(13, 27, 54, 0.72);
+}
+
+.native-tabs.two-tabs {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.native-tabs button {
+  min-height: 2.05rem;
+  border: 0;
+  border-radius: 9px;
+  background: transparent;
+  color: #9aa8c0;
+  font-size: 0.62rem;
+  font-weight: 850;
+}
+
+.native-tabs button.active {
+  background: linear-gradient(135deg, rgba(91, 53, 255, 0.95), rgba(124, 58, 237, 0.72));
+  color: #fff;
+  box-shadow: 0 12px 22px rgba(91, 53, 255, 0.24);
+}
+
+.native-tabs b {
+  display: inline-grid;
+  place-items: center;
+  min-width: 1rem;
+  height: 1rem;
+  border-radius: 999px;
+  background: #7c3aed;
+  color: #fff;
+  font-size: 0.55rem;
+}
+
+.native-pill-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.42rem;
+}
+
+.native-pill-row button {
+  min-height: 2.15rem;
+  border: 1px solid rgba(75, 96, 142, 0.12);
+  border-radius: 999px;
+  background: rgba(13, 27, 54, 0.72);
+  color: #b7c3d8;
+  font-size: 0.66rem;
+  font-weight: 800;
+}
+
+.native-pill-row button.active {
+  border-color: rgba(168, 85, 247, 0.75);
+  background: radial-gradient(circle at 50% 0%, rgba(216, 180, 254, 0.22), transparent 62%), linear-gradient(135deg, #5b35ff, #9b2df2);
+  color: #fff;
+  box-shadow: 0 0 18px rgba(124, 58, 237, 0.34);
+}
+
+.duration-field {
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+}
+
+.duration-field > span {
+  grid-column: 1 / -1;
+}
+
+.duration-field small {
+  position: absolute;
+  right: 0.7rem;
+  bottom: 0.7rem;
+  color: #9aa8c0;
+  font-size: 0.66rem;
+}
+
+.duration-field input {
+  padding-right: 5.2rem;
+}
+
+.native-main-button {
+  min-height: 2.75rem !important;
+  border-radius: 9px !important;
+  background: linear-gradient(135deg, #4b5bff, #c026d3) !important;
+  box-shadow: 0 18px 38px rgba(124, 58, 237, 0.28) !important;
+}
+
+.native-edit-screen .week-training-days-banner {
+  min-height: 3.9rem;
+  margin: 0;
+  border-radius: 11px;
+}
+
 .trainer-students-screen,
 .trainer-student-activity,
 .trainer-new-student-card {
