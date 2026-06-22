@@ -7467,6 +7467,10 @@ body.native-admin-subscreen-active .app-shell {
   display: none;
 }
 
+.admin-panel.creating-routine.native-subscreen .admin-weeks {
+  display: block;
+}
+
 /* Create routine final mobile correction */
 .admin-panel.creating-routine {
   width: min(100%, var(--app-width));
