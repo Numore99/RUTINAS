@@ -1174,7 +1174,7 @@ function t(key, params = {}) {
   const dictionary = translations[state.language] || translations[DEFAULT_LANGUAGE];
   let value = dictionary[key] || translations[DEFAULT_LANGUAGE][key] || key;
   Object.entries(params).forEach(([paramKey, paramValue]) => {
-    value = value.replaceAll(`{${paramKey}}`, String(paramValue ? ""));
+    value = value.replaceAll(`{${paramKey}}`, String(paramValue ?? ""));
   });
   return value;
 }
@@ -3267,7 +3267,7 @@ function renderSummary() {
 }
 
 function escapeHtml(value) {
-  return String(value ? "")
+  return String(value ?? "")
     .replaceAll("&", "&amp;")
     .replaceAll("<", "&lt;")
     .replaceAll(">", "&gt;")
