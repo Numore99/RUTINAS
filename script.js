@@ -1720,7 +1720,7 @@ function getRecentActivityItems() {
     .map((invite) => {
       const student = state.adminUsers.find((user) => user.uid === invite.studentId);
       const name = student?.displayName || getDisplayNameFromEmail(invite.studentEmail || "") || invite.studentEmail || "Alumno";
-      return `${name} aceptÃ³ tu invitaciÃ³n`;
+      return `${name} aceptó tu invitación`;
     });
   const routinesUpdated = getAdminRoutineIds()
     .slice(0, 2)
@@ -1736,15 +1736,36 @@ function renderTrainerHome() {
   const displayName = state.currentUserData?.displayName || getDisplayNameFromEmail(state.currentUser?.email || "");
   const recentItems = getRecentActivityItems();
   trainerHome.innerHTML = `
-    <section class="home-welcome">
-      <h2>Inicio</h2>
+    <section class="trainer-dashboard-hero">
+      <div>
+        <span class="student-role-pill">${state.isAdmin ? "Admin" : "Entrenador"}</span>
+        <h1>RutFit</h1>
+        <p>Hola, ${escapeHtml(displayName || t("user"))} <span aria-hidden="true">&#128075;</span></p>
+      </div>
+      <div class="student-home-actions">
+        <button class="student-notification-button" type="button" data-home-action="notifications" aria-label="Notificaciones">
+          <span aria-hidden="true">&#128276;</span>
+          <b></b>
+        </button>
+        ${renderUserAvatar(state.currentUserData || {}, "student-home-avatar")}
+      </div>
+    </section>
+
+    <section class="trainer-goal-card">
+      <div>
+        <small>Inicio</small>
+        <strong>¡Vamos a por tus objetivos!</strong>
+        <span>Hoy es un gran día para entrenar.</span>
+      </div>
+      <b aria-hidden="true">&#128640;</b>
     </section>
 
     <div class="home-section-title">Resumen</div>
-    <div class="home-grid">
+    <div class="home-grid trainer-summary-grid">
       <article class="home-stat">
         <strong>${activeStudents}</strong>
         <span>Alumnos activos</span>
+        <small>+2 hoy</small>
       </article>
       <article class="home-stat">
         <strong>${pendingInvites}</strong>
@@ -1753,20 +1774,21 @@ function renderTrainerHome() {
       <article class="home-stat">
         <strong>${routineCount}</strong>
         <span>Rutinas creadas</span>
+        <small>+1 esta semana</small>
       </article>
     </div>
 
-    <div class="home-section-title">Acciones rÃ¡pidas</div>
-    <div class="home-actions">
-      <button class="primary-button" type="button" data-home-action="new-student">+ Nuevo alumno</button>
-      <button class="secondary-button" type="button" data-home-action="new-routine">ðŸ“‹ Nueva rutina</button>
-      <button class="secondary-button" type="button" data-home-action="assign-routine">â†» Asignar rutina</button>
+    <div class="home-section-title">Acciones rápidas</div>
+    <div class="home-actions trainer-quick-actions">
+      <button class="primary-button" type="button" data-home-action="new-student"><span>+</span>Nuevo alumno</button>
+      <button class="secondary-button" type="button" data-home-action="new-routine"><span>▣</span>Nueva rutina</button>
+      <button class="secondary-button" type="button" data-home-action="assign-routine"><span>↻</span>Asignar rutina</button>
     </div>
 
     <section class="home-activity">
       <div class="home-section-title">Actividad reciente</div>
       ${recentItems.length
-        ? recentItems.map((item) => `<div class="activity-item">${escapeHtml(item)}</div>`).join("")
+        ? recentItems.map((item, index) => `<div class="activity-item"><i></i><span>${escapeHtml(item)}</span><small>${index === 0 ? "Hace 2h" : index === 1 ? "Ayer" : "Hace 3h"}</small></div>`).join("")
         : `<div class="empty-state">Sin actividad reciente.</div>`
       }
     </section>
@@ -2723,7 +2745,7 @@ function renderApp() {
   const studentMode = !managerMode;
 
   routineSelect.classList.add("is-hidden");
-  appHeader.classList.toggle("is-hidden", studentMode);
+  appHeader.classList.add("is-hidden");
   appMain.classList.remove("is-hidden");
   appKicker.textContent = trainerDashboardOnly ? (state.isAdmin ? t("admin") : t("trainer")) : "";
   appKicker.classList.toggle("is-hidden", !appKicker.textContent.trim());
@@ -4809,6 +4831,12 @@ trainerHome?.addEventListener("click", (event) => {
   const button = event.target.closest("[data-home-action]");
   if (!button) return;
   if (button.dataset.homeAction === "new-student") {
+    state.adminStudentFormOpen = true;
+    state.selectedAdminUserId = "";
+    setActiveView("students");
+    return;
+  }
+  if (button.dataset.homeAction === "notifications") {
     setActiveView("students");
     return;
   }

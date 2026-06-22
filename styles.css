@@ -6422,6 +6422,207 @@ button.student-current-card {
   font-size: 0.65rem;
 }
 
+/* Trainer dashboard replica */
+.trainer-home {
+  display: grid;
+  gap: 0.72rem;
+  padding: 0 0 1rem;
+}
+
+.trainer-dashboard-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 0.78rem;
+}
+
+.trainer-dashboard-hero h1 {
+  margin: 0.36rem 0 0.14rem;
+  color: #fff;
+  font-size: clamp(2.25rem, 12vw, 3.25rem);
+  line-height: 0.92;
+}
+
+.trainer-dashboard-hero p {
+  margin: 0;
+  color: #f3f7ff;
+  font-size: 0.86rem;
+  font-weight: 850;
+}
+
+.trainer-goal-card {
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  min-height: 6.65rem;
+  border: 1px solid rgba(125, 150, 199, 0.12);
+  border-radius: 16px;
+  background:
+    radial-gradient(circle at 86% 26%, rgba(32, 211, 238, 0.22), transparent 3.4rem),
+    radial-gradient(circle at 72% 78%, rgba(191, 36, 242, 0.38), transparent 5rem),
+    linear-gradient(135deg, rgba(70, 35, 180, 0.94), rgba(30, 13, 88, 0.96));
+  padding: 0.85rem;
+  box-shadow: 0 18px 38px rgba(65, 24, 160, 0.24);
+}
+
+.trainer-goal-card small {
+  display: block;
+  color: #aeb8d0;
+  font-size: 0.58rem;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.trainer-goal-card strong {
+  display: block;
+  max-width: 9rem;
+  margin: 0.32rem 0 0.2rem;
+  color: #fff;
+  font-size: 1.18rem;
+  line-height: 1.05;
+}
+
+.trainer-goal-card span {
+  color: #d8e1f5;
+  font-size: 0.64rem;
+}
+
+.trainer-goal-card b {
+  transform: rotate(10deg);
+  font-size: 3.25rem;
+  filter: drop-shadow(0 14px 20px rgba(0, 0, 0, 0.35));
+}
+
+.trainer-summary-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.46rem;
+}
+
+.trainer-home .home-section-title {
+  margin-top: 0.08rem;
+  color: #92a4c2;
+  font-size: 0.58rem;
+  font-weight: 950;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.trainer-home .home-stat {
+  min-height: 4.55rem;
+  border-radius: 13px;
+  padding: 0.58rem;
+  background: rgba(8, 19, 42, 0.64);
+}
+
+.trainer-home .home-stat strong {
+  font-size: 1.38rem;
+}
+
+.trainer-home .home-stat span {
+  margin-top: 0.18rem;
+  font-size: 0.54rem;
+  line-height: 1.15;
+}
+
+.trainer-home .home-stat small {
+  display: block;
+  margin-top: 0.24rem;
+  color: #22c55e;
+  font-size: 0.52rem;
+  font-weight: 900;
+}
+
+.trainer-quick-actions {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.52rem;
+}
+
+.trainer-quick-actions .primary-button,
+.trainer-quick-actions .secondary-button {
+  display: grid;
+  place-items: center;
+  gap: 0.2rem;
+  min-height: 4.55rem;
+  border: 0;
+  border-radius: 14px;
+  color: #fff;
+  font-size: 0.68rem;
+  line-height: 1.1;
+  text-align: center;
+  box-shadow: 0 16px 28px rgba(0, 0, 0, 0.24);
+}
+
+.trainer-quick-actions .primary-button {
+  background: linear-gradient(135deg, #5b35ff, #bd24f2);
+}
+
+.trainer-quick-actions .secondary-button:nth-child(2) {
+  background: linear-gradient(135deg, #ff405d, #f0185f);
+}
+
+.trainer-quick-actions .secondary-button:nth-child(3) {
+  background: linear-gradient(135deg, #14c7e8, #0080b4);
+}
+
+.trainer-quick-actions button span {
+  font-size: 1.35rem;
+  line-height: 1;
+}
+
+.trainer-home .home-activity {
+  display: grid;
+  gap: 0.42rem;
+  border: 0;
+  background: transparent;
+  padding: 0;
+}
+
+.trainer-home .activity-item {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.45rem;
+  min-height: 2.42rem;
+  border: 1px solid rgba(75, 96, 142, 0.12);
+  border-radius: 10px;
+  background: rgba(8, 19, 42, 0.66);
+  padding: 0 0.62rem;
+  color: #dfe7f7;
+  font-size: 0.64rem;
+}
+
+.trainer-home .activity-item i {
+  width: 0.42rem;
+  height: 0.42rem;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 12px rgba(34, 197, 94, 0.55);
+}
+
+.trainer-home .activity-item:nth-child(3) i {
+  background: #fb7185;
+  box-shadow: 0 0 12px rgba(251, 113, 133, 0.55);
+}
+
+.trainer-home .activity-item:nth-child(4) i {
+  background: #a855f7;
+  box-shadow: 0 0 12px rgba(168, 85, 247, 0.55);
+}
+
+.trainer-home .activity-item span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.trainer-home .activity-item small {
+  color: #8f9db8;
+  font-size: 0.56rem;
+}
+
 /* Inicio - Alumno: greeting line above the rutina actual card (matches mockup) */
 .sh-greeting {
   margin: 0 0 0.6rem;
