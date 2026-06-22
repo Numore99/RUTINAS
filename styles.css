@@ -2481,7 +2481,7 @@ main {
 .week-header::after,
 .day-card h3::after,
 .admin-user-toggle::after {
-  content: "›";
+  content: "\203a";
   color: var(--accent);
   font-size: 1.7rem;
   line-height: 1;
@@ -2972,7 +2972,7 @@ main {
 }
 
 .home-welcome p::after {
-  content: " 💪";
+  content: "";
 }
 
 .home-activity,
@@ -3407,7 +3407,7 @@ main {
 }
 
 .next-training-card::after {
-  content: "›";
+  content: "\203a";
   justify-self: end;
   grid-row: 1 / 4;
   grid-column: 2;
@@ -6670,7 +6670,7 @@ body.native-admin-subscreen-active .app-shell {
 }
 
 .admin-panel.routines-view.editing-routine #adminRoutineEditor > .admin-card-title::after {
-  content: "⋮";
+  content: "\22ee";
   color: #8f9db8;
   font-size: 1.2rem;
 }
@@ -7507,7 +7507,7 @@ body.native-admin-subscreen-active .app-shell {
 }
 
 .admin-panel.creating-routine #adminRoutineEditor > .admin-card-title::after {
-  content: "⋮";
+  content: "\22ee";
   color: #8f9db8;
   font-size: 1rem;
 }
@@ -7716,7 +7716,7 @@ body.native-admin-subscreen-active .app-shell {
 }
 
 .admin-panel.routines-view.editing-routine .admin-day:not(.collapsed) > .admin-card-title::before {
-  content: "‹";
+  content: "\2039";
   color: #fff;
   font-size: 1.35rem;
 }
@@ -7935,7 +7935,7 @@ body.native-admin-subscreen-active .app-shell {
 }
 
 .admin-panel.editing-existing-routine .week-overview-mode > .admin-card-title::before {
-  content: "‹";
+  content: "\2039";
   color: #fff;
   font-size: 1.35rem;
 }
@@ -7948,7 +7948,7 @@ body.native-admin-subscreen-active .app-shell {
 }
 
 .admin-panel.editing-existing-routine .week-overview-mode > .admin-card-title h3::after {
-  content: " ⋮";
+  content: " \22ee";
   float: right;
   color: #8f9db8;
   font-size: 1rem;
@@ -8075,7 +8075,7 @@ body.native-admin-subscreen-active .app-shell {
 }
 
 .admin-panel.routines-view.editing-routine .week-edit-mode > .admin-card-title::before {
-  content: "‹";
+  content: "\2039";
   color: #fff;
   font-size: 1.35rem;
 }

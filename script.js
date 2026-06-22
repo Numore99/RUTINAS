@@ -2,19 +2,19 @@
   "back-squat": {
     name: "Sentadilla trasera",
     objective: "fuerza",
-    goal: "Construir fuerza m?xima de piernas para derribos, defensa de derribo y control de cadera.",
+    goal: "Construir fuerza máxima de piernas para derribos, defensa de derribo y control de cadera.",
     baseSets: "5",
     baseReps: "3-5",
     rest: "2:30",
     technique:
-      "Barra firme sobre trapecios, pies estables, abdomen bloqueado y bajada controlada hasta profundidad ?til. Sube empujando el suelo, manteniendo rodillas alineadas y torso s?lido.",
-    mistakes: ["Perder tensi?n lumbar", "Colapsar rodillas hacia dentro", "Rebotar sin control en la bajada"],
+      "Barra firme sobre trapecios, pies estables, abdomen bloqueado y bajada controlada hasta profundidad útil. Sube empujando el suelo, manteniendo rodillas alineadas y torso sólido.",
+    mistakes: ["Perder tensión lumbar", "Colapsar rodillas hacia dentro", "Rebotar sin control en la bajada"],
     images: ["img/back-squat-1.jpg", "img/back-squat-2.jpg"]
   },
   "trap-bar-deadlift": {
     name: "Peso muerto con barra hexagonal",
     objective: "fuerza",
-    goal: "Mejorar extensi?n de cadera y fuerza total sin castigar tanto la espalda baja.",
+    goal: "Mejorar extensión de cadera y fuerza total sin castigar tanto la espalda baja.",
     baseSets: "4-5",
     baseReps: "3-5",
     rest: "2:30",
@@ -31,20 +31,20 @@
     baseReps: "3-5",
     rest: "2:00",
     technique:
-      "Esc?pulas juntas, pies firmes y barra bajando al estern?n bajo. Empuja en diagonal suave manteniendo mu?ecas apiladas sobre codos.",
-    mistakes: ["Abrir codos en exceso", "Rebotar la barra", "Levantar gl?teos del banco"],
+      "Escápulas juntas, pies firmes y barra bajando al esternón bajo. Empuja en diagonal suave manteniendo muñecas apiladas sobre codos.",
+    mistakes: ["Abrir codos en exceso", "Rebotar la barra", "Levantar glúteos del banco"],
     images: ["img/bench-press-1.jpg", "img/bench-press-2.jpg"]
   },
   "weighted-pull-up": {
     name: "Dominada con lastre",
     objective: "fuerza",
-    goal: "Aumentar tracci?n espec?fica para clinch, agarres y control de espalda.",
+    goal: "Aumentar tracción específica para clinch, agarres y control de espalda.",
     baseSets: "4",
     baseReps: "3-6",
     rest: "2:00",
     technique:
       "Inicia colgado con hombros activos, tira los codos hacia las costillas y lleva el pecho a la barra sin balanceo.",
-    mistakes: ["Patada de impulso", "Encoger hombros arriba", "No completar la extensi?n controlada"],
+    mistakes: ["Patada de impulso", "Encoger hombros arriba", "No completar la extensión controlada"],
     images: ["img/weighted-pull-up-1.jpg", "img/weighted-pull-up-2.jpg"]
   },
   "front-squat": {
@@ -56,7 +56,7 @@
     rest: "2:00",
     technique:
       "Codos altos, barra apoyada en deltoides y abdomen firme. Baja vertical, pausa breve y sube sin dejar caer el pecho.",
-    mistakes: ["Codos ca?dos", "Talones despegados", "Respirar sin bracing antes de bajar"],
+    mistakes: ["Codos caídos", "Talones despegados", "Respirar sin bracing antes de bajar"],
     images: ["img/front-squat-1.jpg", "img/front-squat-2.jpg"]
   },
   "landmine-press": {
@@ -67,31 +67,31 @@
     baseReps: "5 por lado",
     rest: "1:30",
     technique:
-      "Base atl?tica, costillas abajo y barra cerca del hombro. Empuja hacia arriba y adelante sin rotar el torso.",
-    mistakes: ["Arquear la espalda", "Perder la mu?eca neutra", "Empujar sin estabilizar la esc?pula"],
+      "Base atlética, costillas abajo y barra cerca del hombro. Empuja hacia arriba y adelante sin rotar el torso.",
+    mistakes: ["Arquear la espalda", "Perder la muñeca neutra", "Empujar sin estabilizar la escápula"],
     images: ["img/landmine-press-1.jpg", "img/landmine-press-2.jpg"]
   },
   "med-ball-slam": {
-    name: "Lanzamiento de bal?n medicinal al suelo",
+    name: "Lanzamiento de balón medicinal al suelo",
     objective: "potencia",
-    goal: "Convertir extensi?n de cadera y tronco en potencia explosiva repetible.",
+    goal: "Convertir extensión de cadera y tronco en potencia explosiva repetible.",
     baseSets: "5",
     baseReps: "5",
     rest: "1:15",
     technique:
-      "Eleva el bal?n con cuerpo largo, bloquea abdomen y acelera hacia el suelo usando cadera, dorsales y brazos.",
-    mistakes: ["Lanzar solo con brazos", "Perder postura lumbar", "Hacer repeticiones lentas sin intenci?n"],
+      "Eleva el balón con cuerpo largo, bloquea abdomen y acelera hacia el suelo usando cadera, dorsales y brazos.",
+    mistakes: ["Lanzar solo con brazos", "Perder postura lumbar", "Hacer repeticiones lentas sin intención"],
     images: ["img/med-ball-slam-1.jpg", "img/med-ball-slam-2.jpg"]
   },
   "box-jump": {
-    name: "Salto al caj?n",
+    name: "Salto al cajón",
     objective: "potencia",
-    goal: "Mejorar producci?n r?pida de fuerza para entradas y cambios de nivel.",
+    goal: "Mejorar producción rápida de fuerza para entradas y cambios de nivel.",
     baseSets: "5",
     baseReps: "3",
     rest: "1:30",
     technique:
-      "Carga cadera corta, salta con intenci?n m?xima y aterriza suave con rodillas alineadas. Baja caminando para preservar potencia.",
+      "Carga cadera corta, salta con intención máxima y aterriza suave con rodillas alineadas. Baja caminando para preservar potencia.",
     mistakes: ["Aterrizar pesado", "Elegir caja demasiado alta", "Convertirlo en cardio"],
     images: ["img/box-jump-1.jpg", "img/box-jump-2.jpg"]
   },
@@ -103,74 +103,74 @@
     baseReps: "8",
     rest: "1:00",
     technique:
-      "La pesa viaja por bisagra de cadera, no por sentadilla. Aprieta gl?teos al frente y deja que los brazos gu?en.",
+      "La pesa viaja por bisagra de cadera, no por sentadilla. Aprieta glúteos al frente y deja que los brazos guíen.",
     mistakes: ["Elevar con hombros", "Flexionar demasiado rodillas", "Perder ritmo respiratorio"],
     images: ["img/kettlebell-swing-1.jpg", "img/kettlebell-swing-2.jpg"]
   },
   "broad-jump": {
     name: "Salto horizontal",
     objective: "potencia",
-    goal: "Transferir potencia horizontal a entradas de derribo y presi?n hacia delante.",
+    goal: "Transferir potencia horizontal a entradas de derribo y presión hacia delante.",
     baseSets: "5",
     baseReps: "3",
     rest: "1:30",
     technique:
       "Carga brazos y cadera, proyecta el cuerpo hacia delante y cae estable absorbiendo con tobillo, rodilla y cadera.",
-    mistakes: ["Caer con rodillas r?gidas", "Mirar al piso", "Repetir sin recuperar potencia"],
+    mistakes: ["Caer con rodillas rígidas", "Mirar al piso", "Repetir sin recuperar potencia"],
     images: ["img/broad-jump-1.jpg", "img/broad-jump-2.jpg"]
   },
   "sled-push": {
     name: "Empuje de trineo",
     objective: "potencia",
-    goal: "Desarrollar empuje de piernas y tronco para presi?n contra jaula.",
+    goal: "Desarrollar empuje de piernas y tronco para presión contra jaula.",
     baseSets: "6",
     baseReps: "15-20 m",
     rest: "1:30",
     technique:
-      "Cuerpo inclinado, brazos fuertes y pasos cortos potentes. Mant?n respiraci?n agresiva sin perder l?nea de cadera.",
+      "Cuerpo inclinado, brazos fuertes y pasos cortos potentes. Mantén respiración agresiva sin perder línea de cadera.",
     mistakes: ["Pasos demasiado largos", "Cadera alta sin empuje", "Dejar caer la cabeza"],
     images: ["img/sled-push-1.jpg", "img/sled-push-2.jpg"]
   },
   "isometric-split-squat": {
-    name: "Zancada isom?trica",
-    objective: "isometr?a",
+    name: "Zancada isométrica",
+    objective: "isometría",
     goal: "Fortalecer posiciones de base, rodilla y cadera bajo fatiga.",
     baseSets: "3",
     baseReps: "25-40 s por lado",
     rest: "1:00",
     technique:
-      "Mant?n zancada s?lida, rodilla delantera alineada y torso alto. Presiona el suelo como si fueras a subir, pero sost?n la posici?n.",
-    mistakes: ["Descansar sobre ligamentos", "Inclinarse hacia delante", "Perder presi?n del pie delantero"],
+      "Mantén zancada sólida, rodilla delantera alineada y torso alto. Presiona el suelo como si fueras a subir, pero sostén la posición.",
+    mistakes: ["Descansar sobre ligamentos", "Inclinarse hacia delante", "Perder presión del pie delantero"],
     images: ["img/isometric-split-squat-1.jpg", "img/isometric-split-squat-2.jpg"]
   },
   "wall-sit-adductor-squeeze": {
-    name: "Sentadilla en pared con presi?n de aductores",
-    objective: "isometr?a",
-    goal: "Reforzar aductores y piernas para guardia, presi?n y prevenci?n de lesiones.",
+    name: "Sentadilla en pared con presión de aductores",
+    objective: "isometría",
+    goal: "Reforzar aductores y piernas para guardia, presión y prevención de lesiones.",
     baseSets: "3",
     baseReps: "30-45 s",
     rest: "1:00",
     technique:
-      "Espalda contra pared, rodillas a 90 grados y bal?n o almohadilla entre rodillas. Aprieta de forma constante sin contener la respiraci?n.",
+      "Espalda contra pared, rodillas a 90 grados y balón o almohadilla entre rodillas. Aprieta de forma constante sin contener la respiración.",
     mistakes: ["Subir demasiado la cadera", "Relajar aductores", "Colapsar pies hacia dentro"],
     images: ["img/wall-sit-adductor-squeeze-1.jpg", "img/wall-sit-adductor-squeeze-2.jpg"]
   },
   "chin-over-bar-hold": {
-    name: "Aguante con ment?n sobre la barra",
-    objective: "isometr?a",
+    name: "Aguante con mentón sobre la barra",
+    objective: "isometría",
     goal: "Sostener agarres fuertes y control de espalda cuando el rival intenta escapar.",
     baseSets: "4",
     baseReps: "10-25 s",
     rest: "1:15",
     technique:
-      "Sube con control, ment?n sobre barra, hombros lejos de orejas y costillas cerradas. Mant?n tensi?n sin balanceo.",
-    mistakes: ["Cuello adelantado", "Codos abiertos", "Caer sin controlar la exc?ntrica"],
+      "Sube con control, mentón sobre barra, hombros lejos de orejas y costillas cerradas. Mantén tensión sin balanceo.",
+    mistakes: ["Cuello adelantado", "Codos abiertos", "Caer sin controlar la excéntrica"],
     images: ["img/chin-over-bar-hold-1.jpg", "img/chin-over-bar-hold-2.jpg"]
   },
   "plank-drag": {
     name: "Arrastre en plancha",
-    objective: "isometr?a",
-    goal: "Entrenar anti-rotaci?n del tronco para scrambles y golpes desde arriba.",
+    objective: "isometría",
+    goal: "Entrenar anti-rotación del tronco para scrambles y golpes desde arriba.",
     baseSets: "3",
     baseReps: "8 por lado",
     rest: "0:45",
@@ -181,31 +181,31 @@
   },
   "bear-hug-hold": {
     name: "Aguante abrazando saco de arena",
-    objective: "isometr?a",
-    goal: "Simular presi?n de clinch y control corporal con respiraci?n bajo compresi?n.",
+    objective: "isometría",
+    goal: "Simular presión de clinch y control corporal con respiración bajo compresión.",
     baseSets: "4",
     baseReps: "20-40 s",
     rest: "1:00",
     technique:
-      "Abraza el saco alto, conecta costillas y pelvis, y mant?n respiraci?n nasal o corta sin perder postura.",
+      "Abraza el saco alto, conecta costillas y pelvis, y mantén respiración nasal o corta sin perder postura.",
     mistakes: ["Apoyar el saco en la espalda baja", "Cerrar demasiado la garganta", "Relajar piernas"],
     images: ["img/bear-hug-hold-1.jpg", "img/bear-hug-hold-2.jpg"]
   },
   "assault-bike-sprint": {
     name: "Sprint en Assault Bike",
     objective: "lactato",
-    goal: "Elevar tolerancia al lactato y recuperaci?n entre esfuerzos de alta intensidad.",
+    goal: "Elevar tolerancia al lactato y recuperación entre esfuerzos de alta intensidad.",
     baseSets: "8",
     baseReps: "15-30 s fuerte",
     rest: "1:00-1:30",
     technique:
-      "Acelera desde el primer segundo con empuje coordinado de brazos y piernas. Mant?n torso estable y termina cada sprint con respiraci?n controlada.",
+      "Acelera desde el primer segundo con empuje coordinado de brazos y piernas. Mantén torso estable y termina cada sprint con respiración controlada.",
     mistakes: ["Salir suave y acelerar tarde", "Desordenar la postura", "Mirar la pantalla todo el tiempo"],
     images: ["img/assault-bike-1.jpg", "img/assault-bike-2.jpg"]
   },
   "assault-bike-recovery": {
-    name: "Recuperaci?n en Assault Bike",
-    objective: "recuperaci?n",
+    name: "Recuperación en Assault Bike",
+    objective: "recuperación",
     goal: "Mejorar aclarado de metabolitos y bajar pulsaciones entre rounds.",
     baseSets: "4-6",
     baseReps: "2:00 suave",
@@ -218,49 +218,49 @@
   "shuttle-run": {
     name: "Carrera ida y vuelta",
     objective: "lactato",
-    goal: "Entrenar cambios de direcci?n repetidos y potencia bajo acidez.",
+    goal: "Entrenar cambios de dirección repetidos y potencia bajo acidez.",
     baseSets: "6-10",
     baseReps: "20 s",
     rest: "0:40-1:00",
     technique:
-      "Acelera bajo, frena con pasos cortos y toca l?nea sin doblar la espalda. Reacelera con intenci?n m?xima.",
-    mistakes: ["Frenar con una sola pierna r?gida", "Girar alto", "Perder calidad por exceso de volumen"],
+      "Acelera bajo, frena con pasos cortos y toca línea sin doblar la espalda. Reacelera con intención máxima.",
+    mistakes: ["Frenar con una sola pierna rígida", "Girar alto", "Perder calidad por exceso de volumen"],
     images: ["img/shuttle-run-1.jpg", "img/shuttle-run-2.jpg"]
   },
   "battle-rope-sprawl": {
     name: "Cuerdas de batalla con sprawl",
     objective: "lactato",
-    goal: "Combinar tren superior, sprawls y respiraci?n agresiva en formato de round.",
+    goal: "Combinar tren superior, sprawls y respiración agresiva en formato de round.",
     baseSets: "5",
     baseReps: "30-40 s",
     rest: "1:00",
     technique:
-      "Ondas fuertes con hombros bajos, sprawl explosivo y regreso r?pido a base atl?tica sin perder respiraci?n.",
-    mistakes: ["Caer con lumbar hundida", "Ondas peque?as", "Volver de pie demasiado lento"],
+      "Ondas fuertes con hombros bajos, sprawl explosivo y regreso rápido a base atlética sin perder respiración.",
+    mistakes: ["Caer con lumbar hundida", "Ondas pequeñas", "Volver de pie demasiado lento"],
     images: ["img/battle-rope-sprawl-1.jpg", "img/battle-rope-sprawl-2.jpg"]
   },
   "ground-and-pound": {
-    name: "Golpes desde posici?n superior",
+    name: "Golpes desde posición superior",
     objective: "ground and pound",
-    goal: "Construir potencia, postura y continuidad golpeando desde posici?n superior.",
+    goal: "Construir potencia, postura y continuidad golpeando desde posición superior.",
     baseSets: "6",
     baseReps: "20-30 s",
     rest: "0:45-1:00",
     technique:
-      "Rodillas pesadas, cadera estable y mano libre posteando cuando hace falta. Golpea en r?fagas cortas y vuelve a base.",
-    mistakes: ["Quedar alto y f?cil de barrer", "Golpear sin retraer mano", "Perder presi?n de cadera"],
+      "Rodillas pesadas, cadera estable y mano libre posteando cuando hace falta. Golpea en ráfagas cortas y vuelve a base.",
+    mistakes: ["Quedar alto y fácil de barrer", "Golpear sin retraer mano", "Perder presión de cadera"],
     images: ["img/ground-and-pound-1.jpg", "img/ground-and-pound-2.jpg"]
   },
   "medicine-ball-gp": {
-    name: "Golpes al suelo con bal?n medicinal",
+    name: "Golpes al suelo con balón medicinal",
     objective: "ground and pound",
     goal: "Transferir potencia de tronco a golpes repetidos con bajo riesgo articular.",
     baseSets: "5",
     baseReps: "8-12 por lado",
     rest: "1:00",
     technique:
-      "Desde rodillas o base de montada, rota el tronco y golpea el bal?n contra el suelo manteniendo cadera pesada.",
-    mistakes: ["Golpear solo con brazo", "Perder equilibrio lateral", "No volver a posici?n defensiva"],
+      "Desde rodillas o base de montada, rota el tronco y golpea el balón contra el suelo manteniendo cadera pesada.",
+    mistakes: ["Golpear solo con brazo", "Perder equilibrio lateral", "No volver a posición defensiva"],
     images: ["img/medicine-ball-gp-1.jpg", "img/medicine-ball-gp-2.jpg"]
   },
   "dummy-posture-strikes": {
@@ -271,49 +271,49 @@
     baseReps: "30 s",
     rest: "0:45",
     technique:
-      "Rompe postura con cadera atr?s, controla b?ceps o torso y alterna golpes cortos sin regalar brazos.",
+      "Rompe postura con cadera atrás, controla bíceps o torso y alterna golpes cortos sin regalar brazos.",
     mistakes: ["Cabeza adelantada", "Manos plantadas sin defensa", "Golpes largos sin base"],
     images: ["img/dummy-posture-strikes-1.jpg", "img/dummy-posture-strikes-2.jpg"]
   },
   "zone-2-run": {
     name: "Carrera en zona 2",
-    objective: "recuperaci?n",
-    goal: "Desarrollar base aer?bica para recuperar mejor entre rounds y sesiones.",
+    objective: "recuperación",
+    goal: "Desarrollar base aeróbica para recuperar mejor entre rounds y sesiones.",
     baseSets: "1",
     baseReps: "25-45 min",
     rest: "Libre",
     technique:
-      "Ritmo conversacional, respiraci?n controlada y pisada relajada. Termina con sensaci?n de poder seguir.",
+      "Ritmo conversacional, respiración controlada y pisada relajada. Termina con sensación de poder seguir.",
     mistakes: ["Convertirlo en tempo", "Subir pulsaciones en cuestas", "Acortar por impaciencia"],
     images: ["img/zone-2-run-1.jpg", "img/zone-2-run-2.jpg"]
   },
   "copenhagen-plank": {
     name: "Plancha Copenhagen",
-    objective: "recuperaci?n",
+    objective: "recuperación",
     goal: "Prevenir lesiones de aductor y mejorar estabilidad lateral para grappling.",
     baseSets: "3",
     baseReps: "15-30 s por lado",
     rest: "0:45",
     technique:
-      "Apoya pierna superior, bloquea costillas y eleva cadera hasta formar una l?nea larga. Mant?n presi?n suave y constante.",
+      "Apoya pierna superior, bloquea costillas y eleva cadera hasta formar una línea larga. Mantén presión suave y constante.",
     mistakes: ["Rotar el torso", "Dejar caer la cadera", "Aguantar dolor punzante"],
     images: ["img/copenhagen-plank-1.jpg", "img/copenhagen-plank-2.jpg"]
   },
   "neck-isometrics": {
-    name: "Isom?tricos de cuello",
-    objective: "recuperaci?n",
-    goal: "Fortalecer cuello para clinch, impactos y prevenci?n de molestias cervicales.",
+    name: "Isométricos de cuello",
+    objective: "recuperación",
+    goal: "Fortalecer cuello para clinch, impactos y prevención de molestias cervicales.",
     baseSets: "2-3",
-    baseReps: "10-20 s por direcci?n",
+    baseReps: "10-20 s por dirección",
     rest: "0:30",
     technique:
-      "Presiona contra mano, banda o pared sin mover la cabeza. Mant?n mand?bula relajada y respiraci?n constante.",
-    mistakes: ["Empujar con dolor", "Mover la cabeza r?pido", "Tensionar hombros"],
+      "Presiona contra mano, banda o pared sin mover la cabeza. Mantén mandíbula relajada y respiración constante.",
+    mistakes: ["Empujar con dolor", "Mover la cabeza rápido", "Tensionar hombros"],
     images: ["img/neck-isometrics-1.jpg", "img/neck-isometrics-2.jpg"]
   },
   "hip-airplane": {
-    name: "Avi?n de cadera",
-    objective: "recuperaci?n",
+    name: "Avión de cadera",
+    objective: "recuperación",
     goal: "Mejorar control de cadera, equilibrio y salud de rodilla para cambios de nivel.",
     baseSets: "2-3",
     baseReps: "5 por lado",
@@ -325,40 +325,40 @@
   },
   "turkish-get-up": {
     name: "Levantada turca",
-    objective: "recuperaci?n",
+    objective: "recuperación",
     goal: "Integrar hombro, cadera y tronco para levantadas seguras desde el suelo.",
     baseSets: "3",
     baseReps: "2 por lado",
     rest: "1:00",
     technique:
       "Mira la carga, crea posteos claros y avanza por fases: codo, mano, puente, barrido, medio arrodillado y de pie.",
-    mistakes: ["Apurarse entre fases", "Doblar mu?eca", "Perder mirada sobre la carga"],
+    mistakes: ["Apurarse entre fases", "Doblar muñeca", "Perder mirada sobre la carga"],
     images: ["img/turkish-get-up-1.jpg", "img/turkish-get-up-2.jpg"]
   }
 };
 
 const phases = [
-  { weeks: [1, 2, 3], name: "Base de fuerza", badge: "Acumulaci?n", modifier: "RPE 7-8, t?cnica limpia, zona 2 estable." },
+  { weeks: [1, 2, 3], name: "Base de fuerza", badge: "Acumulación", modifier: "RPE 7-8, técnica limpia, zona 2 estable." },
   { weeks: [4], name: "Descarga activa", badge: "Deload", modifier: "Reduce 30% el volumen, conserva velocidad." },
-  { weeks: [5, 6, 7], name: "Fuerza + potencia", badge: "Intensificaci?n", modifier: "M?s carga, menos reps, potencia fresca." },
-  { weeks: [8], name: "Descarga neural", badge: "Deload", modifier: "Baja fatiga, cuida movilidad y sue?o." },
+  { weeks: [5, 6, 7], name: "Fuerza + potencia", badge: "Intensificación", modifier: "Más carga, menos reps, potencia fresca." },
+  { weeks: [8], name: "Descarga neural", badge: "Deload", modifier: "Baja fatiga, cuida movilidad y sueño." },
   { weeks: [9, 10, 11], name: "Fight specific", badge: "Pico", modifier: "Rounds densos, repeat power ability y lactato." },
-  { weeks: [12], name: "Taper", badge: "Puesta a punto", modifier: "Bajo volumen, velocidad alta, recuperaci?n prioritaria." }
+  { weeks: [12], name: "Taper", badge: "Puesta a punto", modifier: "Bajo volumen, velocidad alta, recuperación prioritaria." }
 ];
 
 const dayTemplates = [
   {
-    title: "D?a 1",
+    title: "Día 1",
     focus: "Fuerza piernas + lactato",
     exercises: ["back-squat", "box-jump", "isometric-split-squat", "assault-bike-sprint", "ground-and-pound", "copenhagen-plank"]
   },
   {
-    title: "D?a 2",
-    focus: "Tracci?n, clinch y zona 2",
+    title: "Día 2",
+    focus: "Tracción, clinch y zona 2",
     exercises: ["trap-bar-deadlift", "weighted-pull-up", "med-ball-slam", "chin-over-bar-hold", "zone-2-run", "neck-isometrics"]
   },
   {
-    title: "D?a 3",
+    title: "Día 3",
     focus: "Potencia repeat + G&P",
     exercises: ["front-squat", "landmine-press", "kettlebell-swing", "bear-hug-hold", "battle-rope-sprawl", "dummy-posture-strikes"]
   }
@@ -501,22 +501,22 @@ const DEFAULT_LANGUAGE = "es";
 const translations = {
   es: {
     privateAccess: "Acceso privado",
-    loginTitle: "Iniciar sesi?n",
+    loginTitle: "Iniciar sesión",
     languageLabel: "Idioma",
-    password: "Contrase?a",
-    passwordPlaceholder: "M?nimo 6 caracteres",
-    rememberSession: "Mantener sesi?n iniciada",
-    loginButton: "Iniciar sesi?n",
+    password: "Contraseña",
+    passwordPlaceholder: "Mínimo 6 caracteres",
+    rememberSession: "Mantener sesión iniciada",
+    loginButton: "Iniciar sesión",
     createAccount: "Crear cuenta",
-    resetPassword: "Recuperar contrase?a por mail",
+    resetPassword: "Recuperar contraseña por mail",
     accountType: "Tipo de cuenta",
     student: "Alumno",
     trainer: "Entrenador",
     admin: "Admin",
-    logout: "Cerrar sesi?n",
+    logout: "Cerrar sesión",
     totalProgress: "Progreso total",
     doneShort: "hecho",
-    searchFilterControls: "Controles de b?squeda y filtro",
+    searchFilterControls: "Controles de búsqueda y filtro",
     search: "Buscar",
     searchPlaceholder: "Ej: squat, lactato, bike...",
     filterByGoal: "Filtrar por objetivo",
@@ -524,11 +524,11 @@ const translations = {
     strength: "Fuerza",
     power: "Potencia",
     lactate: "Lactato",
-    isometry: "Isometr?a",
-    recovery: "Recuperaci?n",
+    isometry: "Isometría",
+    recovery: "Recuperación",
     planSummary: "Resumen del plan",
-    routineInPreparation: "Rutina en preparaci?n",
-    comingSoon: "Pr?ximamente",
+    routineInPreparation: "Rutina en preparación",
+    comingSoon: "Próximamente",
     administrator: "Administrador",
     routinePanel: "Panel de rutinas",
     routinePanelHelp: "Crea y edita rutinas.",
@@ -537,7 +537,7 @@ const translations = {
     loadingUsers: "Cargando usuarios...",
     students: "Alumnos",
     studentPanel: "Panel de alumnos",
-    studentPanelHelp: "Invita alumnos, espera su aceptaci?n y as?gnales rutinas.",
+    studentPanelHelp: "Invita alumnos, espera su aceptación y asígnales rutinas.",
     inviteStudent: "Invitar alumno",
     studentEmail: "Email del alumno",
     sendInvite: "Enviar solicitud",
@@ -548,9 +548,9 @@ const translations = {
     accountNav: "Cuenta",
     yourProfessors: "Tus profesores",
     acceptedProfessors: "Profesores aceptados",
-    noProfessors: "Todav?a no tienes profesores aceptados.",
+    noProfessors: "Todavía no tienes profesores aceptados.",
     accountPanelTitle: "Cuenta",
-    accountPanelHelp: "Gestiona tu sesi?n en RutFit.",
+    accountPanelHelp: "Gestiona tu sesión en RutFit.",
     profile: "Perfil",
     editProfile: "Editar perfil",
     saveProfile: "Guardar perfil",
@@ -564,9 +564,9 @@ const translations = {
     memberSince: "Miembro desde",
     trainerLabel: "Entrenador",
     notCompleted: "Sin completar",
-    noStudents: "Todav?a no tienes alumnos aceptados.",
+    noStudents: "Todavía no tienes alumnos aceptados.",
     noPendingInvites: "No hay solicitudes pendientes.",
-    inviteSent: "Solicitud enviada. El alumno la ver? al crear cuenta o iniciar sesi?n.",
+    inviteSent: "Solicitud enviada. El alumno la verá al crear cuenta o iniciar sesión.",
     inviteExists: "Ya existe una solicitud pendiente o aceptada para ese email.",
     invitationForYou: "Solicitud de entrenador",
     invitationHelp: "{name} quiere asignarte rutinas en RutFit.",
@@ -578,7 +578,7 @@ const translations = {
     routine: "Rutina",
     routineEditor: "Editor de rutina",
     name: "Nombre",
-    title: "T?tulo",
+    title: "Título",
     tag: "Etiqueta",
     saveRoutine: "Guardar rutina",
     newRoutine: "Nueva rutina",
@@ -586,12 +586,12 @@ const translations = {
     createWeek: "Crear semana",
     deleteRoutine: "Eliminar rutina",
     closeDetail: "Cerrar detalle",
-    startPosition: "Posici?n inicial / bajada",
-    endPosition: "Posici?n final / subida",
+    startPosition: "Posición inicial / bajada",
+    endPosition: "Posición final / subida",
     sets: "Series",
     reps: "Reps",
     rest: "Descanso",
-    technique: "T?cnica",
+    technique: "Técnica",
     commonMistakes: "Errores comunes",
     done: "Hecho",
     markDone: "Marcar como hecho",
@@ -601,7 +601,7 @@ const translations = {
     exercises: "ejercicios",
     completed: "completados",
     weeks: "semanas",
-    noUsers: "Todav?a no hay usuarios.",
+    noUsers: "Todavía no hay usuarios.",
     usersLoadError: "No se pudieron cargar usuarios.",
     noRoutine: "Sin rutina",
     unavailableRoutine: "Rutina no disponible: {id}",
@@ -611,7 +611,7 @@ const translations = {
     addRoutine: "Agregar rutina",
     editCurrentRoutine: "Editar rutina actual",
     removeRoutine: "Quitar rutina",
-    backToUsers: "â† Volver a usuarios",
+    backToUsers: "&larr; Volver a usuarios",
     newRoutineFor: "Nueva rutina para {name}",
     editingRoutine: "Editando {name}",
     newRoutineOption: "Rutina nueva",
@@ -623,39 +623,39 @@ const translations = {
     saveExercise: "Guardar ejercicio",
     exerciseSaved: "Ejercicio guardado.",
     savedExercisesCount: "{count} ejercicios guardados",
-    editDay: "Editar d?a",
-    saveDay: "Guardar d?a",
+    editDay: "Editar día",
+    saveDay: "Guardar día",
     editWeek: "Editar semana",
     saveWeek: "Guardar semana",
-    weekSavedSummary: "Semana guardada - {count} d?as guardados",
+    weekSavedSummary: "Semana guardada - {count} días guardados",
     deleteExercise: "Eliminar ejercicio",
     objective: "Objetivo",
     startImage: "Imagen inicial",
     endImage: "Imagen final",
-    startImageAlt: "{name} posici?n inicial o bajada",
-    endImageAlt: "{name} posici?n final o subida",
+    startImageAlt: "{name} posición inicial o bajada",
+    endImageAlt: "{name} posición final o subida",
     uploadStartImage: "Subir imagen inicial",
     uploadEndImage: "Subir imagen final",
-    technicalGoal: "Objetivo t?cnico",
-    mistakesOnePerLine: "Errores comunes, uno por l?nea",
-    dayNumber: "D?a {number}",
-    deleteDay: "Eliminar d?a",
-    dayTitle: "T?tulo del d?a",
+    technicalGoal: "Objetivo técnico",
+    mistakesOnePerLine: "Errores comunes, uno por línea",
+    dayNumber: "Día {number}",
+    deleteDay: "Eliminar día",
+    dayTitle: "Título del día",
     focus: "Foco",
     createExercise: "Crear ejercicio",
-    emptyDay: "Este d?a todav?a no tiene ejercicios.",
+    emptyDay: "Este día todavía no tiene ejercicios.",
     week: "Semana",
     noPhase: "Sin fase",
     deleteWeek: "Eliminar semana",
-    number: "N?mero",
+    number: "Número",
     phase: "Fase",
     badge: "Etiqueta",
     instructions: "Indicaciones",
-    createDay: "Crear d?a",
-    emptyWeek: "Esta semana todav?a no tiene d?as.",
+    createDay: "Crear día",
+    emptyWeek: "Esta semana todavía no tiene días.",
     createWeekPrompt: "Crea una semana para empezar esta rutina.",
     newPhase: "Nueva fase",
-    noMatchingExercises: "No hay ejercicios que coincidan con esa b?squeda.",
+    noMatchingExercises: "No hay ejercicios que coincidan con esa búsqueda.",
     completeWeek: "Hecha",
     restLower: "descanso",
     hello: "Hola, {name}",
@@ -670,38 +670,38 @@ const translations = {
     userWithoutRoutine: "Usuario sin rutina asignada.",
     newRoutinePreparedAssign: "Nueva rutina preparada. Al guardar se asigna a este usuario.",
     removingRoutine: "Quitando rutina...",
-    routineRemoved: "Rutina quitada. El usuario ver? Pr?ximamente.",
+    routineRemoved: "Rutina quitada. El usuario verá Próximamente.",
     newRoutinePrepared: "Nueva rutina preparada. Edita los datos y guárdala.",
     darioMigrated: "Rutina Dario migrada.",
     darioMigratedAssigned: "Rutina Dario migrada y asignada al usuario.",
     routineNeedsId: "La rutina necesita un ID.",
     routineSaved: "Rutina guardada.",
     routineSavedAssigned: "Rutina guardada y asignada al usuario.",
-    deleteRoutineConfirm: "?Eliminar la rutina \"{name}\"?",
+    deleteRoutineConfirm: "¿Eliminar la rutina \"{name}\"?",
     routineDeleted: "Rutina eliminada.",
     deleteUser: "Eliminar usuario",
-    deleteUserConfirm: "?Eliminar el usuario \"{name}\" de RutFit?",
+    deleteUserConfirm: "¿Eliminar el usuario \"{name}\" de RutFit?",
     userDeleted: "Usuario eliminado.",
-    cannotDeleteSelf: "No puedes eliminar tu propio usuario admin desde aqu?.",
+    cannotDeleteSelf: "No puedes eliminar tu propio usuario admin desde aquí.",
     signingIn: "Ingresando...",
     creatingAccount: "Creando cuenta...",
-    writeEmailForReset: "Escribe tu email para recuperar la contrase?a.",
-    sendingReset: "Enviando correo de recuperaci?n...",
-    resetSent: "Te envi? un correo para recuperar la contrase?a.",
+    writeEmailForReset: "Escribe tu email para recuperar la contraseña.",
+    sendingReset: "Enviando correo de recuperación...",
+    resetSent: "Te envié un correo para recuperar la contraseña.",
     firebaseMissing: "Falta configurar Firebase en firebase-config.js.",
-    invalidEmail: "El email no es v?lido.",
-    invalidLogin: "Email o contrase?a incorrectos.",
+    invalidEmail: "El email no es válido.",
+    invalidLogin: "Email o contraseña incorrectos.",
     emailInUse: "Ese email ya tiene una cuenta.",
-    weakPassword: "La contrase?a debe tener al menos 6 caracteres.",
+    weakPassword: "La contraseña debe tener al menos 6 caracteres.",
     firebaseAuthMissing: "Falta activar Firebase Authentication en este proyecto.",
     authProviderDisabled: "Activa Email/Password en Firebase Authentication.",
-    invalidApiKey: "La configuraci?n de Firebase no es v?lida.",
-    permissionDenied: "Firestore est? bloqueando el acceso. Revisa las reglas de la base de datos.",
-    firestoreNotFound: "No se encontr? Firestore o el documento solicitado. Revisa que la base sea (default).",
-    firestorePending: "Firestore necesita terminar de activarse o tiene una condici?n pendiente ({code}). Espera un minuto y recarga.",
-    firestoreUnavailable: "Firestore no est? disponible ahora. Revisa conexi?n o configuraci?n.",
-    networkFailed: "No hay conexi?n. Int?ntalo de nuevo.",
-    actionFailed: "No se pudo completar la acci?n{code}.",
+    invalidApiKey: "La configuración de Firebase no es válida.",
+    permissionDenied: "Firestore está bloqueando el acceso. Revisa las reglas de la base de datos.",
+    firestoreNotFound: "No se encontró Firestore o el documento solicitado. Revisa que la base sea (default).",
+    firestorePending: "Firestore necesita terminar de activarse o tiene una condición pendiente ({code}). Espera un minuto y recarga.",
+    firestoreUnavailable: "Firestore no está disponible ahora. Revisa conexión o configuración.",
+    networkFailed: "No hay conexión. Inténtalo de nuevo.",
+    actionFailed: "No se pudo completar la acción{code}.",
     storageNotReady: "La imagen se guarda dentro de la rutina.",
     selectImageFile: "Selecciona un archivo de imagen."
   },
@@ -817,7 +817,7 @@ const translations = {
     addRoutine: "Add routine",
     editCurrentRoutine: "Edit current routine",
     removeRoutine: "Remove routine",
-    backToUsers: "â† Back to users",
+    backToUsers: "&larr; Back to users",
     newRoutineFor: "New routine for {name}",
     editingRoutine: "Editing {name}",
     newRoutineOption: "New routine",
@@ -916,8 +916,8 @@ const translations = {
     loginTitle: "Entrar",
     languageLabel: "Idioma",
     password: "Senha",
-    passwordPlaceholder: "M?nimo de 6 caracteres",
-    rememberSession: "Manter sess?o iniciada",
+    passwordPlaceholder: "Mínimo de 6 caracteres",
+    rememberSession: "Manter sessão iniciada",
     loginButton: "Entrar",
     createAccount: "Criar conta",
     resetPassword: "Recuperar senha por email",
@@ -933,36 +933,36 @@ const translations = {
     searchPlaceholder: "Ex: squat, lactato, bike...",
     filterByGoal: "Filtrar por objetivo",
     all: "Todos",
-    strength: "For?a",
-    power: "Pot?ncia",
+    strength: "Força",
+    power: "Potência",
     lactate: "Lactato",
     isometry: "Isometria",
-    recovery: "Recupera?o",
+    recovery: "Recuperação",
     planSummary: "Resumo do plano",
-    routineInPreparation: "Rotina em prepara?o",
+    routineInPreparation: "Rotina em preparação",
     comingSoon: "Em breve",
     administrator: "Administrador",
     routinePanel: "Painel de rotinas",
     routinePanelHelp: "Crie e edite rotinas.",
     closePanel: "Fechar painel",
-    users: "Usu?rios",
-    loadingUsers: "Carregando usu?rios...",
+    users: "Usuários",
+    loadingUsers: "Carregando usuários...",
     students: "Alunos",
     studentPanel: "Painel de alunos",
-    studentPanelHelp: "Convide alunos, espere a aceita?o e atribua rotinas.",
+    studentPanelHelp: "Convide alunos, espere a aceitação e atribua rotinas.",
     inviteStudent: "Convidar aluno",
     studentEmail: "Email do aluno",
-    sendInvite: "Enviar solicita?o",
-    pendingInvites: "Solicita?es pendentes",
+    sendInvite: "Enviar solicitação",
+    pendingInvites: "Solicitações pendentes",
     acceptedStudents: "Alunos aceitos",
     routinesNav: "Rotinas",
     professorsNav: "Professores",
     accountNav: "Conta",
     yourProfessors: "Seus professores",
     acceptedProfessors: "Professores aceitos",
-    noProfessors: "Voc? ainda n?o tem professores aceitos.",
+    noProfessors: "Você ainda não tem professores aceitos.",
     accountPanelTitle: "Conta",
-    accountPanelHelp: "Gerencie sua sess?o no RutFit.",
+    accountPanelHelp: "Gerencie sua sessão no RutFit.",
     profile: "Perfil",
     editProfile: "Editar perfil",
     saveProfile: "Salvar perfil",
@@ -976,21 +976,21 @@ const translations = {
     memberSince: "Membro desde",
     trainerLabel: "Treinador",
     notCompleted: "Sem preencher",
-    noStudents: "Voc? ainda n?o tem alunos aceitos.",
-    noPendingInvites: "N?o h? solicita?es pendentes.",
-    inviteSent: "Solicita?o enviada. O aluno ver? ao criar conta ou entrar.",
-    inviteExists: "J? existe uma solicita?o pendente ou aceita para esse email.",
-    invitationForYou: "Solicita?o de treinador",
-    invitationHelp: "{name} quer atribuir rotinas para voc? no RutFit.",
+    noStudents: "Você ainda não tem alunos aceitos.",
+    noPendingInvites: "Não há solicitações pendentes.",
+    inviteSent: "Solicitação enviada. O aluno verá ao criar conta ou entrar.",
+    inviteExists: "Já existe uma solicitação pendente ou aceita para esse email.",
+    invitationForYou: "Solicitação de treinador",
+    invitationHelp: "{name} quer atribuir rotinas para você no RutFit.",
     acceptInvite: "Aceitar",
     declineInvite: "Recusar",
-    inviteAccepted: "Solicita?o aceita.",
-    inviteDeclined: "Solicita?o recusada.",
+    inviteAccepted: "Solicitação aceita.",
+    inviteDeclined: "Solicitação recusada.",
     assignRoutines: "Atribuir rotinas",
     routine: "Rotina",
     routineEditor: "Editor de rotina",
     name: "Nome",
-    title: "T?tulo",
+    title: "Título",
     tag: "Etiqueta",
     saveRoutine: "Salvar rotina",
     newRoutine: "Nova rotina",
@@ -998,122 +998,122 @@ const translations = {
     createWeek: "Criar semana",
     deleteRoutine: "Excluir rotina",
     closeDetail: "Fechar detalhe",
-    startPosition: "Posi?o inicial / descida",
-    endPosition: "Posi?o final / subida",
-    sets: "S?ries",
+    startPosition: "Posição inicial / descida",
+    endPosition: "Posição final / subida",
+    sets: "Séries",
     reps: "Reps",
     rest: "Descanso",
-    technique: "T?cnica",
+    technique: "Técnica",
     commonMistakes: "Erros comuns",
     done: "Feito",
     markDone: "Marcar como feito",
     startRest: "Iniciar descanso",
     reset: "Reiniciar",
-    sessions: "sess?es",
-    exercises: "exerc?cios",
-    completed: "conclu?dos",
+    sessions: "sessões",
+    exercises: "exercícios",
+    completed: "concluídos",
     weeks: "semanas",
-    noUsers: "Ainda n?o h? usu?rios.",
-    usersLoadError: "N?o foi poss?vel carregar usu?rios.",
+    noUsers: "Ainda não há usuários.",
+    usersLoadError: "Não foi possível carregar usuários.",
     noRoutine: "Sem rotina",
-    unavailableRoutine: "Rotina indispon?vel: {id}",
-    user: "Usu?rio",
+    unavailableRoutine: "Rotina indisponível: {id}",
+    user: "Usuário",
     noEmail: "Sem email",
     assignExistingRoutine: "Atribuir rotina existente",
     addRoutine: "Adicionar rotina",
     editCurrentRoutine: "Editar rotina atual",
     removeRoutine: "Remover rotina",
-    backToUsers: "â† Voltar aos usu?rios",
+    backToUsers: "&larr; Voltar aos usuários",
     newRoutineFor: "Nova rotina para {name}",
     editingRoutine: "Editando {name}",
     newRoutineOption: "Nova rotina",
     noStartImage: "Sem imagem inicial",
     noEndImage: "Sem imagem final",
-    newExercise: "Novo exerc?cio",
-    savedExercises: "Exerc?cios salvos",
-    editExercise: "Editar exerc?cio",
-    saveExercise: "Salvar exerc?cio",
-    exerciseSaved: "Exerc?cio salvo.",
-    savedExercisesCount: "{count} exerc?cios salvos",
+    newExercise: "Novo exercício",
+    savedExercises: "Exercícios salvos",
+    editExercise: "Editar exercício",
+    saveExercise: "Salvar exercício",
+    exerciseSaved: "Exercício salvo.",
+    savedExercisesCount: "{count} exercícios salvos",
     editDay: "Editar dia",
     saveDay: "Salvar dia",
     editWeek: "Editar semana",
     saveWeek: "Salvar semana",
     weekSavedSummary: "Semana salva - {count} dias salvos",
-    deleteExercise: "Excluir exerc?cio",
+    deleteExercise: "Excluir exercício",
     objective: "Objetivo",
     startImage: "Imagem inicial",
     endImage: "Imagem final",
-    startImageAlt: "{name} posi?o inicial ou descida",
-    endImageAlt: "{name} posi?o final ou subida",
+    startImageAlt: "{name} posição inicial ou descida",
+    endImageAlt: "{name} posição final ou subida",
     uploadStartImage: "Enviar imagem inicial",
     uploadEndImage: "Enviar imagem final",
-    technicalGoal: "Objetivo t?cnico",
+    technicalGoal: "Objetivo técnico",
     mistakesOnePerLine: "Erros comuns, um por linha",
     dayNumber: "Dia {number}",
     deleteDay: "Excluir dia",
-    dayTitle: "T?tulo do dia",
+    dayTitle: "Título do dia",
     focus: "Foco",
-    createExercise: "Criar exerc?cio",
-    emptyDay: "Este dia ainda n?o tem exerc?cios.",
+    createExercise: "Criar exercício",
+    emptyDay: "Este dia ainda não tem exercícios.",
     week: "Semana",
     noPhase: "Sem fase",
     deleteWeek: "Excluir semana",
-    number: "N?mero",
+    number: "Número",
     phase: "Fase",
     badge: "Etiqueta",
-    instructions: "Indica?es",
+    instructions: "Indicações",
     createDay: "Criar dia",
-    emptyWeek: "Esta semana ainda n?o tem dias.",
+    emptyWeek: "Esta semana ainda não tem dias.",
     createWeekPrompt: "Crie uma semana para iniciar esta rotina.",
     newPhase: "Nova fase",
-    noMatchingExercises: "Nenhum exerc?cio corresponde a essa busca.",
+    noMatchingExercises: "Nenhum exercício corresponde a essa busca.",
     completeWeek: "Feita",
     restLower: "descanso",
-    hello: "Ol?, {name}",
+    hello: "Olá, {name}",
     loadingRoutine: "Carregando rotina...",
-    adminRulesNotice: "Voc? entrou como admin.",
-    userLoadError: "N?o foi poss?vel carregar seu usu?rio.",
+    adminRulesNotice: "Você entrou como admin.",
+    userLoadError: "Não foi possível carregar seu usuário.",
     uploadingImage: "Salvando imagem...",
     imageLoaded: "Imagem comprimida e salva na rotina.",
     imageStoredInRoutine: "Imagem comprimida e salva na rotina.",
-    updatingUser: "Atualizando usu?rio...",
-    assignedRoutine: "Rotina atribu?da ao usu?rio.",
-    userWithoutRoutine: "Usu?rio sem rotina atribu?da.",
+    updatingUser: "Atualizando usuário...",
+    assignedRoutine: "Rotina atribuída ao usuário.",
+    userWithoutRoutine: "Usuário sem rotina atribuída.",
     newRoutinePreparedAssign: "Nova rotina preparada. Ao salvar, será atribuída a este usuário.",
     removingRoutine: "Removendo rotina...",
-    routineRemoved: "Rotina removida. O usu?rio ver? Em breve.",
+    routineRemoved: "Rotina removida. O usuário verá Em breve.",
     newRoutinePrepared: "Nova rotina preparada. Edite os dados e salve.",
     darioMigrated: "Rotina Dario migrada.",
-    darioMigratedAssigned: "Rotina Dario migrada e atribu?da ao usu?rio.",
+    darioMigratedAssigned: "Rotina Dario migrada e atribuída ao usuário.",
     routineNeedsId: "A rotina precisa de um ID.",
     routineSaved: "Rotina salva.",
-    routineSavedAssigned: "Rotina salva e atribu?da ao usu?rio.",
+    routineSavedAssigned: "Rotina salva e atribuída ao usuário.",
     deleteRoutineConfirm: "Excluir a rotina \"{name}\"?",
-    routineDeleted: "Rotina exclu?da.",
-    deleteUser: "Excluir usu?rio",
-    deleteUserConfirm: "Excluir o usu?rio \"{name}\" do RutFit?",
-    userDeleted: "Usu?rio exclu?do.",
-    cannotDeleteSelf: "Voc? n?o pode excluir seu pr?prio usu?rio admin aqui.",
+    routineDeleted: "Rotina excluída.",
+    deleteUser: "Excluir usuário",
+    deleteUserConfirm: "Excluir o usuário \"{name}\" do RutFit?",
+    userDeleted: "Usuário excluído.",
+    cannotDeleteSelf: "Você não pode excluir seu próprio usuário admin aqui.",
     signingIn: "Entrando...",
     creatingAccount: "Criando conta...",
     writeEmailForReset: "Digite seu email para recuperar a senha.",
-    sendingReset: "Enviando email de recupera?o...",
+    sendingReset: "Enviando email de recuperação...",
     resetSent: "Enviei um email para recuperar a senha.",
     firebaseMissing: "Falta configurar Firebase em firebase-config.js.",
-    invalidEmail: "O email n?o ? v?lido.",
+    invalidEmail: "O email não é válido.",
     invalidLogin: "Email ou senha incorretos.",
-    emailInUse: "Esse email j? tem uma conta.",
+    emailInUse: "Esse email já tem uma conta.",
     weakPassword: "A senha deve ter pelo menos 6 caracteres.",
-    firebaseAuthMissing: "Ã‰ necess?rio ativar Firebase Authentication neste projeto.",
+    firebaseAuthMissing: "É necessário ativar Firebase Authentication neste projeto.",
     authProviderDisabled: "Ative Email/Password no Firebase Authentication.",
-    invalidApiKey: "A configura?o do Firebase n?o ? v?lida.",
-    permissionDenied: "Firestore est? bloqueando o acesso. Revise as regras do banco de dados.",
-    firestoreNotFound: "Firestore ou o documento solicitado n?o foi encontrado. Confira se o banco ? (default).",
-    firestorePending: "Firestore precisa terminar de ativar ou tem uma condi?o pendente ({code}). Aguarde um minuto e recarregue.",
-    firestoreUnavailable: "Firestore n?o est? dispon?vel agora. Revise conex?o ou configura?o.",
-    networkFailed: "Sem conex?o. Tente novamente.",
-    actionFailed: "N?o foi poss?vel concluir a a?o{code}.",
+    invalidApiKey: "A configuração do Firebase não é válida.",
+    permissionDenied: "Firestore está bloqueando o acesso. Revise as regras do banco de dados.",
+    firestoreNotFound: "Firestore ou o documento solicitado não foi encontrado. Confira se o banco é (default).",
+    firestorePending: "Firestore precisa terminar de ativar ou tem uma condição pendente ({code}). Aguarde um minuto e recarregue.",
+    firestoreUnavailable: "Firestore não está disponível agora. Revise conexão ou configuração.",
+    networkFailed: "Sem conexão. Tente novamente.",
+    actionFailed: "Não foi possível concluir a ação{code}.",
     storageNotReady: "A imagem e salva dentro da rotina.",
     selectImageFile: "Selecione um arquivo de imagem."
   }
@@ -1317,7 +1317,7 @@ function getProfileStats(user = {}) {
   return [
     user.weight ?`${user.weight} kg` : "",
     user.height ?`${user.height} m` : "",
-    user.age ?`${user.age} a?os` : ""
+    user.age ?`${user.age} años` : ""
   ].filter(Boolean);
 }
 
@@ -1450,7 +1450,7 @@ async function ensureUserDocument(user) {
         { merge: true }
       );
     } catch (error) {
-      console.warn("No se pudo guardar el rol admin. Se usar? el email admin local.", error);
+      console.warn("No se pudo guardar el rol admin. Se usará el email admin local.", error);
     }
     data.role = "admin";
   }
@@ -1876,7 +1876,7 @@ function getNextTrainingLabel(routine = getActiveRoutine()) {
     for (let dayIndex = 0; dayIndex < (week.days || []).length; dayIndex += 1) {
       const day = week.days[dayIndex];
       const ids = (day.exercises || []).map((exerciseKey) => progressId(week.number, dayIndex, exerciseKey));
-      if (ids.some((id) => !progress[id])) return `${t("week")} ${week.number} ? ${day.title}`;
+      if (ids.some((id) => !progress[id])) return `${t("week")} ${week.number} · ${day.title}`;
     }
   }
   return t("completeWeek");
@@ -1912,14 +1912,14 @@ function renderStudentHome() {
   const nextInfo = getNextTrainingInfo(routine);
   const displayName = state.currentUserData?.displayName || getDisplayNameFromEmail(state.currentUser?.email || "");
   const subtitle = nextInfo
-    ?`${t("week")} ${nextInfo.weekNumber} de ${nextInfo.totalWeeks} ? Dia ${nextInfo.dayNumber} de ${nextInfo.totalDays}`
+    ?`${t("week")} ${nextInfo.weekNumber} de ${nextInfo.totalWeeks} · Día ${nextInfo.dayNumber} de ${nextInfo.totalDays}`
     : (routine?.plan?.length ?"Rutina completada" : t("noRoutine"));
   const todayExercises = nextInfo ?nextInfo.exerciseCount : 0;
   const todayMinutes = todayExercises ?Math.round(todayExercises * 7.5) : 0;
   const todayKcal = todayMinutes ?Math.round(todayMinutes * 7) : 0;
 
   studentHome.innerHTML = `
-    <p class="sh-greeting">Hola, ${escapeHtml(displayName || t("user"))} <span aria-hidden="true">ðŸ‘‹</span></p>
+    <p class="sh-greeting">Hola, ${escapeHtml(displayName || t("user"))} <span aria-hidden="true"></span></p>
     <section class="student-dashboard-card">
       <div>
         <span class="kicker">Rutina actual</span>
@@ -1945,11 +1945,11 @@ function renderStudentHome() {
         <span>Kcal aprox.</span>
       </article>
     </div>
-    <div class="home-section-title">Proximo entrenamiento</div>
+    <div class="home-section-title">Próximo entrenamiento</div>
     <section class="student-current-card next-training-card">
       <small>${nextInfo ?`${t("week")} ${nextInfo.weekNumber}` : ""}</small>
       <strong>${escapeHtml(nextInfo ?nextInfo.dayTitle : getNextTrainingLabel(routine))}</strong>
-      <span>Ma?ana ? 18:00</span>
+      <span>Mañana · 18:00</span>
     </section>
     <section class="student-current-card streak-card">
       <small>Racha</small>
@@ -1967,7 +1967,7 @@ function renderStudentHomeV2() {
   const nextInfo = getNextTrainingInfo(routine);
   const displayName = state.currentUserData?.displayName || getDisplayNameFromEmail(state.currentUser?.email || "");
   const subtitle = nextInfo
-    ?`${t("week")} ${nextInfo.weekNumber} de ${nextInfo.totalWeeks} ? D?a ${nextInfo.dayNumber} de ${nextInfo.totalDays}`
+    ?`${t("week")} ${nextInfo.weekNumber} de ${nextInfo.totalWeeks} · Día ${nextInfo.dayNumber} de ${nextInfo.totalDays}`
     : (routine?.plan?.length ?"Rutina completada" : t("noRoutine"));
   const todayExercises = nextInfo ?nextInfo.exerciseCount : 0;
   const todayMinutes = todayExercises ?Math.round(todayExercises * 7.5) : 0;
@@ -2013,16 +2013,16 @@ function renderStudentHomeV2() {
         <span>Kcal aprox.</span>
       </article>
     </div>
-    <div class="home-section-title">Pr?ximo entrenamiento</div>
+    <div class="home-section-title">Próximo entrenamiento</div>
     <button class="student-current-card next-training-card" type="button" data-student-home-action="routine">
       <small>${nextInfo ?`${t("week")} ${nextInfo.weekNumber}` : ""}</small>
       <strong>${escapeHtml(nextInfo ?nextInfo.dayTitle : getNextTrainingLabel(routine))}</strong>
-      <span>Ma?ana ? 18:00</span>
+      <span>Mañana · 18:00</span>
     </button>
     <section class="student-current-card streak-card">
       <small>Racha</small>
       <strong>12</strong>
-      <span>D?as seguidos</span>
+      <span>Días seguidos</span>
       <div class="flame-row" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
     </section>
   `;
@@ -2041,13 +2041,13 @@ function renderStudentNotifications() {
         <h2>Notificaciones</h2>
         <span></span>
       </div>
-      <button class="notifications-read-all" type="button" data-notification-action="read-all">Marcar todas como le?das</button>
+      <button class="notifications-read-all" type="button" data-notification-action="read-all">Marcar todas como leídas</button>
       <div class="notification-list">
         ${renderNotificationRow("purple", "Nuevo entrenamiento disponible", `${escapeHtml(nextTitle)}<br>Hace 1h`, "")}
-        ${renderNotificationRow("purple", "Entrenamiento completado", "Buen trabajo! Has completado tu entrenamiento del d?a.", "Ayer")}
-        ${renderNotificationRow("orange", "Recordatorio", "No olvides registrar tus medidas semanales.", "2 d?as")}
-        ${renderNotificationRow("orange", "Nueva rutina asignada", `${escapeHtml(routineName)} ha sido asignada a tu plan.`, "3 d?as")}
-        ${renderNotificationRow("orange", "Meta alcanzada", "Felicidades! 10 d?as de racha conseguidos.", "5 d?as")}
+        ${renderNotificationRow("purple", "Entrenamiento completado", "Buen trabajo! Has completado tu entrenamiento del día.", "Ayer")}
+        ${renderNotificationRow("orange", "Recordatorio", "No olvides registrar tus medidas semanales.", "2 días")}
+        ${renderNotificationRow("orange", "Nueva rutina asignada", `${escapeHtml(routineName)} ha sido asignada a tu plan.`, "3 días")}
+        ${renderNotificationRow("orange", "Meta alcanzada", "Felicidades! 10 días de racha conseguidos.", "5 días")}
       </div>
     </section>
   `;
@@ -2089,7 +2089,7 @@ function renderStudentProgress() {
       <div class="screen-topbar progress-topbar">
         <span></span>
         <h2>Progreso</h2>
-        <button class="icon-button ghost-icon" type="button" data-progress-action="menu" aria-label="Opciones">â‹®</button>
+        <button class="icon-button ghost-icon" type="button" data-progress-action="menu" aria-label="Opciones">&vellip;</button>
       </div>
 
       <div class="mock-tabs progress-tabs">
@@ -2127,8 +2127,8 @@ function renderProgressSummary({ weekWorkouts, percent, kcal }) {
     </div>
 
     <section class="performance-card">
-      <div class="progress-section-title">Gr?fico de rendimiento</div>
-      <div class="performance-chart" aria-label="Gr?fico de rendimiento">
+      <div class="progress-section-title">Gráfico de rendimiento</div>
+      <div class="performance-chart" aria-label="Gráfico de rendimiento">
         <span class="axis top">100%</span>
         <span class="axis mid">50%</span>
         <span class="axis bottom">0%</span>
@@ -2145,13 +2145,13 @@ function renderProgressSummary({ weekWorkouts, percent, kcal }) {
             <circle cx="20" cy="118" r="4"/><circle cx="62" cy="91" r="4"/><circle cx="95" cy="48" r="4"/><circle cx="132" cy="82" r="4"/><circle cx="170" cy="56" r="4"/><circle cx="205" cy="92" r="4"/><circle cx="238" cy="55" r="4"/><circle cx="275" cy="42" r="4"/><circle cx="304" cy="22" r="4"/>
           </g>
         </svg>
-        <div class="chart-days"><span>Lun</span><span>Mar</span><span>Mi?</span><span>Jue</span><span>Vie</span><span>S?b</span><span>Dom</span></div>
+        <div class="chart-days"><span>Lun</span><span>Mar</span><span>Mié</span><span>Jue</span><span>Vie</span><span>Sáb</span><span>Dom</span></div>
       </div>
     </section>
 
     <section class="progress-streak">
       <div class="progress-section-title">Racha de entrenamiento</div>
-      <strong>12 <span>d?as seguidos</span></strong>
+      <strong>12 <span>días seguidos</span></strong>
       <div class="flame-row" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
     </section>
   `;
@@ -2175,8 +2175,8 @@ function renderProgressHistory(routine) {
         <article class="history-row">
           <span class="routine-list-icon ${iconClass}"></span>
           <div>
-            <strong>${escapeHtml(day.title || `D?a ${index + 1}`)}</strong>
-            <small>${date} ? ${minutes} min</small>
+            <strong>${escapeHtml(day.title || `Día ${index + 1}`)}</strong>
+            <small>${date} · ${minutes} min</small>
           </div>
           <b>${percent}%</b>
         </article>
@@ -2232,7 +2232,7 @@ function renderProgressMeasures() {
             <article><span>Grasa corporal</span><strong>${escapeHtml(bodyFat)}</strong><small>%</small></article>
             <article><span>Masa muscular</span><strong>${escapeHtml(muscleMass)}</strong><small>kg</small></article>
           </div>
-          <div class="progress-section-title">Hist?rico</div>
+          <div class="progress-section-title">Histórico</div>
           <div class="performance-chart compact-chart measure-chart">
             <span class="axis top">80</span>
             <span class="axis mid">78</span>
@@ -2493,7 +2493,7 @@ function renderAssignRoutineScreen(routineIds) {
   return `
     <section class="assign-routine-screen">
       <div class="screen-topbar">
-        <button class="icon-button ghost-icon" type="button" data-assign-action="back" aria-label="Volver">‹</button>
+        <button class="icon-button ghost-icon" type="button" data-assign-action="back" aria-label="Volver">&lsaquo;</button>
         <h2>Asignar rutina</h2>
         <span></span>
       </div>
@@ -2554,7 +2554,7 @@ function renderAdminWeekEditorScreen(week, weekIndex) {
   return `
     <article class="native-edit-screen week-edit-screen" data-week-index="${weekIndex}">
       <div class="screen-topbar">
-        <button class="icon-button ghost-icon" type="button" data-admin-action="back-to-routine-weeks" aria-label="Volver">‹</button>
+        <button class="icon-button ghost-icon" type="button" data-admin-action="back-to-routine-weeks" aria-label="Volver">&lsaquo;</button>
         <h2>Editar semana</h2>
         <span></span>
       </div>
@@ -2590,7 +2590,7 @@ function renderAdminWeekEditorScreen(week, weekIndex) {
       </label>
       <div class="week-training-days-banner">
         <div><strong>Días de entrenamiento</strong><span>${daysCount} ${daysCount === 1 ? "día" : "días"}</span></div>
-        <i aria-hidden="true">✦</i>
+        <i aria-hidden="true">&star;</i>
       </div>
       <button class="primary-button native-main-button" type="button" data-admin-action="add-day">+ Crear día</button>
     </article>
@@ -2607,9 +2607,9 @@ function renderAdminDayEditorScreen(week, day, weekIndex, dayIndex) {
   return `
     <article class="native-edit-screen day-edit-screen" data-week-index="${weekIndex}" data-day-index="${dayIndex}">
       <div class="screen-topbar">
-        <button class="icon-button ghost-icon" type="button" data-admin-action="back-to-week-edit" aria-label="Volver">‹</button>
-        <h2>${day.title ?escapeHtml(day.title) : "Crear día ✨"}</h2>
-        <button class="icon-button ghost-icon" type="button" data-admin-action="save-day" aria-label="Guardar">✓</button>
+        <button class="icon-button ghost-icon" type="button" data-admin-action="back-to-week-edit" aria-label="Volver">&lsaquo;</button>
+        <h2>${day.title ?escapeHtml(day.title) : "Crear día"}</h2>
+        <button class="icon-button ghost-icon" type="button" data-admin-action="save-day" aria-label="Guardar">&check;</button>
       </div>
       <div class="admin-day-stats native-day-stats">
         <article><span>Ejercicios</span><strong>${exerciseCount}</strong></article>
@@ -2657,7 +2657,7 @@ function renderAdminDayEditorScreen(week, day, weekIndex, dayIndex) {
                 <strong>${index + 1}. ${escapeHtml(exercise.name || t("newExercise"))}</strong>
                 <small>${escapeHtml([exercise.baseSets ?`${exercise.baseSets} series` : "", exercise.baseReps ?`${exercise.baseReps} reps` : "", exercise.rest ?`Descanso: ${exercise.rest}` : ""].filter(Boolean).join(" · "))}</small>
               </span>
-              <b>⋮</b>
+              <b>&vellip;</b>
             </button>
           `;
         }).join("") || `<div class="empty-state">Agrega ejercicios para este día.</div>`}
@@ -2688,9 +2688,9 @@ function renderAdminExerciseEditorScreen(exercise, exerciseKey, weekIndex, dayIn
   return `
     <article class="native-edit-screen exercise-edit-screen" data-week-index="${weekIndex}" data-day-index="${dayIndex}" data-exercise-key="${escapeHtml(exerciseKey)}">
       <div class="screen-topbar">
-        <button class="icon-button ghost-icon" type="button" data-admin-action="back-to-day-edit" aria-label="Volver">‹</button>
+        <button class="icon-button ghost-icon" type="button" data-admin-action="back-to-day-edit" aria-label="Volver">&lsaquo;</button>
         <h2>${exercise.name ? "Editar ejercicio" : "Nuevo ejercicio"}</h2>
-        <button class="icon-button ghost-icon" type="button" data-admin-action="delete-exercise" aria-label="Eliminar">⋮</button>
+        <button class="icon-button ghost-icon" type="button" data-admin-action="delete-exercise" aria-label="Eliminar">&vellip;</button>
       </div>
       <div class="exercise-editor-hero native-hero-upload">
         ${startPreview}
@@ -2758,7 +2758,7 @@ function renderTrainerNewStudentForm() {
   return `
     <section class="trainer-new-student-card">
       <div class="screen-topbar">
-        <button class="icon-button ghost-icon" type="button" data-admin-new-student-close aria-label="Volver">‹</button>
+        <button class="icon-button ghost-icon" type="button" data-admin-new-student-close aria-label="Volver">&lsaquo;</button>
         <h2>Nuevo alumno</h2>
         <span></span>
       </div>
@@ -2798,7 +2798,7 @@ function renderTrainerStudentActivity(user, routineIds) {
       <div class="screen-topbar">
         <button class="icon-button ghost-icon" type="button" data-admin-users-back aria-label="Volver">9</button>
         <h2>${escapeHtml(displayName || t("user"))}</h2>
-        ${canDeleteUser ?`<button class="icon-button ghost-icon user-delete-button" type="button" data-user-delete aria-label="${t("deleteUser")}">⋮</button>` : `<button class="icon-button ghost-icon" type="button" aria-label="Opciones">⋮</button>`}
+        ${canDeleteUser ?`<button class="icon-button ghost-icon user-delete-button" type="button" data-user-delete aria-label="${t("deleteUser")}">&vellip;</button>` : `<button class="icon-button ghost-icon" type="button" aria-label="Opciones">&vellip;</button>`}
       </div>
       <div class="activity-profile-hero">
         ${renderUserAvatar(user, "student-activity-avatar")}
@@ -3152,7 +3152,7 @@ function renderAccountPanel() {
           <strong>${escapeHtml(displayName || t("user"))}</strong>
           <span>${escapeHtml(email || t("noEmail"))}</span>
           <small>${escapeHtml(role)}</small>
-          ${stats.length ?`<p>${stats.map(escapeHtml).join(" ? ")}</p>` : ""}
+          ${stats.length ?`<p>${stats.map(escapeHtml).join(" · ")}</p>` : ""}
         </div>
       </article>
       <div class="profile-form">
@@ -3195,7 +3195,7 @@ function renderAccountPanel() {
       </div>
       <p class="account-help">${t("accountPanelHelp")}</p>
       <section class="settings-list" aria-label="${t("accountNav")}">
-        <div><span>Informaci?n personal</span><strong>></strong></div>
+        <div><span>Información personal</span><strong>></strong></div>
         <div><span>Objetivos</span><strong>></strong></div>
         <div><span>Preferencias</span><strong>></strong></div>
         <div><span>Centro de ayuda</span><strong>></strong></div>
@@ -3246,24 +3246,24 @@ const routines = {
     id: "bia",
     name: "Bia",
     title: "Rutina Bia",
-    kicker: "Pr?ximamente",
+    kicker: "Próximamente",
     exerciseLibrary: {},
     plan: []
   },
   pending: {
     id: "pending",
     name: "Sin rutina",
-    title: "Rutina en preparaci?n",
-    kicker: "Pr?ximamente",
+    title: "Rutina en preparación",
+    kicker: "Próximamente",
     exerciseLibrary: {},
     plan: []
   }
 };
 
 routines.dario.title = "RutFit";
-routines.bia.kicker = "Pr?ximamente";
-routines.pending.title = "Rutina en preparaci?n";
-routines.pending.kicker = "Pr?ximamente";
+routines.bia.kicker = "Próximamente";
+routines.pending.title = "Rutina en preparación";
+routines.pending.kicker = "Próximamente";
 
 function progressId(week, dayIndex, exerciseKey) {
   return `w${week}-d${dayIndex + 1}-${exerciseKey}`;
@@ -3301,16 +3301,16 @@ function matchesFilters(exercise) {
 function phasePrescription(exercise, weekNumber) {
   if ([4, 8].includes(weekNumber)) {
     return {
-      sets: exercise.objective === "recuperaci?n" ?exercise.baseSets : "2-3",
+      sets: exercise.objective === "recuperación" ?exercise.baseSets : "2-3",
       reps: exercise.objective === "fuerza" ?"3 suave" : exercise.baseReps,
-      rest: exercise.objective === "recuperaci?n" ?exercise.rest : "1:00-1:30"
+      rest: exercise.objective === "recuperación" ?exercise.rest : "1:00-1:30"
     };
   }
 
   if (weekNumber === 12) {
     return {
       sets: exercise.objective === "lactato" ?"4" : "2-3",
-      reps: exercise.objective === "fuerza" ?"2 r?pido" : exercise.baseReps,
+      reps: exercise.objective === "fuerza" ?"2 rápido" : exercise.baseReps,
       rest: exercise.objective === "lactato" ?"1:30" : exercise.rest
     };
   }
@@ -3569,7 +3569,7 @@ function renderRoutineCatalog(routineIds) {
               <small>${totalWeeks} semanas · ${assigned} alumnos</small>
             </span>
             <span class="routine-mini-ring" style="--progress:${progressValue}%">${progressValue}%</span>
-            <button class="routine-menu-button" type="button" data-routine-card-edit="${escapeHtml(id)}" aria-label="Editar rutina">⋮</button>
+            <button class="routine-menu-button" type="button" data-routine-card-edit="${escapeHtml(id)}" aria-label="Editar rutina">&vellip;</button>
           </article>
         `;
       }).join("")}
@@ -3588,14 +3588,14 @@ function getProfileCompletionPercent() {
 function renderStudentProfileAccount(userData, displayName, email) {
   const percent = getProfileCompletionPercent();
   const stats = [
-    ["12", "D?as de racha"],
+    ["12", "Días de racha"],
     [String(Object.values(progress).filter(Boolean).length), "Entrenamientos"],
     [`${percent}%`, "Cumplimiento"]
   ];
   return `
     <section class="student-account-screen profile-screen">
       <div class="screen-topbar">
-        <button class="icon-button ghost-icon" type="button" data-account-back aria-label="Volver">â€¹</button>
+        <button class="icon-button ghost-icon" type="button" data-account-back aria-label="Volver">&lsaquo;</button>
         <h2>Perfil del Alumno</h2>
         <button class="icon-button ghost-icon" type="button" data-account-section="settings" aria-label="Ajustes">${getInlineIcon("settings")}</button>
       </div>
@@ -3622,7 +3622,7 @@ function renderStudentProfileAccount(userData, displayName, email) {
       </div>
 
       <section class="settings-list account-menu">
-        <button type="button" data-account-section="personal"><span>${getInlineIcon("user")} Informaci?n personal</span><strong>></strong></button>
+        <button type="button" data-account-section="personal"><span>${getInlineIcon("user")} Información personal</span><strong>></strong></button>
         <button type="button" data-account-section="goals"><span>${getInlineIcon("heart")} Objetivos</span><strong>></strong></button>
         <button type="button" data-account-section="settings"><span>${getInlineIcon("settings")} Preferencias</span><strong>></strong></button>
         <button type="button" data-account-action="help"><span>${getInlineIcon("info")} Centro de ayuda</span><strong>></strong></button>
@@ -3675,7 +3675,7 @@ function renderStudentSettingsAccount(userData) {
 
       <div class="settings-group-title">Preferencias</div>
       <section class="settings-list account-menu">
-        <button type="button" data-settings-action="units"><span>Unidades</span><em>M?trico (kg, cm)</em><strong>></strong></button>
+        <button type="button" data-settings-action="units"><span>Unidades</span><em>Métrico (kg, cm)</em><strong>></strong></button>
         ${renderPreferenceToggle("reminders", "Recordatorios", preference("reminders", true))}
         ${renderPreferenceToggle("notifications", "Notificaciones", preference("notifications", true))}
         ${renderPreferenceToggle("sounds", "Sonidos", preference("sounds", true))}
@@ -3683,13 +3683,13 @@ function renderStudentSettingsAccount(userData) {
 
       <div class="settings-group-title">Cuenta</div>
       <section class="settings-list account-menu">
-        <button type="button" data-settings-action="password"><span>Cambiar contrase?a</span><strong>></strong></button>
+        <button type="button" data-settings-action="password"><span>Cambiar contraseña</span><strong>></strong></button>
         <button type="button" data-settings-action="privacy"><span>Privacidad</span><strong>></strong></button>
         <button class="delete-account-row" type="button" data-settings-action="delete"><span>Eliminar cuenta</span></button>
       </section>
 
       <p class="account-status" id="accountStatus" aria-live="polite"></p>
-      <p class="app-version">Versi?n 1.0.0</p>
+      <p class="app-version">Versión 1.0.0</p>
     </section>
   `;
 }
@@ -3867,7 +3867,7 @@ function renderAdminPanel() {
                         exercise.rest ?`Descanso: ${exercise.rest}` : ""
                       ].filter(Boolean).join(" · "))}</small>
                     </div>
-                    <button class="exercise-kebab" type="button" data-admin-action="edit-exercise" aria-label="${t("editExercise")}">⋮</button>
+                    <button class="exercise-kebab" type="button" data-admin-action="edit-exercise" aria-label="${t("editExercise")}">&vellip;</button>
                   </div>
                   ${isEditingExercise ?`
                     <div class="admin-exercise-form">
@@ -3987,7 +3987,7 @@ return `
       ${(week.days || []).map((day, index) => `
         <button class="week-overview-day" type="button" data-admin-action="edit-day" data-week-index="${weekIndex}" data-day-index="${index}">
           <span><strong>${escapeHtml(day.title || `Día ${index + 1}`)}</strong><small>${(day.exercises || []).length} ejercicios</small></span>
-          <b>✓</b>
+          <b>&check;</b>
         </button>
       `).join("") || `<div class="empty-state">${t("emptyWeek")}</div>`}
     </div>
@@ -4000,7 +4000,7 @@ return `
     <label class="search-box"><span>${t("badge")}</span><input class="admin-field" data-week-field="phase.badge" value="${escapeHtml(phase.badge || "")}" /></label>
     <label class="search-box"><span>${t("instructions")}</span><input class="admin-field" data-week-field="phase.modifier" value="${escapeHtml(phase.modifier || "")}" /></label>
   </div>
-  <div class="week-training-days-banner"><strong>Días de entrenamiento</strong><span>${(week.days || []).length} días 🧊</span></div>
+  <div class="week-training-days-banner"><strong>Días de entrenamiento</strong><span>${(week.days || []).length} días</span></div>
   <div class="admin-row-actions">
     <button class="secondary-button" type="button" data-admin-action="add-day">+ Crear día</button>
   </div>
@@ -4277,9 +4277,9 @@ function renderPlan() {
                   <span class="exercise-thumb objective-dot ${objectiveClass}">${thumb}</span>
                   <span>
                     <strong>${exercise.name}</strong>
-                    <small>${exercise.objective} ? ${prescription.sets} x ${prescription.reps} ? ${t("restLower")} ${prescription.rest}</small>
+                    <small>${exercise.objective} · ${prescription.sets} x ${prescription.reps} · ${t("restLower")} ${prescription.rest}</small>
                   </span>
-                  <span class="done-mark">âœ“</span>
+                  <span class="done-mark">&check;</span>
                 </button>
               `;
             })
@@ -4365,16 +4365,16 @@ function renderStudentRoutineOverview(routine) {
           <small>${escapeHtml(phase.name || `Semana ${index + 1}`)}</small>
         </span>
         <b>${percent >= 100 ?"100%" : percent > 0 ?"En progreso" : "0%"}</b>
-        <i>${percent >= 100 ?"âœ“" : ">"}</i>
+        <i>${percent >= 100 ?"&check;" : ">"}</i>
       </button>
     `;
   }).join("");
   return `
     <section class="student-routine-screen routine-overview-screen">
       <div class="screen-topbar routine-topbar">
-        <button class="icon-button ghost-icon" type="button" data-routine-back aria-label="Volver">â€¹</button>
+        <button class="icon-button ghost-icon" type="button" data-routine-back aria-label="Volver">&lsaquo;</button>
         <h2>Mi Rutina</h2>
-        <button class="icon-button ghost-icon" type="button" data-routine-menu aria-label="Opciones">â‹®</button>
+        <button class="icon-button ghost-icon" type="button" data-routine-menu aria-label="Opciones">&vellip;</button>
       </div>
       <section class="routine-current-card">
         <div>
@@ -4386,7 +4386,7 @@ function renderStudentRoutineOverview(routine) {
       </section>
       <div class="mock-tabs routine-tabs">
         <button type="button" data-routine-tab="weeks" class="active">Semanas</button>
-        <button type="button" data-routine-tab="info">Informaci?n</button>
+        <button type="button" data-routine-tab="info">Información</button>
       </div>
       <section class="routine-week-list">
         ${weekRows || `<div class="empty-state">${t("routineInPreparation")}</div>`}
@@ -4404,7 +4404,7 @@ function renderStudentRoutineInfo(routine) {
     <section class="student-routine-screen routine-info-screen">
       <div class="screen-topbar routine-topbar">
         <button class="icon-button ghost-icon" type="button" data-routine-tab="weeks" aria-label="Volver">⬹</button>
-        <h2>Informaci?n de Rutina</h2>
+        <h2>Información de Rutina</h2>
         <span></span>
       </div>
       <section class="routine-current-card">
@@ -4415,15 +4415,15 @@ function renderStudentRoutineInfo(routine) {
         ${renderRoutineProgressRing(stats.percent)}
       </section>
       <div class="mock-tabs routine-tabs">
-        <button type="button" data-routine-tab="info" class="active">Informaci?n</button>
+        <button type="button" data-routine-tab="info" class="active">Información</button>
         <button type="button" data-routine-tab="notes">Notas</button>
       </div>
       <section class="routine-info-list">
         <article><span>Objetivo</span><strong>${escapeHtml(routine.goal || "Aumentar fuerza y masa muscular")}</strong></article>
         <article><span>Nivel</span><strong>${escapeHtml(routine.level || "Intermedio")}</strong></article>
-        <article><span>Duraci?n</span><strong>${routine.plan.length || 0} semanas</strong></article>
-        <article><span>Descripci?n</span><strong>${escapeHtml(description)}</strong></article>
-        <article><span>Frecuencia</span><strong>${escapeHtml(routine.frequency || "4 d?as por semana")}</strong></article>
+        <article><span>Duración</span><strong>${routine.plan.length || 0} semanas</strong></article>
+        <article><span>Descripción</span><strong>${escapeHtml(description)}</strong></article>
+        <article><span>Frecuencia</span><strong>${escapeHtml(routine.frequency || "4 días por semana")}</strong></article>
         <article><span>Equipo</span><strong>${escapeHtml(routine.equipment || "Gimnasio")}</strong></article>
       </section>
     </section>
@@ -4447,10 +4447,10 @@ function renderStudentRoutineWeek(routine, week) {
         <button class="routine-day-row" type="button" data-routine-day="${dayIndex}">
           <span class="routine-list-icon ${iconClass}"></span>
           <span>
-            <strong>${escapeHtml(day.title || `D?a ${dayIndex + 1}`)}</strong>
+            <strong>${escapeHtml(day.title || `Día ${dayIndex + 1}`)}</strong>
             <small>${escapeHtml(day.focus || (completed ?"Completado" : inProgress ?"En progreso" : "Pendiente"))}</small>
           </span>
-          <b class="${completed ?"complete" : inProgress ?"progress" : ""}">${completed ?"âœ“" : inProgress ?"â–¶" : "â–¡"}</b>
+          <b class="${completed ?"complete" : inProgress ?"progress" : ""}">${completed ?"&check;" : inProgress ?"&#9654;" : "&#9633;"}</b>
         </button>
         ${exerciseList}
       </article>
@@ -4470,7 +4470,7 @@ function renderStudentRoutineWeek(routine, week) {
         </div>
         <div class="week-progress-bar"><span style="width:${percent}%"></span></div>
       </section>
-      <div class="progress-section-title">D?as</div>
+      <div class="progress-section-title">Días</div>
       <section class="routine-day-list">${days || `<div class="empty-state">${t("emptyWeek")}</div>`}</section>
     </section>
   `;
@@ -4491,9 +4491,9 @@ function renderStudentRoutineDayExercises(routine, week, day, dayIndex) {
         <span class="exercise-thumb objective-dot ${normalize(exercise.objective).replaceAll(" ", "-")}">${thumb}</span>
         <span>
           <strong>${escapeHtml(exercise.name || t("newExercise"))}</strong>
-          <small>${escapeHtml(exercise.objective || "")} ? ${escapeHtml(prescription.sets)} x ${escapeHtml(prescription.reps)}</small>
+          <small>${escapeHtml(exercise.objective || "")} · ${escapeHtml(prescription.sets)} x ${escapeHtml(prescription.reps)}</small>
         </span>
-        <span class="done-mark">âœ“</span>
+        <span class="done-mark">&check;</span>
       </button>
     `;
   }).join("");
@@ -4532,16 +4532,16 @@ function renderStudentRoutineDayScreen(routine, week, day, dayIndex) {
           <strong>${index + 1}. ${escapeHtml(exercise.name || t("newExercise"))}</strong>
           <small>${escapeHtml(prescription.sets)} series x ${escapeHtml(prescription.reps)} reps</small>
         </span>
-        <b>${done ?"âœ“" : current ?"â–¶" : "â—‹"}</b>
+        <b>${done ?"&check;" : current ?"&#9654;" : "&#9675;"}</b>
       </button>
     `;
   }).join("");
   return `
     <section class="student-routine-screen training-day-screen">
       <div class="screen-topbar routine-topbar">
-        <button class="icon-button ghost-icon" type="button" data-routine-view="week" aria-label="Volver">â€¹</button>
-        <h2>${escapeHtml(day.title || `D?a ${dayIndex + 1}`)}</h2>
-        <button class="icon-button ghost-icon" type="button" data-routine-menu aria-label="Opciones">â‹®</button>
+        <button class="icon-button ghost-icon" type="button" data-routine-view="week" aria-label="Volver">&lsaquo;</button>
+        <h2>${escapeHtml(day.title || `Día ${dayIndex + 1}`)}</h2>
+        <button class="icon-button ghost-icon" type="button" data-routine-menu aria-label="Opciones">&vellip;</button>
       </div>
       <span class="training-status">${stats.percent >= 100 ?"Completado" : stats.percent > 0 ?"En progreso" : "Pendiente"}</span>
       <div class="progress-stat-grid training-stat-grid">
@@ -4570,9 +4570,9 @@ function renderStudentExerciseScreen(routine, week, day, dayIndex, exerciseKey) 
   return `
     <section class="student-routine-screen exercise-run-screen">
       <div class="screen-topbar routine-topbar">
-        <button class="icon-button ghost-icon" type="button" data-routine-view="day" aria-label="Volver">â€¹</button>
+        <button class="icon-button ghost-icon" type="button" data-routine-view="day" aria-label="Volver">&lsaquo;</button>
         <h2>${escapeHtml(exercise.name || t("newExercise"))}</h2>
-        <button class="icon-button ghost-icon" type="button" data-routine-menu aria-label="Opciones">â‹®</button>
+        <button class="icon-button ghost-icon" type="button" data-routine-menu aria-label="Opciones">&vellip;</button>
       </div>
       <div class="exercise-run-image">
         <img src="${escapeHtml(image)}" alt="${escapeHtml(exercise.name || t("newExercise"))}" />
@@ -5310,7 +5310,7 @@ accountPanel?.addEventListener("click", async (event) => {
     if (action === "password") {
       try {
         await firebase.auth().sendPasswordResetEmail(state.currentUser.email);
-        if (status) status.textContent = "Te enviamos un mail para cambiar la contrase?a.";
+        if (status) status.textContent = "Te enviamos un mail para cambiar la contraseña.";
       } catch (error) {
         if (status) status.textContent = getAuthErrorMessage(error);
       }
@@ -5321,13 +5321,13 @@ accountPanel?.addEventListener("click", async (event) => {
       return;
     }
     if (action === "units") {
-      if (status) status.textContent = "RutFit usa sistema m?trico: kg y cm.";
+      if (status) status.textContent = "RutFit usa sistema métrico: kg y cm.";
       return;
     }
     if (action === "delete") {
-      const confirmed = await showConfirmDialog("?Eliminar tu cuenta de RutFit?");
+      const confirmed = await showConfirmDialog("¿Eliminar tu cuenta de RutFit?");
       if (!confirmed) return;
-      if (status) status.textContent = "Para eliminar la cuenta definitivamente, vuelve a iniciar sesi?n recientemente y solicita eliminaci?n al admin.";
+      if (status) status.textContent = "Para eliminar la cuenta definitivamente, vuelve a iniciar sesión recientemente y solicita eliminación al admin.";
       return;
     }
   }
@@ -5435,7 +5435,7 @@ studentProgress?.addEventListener("click", (event) => {
     setActiveView("home");
   }
   if (button.dataset.notificationAction === "read-all") {
-    button.textContent = "Todo le?do";
+    button.textContent = "Todo leído";
     button.disabled = true;
   }
 });
