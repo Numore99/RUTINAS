@@ -5392,6 +5392,260 @@ main {
   box-shadow: none;
 }
 
+/* Student home and notifications replica */
+.student-home {
+  gap: 0.72rem;
+  padding: 0 0 1rem;
+}
+
+.student-home-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 0.75rem;
+}
+
+.student-role-pill {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  padding: 0.2rem 0.46rem;
+  border-radius: 999px;
+  background: linear-gradient(135deg, rgba(110, 52, 255, 0.92), rgba(185, 41, 244, 0.72));
+  color: #fff;
+  font-size: 0.56rem;
+  font-weight: 950;
+  text-transform: uppercase;
+  box-shadow: 0 0 18px rgba(124, 60, 255, 0.36);
+}
+
+.student-home-hero h1 {
+  margin: 0.35rem 0 0.12rem;
+  color: #fff;
+  font-size: clamp(2.15rem, 12vw, 3.15rem);
+  line-height: 0.92;
+  letter-spacing: 0;
+}
+
+.student-home-hero p {
+  margin: 0;
+  color: #f3f7ff;
+  font-size: 0.86rem;
+  font-weight: 850;
+}
+
+.student-home-actions {
+  position: relative;
+  display: grid;
+  justify-items: end;
+  gap: 0.28rem;
+}
+
+.student-home-avatar,
+.student-home-avatar.profile-avatar-empty {
+  width: 3.55rem;
+  height: 3.55rem;
+  border-radius: 50%;
+  border: 2px solid rgba(125, 54, 255, 0.88);
+  object-fit: cover;
+  box-shadow:
+    0 0 0 4px rgba(124, 60, 255, 0.12),
+    0 0 28px rgba(124, 60, 255, 0.42);
+}
+
+.student-notification-button {
+  position: absolute;
+  top: -0.25rem;
+  right: -0.15rem;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 1.58rem;
+  height: 1.58rem;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(7, 17, 38, 0.82);
+  color: #fff;
+  font-size: 0.92rem;
+  box-shadow: 0 0 18px rgba(124, 60, 255, 0.45);
+}
+
+.student-notification-button b {
+  position: absolute;
+  top: 0.1rem;
+  right: 0.05rem;
+  width: 0.48rem;
+  height: 0.48rem;
+  border: 2px solid #071126;
+  border-radius: 50%;
+  background: #ec2f6c;
+}
+
+.student-home .student-dashboard-card {
+  min-height: 6.35rem;
+  padding: 0.82rem;
+  border-radius: 16px;
+  background:
+    radial-gradient(circle at 88% 20%, rgba(124, 60, 255, 0.38), transparent 4.1rem),
+    linear-gradient(145deg, rgba(12, 31, 61, 0.95), rgba(6, 16, 37, 0.98));
+}
+
+.student-home .student-dashboard-card h2 {
+  margin: 0.35rem 0 0.12rem;
+  font-size: 0.94rem;
+  line-height: 1.2;
+}
+
+.student-home .student-dashboard-card p {
+  font-size: 0.62rem;
+}
+
+.student-home .kicker,
+.student-home .home-section-title {
+  color: #92a4c2;
+  font-size: 0.57rem;
+  font-weight: 950;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.student-home .mini-progress {
+  width: 3.65rem;
+}
+
+.student-home .mini-progress strong {
+  font-size: 0.75rem;
+}
+
+.student-stat-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.5rem;
+}
+
+.student-home .home-stat {
+  min-height: 4.1rem;
+  padding: 0.62rem 0.5rem;
+  border-radius: 14px;
+  background: rgba(8, 19, 42, 0.62);
+}
+
+.student-home .home-stat strong {
+  font-size: 1.35rem;
+}
+
+.student-home .home-stat span {
+  margin-top: 0.18rem;
+  font-size: 0.54rem;
+}
+
+.student-home .student-current-card {
+  width: 100%;
+  border-radius: 14px;
+  padding: 0.72rem;
+  text-align: left;
+}
+
+button.student-current-card {
+  border: 1px solid rgba(125, 150, 199, 0.15);
+  color: #fff;
+}
+
+.student-home .student-current-card strong {
+  font-size: 0.82rem;
+}
+
+.student-home .student-current-card span {
+  font-size: 0.62rem;
+}
+
+.student-home .next-training-card::after {
+  font-size: 1.3rem;
+}
+
+.student-home .streak-card {
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+}
+
+.student-home .streak-card small {
+  grid-column: 1 / -1;
+}
+
+.student-home .streak-card strong {
+  font-size: 1.6rem;
+}
+
+.student-home .streak-card .flame-row {
+  justify-self: end;
+}
+
+.student-notifications-screen {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.notifications-read-all {
+  width: fit-content;
+  border: 0;
+  background: transparent;
+  color: #8f9db8;
+  padding: 0;
+  font-size: 0.68rem;
+  font-weight: 750;
+}
+
+.notification-list {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.notification-row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 0.52rem;
+  min-height: 4.08rem;
+  padding: 0.72rem;
+  border: 1px solid rgba(75, 96, 142, 0.14);
+  border-radius: 14px;
+  background: rgba(8, 19, 42, 0.68);
+}
+
+.notification-row i,
+.notification-row b {
+  width: 0.46rem;
+  height: 0.46rem;
+  margin-top: 0.28rem;
+  border-radius: 50%;
+  background: #8b5cf6;
+  box-shadow: 0 0 14px rgba(139, 92, 246, 0.65);
+}
+
+.notification-row i.orange {
+  background: #f59e0b;
+  box-shadow: 0 0 14px rgba(245, 158, 11, 0.55);
+}
+
+.notification-row strong {
+  display: block;
+  color: #fff;
+  font-size: 0.73rem;
+  line-height: 1.15;
+}
+
+.notification-row p {
+  margin: 0.18rem 0 0;
+  color: #9aa8c0;
+  font-size: 0.61rem;
+  line-height: 1.28;
+}
+
+.notification-row span {
+  color: #8f9db8;
+  font-size: 0.58rem;
+  white-space: nowrap;
+}
+
 /* Inicio - Alumno: greeting line above the rutina actual card (matches mockup) */
 .sh-greeting {
   margin: 0 0 0.6rem;

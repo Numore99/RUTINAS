@@ -1901,6 +1901,112 @@ function renderStudentHome() {
   `;
 }
 
+function renderStudentHomeV2() {
+  if (!studentHome) return;
+  const routine = getActiveRoutine();
+  const stats = getRoutineProgressStats(routine);
+  const nextInfo = getNextTrainingInfo(routine);
+  const displayName = state.currentUserData?.displayName || getDisplayNameFromEmail(state.currentUser?.email || "");
+  const subtitle = nextInfo
+    ? `${t("week")} ${nextInfo.weekNumber} de ${nextInfo.totalWeeks} · Día ${nextInfo.dayNumber} de ${nextInfo.totalDays}`
+    : (routine?.plan?.length ? "Rutina completada" : t("noRoutine"));
+  const todayExercises = nextInfo ? nextInfo.exerciseCount : 0;
+  const todayMinutes = todayExercises ? Math.round(todayExercises * 7.5) : 0;
+  const todayKcal = todayMinutes ? Math.round(todayMinutes * 7) : 0;
+
+  studentHome.innerHTML = `
+    <section class="student-home-hero">
+      <div>
+        <span class="student-role-pill">Alumno</span>
+        <h1>RutFit</h1>
+        <p>Hola, ${escapeHtml(displayName || t("user"))} <span aria-hidden="true">&#128075;</span></p>
+      </div>
+      <div class="student-home-actions">
+        <button class="student-notification-button" type="button" data-student-home-action="notifications" aria-label="Notificaciones">
+          <span aria-hidden="true">&#128276;</span>
+          <b></b>
+        </button>
+        ${renderUserAvatar(state.currentUserData || {}, "student-home-avatar")}
+      </div>
+    </section>
+    <section class="student-dashboard-card">
+      <div>
+        <span class="kicker">Rutina actual</span>
+        <h2>${escapeHtml(routine?.name || t("noRoutine"))}</h2>
+        <p>${escapeHtml(subtitle)}</p>
+      </div>
+      <div class="mini-progress" style="--progress:${stats.percent}%">
+        <strong>${stats.percent}%</strong>
+      </div>
+    </section>
+    <div class="home-section-title">Resumen de hoy</div>
+    <div class="home-grid student-stat-grid">
+      <article class="home-stat">
+        <strong>${todayExercises}</strong>
+        <span>Ejercicios</span>
+      </article>
+      <article class="home-stat">
+        <strong>${todayMinutes}</strong>
+        <span>Minutos</span>
+      </article>
+      <article class="home-stat">
+        <strong>${todayKcal}</strong>
+        <span>Kcal aprox.</span>
+      </article>
+    </div>
+    <div class="home-section-title">Próximo entrenamiento</div>
+    <button class="student-current-card next-training-card" type="button" data-student-home-action="routine">
+      <small>${nextInfo ? `${t("week")} ${nextInfo.weekNumber}` : ""}</small>
+      <strong>${escapeHtml(nextInfo ? nextInfo.dayTitle : getNextTrainingLabel(routine))}</strong>
+      <span>Mañana · 18:00</span>
+    </button>
+    <section class="student-current-card streak-card">
+      <small>Racha</small>
+      <strong>12</strong>
+      <span>Días seguidos</span>
+      <div class="flame-row" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+    </section>
+  `;
+}
+
+function renderStudentNotifications() {
+  if (!studentProgress) return;
+  const routine = getActiveRoutine();
+  const nextInfo = getNextTrainingInfo(routine);
+  const routineName = routine?.name || t("noRoutine");
+  const nextTitle = nextInfo?.dayTitle || getNextTrainingLabel(routine);
+  studentProgress.innerHTML = `
+    <section class="student-notifications-screen">
+      <div class="screen-topbar progress-topbar">
+        <button class="icon-button ghost-icon" type="button" data-notification-action="back" aria-label="Volver">‹</button>
+        <h2>Notificaciones</h2>
+        <span></span>
+      </div>
+      <button class="notifications-read-all" type="button" data-notification-action="read-all">Marcar todas como leídas</button>
+      <div class="notification-list">
+        ${renderNotificationRow("purple", "Nuevo entrenamiento disponible", `${escapeHtml(nextTitle)}<br>Hace 1h`, "")}
+        ${renderNotificationRow("purple", "Entrenamiento completado", "Buen trabajo! Has completado tu entrenamiento del día.", "Ayer")}
+        ${renderNotificationRow("orange", "Recordatorio", "No olvides registrar tus medidas semanales.", "2 días")}
+        ${renderNotificationRow("orange", "Nueva rutina asignada", `${escapeHtml(routineName)} ha sido asignada a tu plan.`, "3 días")}
+        ${renderNotificationRow("orange", "Meta alcanzada", "Felicidades! 10 días de racha conseguidos.", "5 días")}
+      </div>
+    </section>
+  `;
+}
+
+function renderNotificationRow(color, title, body, time) {
+  return `
+    <article class="notification-row">
+      <i class="${color}" aria-hidden="true"></i>
+      <div>
+        <strong>${title}</strong>
+        <p>${body}</p>
+      </div>
+      ${time ? `<span>${time}</span>` : `<b aria-hidden="true"></b>`}
+    </article>
+  `;
+}
+
 function renderStudentProgress() {
   if (!studentProgress) return;
   const routine = getActiveRoutine();
@@ -2527,14 +2633,14 @@ function renderApp() {
   if (managerMode && !["home", "students", "routines", "account"].includes(state.activeView)) {
     state.activeView = "home";
   }
-  if (!managerMode && !["home", "routines", "progress", "professors", "account"].includes(state.activeView)) {
+  if (!managerMode && !["home", "routines", "progress", "professors", "account", "notifications"].includes(state.activeView)) {
     state.activeView = "home";
   }
   const trainerDashboardOnly = managerMode && ["home", "students", "routines", "account"].includes(state.activeView);
   const studentMode = !managerMode;
 
   routineSelect.classList.add("is-hidden");
-  appHeader.classList.remove("is-hidden");
+  appHeader.classList.toggle("is-hidden", studentMode);
   appMain.classList.remove("is-hidden");
   appKicker.textContent = trainerDashboardOnly ? (state.isAdmin ? t("admin") : t("trainer")) : "";
   appKicker.classList.toggle("is-hidden", !appKicker.textContent.trim());
@@ -2557,9 +2663,10 @@ function renderApp() {
   trainerHome?.classList.toggle("is-hidden", !(managerMode && state.activeView === "home"));
   if (managerMode && state.activeView === "home") renderTrainerHome();
   studentHome?.classList.toggle("is-hidden", !(studentMode && state.activeView === "home"));
-  if (studentMode && state.activeView === "home") renderStudentHome();
-  studentProgress?.classList.toggle("is-hidden", !(studentMode && state.activeView === "progress"));
+  if (studentMode && state.activeView === "home") renderStudentHomeV2();
+  studentProgress?.classList.toggle("is-hidden", !(studentMode && ["progress", "notifications"].includes(state.activeView)));
   if (studentMode && state.activeView === "progress") renderStudentProgress();
+  if (studentMode && state.activeView === "notifications") renderStudentNotifications();
   studentInvitesPanel?.classList.toggle("is-hidden", !(studentMode && state.activeView === "professors"));
 
   const showAccount = state.activeView === "account";
@@ -4579,6 +4686,21 @@ studentHome?.addEventListener("click", (event) => {
   if (!button) return;
   if (button.dataset.studentHomeAction === "routine") {
     setActiveView("routines");
+  }
+  if (button.dataset.studentHomeAction === "notifications") {
+    setActiveView("notifications");
+  }
+});
+
+studentProgress?.addEventListener("click", (event) => {
+  const button = event.target.closest("[data-notification-action]");
+  if (!button) return;
+  if (button.dataset.notificationAction === "back") {
+    setActiveView("home");
+  }
+  if (button.dataset.notificationAction === "read-all") {
+    button.textContent = "Todo leído";
+    button.disabled = true;
   }
 });
 
