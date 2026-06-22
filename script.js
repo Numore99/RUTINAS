@@ -398,6 +398,7 @@ const state = {
   adminEditorMode: "",
   pendingAssignUserId: "",
   adminEditingExerciseKey: "",
+  accountSubView: "profile",
   currentExerciseKey: null,
   timerSeconds: 0,
   timerInterval: null
@@ -2496,6 +2497,12 @@ function renderAccountPanel() {
   const displayName = userData.displayName || getDisplayNameFromEmail(email);
   const role = state.isAdmin ? t("admin") : state.isTrainer ? t("trainer") : t("student");
   const isStudentProfile = !state.isAdmin && !state.isTrainer;
+  if (isStudentProfile) {
+    accountPanel.innerHTML = state.accountSubView === "settings"
+      ? renderStudentSettingsAccount(userData, displayName, email)
+      : renderStudentProfileAccount(userData, displayName, email);
+    return;
+  }
   const stats = isStudentProfile ? getProfileStats(userData) : [];
   accountPanel.innerHTML = `
     <section class="student-panel-card">
@@ -2895,6 +2902,145 @@ function renderRoutineCatalog(routineIds) {
       }).join("")}
     </div>
   `;
+}
+
+function getProfileCompletionPercent() {
+  const routine = getActiveRoutine() || routines.pending;
+  const total = getRoutineTotalSessions(routine);
+  const done = Object.values(progress).filter(Boolean).length;
+  return total ? Math.round((done / total) * 100) : 0;
+}
+
+function renderStudentProfileAccount(userData, displayName, email) {
+  const percent = getProfileCompletionPercent();
+  const stats = [
+    ["12", "Días de racha"],
+    [String(Object.values(progress).filter(Boolean).length), "Entrenamientos"],
+    [`${percent}%`, "Cumplimiento"]
+  ];
+  return `
+    <section class="student-account-screen profile-screen">
+      <div class="screen-topbar">
+        <button class="icon-button ghost-icon" type="button" data-account-back aria-label="Volver">‹</button>
+        <h2>Perfil del Alumno</h2>
+        <button class="icon-button ghost-icon" type="button" data-account-section="settings" aria-label="Ajustes">${getInlineIcon("settings")}</button>
+      </div>
+
+      <article class="student-profile-hero">
+        <div class="profile-photo-wrap">
+          ${renderUserAvatar(userData, "student-profile-photo")}
+          <label class="profile-camera" aria-label="${t("changePhoto")}">
+            ${getInlineIcon("camera")}
+            <input type="file" accept="image/*" data-profile-photo hidden />
+          </label>
+        </div>
+        <strong>${escapeHtml(displayName || t("user"))}</strong>
+        <span>${escapeHtml(email || t("noEmail"))}</span>
+      </article>
+
+      <div class="profile-metrics">
+        ${stats.map(([value, label]) => `
+          <article>
+            <strong>${escapeHtml(value)}</strong>
+            <span>${escapeHtml(label)}</span>
+          </article>
+        `).join("")}
+      </div>
+
+      <section class="settings-list account-menu">
+        <button type="button" data-account-section="personal"><span>${getInlineIcon("user")} Información personal</span><strong>></strong></button>
+        <button type="button" data-account-section="goals"><span>${getInlineIcon("heart")} Objetivos</span><strong>></strong></button>
+        <button type="button" data-account-section="settings"><span>${getInlineIcon("settings")} Preferencias</span><strong>></strong></button>
+        <button type="button" data-account-action="help"><span>${getInlineIcon("info")} Centro de ayuda</span><strong>></strong></button>
+      </section>
+
+      <section class="profile-form compact-profile-form ${["personal", "goals"].includes(state.accountSubView) ? "" : "is-hidden"}">
+        <label class="search-box">
+          <span>${t("name")}</span>
+          <input type="text" data-profile-field="displayName" value="${escapeHtml(displayName || "")}" autocomplete="name" />
+        </label>
+        <div class="profile-grid">
+          <label class="search-box">
+            <span>${t("weight")}</span>
+            <input type="number" inputmode="decimal" data-profile-field="weight" value="${escapeHtml(userData.weight || "")}" placeholder="78" />
+          </label>
+          <label class="search-box">
+            <span>${t("height")}</span>
+            <input type="number" inputmode="decimal" step="0.01" data-profile-field="height" value="${escapeHtml(userData.height || "")}" placeholder="1.75" />
+          </label>
+          <label class="search-box">
+            <span>${t("age")}</span>
+            <input type="number" inputmode="numeric" data-profile-field="age" value="${escapeHtml(userData.age || "")}" placeholder="24" />
+          </label>
+        </div>
+        <label class="search-box">
+          <span>${t("goal")}</span>
+          <textarea data-profile-field="goal" rows="2" placeholder="${t("goal")}">${escapeHtml(userData.goal || "")}</textarea>
+        </label>
+        <button class="secondary-button" type="button" data-profile-save>${t("saveProfile")}</button>
+      </section>
+
+      <p class="account-status" id="accountStatus" aria-live="polite"></p>
+      <button class="account-logout-row" type="button" data-account-logout>
+        <span>${getInlineIcon("logout")} ${t("logout")}</span><strong>></strong>
+      </button>
+    </section>
+  `;
+}
+
+function renderStudentSettingsAccount(userData) {
+  const preferences = userData.preferences || {};
+  const preference = (key, fallback = true) => preferences[key] !== undefined ? preferences[key] : fallback;
+  return `
+    <section class="student-account-screen settings-screen">
+      <div class="screen-topbar">
+        <button class="icon-button ghost-icon" type="button" data-account-section="profile" aria-label="Volver">‹</button>
+        <h2>Ajustes</h2>
+        <span></span>
+      </div>
+
+      <div class="settings-group-title">Preferencias</div>
+      <section class="settings-list account-menu">
+        <button type="button" data-settings-action="units"><span>Unidades</span><em>Métrico (kg, cm)</em><strong>></strong></button>
+        ${renderPreferenceToggle("reminders", "Recordatorios", preference("reminders", true))}
+        ${renderPreferenceToggle("notifications", "Notificaciones", preference("notifications", true))}
+        ${renderPreferenceToggle("sounds", "Sonidos", preference("sounds", true))}
+      </section>
+
+      <div class="settings-group-title">Cuenta</div>
+      <section class="settings-list account-menu">
+        <button type="button" data-settings-action="password"><span>Cambiar contraseña</span><strong>></strong></button>
+        <button type="button" data-settings-action="privacy"><span>Privacidad</span><strong>></strong></button>
+        <button class="delete-account-row" type="button" data-settings-action="delete"><span>Eliminar cuenta</span></button>
+      </section>
+
+      <p class="account-status" id="accountStatus" aria-live="polite"></p>
+      <p class="app-version">Versión 1.0.0</p>
+    </section>
+  `;
+}
+
+function renderPreferenceToggle(key, label, checked) {
+  return `
+    <label class="settings-toggle-row">
+      <span>${escapeHtml(label)}</span>
+      <em>${checked ? "Activado" : "Desactivado"}</em>
+      <input type="checkbox" data-preference-toggle="${escapeHtml(key)}" ${checked ? "checked" : ""} />
+      <i aria-hidden="true"></i>
+    </label>
+  `;
+}
+
+function getInlineIcon(name) {
+  const icons = {
+    settings: '<svg viewBox="0 0 24 24"><path d="M12 8.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Zm8.5 3.5-2.1-.7a7 7 0 0 0-.5-1.2l1-2-2.8-2.8-2 .9a7 7 0 0 0-1.2-.5L12 3.5H8l-.7 2.2a7 7 0 0 0-1.2.5l-2-.9-2.8 2.8 1 2a7 7 0 0 0-.5 1.2L-.5 12v4l2.3.7c.1.4.3.8.5 1.2l-1 2 2.8 2.8 2-.9c.4.2.8.4 1.2.5L8 24.5h4l.7-2.2c.4-.1.8-.3 1.2-.5l2 .9 2.8-2.8-1-2c.2-.4.4-.8.5-1.2l2.3-.7v-4Z"/></svg>',
+    camera: '<svg viewBox="0 0 24 24"><path d="M8 6 9.5 4h5L16 6h3a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h3Zm4 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"/></svg>',
+    user: '<svg viewBox="0 0 24 24"><path d="M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10Zm-9 9a9 9 0 0 1 18 0v1H3v-1Z"/></svg>',
+    heart: '<svg viewBox="0 0 24 24"><path d="M12 21s-8-4.8-8-11a5 5 0 0 1 8-4 5 5 0 0 1 8 4c0 6.2-8 11-8 11Z"/></svg>',
+    info: '<svg viewBox="0 0 24 24"><path d="M11 10h2v8h-2v-8Zm0-4h2v2h-2V6Zm1 16a10 10 0 1 0 0-20 10 10 0 0 0 0 20Z"/></svg>',
+    logout: '<svg viewBox="0 0 24 24"><path d="M10 4H4v16h6v-2H6V6h4V4Zm5.5 3.5L14 9l2 2H9v2h7l-2 2 1.5 1.5L20 12l-4.5-4.5Z"/></svg>'
+  };
+  return icons[name] || "";
 }
 
 function renderAdminPanel() {
@@ -3723,10 +3869,63 @@ adminUsers.addEventListener("click", async (event) => {
 bottomNav?.addEventListener("click", (event) => {
   const button = event.target.closest("[data-view]");
   if (!button) return;
+  if (button.dataset.view === "account") {
+    state.accountSubView = "profile";
+  }
   setActiveView(button.dataset.view);
 });
 
 accountPanel?.addEventListener("click", async (event) => {
+  const backButton = event.target.closest("[data-account-back]");
+  if (backButton) {
+    setActiveView("home");
+    return;
+  }
+
+  const sectionButton = event.target.closest("[data-account-section]");
+  if (sectionButton) {
+    const target = sectionButton.dataset.accountSection;
+    state.accountSubView = target === "settings" ? "settings" : target === "profile" ? "profile" : target;
+    renderAccountPanel();
+    return;
+  }
+
+  const helpButton = event.target.closest("[data-account-action='help']");
+  if (helpButton) {
+    const status = accountPanel.querySelector("#accountStatus");
+    if (status) status.textContent = "Soporte RutFit: escribe a tu entrenador o administrador.";
+    return;
+  }
+
+  const settingsAction = event.target.closest("[data-settings-action]");
+  if (settingsAction) {
+    const action = settingsAction.dataset.settingsAction;
+    const status = accountPanel.querySelector("#accountStatus");
+    if (action === "password") {
+      try {
+        await firebase.auth().sendPasswordResetEmail(state.currentUser.email);
+        if (status) status.textContent = "Te enviamos un mail para cambiar la contraseña.";
+      } catch (error) {
+        if (status) status.textContent = getAuthErrorMessage(error);
+      }
+      return;
+    }
+    if (action === "privacy") {
+      if (status) status.textContent = "Tus datos solo se usan para RutFit y tus entrenadores aceptados.";
+      return;
+    }
+    if (action === "units") {
+      if (status) status.textContent = "RutFit usa sistema métrico: kg y cm.";
+      return;
+    }
+    if (action === "delete") {
+      const confirmed = await showConfirmDialog("¿Eliminar tu cuenta de RutFit?");
+      if (!confirmed) return;
+      if (status) status.textContent = "Para eliminar la cuenta definitivamente, vuelve a iniciar sesión recientemente y solicita eliminación al admin.";
+      return;
+    }
+  }
+
   const saveButton = event.target.closest("[data-profile-save]");
   if (saveButton) {
     saveButton.disabled = true;
@@ -3744,6 +3943,39 @@ accountPanel?.addEventListener("click", async (event) => {
 });
 
 accountPanel?.addEventListener("change", async (event) => {
+  const preferenceToggle = event.target.closest("[data-preference-toggle]");
+  if (preferenceToggle) {
+    const key = preferenceToggle.dataset.preferenceToggle;
+    const value = preferenceToggle.checked;
+    const status = accountPanel.querySelector("#accountStatus");
+    try {
+      await db.collection("users").doc(state.currentUser.uid).set(
+        {
+          preferences: {
+            ...(state.currentUserData?.preferences || {}),
+            [key]: value
+          },
+          updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+        },
+        { merge: true }
+      );
+      state.currentUserData = {
+        ...(state.currentUserData || {}),
+        preferences: {
+          ...(state.currentUserData?.preferences || {}),
+          [key]: value
+        }
+      };
+      renderAccountPanel();
+      const nextStatus = accountPanel.querySelector("#accountStatus");
+      if (nextStatus) nextStatus.textContent = "Preferencias guardadas.";
+    } catch (error) {
+      preferenceToggle.checked = !value;
+      if (status) status.textContent = getAuthErrorMessage(error);
+    }
+    return;
+  }
+
   const input = event.target.closest("[data-profile-photo]");
   if (!input?.files?.[0]) return;
   try {
