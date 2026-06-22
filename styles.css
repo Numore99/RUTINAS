@@ -5932,6 +5932,208 @@ body.native-admin-subscreen-active .app-shell {
   font-size: 0.62rem !important;
 }
 
+.native-admin-subscreen-active .day-edit-screen,
+.native-admin-subscreen-active .exercise-edit-screen {
+  align-content: start;
+  gap: 0.52rem;
+  min-height: auto;
+  padding: 0.62rem;
+  border-radius: 12px;
+  background: linear-gradient(180deg, #07142c 0%, #041026 100%);
+}
+
+.native-admin-subscreen-active .day-edit-screen .screen-topbar,
+.native-admin-subscreen-active .exercise-edit-screen .screen-topbar {
+  min-height: 1.72rem;
+  margin-bottom: 0;
+}
+
+.native-admin-subscreen-active .day-edit-screen .screen-topbar h2,
+.native-admin-subscreen-active .exercise-edit-screen .screen-topbar h2 {
+  overflow: hidden;
+  color: #fff;
+  font-size: 0.78rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.native-day-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.38rem;
+  margin: 0;
+}
+
+.native-day-stats article {
+  min-height: 2.6rem;
+  border: 1px solid rgba(75, 96, 142, 0.14);
+  border-radius: 9px;
+  background: rgba(8, 19, 42, 0.7);
+  padding: 0.42rem;
+}
+
+.native-day-stats span {
+  display: block;
+  color: #91a0bd;
+  font-size: 0.48rem;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.native-day-stats strong {
+  display: block;
+  margin-top: 0.16rem;
+  color: #fff;
+  font-size: 0.82rem;
+}
+
+.native-admin-subscreen-active .day-edit-screen .native-tabs {
+  min-height: 2rem;
+}
+
+.native-admin-subscreen-active .day-edit-screen .native-tabs button {
+  min-height: 1.7rem;
+  font-size: 0.56rem;
+}
+
+.native-admin-subscreen-active .native-pill-row {
+  gap: 0.36rem;
+}
+
+.native-admin-subscreen-active .native-pill-row button {
+  min-height: 1.85rem;
+  padding: 0 0.62rem;
+  border-radius: 999px;
+  font-size: 0.56rem;
+}
+
+.native-exercise-list {
+  display: grid;
+  gap: 0.38rem;
+}
+
+.native-exercise-list .week-days-title {
+  margin: 0;
+}
+
+.native-exercise-list .week-days-title .primary-button {
+  width: auto;
+  min-height: 1.62rem;
+  padding: 0 0.62rem;
+  border-radius: 999px;
+  font-size: 0.52rem;
+}
+
+.native-exercise-row {
+  display: grid;
+  grid-template-columns: 2.52rem minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 3.05rem;
+  border: 1px solid rgba(75, 96, 142, 0.13);
+  border-radius: 10px;
+  background: rgba(13, 27, 54, 0.72);
+  color: #fff;
+  padding: 0.42rem;
+  text-align: left;
+}
+
+.native-exercise-thumb {
+  overflow: hidden;
+  display: block;
+  width: 2.52rem;
+  height: 2.52rem;
+  border-radius: 8px;
+  background: rgba(15, 23, 42, 0.85);
+}
+
+.native-exercise-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.native-exercise-row strong {
+  display: block;
+  overflow: hidden;
+  color: #fff;
+  font-size: 0.62rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.native-exercise-row small {
+  display: block;
+  overflow: hidden;
+  margin-top: 0.08rem;
+  color: #8f9db8;
+  font-size: 0.5rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.native-exercise-row b {
+  color: #8f9db8;
+  font-size: 0.9rem;
+}
+
+.native-hero-upload {
+  overflow: hidden;
+  min-height: 7rem;
+  margin: 0;
+  border-radius: 11px;
+  background: rgba(13, 27, 54, 0.72);
+}
+
+.native-hero-upload .admin-image-preview,
+.native-hero-upload .admin-image-empty {
+  width: 100%;
+  height: 7rem;
+  max-height: 7rem;
+  border-radius: 11px;
+  object-fit: cover;
+}
+
+.native-camera-button {
+  position: absolute;
+  right: 0.52rem;
+  bottom: 0.52rem;
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 9px;
+  background: rgba(0, 0, 0, 0.58);
+  color: #fff;
+}
+
+.native-camera-button svg {
+  width: 1rem;
+  height: 1rem;
+  fill: currentColor;
+}
+
+.native-camera-button input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+}
+
+.native-two-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.48rem;
+}
+
+.native-admin-subscreen-active .exercise-edit-screen .native-field input,
+.native-admin-subscreen-active .exercise-edit-screen .native-field textarea {
+  min-height: 2.05rem;
+}
+
+.native-admin-subscreen-active .exercise-edit-screen .native-field textarea {
+  min-height: 3rem;
+}
+
 .admin-panel.native-subscreen {
   width: min(100%, var(--app-width));
   margin: 0 auto;

@@ -2599,16 +2599,26 @@ function renderAdminWeekEditorScreen(week, weekIndex) {
 
 function renderAdminDayEditorScreen(week, day, weekIndex, dayIndex) {
   const focus = day.focus || "Hipertrofia";
+  const exerciseCount = (day.exercises || []).length;
+  const totalSets = (day.exercises || []).reduce((total, key) => {
+    const exercise = state.adminDraft?.exerciseLibrary?.[key] || {};
+    return total + (Number(String(exercise.baseSets || "").match(/\d+/)?.[0]) || 0);
+  }, 0);
   return `
     <article class="native-edit-screen day-edit-screen" data-week-index="${weekIndex}" data-day-index="${dayIndex}">
       <div class="screen-topbar">
         <button class="icon-button ghost-icon" type="button" data-admin-action="back-to-week-edit" aria-label="Volver">‹</button>
-        <h2>Crear día ✨</h2>
-        <button class="icon-button ghost-icon" type="button" aria-label="Más">⋮</button>
+        <h2>${day.title ?escapeHtml(day.title) : "Crear día ✨"}</h2>
+        <button class="icon-button ghost-icon" type="button" data-admin-action="save-day" aria-label="Guardar">✓</button>
+      </div>
+      <div class="admin-day-stats native-day-stats">
+        <article><span>Ejercicios</span><strong>${exerciseCount}</strong></article>
+        <article><span>Series totales</span><strong>${totalSets}</strong></article>
+        <article><span>Duración</span><strong>${escapeHtml(day.duration || "45")} min</strong></article>
       </div>
       <div class="native-tabs two-tabs">
         <button class="active" type="button">Información</button>
-        <button type="button">Ejercicios <b>${(day.exercises || []).length}</b></button>
+        <button type="button" data-admin-action="add-exercise">Ejercicios <b>${exerciseCount}</b></button>
       </div>
       <label class="native-field">
         <span>Nombre del día</span>
@@ -2631,7 +2641,96 @@ function renderAdminDayEditorScreen(week, day, weekIndex, dayIndex) {
         <span>Notas</span>
         <textarea class="admin-textarea" data-day-field="notes" placeholder="Notas o indicaciones especiales para este día...">${escapeHtml(day.notes || "")}</textarea>
       </label>
+      <div class="native-exercise-list">
+        <div class="week-days-title">
+          <span>Ejercicios</span>
+          <button class="primary-button" type="button" data-admin-action="add-exercise">+ Agregar ejercicio</button>
+        </div>
+        ${(day.exercises || []).map((key, index) => {
+          const exercise = state.adminDraft?.exerciseLibrary?.[key] || {};
+          const images = exercise.images || ["", ""];
+          const thumb = images[0] ?`<img src="${escapeHtml(resolveExerciseImage(images[0], exercise.name || t("newExercise")))}" alt="${escapeHtml(exercise.name || t("newExercise"))}" />` : "";
+          return `
+            <button class="native-exercise-row" type="button" data-admin-action="edit-exercise" data-exercise-key="${escapeHtml(key)}">
+              <span class="native-exercise-thumb">${thumb}</span>
+              <span>
+                <strong>${index + 1}. ${escapeHtml(exercise.name || t("newExercise"))}</strong>
+                <small>${escapeHtml([exercise.baseSets ?`${exercise.baseSets} series` : "", exercise.baseReps ?`${exercise.baseReps} reps` : "", exercise.rest ?`Descanso: ${exercise.rest}` : ""].filter(Boolean).join(" · "))}</small>
+              </span>
+              <b>⋮</b>
+            </button>
+          `;
+        }).join("") || `<div class="empty-state">Agrega ejercicios para este día.</div>`}
+      </div>
       <button class="primary-button native-main-button" type="button" data-admin-action="save-day">▣ Guardar día</button>
+    </article>
+  `;
+}
+
+function findExerciseLocation(exerciseKey) {
+  if (!state.adminDraft || !exerciseKey) return null;
+  for (let weekIndex = 0; weekIndex < state.adminDraft.plan.length; weekIndex += 1) {
+    const week = state.adminDraft.plan[weekIndex];
+    for (let dayIndex = 0; dayIndex < (week.days || []).length; dayIndex += 1) {
+      if ((week.days[dayIndex].exercises || []).includes(exerciseKey)) {
+        return { weekIndex, dayIndex };
+      }
+    }
+  }
+  return null;
+}
+
+function renderAdminExerciseEditorScreen(exercise, exerciseKey, weekIndex, dayIndex) {
+  const images = exercise.images || ["", ""];
+  const startPreview = images[0]
+    ?`<img class="admin-image-preview" src="${escapeHtml(resolveExerciseImage(images[0], exercise.name || t("newExercise")))}" alt="${escapeHtml(exercise.name || t("newExercise"))}" />`
+    : `<div class="admin-image-empty">RutFit</div>`;
+  return `
+    <article class="native-edit-screen exercise-edit-screen" data-week-index="${weekIndex}" data-day-index="${dayIndex}" data-exercise-key="${escapeHtml(exerciseKey)}">
+      <div class="screen-topbar">
+        <button class="icon-button ghost-icon" type="button" data-admin-action="back-to-day-edit" aria-label="Volver">‹</button>
+        <h2>${exercise.name ? "Editar ejercicio" : "Nuevo ejercicio"}</h2>
+        <button class="icon-button ghost-icon" type="button" data-admin-action="delete-exercise" aria-label="Eliminar">⋮</button>
+      </div>
+      <div class="exercise-editor-hero native-hero-upload">
+        ${startPreview}
+        <label class="native-camera-button">
+          ${getInlineIcon("camera")}
+          <input type="file" accept="image/*" data-image-upload="0" />
+        </label>
+      </div>
+      <label class="native-field">
+        <span>Nombre del ejercicio</span>
+        <input class="admin-field" data-exercise-field="name" value="${escapeHtml(exercise.name || "")}" placeholder="Press de banca" />
+      </label>
+      <label class="native-field native-icon-field">
+        <span>Grupo muscular</span>
+        <input class="admin-field" data-exercise-field="objective" value="${escapeHtml(exercise.objective || "")}" placeholder="Pecho" />
+      </label>
+      <label class="native-field native-icon-field">
+        <span>Equipo</span>
+        <input class="admin-field" data-exercise-field="equipment" value="${escapeHtml(exercise.equipment || "")}" placeholder="Barra" />
+      </label>
+      <div class="native-two-grid">
+        <label class="native-field">
+          <span>Series</span>
+          <input class="admin-field" data-exercise-field="baseSets" value="${escapeHtml(exercise.baseSets || "")}" placeholder="4" />
+        </label>
+        <label class="native-field">
+          <span>Repeticiones</span>
+          <input class="admin-field" data-exercise-field="baseReps" value="${escapeHtml(exercise.baseReps || "")}" placeholder="8 - 10" />
+        </label>
+      </div>
+      <label class="native-field duration-field">
+        <span>Descanso</span>
+        <input class="admin-field" data-exercise-field="rest" value="${escapeHtml(exercise.rest || "")}" placeholder="90" />
+        <small>segundos</small>
+      </label>
+      <label class="native-field">
+        <span>Técnica</span>
+        <textarea class="admin-textarea" data-exercise-field="technique" placeholder="Indicaciones técnicas...">${escapeHtml(exercise.technique || "")}</textarea>
+      </label>
+      <button class="primary-button native-main-button" type="button" data-admin-action="save-exercise">▣ Guardar cambios</button>
     </article>
   `;
 }
@@ -3714,6 +3813,22 @@ function renderAdminPanel() {
   const focusedDayIndex = Number(state.adminDayEditorIndex);
   if (Number.isInteger(focusedWeekIndex) && draft.plan[focusedWeekIndex]) {
     const focusedWeek = draft.plan[focusedWeekIndex];
+    const exerciseLocation = findExerciseLocation(state.adminEditingExerciseKey);
+    if (
+      state.adminEditingExerciseKey
+      && exerciseLocation
+      && exerciseLocation.weekIndex === focusedWeekIndex
+      && exerciseLocation.dayIndex === focusedDayIndex
+      && draft.exerciseLibrary[state.adminEditingExerciseKey]
+    ) {
+      adminWeeks.innerHTML = renderAdminExerciseEditorScreen(
+        draft.exerciseLibrary[state.adminEditingExerciseKey],
+        state.adminEditingExerciseKey,
+        focusedWeekIndex,
+        focusedDayIndex
+      );
+      return;
+    }
     if (Number.isInteger(focusedDayIndex) && focusedWeek.days?.[focusedDayIndex]) {
       adminWeeks.innerHTML = renderAdminDayEditorScreen(focusedWeek, focusedWeek.days[focusedDayIndex], focusedWeekIndex, focusedDayIndex);
       return;
@@ -3947,6 +4062,13 @@ async function handleAdminAction(button) {
 
   if (action === "back-to-week-edit") {
     state.adminDayEditorIndex = null;
+    state.adminEditingExerciseKey = "";
+    renderAdminPanel();
+    return;
+  }
+
+  if (action === "back-to-day-edit") {
+    state.adminEditingExerciseKey = "";
     renderAdminPanel();
     return;
   }
@@ -3965,7 +4087,9 @@ async function handleAdminAction(button) {
   }
 
   if (action === "edit-exercise") {
-    state.adminEditingExerciseKey = state.adminEditingExerciseKey === exerciseKey ?"" : exerciseKey;
+    state.adminEditingExerciseKey = exerciseKey || "";
+    if (Number.isInteger(weekIndex)) state.adminWeekEditorIndex = weekIndex;
+    if (Number.isInteger(dayIndex)) state.adminDayEditorIndex = dayIndex;
     renderAdminPanel();
     return;
   }
@@ -4074,6 +4198,8 @@ if (action === "delete-week") {
       images: ["", ""]
     };
     state.adminDraft.plan[weekIndex].days[dayIndex].exercises.push(key);
+    state.adminWeekEditorIndex = weekIndex;
+    state.adminDayEditorIndex = dayIndex;
     state.adminEditingExerciseKey = key;
   }
 
