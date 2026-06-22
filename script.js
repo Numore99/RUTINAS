@@ -3729,6 +3729,8 @@ function renderAdminPanel() {
   const showRoutines = state.activeView === "routines";
   const isEditingRoutine = Boolean(state.adminDraft && state.adminEditorMode);
   const isNativeSubscreen = showRoutines && isEditingRoutine && state.adminWeekEditorIndex !== null;
+  document.body.classList.toggle("native-admin-subscreen-active", isNativeSubscreen);
+  bottomNav?.classList.toggle("is-hidden", isNativeSubscreen);
   adminPanel.classList.toggle("students-view", showUsers);
   adminPanel.classList.toggle("routines-view", showRoutines);
   adminPanel.classList.toggle("editing-routine", isEditingRoutine);
@@ -4059,7 +4061,8 @@ async function handleAdminAction(button) {
   if (action === "back-to-routine-weeks") {
     state.adminWeekEditorIndex = null;
     state.adminDayEditorIndex = null;
-    renderAdminPanel();
+    state.adminEditingExerciseKey = "";
+    renderApp();
     return;
   }
 
@@ -4144,7 +4147,8 @@ if (action === "save-week") {
     await saveAdminDraftAndAssignment();
     state.adminWeekEditorIndex = null;
     state.adminDayEditorIndex = null;
-    renderAdminPanel();
+    state.adminEditingExerciseKey = "";
+    renderApp();
   } catch (error) {
     state.adminDraft.plan[weekIndex].collapsed = false;
     setAdminMessage(`${getAuthErrorMessage(error)} ${error?.message || ""}`.trim(), "error");
@@ -5475,12 +5479,19 @@ studentInvitesPanel?.addEventListener("click", async (event) => {
 
 adminAddWeek.addEventListener("click", () => {
   if (!state.adminDraft) state.adminDraft = createEmptyRoutine("nueva-rutina");
+  if (!state.adminEditorMode) state.adminEditorMode = "edit";
+  state.activeView = "routines";
+  state.adminPanelOpen = true;
+  state.adminEditingExerciseKey = "";
+  state.adminDayEditorIndex = null;
+  const nextIndex = state.adminDraft.plan.length;
   state.adminDraft.plan.push({
     number: "",
     phase: { name: "", badge: "", modifier: "" },
     days: []
   });
-  renderAdminPanel();
+  state.adminWeekEditorIndex = nextIndex;
+  renderApp();
 });
 
 adminNewRoutine.addEventListener("click", () => {
