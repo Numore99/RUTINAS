@@ -1353,6 +1353,7 @@ function getAuthErrorMessage(error) {
 }
 
 function showAuthScreen(message = "") {
+  document.body.classList.remove("native-admin-subscreen-active");
   stopUserSubscriptions();
   state.selectedRoutine = "";
   state.currentUser = null;
@@ -2549,6 +2550,7 @@ function formatDateDisplay(value) {
 
 function renderAdminWeekEditorScreen(week, weekIndex) {
   const phase = week.phase || {};
+  const daysCount = (week.days || []).length;
   return `
     <article class="native-edit-screen week-edit-screen" data-week-index="${weekIndex}">
       <div class="screen-topbar">
@@ -2587,7 +2589,8 @@ function renderAdminWeekEditorScreen(week, weekIndex) {
         <textarea class="admin-textarea" data-week-field="phase.modifier" placeholder="Enfocarse en la técnica y en la adaptación al volumen.">${escapeHtml(phase.modifier || "")}</textarea>
       </label>
       <div class="week-training-days-banner">
-        <div><strong>Días de entrenamiento</strong><span>${(week.days || []).length} días 🧊</span></div>
+        <div><strong>Días de entrenamiento</strong><span>${daysCount} ${daysCount === 1 ? "día" : "días"}</span></div>
+        <i aria-hidden="true">✦</i>
       </div>
       <button class="primary-button native-main-button" type="button" data-admin-action="add-day">+ Crear día</button>
     </article>
@@ -2928,10 +2931,15 @@ function renderApp() {
   }
   const trainerDashboardOnly = managerMode && ["home", "students", "routines", "account", "notifications"].includes(state.activeView);
   const studentMode = !managerMode;
+  const nativeAdminSubscreen = managerMode
+    && state.activeView === "routines"
+    && Boolean(state.adminDraft && state.adminEditorMode)
+    && state.adminWeekEditorIndex !== null;
 
   routineSelect.classList.add("is-hidden");
   appHeader.classList.add("is-hidden");
   appMain.classList.remove("is-hidden");
+  document.body.classList.toggle("native-admin-subscreen-active", nativeAdminSubscreen);
   appKicker.textContent = trainerDashboardOnly ?(state.isAdmin ?t("admin") : t("trainer")) : "";
   appKicker.classList.toggle("is-hidden", !appKicker.textContent.trim());
   appTitle.textContent = "RutFit";
@@ -2939,7 +2947,7 @@ function renderApp() {
   userGreeting.textContent = displayName ?t("hello", { name: displayName }) : "";
   adminToggle.textContent = state.isAdmin ?t("admin") : t("students");
   adminToggle.classList.add("is-hidden");
-  bottomNav?.classList.remove("is-hidden");
+  bottomNav?.classList.toggle("is-hidden", nativeAdminSubscreen);
   renderBottomNav();
 
   const showAdminPanel = managerMode && ["students", "routines"].includes(state.activeView);
@@ -3831,7 +3839,7 @@ return `
         const isWeekCollapsed = week.collapsed === true;
         const totalExercises = (week.days || []).reduce((total, day) => total + (day.exercises || []).length, 0);
       return `
-        <article class="admin-editor-card ${isWeekCollapsed ?"week-overview-mode" : "week-edit-mode"}" data-week-index="${weekIndex}">
+        <article class="admin-editor-card ${isWeekCollapsed ?"week-overview-mode" : "week-edit-mode"}" data-week-index="${weekIndex}" ${isWeekCollapsed ?'data-admin-open-week="true"' : ""}>
           <div class="admin-card-title">
             <div>
               <small>${t("week")}</small>
@@ -4811,6 +4819,22 @@ adminWeeks.addEventListener("click", async (event) => {
     }
     return;
   }
+
+  const weekCard = event.target.closest("[data-admin-open-week]");
+  if (weekCard && !event.target.closest("[data-admin-action]")) {
+    const weekIndex = Number(weekCard.dataset.weekIndex);
+    if (Number.isInteger(weekIndex) && state.adminDraft?.plan?.[weekIndex]) {
+      state.adminDraft.plan.forEach((week, index) => {
+        week.collapsed = index !== weekIndex;
+      });
+      state.adminDraft.plan[weekIndex].collapsed = false;
+      state.adminWeekEditorIndex = weekIndex;
+      state.adminDayEditorIndex = null;
+      renderAdminPanel();
+    }
+    return;
+  }
+
   const button = event.target.closest("[data-admin-action]");
   if (!button) return;
   await handleAdminAction(button);
