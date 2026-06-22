@@ -5646,6 +5646,304 @@ button.student-current-card {
   white-space: nowrap;
 }
 
+/* Trainer students replica */
+.admin-panel.students-view #adminUsersCard {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.admin-panel.students-view #adminUsersCard > .admin-card-title {
+  display: none;
+}
+
+.trainer-students-screen,
+.trainer-student-activity,
+.trainer-new-student-card {
+  display: grid;
+  gap: 0.72rem;
+}
+
+.trainer-students-topbar,
+.screen-topbar {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.screen-topbar {
+  grid-template-columns: auto minmax(0, 1fr) auto;
+}
+
+.trainer-students-topbar h2,
+.screen-topbar h2 {
+  margin: 0;
+  color: #fff;
+  font-size: 1.08rem;
+  line-height: 1;
+}
+
+.trainer-add-student-button {
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border: 0;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #5b35ff, #bf24f2);
+  color: #fff;
+  font-size: 1.45rem;
+  font-weight: 800;
+  box-shadow: 0 12px 28px rgba(124, 60, 255, 0.32);
+}
+
+.trainer-student-search {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 0.45rem;
+  min-height: 2.2rem;
+  padding: 0 0.7rem;
+  border: 1px solid rgba(75, 96, 142, 0.18);
+  border-radius: 10px;
+  background: rgba(13, 27, 54, 0.86);
+  color: #7d8ca8;
+}
+
+.trainer-student-search input {
+  width: 100%;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #fff;
+  font-size: 0.72rem;
+}
+
+.trainer-student-tabs,
+.student-activity-tabs,
+.student-level-pills {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.45rem;
+}
+
+.student-activity-tabs {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.trainer-student-tabs button,
+.student-activity-tabs button,
+.student-level-pills span {
+  min-height: 2rem;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(8, 19, 42, 0.7);
+  color: #b7c3d8;
+  font-size: 0.64rem;
+  font-weight: 850;
+}
+
+.trainer-student-tabs button.active,
+.student-activity-tabs button.active,
+.student-level-pills span.active {
+  background: linear-gradient(135deg, #5b35ff, #bf24f2);
+  color: #fff;
+  box-shadow: 0 10px 22px rgba(124, 60, 255, 0.28);
+}
+
+.trainer-student-list {
+  display: grid;
+  gap: 0.46rem;
+}
+
+.trainer-student-item {
+  position: relative;
+}
+
+.trainer-student-open {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.62rem;
+  width: 100%;
+  min-height: 3.65rem;
+  border: 1px solid rgba(75, 96, 142, 0.12);
+  border-radius: 12px;
+  background: rgba(8, 19, 42, 0.68);
+  color: #fff;
+  padding: 0.5rem 0.62rem;
+  text-align: left;
+}
+
+.trainer-student-open strong {
+  display: block;
+  font-size: 0.76rem;
+}
+
+.trainer-student-open small {
+  display: block;
+  margin-top: 0.1rem;
+  color: #8f9db8;
+  font-size: 0.58rem;
+}
+
+.trainer-student-open em {
+  padding: 0.28rem 0.48rem;
+  border-radius: 8px;
+  font-size: 0.57rem;
+  font-style: normal;
+  font-weight: 900;
+}
+
+.trainer-student-open em.active {
+  background: rgba(29, 185, 84, 0.14);
+  color: #22c55e;
+}
+
+.trainer-student-open em.inactive {
+  background: rgba(244, 63, 94, 0.14);
+  color: #fb7185;
+}
+
+.compact-delete {
+  position: absolute;
+  right: 0.35rem;
+  top: -0.35rem;
+}
+
+.trainer-new-student-card {
+  overflow: hidden;
+  border: 1px solid rgba(75, 96, 142, 0.16);
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 74% 2%, rgba(124, 60, 255, 0.35), transparent 5rem),
+    linear-gradient(145deg, rgba(10, 24, 49, 0.96), rgba(6, 16, 37, 0.98));
+  padding: 0.82rem;
+}
+
+.new-student-avatar {
+  position: relative;
+  justify-self: center;
+  width: 5rem;
+  height: 5rem;
+}
+
+.new-student-avatar .student-home-avatar,
+.new-student-avatar .profile-avatar-empty {
+  width: 5rem;
+  height: 5rem;
+}
+
+.new-student-avatar b {
+  position: absolute;
+  right: 0;
+  bottom: 0.15rem;
+  display: grid;
+  place-items: center;
+  width: 1.55rem;
+  height: 1.55rem;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #5b35ff, #bf24f2);
+  color: #fff;
+  font-size: 0.7rem;
+}
+
+.trainer-new-student-card .search-box {
+  min-height: 3.2rem;
+  padding: 0.46rem 0.62rem;
+  border-radius: 10px;
+}
+
+.trainer-new-student-card .primary-button {
+  min-height: 2.8rem;
+  border-radius: 10px;
+}
+
+.trainer-student-activity .screen-topbar {
+  margin-bottom: 0.15rem;
+}
+
+.activity-profile-hero {
+  display: grid;
+  place-items: center;
+}
+
+.student-activity-avatar,
+.student-activity-avatar.profile-avatar-empty {
+  width: 5.1rem;
+  height: 5.1rem;
+  border-radius: 50%;
+  border: 2px solid rgba(124, 60, 255, 0.88);
+  object-fit: cover;
+  box-shadow: 0 0 0 4px rgba(124, 60, 255, 0.13), 0 0 28px rgba(124, 60, 255, 0.45);
+}
+
+.student-activity-routine {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.8rem;
+  min-height: 5.25rem;
+  border: 1px solid rgba(75, 96, 142, 0.16);
+  border-radius: 14px;
+  background: rgba(8, 19, 42, 0.68);
+  padding: 0.8rem;
+}
+
+.student-activity-routine small,
+.student-activity-routine span {
+  display: block;
+  color: #8f9db8;
+  font-size: 0.6rem;
+  text-transform: uppercase;
+}
+
+.student-activity-routine strong {
+  display: block;
+  margin: 0.32rem 0 0.15rem;
+  color: #fff;
+  font-size: 0.88rem;
+}
+
+.student-activity-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.45rem;
+}
+
+.student-activity-stats article {
+  display: grid;
+  justify-items: center;
+  gap: 0.18rem;
+  min-height: 4.9rem;
+  border: 1px solid rgba(75, 96, 142, 0.13);
+  border-radius: 12px;
+  background: rgba(8, 19, 42, 0.62);
+  padding: 0.62rem 0.42rem;
+  text-align: center;
+}
+
+.student-activity-stats b {
+  color: #a855f7;
+  font-size: 1.15rem;
+}
+
+.student-activity-stats strong {
+  color: #fff;
+  font-size: 0.88rem;
+}
+
+.student-activity-stats span {
+  color: #8f9db8;
+  font-size: 0.53rem;
+}
+
+.trainer-student-activity .admin-row-actions {
+  grid-template-columns: 1fr;
+}
+
 /* Inicio - Alumno: greeting line above the rutina actual card (matches mockup) */
 .sh-greeting {
   margin: 0 0 0.6rem;

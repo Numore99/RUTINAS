@@ -1,20 +1,20 @@
-const exerciseLibrary = {
+﻿const exerciseLibrary = {
   "back-squat": {
     name: "Sentadilla trasera",
     objective: "fuerza",
-    goal: "Construir fuerza máxima de piernas para derribos, defensa de derribo y control de cadera.",
+    goal: "Construir fuerza mÃ¡xima de piernas para derribos, defensa de derribo y control de cadera.",
     baseSets: "5",
     baseReps: "3-5",
     rest: "2:30",
     technique:
-      "Barra firme sobre trapecios, pies estables, abdomen bloqueado y bajada controlada hasta profundidad útil. Sube empujando el suelo, manteniendo rodillas alineadas y torso sólido.",
-    mistakes: ["Perder tensión lumbar", "Colapsar rodillas hacia dentro", "Rebotar sin control en la bajada"],
+      "Barra firme sobre trapecios, pies estables, abdomen bloqueado y bajada controlada hasta profundidad Ãºtil. Sube empujando el suelo, manteniendo rodillas alineadas y torso sÃ³lido.",
+    mistakes: ["Perder tensiÃ³n lumbar", "Colapsar rodillas hacia dentro", "Rebotar sin control en la bajada"],
     images: ["img/back-squat-1.jpg", "img/back-squat-2.jpg"]
   },
   "trap-bar-deadlift": {
     name: "Peso muerto con barra hexagonal",
     objective: "fuerza",
-    goal: "Mejorar extensión de cadera y fuerza total sin castigar tanto la espalda baja.",
+    goal: "Mejorar extensiÃ³n de cadera y fuerza total sin castigar tanto la espalda baja.",
     baseSets: "4-5",
     baseReps: "3-5",
     rest: "2:30",
@@ -31,20 +31,20 @@ const exerciseLibrary = {
     baseReps: "3-5",
     rest: "2:00",
     technique:
-      "Escápulas juntas, pies firmes y barra bajando al esternón bajo. Empuja en diagonal suave manteniendo muñecas apiladas sobre codos.",
-    mistakes: ["Abrir codos en exceso", "Rebotar la barra", "Levantar glúteos del banco"],
+      "EscÃ¡pulas juntas, pies firmes y barra bajando al esternÃ³n bajo. Empuja en diagonal suave manteniendo muÃ±ecas apiladas sobre codos.",
+    mistakes: ["Abrir codos en exceso", "Rebotar la barra", "Levantar glÃºteos del banco"],
     images: ["img/bench-press-1.jpg", "img/bench-press-2.jpg"]
   },
   "weighted-pull-up": {
     name: "Dominada con lastre",
     objective: "fuerza",
-    goal: "Aumentar tracción específica para clinch, agarres y control de espalda.",
+    goal: "Aumentar tracciÃ³n especÃ­fica para clinch, agarres y control de espalda.",
     baseSets: "4",
     baseReps: "3-6",
     rest: "2:00",
     technique:
       "Inicia colgado con hombros activos, tira los codos hacia las costillas y lleva el pecho a la barra sin balanceo.",
-    mistakes: ["Patada de impulso", "Encoger hombros arriba", "No completar la extensión controlada"],
+    mistakes: ["Patada de impulso", "Encoger hombros arriba", "No completar la extensiÃ³n controlada"],
     images: ["img/weighted-pull-up-1.jpg", "img/weighted-pull-up-2.jpg"]
   },
   "front-squat": {
@@ -56,7 +56,7 @@ const exerciseLibrary = {
     rest: "2:00",
     technique:
       "Codos altos, barra apoyada en deltoides y abdomen firme. Baja vertical, pausa breve y sube sin dejar caer el pecho.",
-    mistakes: ["Codos caídos", "Talones despegados", "Respirar sin bracing antes de bajar"],
+    mistakes: ["Codos caÃ­dos", "Talones despegados", "Respirar sin bracing antes de bajar"],
     images: ["img/front-squat-1.jpg", "img/front-squat-2.jpg"]
   },
   "landmine-press": {
@@ -67,31 +67,31 @@ const exerciseLibrary = {
     baseReps: "5 por lado",
     rest: "1:30",
     technique:
-      "Base atlética, costillas abajo y barra cerca del hombro. Empuja hacia arriba y adelante sin rotar el torso.",
-    mistakes: ["Arquear la espalda", "Perder la muñeca neutra", "Empujar sin estabilizar la escápula"],
+      "Base atlÃ©tica, costillas abajo y barra cerca del hombro. Empuja hacia arriba y adelante sin rotar el torso.",
+    mistakes: ["Arquear la espalda", "Perder la muÃ±eca neutra", "Empujar sin estabilizar la escÃ¡pula"],
     images: ["img/landmine-press-1.jpg", "img/landmine-press-2.jpg"]
   },
   "med-ball-slam": {
-    name: "Lanzamiento de balón medicinal al suelo",
+    name: "Lanzamiento de balÃ³n medicinal al suelo",
     objective: "potencia",
-    goal: "Convertir extensión de cadera y tronco en potencia explosiva repetible.",
+    goal: "Convertir extensiÃ³n de cadera y tronco en potencia explosiva repetible.",
     baseSets: "5",
     baseReps: "5",
     rest: "1:15",
     technique:
-      "Eleva el balón con cuerpo largo, bloquea abdomen y acelera hacia el suelo usando cadera, dorsales y brazos.",
-    mistakes: ["Lanzar solo con brazos", "Perder postura lumbar", "Hacer repeticiones lentas sin intención"],
+      "Eleva el balÃ³n con cuerpo largo, bloquea abdomen y acelera hacia el suelo usando cadera, dorsales y brazos.",
+    mistakes: ["Lanzar solo con brazos", "Perder postura lumbar", "Hacer repeticiones lentas sin intenciÃ³n"],
     images: ["img/med-ball-slam-1.jpg", "img/med-ball-slam-2.jpg"]
   },
   "box-jump": {
-    name: "Salto al cajón",
+    name: "Salto al cajÃ³n",
     objective: "potencia",
-    goal: "Mejorar producción rápida de fuerza para entradas y cambios de nivel.",
+    goal: "Mejorar producciÃ³n rÃ¡pida de fuerza para entradas y cambios de nivel.",
     baseSets: "5",
     baseReps: "3",
     rest: "1:30",
     technique:
-      "Carga cadera corta, salta con intención máxima y aterriza suave con rodillas alineadas. Baja caminando para preservar potencia.",
+      "Carga cadera corta, salta con intenciÃ³n mÃ¡xima y aterriza suave con rodillas alineadas. Baja caminando para preservar potencia.",
     mistakes: ["Aterrizar pesado", "Elegir caja demasiado alta", "Convertirlo en cardio"],
     images: ["img/box-jump-1.jpg", "img/box-jump-2.jpg"]
   },
@@ -103,74 +103,74 @@ const exerciseLibrary = {
     baseReps: "8",
     rest: "1:00",
     technique:
-      "La pesa viaja por bisagra de cadera, no por sentadilla. Aprieta glúteos al frente y deja que los brazos guíen.",
+      "La pesa viaja por bisagra de cadera, no por sentadilla. Aprieta glÃºteos al frente y deja que los brazos guÃ­en.",
     mistakes: ["Elevar con hombros", "Flexionar demasiado rodillas", "Perder ritmo respiratorio"],
     images: ["img/kettlebell-swing-1.jpg", "img/kettlebell-swing-2.jpg"]
   },
   "broad-jump": {
     name: "Salto horizontal",
     objective: "potencia",
-    goal: "Transferir potencia horizontal a entradas de derribo y presión hacia delante.",
+    goal: "Transferir potencia horizontal a entradas de derribo y presiÃ³n hacia delante.",
     baseSets: "5",
     baseReps: "3",
     rest: "1:30",
     technique:
       "Carga brazos y cadera, proyecta el cuerpo hacia delante y cae estable absorbiendo con tobillo, rodilla y cadera.",
-    mistakes: ["Caer con rodillas rígidas", "Mirar al piso", "Repetir sin recuperar potencia"],
+    mistakes: ["Caer con rodillas rÃ­gidas", "Mirar al piso", "Repetir sin recuperar potencia"],
     images: ["img/broad-jump-1.jpg", "img/broad-jump-2.jpg"]
   },
   "sled-push": {
     name: "Empuje de trineo",
     objective: "potencia",
-    goal: "Desarrollar empuje de piernas y tronco para presión contra jaula.",
+    goal: "Desarrollar empuje de piernas y tronco para presiÃ³n contra jaula.",
     baseSets: "6",
     baseReps: "15-20 m",
     rest: "1:30",
     technique:
-      "Cuerpo inclinado, brazos fuertes y pasos cortos potentes. Mantén respiración agresiva sin perder línea de cadera.",
+      "Cuerpo inclinado, brazos fuertes y pasos cortos potentes. MantÃ©n respiraciÃ³n agresiva sin perder lÃ­nea de cadera.",
     mistakes: ["Pasos demasiado largos", "Cadera alta sin empuje", "Dejar caer la cabeza"],
     images: ["img/sled-push-1.jpg", "img/sled-push-2.jpg"]
   },
   "isometric-split-squat": {
-    name: "Zancada isométrica",
-    objective: "isometría",
+    name: "Zancada isomÃ©trica",
+    objective: "isometrÃ­a",
     goal: "Fortalecer posiciones de base, rodilla y cadera bajo fatiga.",
     baseSets: "3",
     baseReps: "25-40 s por lado",
     rest: "1:00",
     technique:
-      "Mantén zancada sólida, rodilla delantera alineada y torso alto. Presiona el suelo como si fueras a subir, pero sostén la posición.",
-    mistakes: ["Descansar sobre ligamentos", "Inclinarse hacia delante", "Perder presión del pie delantero"],
+      "MantÃ©n zancada sÃ³lida, rodilla delantera alineada y torso alto. Presiona el suelo como si fueras a subir, pero sostÃ©n la posiciÃ³n.",
+    mistakes: ["Descansar sobre ligamentos", "Inclinarse hacia delante", "Perder presiÃ³n del pie delantero"],
     images: ["img/isometric-split-squat-1.jpg", "img/isometric-split-squat-2.jpg"]
   },
   "wall-sit-adductor-squeeze": {
-    name: "Sentadilla en pared con presión de aductores",
-    objective: "isometría",
-    goal: "Reforzar aductores y piernas para guardia, presión y prevención de lesiones.",
+    name: "Sentadilla en pared con presiÃ³n de aductores",
+    objective: "isometrÃ­a",
+    goal: "Reforzar aductores y piernas para guardia, presiÃ³n y prevenciÃ³n de lesiones.",
     baseSets: "3",
     baseReps: "30-45 s",
     rest: "1:00",
     technique:
-      "Espalda contra pared, rodillas a 90 grados y balón o almohadilla entre rodillas. Aprieta de forma constante sin contener la respiración.",
+      "Espalda contra pared, rodillas a 90 grados y balÃ³n o almohadilla entre rodillas. Aprieta de forma constante sin contener la respiraciÃ³n.",
     mistakes: ["Subir demasiado la cadera", "Relajar aductores", "Colapsar pies hacia dentro"],
     images: ["img/wall-sit-adductor-squeeze-1.jpg", "img/wall-sit-adductor-squeeze-2.jpg"]
   },
   "chin-over-bar-hold": {
-    name: "Aguante con mentón sobre la barra",
-    objective: "isometría",
+    name: "Aguante con mentÃ³n sobre la barra",
+    objective: "isometrÃ­a",
     goal: "Sostener agarres fuertes y control de espalda cuando el rival intenta escapar.",
     baseSets: "4",
     baseReps: "10-25 s",
     rest: "1:15",
     technique:
-      "Sube con control, mentón sobre barra, hombros lejos de orejas y costillas cerradas. Mantén tensión sin balanceo.",
-    mistakes: ["Cuello adelantado", "Codos abiertos", "Caer sin controlar la excéntrica"],
+      "Sube con control, mentÃ³n sobre barra, hombros lejos de orejas y costillas cerradas. MantÃ©n tensiÃ³n sin balanceo.",
+    mistakes: ["Cuello adelantado", "Codos abiertos", "Caer sin controlar la excÃ©ntrica"],
     images: ["img/chin-over-bar-hold-1.jpg", "img/chin-over-bar-hold-2.jpg"]
   },
   "plank-drag": {
     name: "Arrastre en plancha",
-    objective: "isometría",
-    goal: "Entrenar anti-rotación del tronco para scrambles y golpes desde arriba.",
+    objective: "isometrÃ­a",
+    goal: "Entrenar anti-rotaciÃ³n del tronco para scrambles y golpes desde arriba.",
     baseSets: "3",
     baseReps: "8 por lado",
     rest: "0:45",
@@ -181,31 +181,31 @@ const exerciseLibrary = {
   },
   "bear-hug-hold": {
     name: "Aguante abrazando saco de arena",
-    objective: "isometría",
-    goal: "Simular presión de clinch y control corporal con respiración bajo compresión.",
+    objective: "isometrÃ­a",
+    goal: "Simular presiÃ³n de clinch y control corporal con respiraciÃ³n bajo compresiÃ³n.",
     baseSets: "4",
     baseReps: "20-40 s",
     rest: "1:00",
     technique:
-      "Abraza el saco alto, conecta costillas y pelvis, y mantén respiración nasal o corta sin perder postura.",
+      "Abraza el saco alto, conecta costillas y pelvis, y mantÃ©n respiraciÃ³n nasal o corta sin perder postura.",
     mistakes: ["Apoyar el saco en la espalda baja", "Cerrar demasiado la garganta", "Relajar piernas"],
     images: ["img/bear-hug-hold-1.jpg", "img/bear-hug-hold-2.jpg"]
   },
   "assault-bike-sprint": {
     name: "Sprint en Assault Bike",
     objective: "lactato",
-    goal: "Elevar tolerancia al lactato y recuperación entre esfuerzos de alta intensidad.",
+    goal: "Elevar tolerancia al lactato y recuperaciÃ³n entre esfuerzos de alta intensidad.",
     baseSets: "8",
     baseReps: "15-30 s fuerte",
     rest: "1:00-1:30",
     technique:
-      "Acelera desde el primer segundo con empuje coordinado de brazos y piernas. Mantén torso estable y termina cada sprint con respiración controlada.",
+      "Acelera desde el primer segundo con empuje coordinado de brazos y piernas. MantÃ©n torso estable y termina cada sprint con respiraciÃ³n controlada.",
     mistakes: ["Salir suave y acelerar tarde", "Desordenar la postura", "Mirar la pantalla todo el tiempo"],
     images: ["img/assault-bike-1.jpg", "img/assault-bike-2.jpg"]
   },
   "assault-bike-recovery": {
-    name: "Recuperación en Assault Bike",
-    objective: "recuperación",
+    name: "RecuperaciÃ³n en Assault Bike",
+    objective: "recuperaciÃ³n",
     goal: "Mejorar aclarado de metabolitos y bajar pulsaciones entre rounds.",
     baseSets: "4-6",
     baseReps: "2:00 suave",
@@ -218,49 +218,49 @@ const exerciseLibrary = {
   "shuttle-run": {
     name: "Carrera ida y vuelta",
     objective: "lactato",
-    goal: "Entrenar cambios de dirección repetidos y potencia bajo acidez.",
+    goal: "Entrenar cambios de direcciÃ³n repetidos y potencia bajo acidez.",
     baseSets: "6-10",
     baseReps: "20 s",
     rest: "0:40-1:00",
     technique:
-      "Acelera bajo, frena con pasos cortos y toca línea sin doblar la espalda. Reacelera con intención máxima.",
-    mistakes: ["Frenar con una sola pierna rígida", "Girar alto", "Perder calidad por exceso de volumen"],
+      "Acelera bajo, frena con pasos cortos y toca lÃ­nea sin doblar la espalda. Reacelera con intenciÃ³n mÃ¡xima.",
+    mistakes: ["Frenar con una sola pierna rÃ­gida", "Girar alto", "Perder calidad por exceso de volumen"],
     images: ["img/shuttle-run-1.jpg", "img/shuttle-run-2.jpg"]
   },
   "battle-rope-sprawl": {
     name: "Cuerdas de batalla con sprawl",
     objective: "lactato",
-    goal: "Combinar tren superior, sprawls y respiración agresiva en formato de round.",
+    goal: "Combinar tren superior, sprawls y respiraciÃ³n agresiva en formato de round.",
     baseSets: "5",
     baseReps: "30-40 s",
     rest: "1:00",
     technique:
-      "Ondas fuertes con hombros bajos, sprawl explosivo y regreso rápido a base atlética sin perder respiración.",
-    mistakes: ["Caer con lumbar hundida", "Ondas pequeñas", "Volver de pie demasiado lento"],
+      "Ondas fuertes con hombros bajos, sprawl explosivo y regreso rÃ¡pido a base atlÃ©tica sin perder respiraciÃ³n.",
+    mistakes: ["Caer con lumbar hundida", "Ondas pequeÃ±as", "Volver de pie demasiado lento"],
     images: ["img/battle-rope-sprawl-1.jpg", "img/battle-rope-sprawl-2.jpg"]
   },
   "ground-and-pound": {
-    name: "Golpes desde posición superior",
+    name: "Golpes desde posiciÃ³n superior",
     objective: "ground and pound",
-    goal: "Construir potencia, postura y continuidad golpeando desde posición superior.",
+    goal: "Construir potencia, postura y continuidad golpeando desde posiciÃ³n superior.",
     baseSets: "6",
     baseReps: "20-30 s",
     rest: "0:45-1:00",
     technique:
-      "Rodillas pesadas, cadera estable y mano libre posteando cuando hace falta. Golpea en ráfagas cortas y vuelve a base.",
-    mistakes: ["Quedar alto y fácil de barrer", "Golpear sin retraer mano", "Perder presión de cadera"],
+      "Rodillas pesadas, cadera estable y mano libre posteando cuando hace falta. Golpea en rÃ¡fagas cortas y vuelve a base.",
+    mistakes: ["Quedar alto y fÃ¡cil de barrer", "Golpear sin retraer mano", "Perder presiÃ³n de cadera"],
     images: ["img/ground-and-pound-1.jpg", "img/ground-and-pound-2.jpg"]
   },
   "medicine-ball-gp": {
-    name: "Golpes al suelo con balón medicinal",
+    name: "Golpes al suelo con balÃ³n medicinal",
     objective: "ground and pound",
     goal: "Transferir potencia de tronco a golpes repetidos con bajo riesgo articular.",
     baseSets: "5",
     baseReps: "8-12 por lado",
     rest: "1:00",
     technique:
-      "Desde rodillas o base de montada, rota el tronco y golpea el balón contra el suelo manteniendo cadera pesada.",
-    mistakes: ["Golpear solo con brazo", "Perder equilibrio lateral", "No volver a posición defensiva"],
+      "Desde rodillas o base de montada, rota el tronco y golpea el balÃ³n contra el suelo manteniendo cadera pesada.",
+    mistakes: ["Golpear solo con brazo", "Perder equilibrio lateral", "No volver a posiciÃ³n defensiva"],
     images: ["img/medicine-ball-gp-1.jpg", "img/medicine-ball-gp-2.jpg"]
   },
   "dummy-posture-strikes": {
@@ -271,49 +271,49 @@ const exerciseLibrary = {
     baseReps: "30 s",
     rest: "0:45",
     technique:
-      "Rompe postura con cadera atrás, controla bíceps o torso y alterna golpes cortos sin regalar brazos.",
+      "Rompe postura con cadera atrÃ¡s, controla bÃ­ceps o torso y alterna golpes cortos sin regalar brazos.",
     mistakes: ["Cabeza adelantada", "Manos plantadas sin defensa", "Golpes largos sin base"],
     images: ["img/dummy-posture-strikes-1.jpg", "img/dummy-posture-strikes-2.jpg"]
   },
   "zone-2-run": {
     name: "Carrera en zona 2",
-    objective: "recuperación",
-    goal: "Desarrollar base aeróbica para recuperar mejor entre rounds y sesiones.",
+    objective: "recuperaciÃ³n",
+    goal: "Desarrollar base aerÃ³bica para recuperar mejor entre rounds y sesiones.",
     baseSets: "1",
     baseReps: "25-45 min",
     rest: "Libre",
     technique:
-      "Ritmo conversacional, respiración controlada y pisada relajada. Termina con sensación de poder seguir.",
+      "Ritmo conversacional, respiraciÃ³n controlada y pisada relajada. Termina con sensaciÃ³n de poder seguir.",
     mistakes: ["Convertirlo en tempo", "Subir pulsaciones en cuestas", "Acortar por impaciencia"],
     images: ["img/zone-2-run-1.jpg", "img/zone-2-run-2.jpg"]
   },
   "copenhagen-plank": {
     name: "Plancha Copenhagen",
-    objective: "recuperación",
+    objective: "recuperaciÃ³n",
     goal: "Prevenir lesiones de aductor y mejorar estabilidad lateral para grappling.",
     baseSets: "3",
     baseReps: "15-30 s por lado",
     rest: "0:45",
     technique:
-      "Apoya pierna superior, bloquea costillas y eleva cadera hasta formar una línea larga. Mantén presión suave y constante.",
+      "Apoya pierna superior, bloquea costillas y eleva cadera hasta formar una lÃ­nea larga. MantÃ©n presiÃ³n suave y constante.",
     mistakes: ["Rotar el torso", "Dejar caer la cadera", "Aguantar dolor punzante"],
     images: ["img/copenhagen-plank-1.jpg", "img/copenhagen-plank-2.jpg"]
   },
   "neck-isometrics": {
-    name: "Isométricos de cuello",
-    objective: "recuperación",
-    goal: "Fortalecer cuello para clinch, impactos y prevención de molestias cervicales.",
+    name: "IsomÃ©tricos de cuello",
+    objective: "recuperaciÃ³n",
+    goal: "Fortalecer cuello para clinch, impactos y prevenciÃ³n de molestias cervicales.",
     baseSets: "2-3",
-    baseReps: "10-20 s por dirección",
+    baseReps: "10-20 s por direcciÃ³n",
     rest: "0:30",
     technique:
-      "Presiona contra mano, banda o pared sin mover la cabeza. Mantén mandíbula relajada y respiración constante.",
-    mistakes: ["Empujar con dolor", "Mover la cabeza rápido", "Tensionar hombros"],
+      "Presiona contra mano, banda o pared sin mover la cabeza. MantÃ©n mandÃ­bula relajada y respiraciÃ³n constante.",
+    mistakes: ["Empujar con dolor", "Mover la cabeza rÃ¡pido", "Tensionar hombros"],
     images: ["img/neck-isometrics-1.jpg", "img/neck-isometrics-2.jpg"]
   },
   "hip-airplane": {
-    name: "Avión de cadera",
-    objective: "recuperación",
+    name: "AviÃ³n de cadera",
+    objective: "recuperaciÃ³n",
     goal: "Mejorar control de cadera, equilibrio y salud de rodilla para cambios de nivel.",
     baseSets: "2-3",
     baseReps: "5 por lado",
@@ -325,40 +325,40 @@ const exerciseLibrary = {
   },
   "turkish-get-up": {
     name: "Levantada turca",
-    objective: "recuperación",
+    objective: "recuperaciÃ³n",
     goal: "Integrar hombro, cadera y tronco para levantadas seguras desde el suelo.",
     baseSets: "3",
     baseReps: "2 por lado",
     rest: "1:00",
     technique:
       "Mira la carga, crea posteos claros y avanza por fases: codo, mano, puente, barrido, medio arrodillado y de pie.",
-    mistakes: ["Apurarse entre fases", "Doblar muñeca", "Perder mirada sobre la carga"],
+    mistakes: ["Apurarse entre fases", "Doblar muÃ±eca", "Perder mirada sobre la carga"],
     images: ["img/turkish-get-up-1.jpg", "img/turkish-get-up-2.jpg"]
   }
 };
 
 const phases = [
-  { weeks: [1, 2, 3], name: "Base de fuerza", badge: "Acumulación", modifier: "RPE 7-8, técnica limpia, zona 2 estable." },
+  { weeks: [1, 2, 3], name: "Base de fuerza", badge: "AcumulaciÃ³n", modifier: "RPE 7-8, tÃ©cnica limpia, zona 2 estable." },
   { weeks: [4], name: "Descarga activa", badge: "Deload", modifier: "Reduce 30% el volumen, conserva velocidad." },
-  { weeks: [5, 6, 7], name: "Fuerza + potencia", badge: "Intensificación", modifier: "Más carga, menos reps, potencia fresca." },
-  { weeks: [8], name: "Descarga neural", badge: "Deload", modifier: "Baja fatiga, cuida movilidad y sueño." },
+  { weeks: [5, 6, 7], name: "Fuerza + potencia", badge: "IntensificaciÃ³n", modifier: "MÃ¡s carga, menos reps, potencia fresca." },
+  { weeks: [8], name: "Descarga neural", badge: "Deload", modifier: "Baja fatiga, cuida movilidad y sueÃ±o." },
   { weeks: [9, 10, 11], name: "Fight specific", badge: "Pico", modifier: "Rounds densos, repeat power ability y lactato." },
-  { weeks: [12], name: "Taper", badge: "Puesta a punto", modifier: "Bajo volumen, velocidad alta, recuperación prioritaria." }
+  { weeks: [12], name: "Taper", badge: "Puesta a punto", modifier: "Bajo volumen, velocidad alta, recuperaciÃ³n prioritaria." }
 ];
 
 const dayTemplates = [
   {
-    title: "Día 1",
+    title: "DÃ­a 1",
     focus: "Fuerza piernas + lactato",
     exercises: ["back-squat", "box-jump", "isometric-split-squat", "assault-bike-sprint", "ground-and-pound", "copenhagen-plank"]
   },
   {
-    title: "Día 2",
-    focus: "Tracción, clinch y zona 2",
+    title: "DÃ­a 2",
+    focus: "TracciÃ³n, clinch y zona 2",
     exercises: ["trap-bar-deadlift", "weighted-pull-up", "med-ball-slam", "chin-over-bar-hold", "zone-2-run", "neck-isometrics"]
   },
   {
-    title: "Día 3",
+    title: "DÃ­a 3",
     focus: "Potencia repeat + G&P",
     exercises: ["front-squat", "landmine-press", "kettlebell-swing", "bear-hug-hold", "battle-rope-sprawl", "dummy-posture-strikes"]
   }
@@ -398,6 +398,9 @@ const state = {
   adminEditorMode: "",
   pendingAssignUserId: "",
   adminEditingExerciseKey: "",
+  adminStudentQuery: "",
+  adminStudentFilter: "all",
+  adminStudentFormOpen: false,
   accountSubView: "profile",
   progressSubView: "summary",
   progressHistoryFilter: "all",
@@ -488,22 +491,22 @@ const DEFAULT_LANGUAGE = "es";
 const translations = {
   es: {
     privateAccess: "Acceso privado",
-    loginTitle: "Iniciar sesión",
+    loginTitle: "Iniciar sesiÃ³n",
     languageLabel: "Idioma",
-    password: "Contraseña",
-    passwordPlaceholder: "Mínimo 6 caracteres",
-    rememberSession: "Mantener sesión iniciada",
-    loginButton: "Iniciar sesión",
+    password: "ContraseÃ±a",
+    passwordPlaceholder: "MÃ­nimo 6 caracteres",
+    rememberSession: "Mantener sesiÃ³n iniciada",
+    loginButton: "Iniciar sesiÃ³n",
     createAccount: "Crear cuenta",
-    resetPassword: "Recuperar contraseña por mail",
+    resetPassword: "Recuperar contraseÃ±a por mail",
     accountType: "Tipo de cuenta",
     student: "Alumno",
     trainer: "Entrenador",
     admin: "Admin",
-    logout: "Cerrar sesión",
+    logout: "Cerrar sesiÃ³n",
     totalProgress: "Progreso total",
     doneShort: "hecho",
-    searchFilterControls: "Controles de búsqueda y filtro",
+    searchFilterControls: "Controles de bÃºsqueda y filtro",
     search: "Buscar",
     searchPlaceholder: "Ej: squat, lactato, bike...",
     filterByGoal: "Filtrar por objetivo",
@@ -511,11 +514,11 @@ const translations = {
     strength: "Fuerza",
     power: "Potencia",
     lactate: "Lactato",
-    isometry: "Isometría",
-    recovery: "Recuperación",
+    isometry: "IsometrÃ­a",
+    recovery: "RecuperaciÃ³n",
     planSummary: "Resumen del plan",
-    routineInPreparation: "Rutina en preparación",
-    comingSoon: "Próximamente",
+    routineInPreparation: "Rutina en preparaciÃ³n",
+    comingSoon: "PrÃ³ximamente",
     administrator: "Administrador",
     routinePanel: "Panel de rutinas",
     routinePanelHelp: "Crea y edita rutinas.",
@@ -524,7 +527,7 @@ const translations = {
     loadingUsers: "Cargando usuarios...",
     students: "Alumnos",
     studentPanel: "Panel de alumnos",
-    studentPanelHelp: "Invita alumnos, espera su aceptación y asígnales rutinas.",
+    studentPanelHelp: "Invita alumnos, espera su aceptaciÃ³n y asÃ­gnales rutinas.",
     inviteStudent: "Invitar alumno",
     studentEmail: "Email del alumno",
     sendInvite: "Enviar solicitud",
@@ -535,9 +538,9 @@ const translations = {
     accountNav: "Cuenta",
     yourProfessors: "Tus profesores",
     acceptedProfessors: "Profesores aceptados",
-    noProfessors: "Todavía no tienes profesores aceptados.",
+    noProfessors: "TodavÃ­a no tienes profesores aceptados.",
     accountPanelTitle: "Cuenta",
-    accountPanelHelp: "Gestiona tu sesión en RutFit.",
+    accountPanelHelp: "Gestiona tu sesiÃ³n en RutFit.",
     profile: "Perfil",
     editProfile: "Editar perfil",
     saveProfile: "Guardar perfil",
@@ -551,9 +554,9 @@ const translations = {
     memberSince: "Miembro desde",
     trainerLabel: "Entrenador",
     notCompleted: "Sin completar",
-    noStudents: "Todavía no tienes alumnos aceptados.",
+    noStudents: "TodavÃ­a no tienes alumnos aceptados.",
     noPendingInvites: "No hay solicitudes pendientes.",
-    inviteSent: "Solicitud enviada. El alumno la verá al crear cuenta o iniciar sesión.",
+    inviteSent: "Solicitud enviada. El alumno la verÃ¡ al crear cuenta o iniciar sesiÃ³n.",
     inviteExists: "Ya existe una solicitud pendiente o aceptada para ese email.",
     invitationForYou: "Solicitud de entrenador",
     invitationHelp: "{name} quiere asignarte rutinas en RutFit.",
@@ -565,7 +568,7 @@ const translations = {
     routine: "Rutina",
     routineEditor: "Editor de rutina",
     name: "Nombre",
-    title: "Título",
+    title: "TÃ­tulo",
     tag: "Etiqueta",
     saveRoutine: "Guardar rutina",
     newRoutine: "Nueva rutina",
@@ -573,12 +576,12 @@ const translations = {
     createWeek: "Crear semana",
     deleteRoutine: "Eliminar rutina",
     closeDetail: "Cerrar detalle",
-    startPosition: "Posición inicial / bajada",
-    endPosition: "Posición final / subida",
+    startPosition: "PosiciÃ³n inicial / bajada",
+    endPosition: "PosiciÃ³n final / subida",
     sets: "Series",
     reps: "Reps",
     rest: "Descanso",
-    technique: "Técnica",
+    technique: "TÃ©cnica",
     commonMistakes: "Errores comunes",
     done: "Hecho",
     markDone: "Marcar como hecho",
@@ -588,7 +591,7 @@ const translations = {
     exercises: "ejercicios",
     completed: "completados",
     weeks: "semanas",
-    noUsers: "Todavía no hay usuarios.",
+    noUsers: "TodavÃ­a no hay usuarios.",
     usersLoadError: "No se pudieron cargar usuarios.",
     noRoutine: "Sin rutina",
     unavailableRoutine: "Rutina no disponible: {id}",
@@ -598,7 +601,7 @@ const translations = {
     addRoutine: "Agregar rutina",
     editCurrentRoutine: "Editar rutina actual",
     removeRoutine: "Quitar rutina",
-    backToUsers: "← Volver a usuarios",
+    backToUsers: "â† Volver a usuarios",
     newRoutineFor: "Nueva rutina para {name}",
     editingRoutine: "Editando {name}",
     newRoutineOption: "Rutina nueva",
@@ -610,39 +613,39 @@ const translations = {
     saveExercise: "Guardar ejercicio",
     exerciseSaved: "Ejercicio guardado.",
     savedExercisesCount: "{count} ejercicios guardados",
-    editDay: "Editar día",
-    saveDay: "Guardar día",
+    editDay: "Editar dÃ­a",
+    saveDay: "Guardar dÃ­a",
     editWeek: "Editar semana",
     saveWeek: "Guardar semana",
-    weekSavedSummary: "Semana guardada - {count} días guardados",
+    weekSavedSummary: "Semana guardada - {count} dÃ­as guardados",
     deleteExercise: "Eliminar ejercicio",
     objective: "Objetivo",
     startImage: "Imagen inicial",
     endImage: "Imagen final",
-    startImageAlt: "{name} posición inicial o bajada",
-    endImageAlt: "{name} posición final o subida",
+    startImageAlt: "{name} posiciÃ³n inicial o bajada",
+    endImageAlt: "{name} posiciÃ³n final o subida",
     uploadStartImage: "Subir imagen inicial",
     uploadEndImage: "Subir imagen final",
-    technicalGoal: "Objetivo técnico",
-    mistakesOnePerLine: "Errores comunes, uno por línea",
-    dayNumber: "Día {number}",
-    deleteDay: "Eliminar día",
-    dayTitle: "Título del día",
+    technicalGoal: "Objetivo tÃ©cnico",
+    mistakesOnePerLine: "Errores comunes, uno por lÃ­nea",
+    dayNumber: "DÃ­a {number}",
+    deleteDay: "Eliminar dÃ­a",
+    dayTitle: "TÃ­tulo del dÃ­a",
     focus: "Foco",
     createExercise: "Crear ejercicio",
-    emptyDay: "Este día todavía no tiene ejercicios.",
+    emptyDay: "Este dÃ­a todavÃ­a no tiene ejercicios.",
     week: "Semana",
     noPhase: "Sin fase",
     deleteWeek: "Eliminar semana",
-    number: "Número",
+    number: "NÃºmero",
     phase: "Fase",
     badge: "Etiqueta",
     instructions: "Indicaciones",
-    createDay: "Crear día",
-    emptyWeek: "Esta semana todavía no tiene días.",
+    createDay: "Crear dÃ­a",
+    emptyWeek: "Esta semana todavÃ­a no tiene dÃ­as.",
     createWeekPrompt: "Crea una semana para empezar esta rutina.",
     newPhase: "Nueva fase",
-    noMatchingExercises: "No hay ejercicios que coincidan con esa búsqueda.",
+    noMatchingExercises: "No hay ejercicios que coincidan con esa bÃºsqueda.",
     completeWeek: "Hecha",
     restLower: "descanso",
     hello: "Hola, {name}",
@@ -657,38 +660,38 @@ const translations = {
     userWithoutRoutine: "Usuario sin rutina asignada.",
     newRoutinePreparedAssign: "Nueva rutina preparada. Al guardar se asigna a este usuario.",
     removingRoutine: "Quitando rutina...",
-    routineRemoved: "Rutina quitada. El usuario verá Próximamente.",
-    newRoutinePrepared: "Nueva rutina preparada. Edita los datos y guárdala.",
+    routineRemoved: "Rutina quitada. El usuario verÃ¡ PrÃ³ximamente.",
+    newRoutinePrepared: "Nueva rutina preparada. Edita los datos y guÃ¡rdala.",
     darioMigrated: "Rutina Dario migrada.",
     darioMigratedAssigned: "Rutina Dario migrada y asignada al usuario.",
     routineNeedsId: "La rutina necesita un ID.",
     routineSaved: "Rutina guardada.",
     routineSavedAssigned: "Rutina guardada y asignada al usuario.",
-    deleteRoutineConfirm: "¿Eliminar la rutina \"{name}\"?",
+    deleteRoutineConfirm: "Â¿Eliminar la rutina \"{name}\"?",
     routineDeleted: "Rutina eliminada.",
     deleteUser: "Eliminar usuario",
-    deleteUserConfirm: "¿Eliminar el usuario \"{name}\" de RutFit?",
+    deleteUserConfirm: "Â¿Eliminar el usuario \"{name}\" de RutFit?",
     userDeleted: "Usuario eliminado.",
-    cannotDeleteSelf: "No puedes eliminar tu propio usuario admin desde aquí.",
+    cannotDeleteSelf: "No puedes eliminar tu propio usuario admin desde aquÃ­.",
     signingIn: "Ingresando...",
     creatingAccount: "Creando cuenta...",
-    writeEmailForReset: "Escribe tu email para recuperar la contraseña.",
-    sendingReset: "Enviando correo de recuperación...",
-    resetSent: "Te envié un correo para recuperar la contraseña.",
+    writeEmailForReset: "Escribe tu email para recuperar la contraseÃ±a.",
+    sendingReset: "Enviando correo de recuperaciÃ³n...",
+    resetSent: "Te enviÃ© un correo para recuperar la contraseÃ±a.",
     firebaseMissing: "Falta configurar Firebase en firebase-config.js.",
-    invalidEmail: "El email no es válido.",
-    invalidLogin: "Email o contraseña incorrectos.",
+    invalidEmail: "El email no es vÃ¡lido.",
+    invalidLogin: "Email o contraseÃ±a incorrectos.",
     emailInUse: "Ese email ya tiene una cuenta.",
-    weakPassword: "La contraseña debe tener al menos 6 caracteres.",
+    weakPassword: "La contraseÃ±a debe tener al menos 6 caracteres.",
     firebaseAuthMissing: "Falta activar Firebase Authentication en este proyecto.",
     authProviderDisabled: "Activa Email/Password en Firebase Authentication.",
-    invalidApiKey: "La configuración de Firebase no es válida.",
-    permissionDenied: "Firestore está bloqueando el acceso. Revisa las reglas de la base de datos.",
-    firestoreNotFound: "No se encontró Firestore o el documento solicitado. Revisa que la base sea (default).",
-    firestorePending: "Firestore necesita terminar de activarse o tiene una condición pendiente ({code}). Espera un minuto y recarga.",
-    firestoreUnavailable: "Firestore no está disponible ahora. Revisa conexión o configuración.",
-    networkFailed: "No hay conexión. Inténtalo de nuevo.",
-    actionFailed: "No se pudo completar la acción{code}.",
+    invalidApiKey: "La configuraciÃ³n de Firebase no es vÃ¡lida.",
+    permissionDenied: "Firestore estÃ¡ bloqueando el acceso. Revisa las reglas de la base de datos.",
+    firestoreNotFound: "No se encontrÃ³ Firestore o el documento solicitado. Revisa que la base sea (default).",
+    firestorePending: "Firestore necesita terminar de activarse o tiene una condiciÃ³n pendiente ({code}). Espera un minuto y recarga.",
+    firestoreUnavailable: "Firestore no estÃ¡ disponible ahora. Revisa conexiÃ³n o configuraciÃ³n.",
+    networkFailed: "No hay conexiÃ³n. IntÃ©ntalo de nuevo.",
+    actionFailed: "No se pudo completar la acciÃ³n{code}.",
     storageNotReady: "La imagen se guarda dentro de la rutina.",
     selectImageFile: "Selecciona un archivo de imagen."
   },
@@ -804,7 +807,7 @@ const translations = {
     addRoutine: "Add routine",
     editCurrentRoutine: "Edit current routine",
     removeRoutine: "Remove routine",
-    backToUsers: "← Back to users",
+    backToUsers: "â† Back to users",
     newRoutineFor: "New routine for {name}",
     editingRoutine: "Editing {name}",
     newRoutineOption: "New routine",
@@ -903,8 +906,8 @@ const translations = {
     loginTitle: "Entrar",
     languageLabel: "Idioma",
     password: "Senha",
-    passwordPlaceholder: "Mínimo de 6 caracteres",
-    rememberSession: "Manter sessão iniciada",
+    passwordPlaceholder: "MÃ­nimo de 6 caracteres",
+    rememberSession: "Manter sessÃ£o iniciada",
     loginButton: "Entrar",
     createAccount: "Criar conta",
     resetPassword: "Recuperar senha por email",
@@ -920,36 +923,36 @@ const translations = {
     searchPlaceholder: "Ex: squat, lactato, bike...",
     filterByGoal: "Filtrar por objetivo",
     all: "Todos",
-    strength: "Força",
-    power: "Potência",
+    strength: "ForÃ§a",
+    power: "PotÃªncia",
     lactate: "Lactato",
     isometry: "Isometria",
-    recovery: "Recuperação",
+    recovery: "RecuperaÃ§Ã£o",
     planSummary: "Resumo do plano",
-    routineInPreparation: "Rotina em preparação",
+    routineInPreparation: "Rotina em preparaÃ§Ã£o",
     comingSoon: "Em breve",
     administrator: "Administrador",
     routinePanel: "Painel de rotinas",
     routinePanelHelp: "Crie e edite rotinas.",
     closePanel: "Fechar painel",
-    users: "Usuários",
-    loadingUsers: "Carregando usuários...",
+    users: "UsuÃ¡rios",
+    loadingUsers: "Carregando usuÃ¡rios...",
     students: "Alunos",
     studentPanel: "Painel de alunos",
-    studentPanelHelp: "Convide alunos, espere a aceitação e atribua rotinas.",
+    studentPanelHelp: "Convide alunos, espere a aceitaÃ§Ã£o e atribua rotinas.",
     inviteStudent: "Convidar aluno",
     studentEmail: "Email do aluno",
-    sendInvite: "Enviar solicitação",
-    pendingInvites: "Solicitações pendentes",
+    sendInvite: "Enviar solicitaÃ§Ã£o",
+    pendingInvites: "SolicitaÃ§Ãµes pendentes",
     acceptedStudents: "Alunos aceitos",
     routinesNav: "Rotinas",
     professorsNav: "Professores",
     accountNav: "Conta",
     yourProfessors: "Seus professores",
     acceptedProfessors: "Professores aceitos",
-    noProfessors: "Você ainda não tem professores aceitos.",
+    noProfessors: "VocÃª ainda nÃ£o tem professores aceitos.",
     accountPanelTitle: "Conta",
-    accountPanelHelp: "Gerencie sua sessão no RutFit.",
+    accountPanelHelp: "Gerencie sua sessÃ£o no RutFit.",
     profile: "Perfil",
     editProfile: "Editar perfil",
     saveProfile: "Salvar perfil",
@@ -963,21 +966,21 @@ const translations = {
     memberSince: "Membro desde",
     trainerLabel: "Treinador",
     notCompleted: "Sem preencher",
-    noStudents: "Você ainda não tem alunos aceitos.",
-    noPendingInvites: "Não há solicitações pendentes.",
-    inviteSent: "Solicitação enviada. O aluno verá ao criar conta ou entrar.",
-    inviteExists: "Já existe uma solicitação pendente ou aceita para esse email.",
-    invitationForYou: "Solicitação de treinador",
-    invitationHelp: "{name} quer atribuir rotinas para você no RutFit.",
+    noStudents: "VocÃª ainda nÃ£o tem alunos aceitos.",
+    noPendingInvites: "NÃ£o hÃ¡ solicitaÃ§Ãµes pendentes.",
+    inviteSent: "SolicitaÃ§Ã£o enviada. O aluno verÃ¡ ao criar conta ou entrar.",
+    inviteExists: "JÃ¡ existe uma solicitaÃ§Ã£o pendente ou aceita para esse email.",
+    invitationForYou: "SolicitaÃ§Ã£o de treinador",
+    invitationHelp: "{name} quer atribuir rotinas para vocÃª no RutFit.",
     acceptInvite: "Aceitar",
     declineInvite: "Recusar",
-    inviteAccepted: "Solicitação aceita.",
-    inviteDeclined: "Solicitação recusada.",
+    inviteAccepted: "SolicitaÃ§Ã£o aceita.",
+    inviteDeclined: "SolicitaÃ§Ã£o recusada.",
     assignRoutines: "Atribuir rotinas",
     routine: "Rotina",
     routineEditor: "Editor de rotina",
     name: "Nome",
-    title: "Título",
+    title: "TÃ­tulo",
     tag: "Etiqueta",
     saveRoutine: "Salvar rotina",
     newRoutine: "Nova rotina",
@@ -985,122 +988,122 @@ const translations = {
     createWeek: "Criar semana",
     deleteRoutine: "Excluir rotina",
     closeDetail: "Fechar detalhe",
-    startPosition: "Posição inicial / descida",
-    endPosition: "Posição final / subida",
-    sets: "Séries",
+    startPosition: "PosiÃ§Ã£o inicial / descida",
+    endPosition: "PosiÃ§Ã£o final / subida",
+    sets: "SÃ©ries",
     reps: "Reps",
     rest: "Descanso",
-    technique: "Técnica",
+    technique: "TÃ©cnica",
     commonMistakes: "Erros comuns",
     done: "Feito",
     markDone: "Marcar como feito",
     startRest: "Iniciar descanso",
     reset: "Reiniciar",
-    sessions: "sessões",
-    exercises: "exercícios",
-    completed: "concluídos",
+    sessions: "sessÃµes",
+    exercises: "exercÃ­cios",
+    completed: "concluÃ­dos",
     weeks: "semanas",
-    noUsers: "Ainda não há usuários.",
-    usersLoadError: "Não foi possível carregar usuários.",
+    noUsers: "Ainda nÃ£o hÃ¡ usuÃ¡rios.",
+    usersLoadError: "NÃ£o foi possÃ­vel carregar usuÃ¡rios.",
     noRoutine: "Sem rotina",
-    unavailableRoutine: "Rotina indisponível: {id}",
-    user: "Usuário",
+    unavailableRoutine: "Rotina indisponÃ­vel: {id}",
+    user: "UsuÃ¡rio",
     noEmail: "Sem email",
     assignExistingRoutine: "Atribuir rotina existente",
     addRoutine: "Adicionar rotina",
     editCurrentRoutine: "Editar rotina atual",
     removeRoutine: "Remover rotina",
-    backToUsers: "← Voltar aos usuários",
+    backToUsers: "â† Voltar aos usuÃ¡rios",
     newRoutineFor: "Nova rotina para {name}",
     editingRoutine: "Editando {name}",
     newRoutineOption: "Nova rotina",
     noStartImage: "Sem imagem inicial",
     noEndImage: "Sem imagem final",
-    newExercise: "Novo exercício",
-    savedExercises: "Exercícios salvos",
-    editExercise: "Editar exercício",
-    saveExercise: "Salvar exercício",
-    exerciseSaved: "Exercício salvo.",
-    savedExercisesCount: "{count} exercícios salvos",
+    newExercise: "Novo exercÃ­cio",
+    savedExercises: "ExercÃ­cios salvos",
+    editExercise: "Editar exercÃ­cio",
+    saveExercise: "Salvar exercÃ­cio",
+    exerciseSaved: "ExercÃ­cio salvo.",
+    savedExercisesCount: "{count} exercÃ­cios salvos",
     editDay: "Editar dia",
     saveDay: "Salvar dia",
     editWeek: "Editar semana",
     saveWeek: "Salvar semana",
     weekSavedSummary: "Semana salva - {count} dias salvos",
-    deleteExercise: "Excluir exercício",
+    deleteExercise: "Excluir exercÃ­cio",
     objective: "Objetivo",
     startImage: "Imagem inicial",
     endImage: "Imagem final",
-    startImageAlt: "{name} posição inicial ou descida",
-    endImageAlt: "{name} posição final ou subida",
+    startImageAlt: "{name} posiÃ§Ã£o inicial ou descida",
+    endImageAlt: "{name} posiÃ§Ã£o final ou subida",
     uploadStartImage: "Enviar imagem inicial",
     uploadEndImage: "Enviar imagem final",
-    technicalGoal: "Objetivo técnico",
+    technicalGoal: "Objetivo tÃ©cnico",
     mistakesOnePerLine: "Erros comuns, um por linha",
     dayNumber: "Dia {number}",
     deleteDay: "Excluir dia",
-    dayTitle: "Título do dia",
+    dayTitle: "TÃ­tulo do dia",
     focus: "Foco",
-    createExercise: "Criar exercício",
-    emptyDay: "Este dia ainda não tem exercícios.",
+    createExercise: "Criar exercÃ­cio",
+    emptyDay: "Este dia ainda nÃ£o tem exercÃ­cios.",
     week: "Semana",
     noPhase: "Sem fase",
     deleteWeek: "Excluir semana",
-    number: "Número",
+    number: "NÃºmero",
     phase: "Fase",
     badge: "Etiqueta",
-    instructions: "Indicações",
+    instructions: "IndicaÃ§Ãµes",
     createDay: "Criar dia",
-    emptyWeek: "Esta semana ainda não tem dias.",
+    emptyWeek: "Esta semana ainda nÃ£o tem dias.",
     createWeekPrompt: "Crie uma semana para iniciar esta rotina.",
     newPhase: "Nova fase",
-    noMatchingExercises: "Nenhum exercício corresponde a essa busca.",
+    noMatchingExercises: "Nenhum exercÃ­cio corresponde a essa busca.",
     completeWeek: "Feita",
     restLower: "descanso",
-    hello: "Olá, {name}",
+    hello: "OlÃ¡, {name}",
     loadingRoutine: "Carregando rotina...",
-    adminRulesNotice: "Você entrou como admin.",
-    userLoadError: "Não foi possível carregar seu usuário.",
+    adminRulesNotice: "VocÃª entrou como admin.",
+    userLoadError: "NÃ£o foi possÃ­vel carregar seu usuÃ¡rio.",
     uploadingImage: "Salvando imagem...",
     imageLoaded: "Imagem comprimida e salva na rotina.",
     imageStoredInRoutine: "Imagem comprimida e salva na rotina.",
-    updatingUser: "Atualizando usuário...",
-    assignedRoutine: "Rotina atribuída ao usuário.",
-    userWithoutRoutine: "Usuário sem rotina atribuída.",
-    newRoutinePreparedAssign: "Nova rotina preparada. Ao salvar, será atribuída a este usuário.",
+    updatingUser: "Atualizando usuÃ¡rio...",
+    assignedRoutine: "Rotina atribuÃ­da ao usuÃ¡rio.",
+    userWithoutRoutine: "UsuÃ¡rio sem rotina atribuÃ­da.",
+    newRoutinePreparedAssign: "Nova rotina preparada. Ao salvar, serÃ¡ atribuÃ­da a este usuÃ¡rio.",
     removingRoutine: "Removendo rotina...",
-    routineRemoved: "Rotina removida. O usuário verá Em breve.",
+    routineRemoved: "Rotina removida. O usuÃ¡rio verÃ¡ Em breve.",
     newRoutinePrepared: "Nova rotina preparada. Edite os dados e salve.",
     darioMigrated: "Rotina Dario migrada.",
-    darioMigratedAssigned: "Rotina Dario migrada e atribuída ao usuário.",
+    darioMigratedAssigned: "Rotina Dario migrada e atribuÃ­da ao usuÃ¡rio.",
     routineNeedsId: "A rotina precisa de um ID.",
     routineSaved: "Rotina salva.",
-    routineSavedAssigned: "Rotina salva e atribuída ao usuário.",
+    routineSavedAssigned: "Rotina salva e atribuÃ­da ao usuÃ¡rio.",
     deleteRoutineConfirm: "Excluir a rotina \"{name}\"?",
-    routineDeleted: "Rotina excluída.",
-    deleteUser: "Excluir usuário",
-    deleteUserConfirm: "Excluir o usuário \"{name}\" do RutFit?",
-    userDeleted: "Usuário excluído.",
-    cannotDeleteSelf: "Você não pode excluir seu próprio usuário admin aqui.",
+    routineDeleted: "Rotina excluÃ­da.",
+    deleteUser: "Excluir usuÃ¡rio",
+    deleteUserConfirm: "Excluir o usuÃ¡rio \"{name}\" do RutFit?",
+    userDeleted: "UsuÃ¡rio excluÃ­do.",
+    cannotDeleteSelf: "VocÃª nÃ£o pode excluir seu prÃ³prio usuÃ¡rio admin aqui.",
     signingIn: "Entrando...",
     creatingAccount: "Criando conta...",
     writeEmailForReset: "Digite seu email para recuperar a senha.",
-    sendingReset: "Enviando email de recuperação...",
+    sendingReset: "Enviando email de recuperaÃ§Ã£o...",
     resetSent: "Enviei um email para recuperar a senha.",
     firebaseMissing: "Falta configurar Firebase em firebase-config.js.",
-    invalidEmail: "O email não é válido.",
+    invalidEmail: "O email nÃ£o Ã© vÃ¡lido.",
     invalidLogin: "Email ou senha incorretos.",
-    emailInUse: "Esse email já tem uma conta.",
+    emailInUse: "Esse email jÃ¡ tem uma conta.",
     weakPassword: "A senha deve ter pelo menos 6 caracteres.",
-    firebaseAuthMissing: "É necessário ativar Firebase Authentication neste projeto.",
+    firebaseAuthMissing: "Ã‰ necessÃ¡rio ativar Firebase Authentication neste projeto.",
     authProviderDisabled: "Ative Email/Password no Firebase Authentication.",
-    invalidApiKey: "A configuração do Firebase não é válida.",
-    permissionDenied: "Firestore está bloqueando o acesso. Revise as regras do banco de dados.",
-    firestoreNotFound: "Firestore ou o documento solicitado não foi encontrado. Confira se o banco é (default).",
-    firestorePending: "Firestore precisa terminar de ativar ou tem uma condição pendente ({code}). Aguarde um minuto e recarregue.",
-    firestoreUnavailable: "Firestore não está disponível agora. Revise conexão ou configuração.",
-    networkFailed: "Sem conexão. Tente novamente.",
-    actionFailed: "Não foi possível concluir a ação{code}.",
+    invalidApiKey: "A configuraÃ§Ã£o do Firebase nÃ£o Ã© vÃ¡lida.",
+    permissionDenied: "Firestore estÃ¡ bloqueando o acesso. Revise as regras do banco de dados.",
+    firestoreNotFound: "Firestore ou o documento solicitado nÃ£o foi encontrado. Confira se o banco Ã© (default).",
+    firestorePending: "Firestore precisa terminar de ativar ou tem uma condiÃ§Ã£o pendente ({code}). Aguarde um minuto e recarregue.",
+    firestoreUnavailable: "Firestore nÃ£o estÃ¡ disponÃ­vel agora. Revise conexÃ£o ou configuraÃ§Ã£o.",
+    networkFailed: "Sem conexÃ£o. Tente novamente.",
+    actionFailed: "NÃ£o foi possÃ­vel concluir a aÃ§Ã£o{code}.",
     storageNotReady: "A imagem e salva dentro da rotina.",
     selectImageFile: "Selecione um arquivo de imagem."
   }
@@ -1146,7 +1149,15 @@ function isFirebaseConfigured() {
 }
 
 function normalizeEmail(email) {
-  return email.trim().toLowerCase();
+  return String(email || "").trim().toLowerCase();
+}
+
+function normalizeText(text) {
+  return String(text || "")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .trim()
+    .toLowerCase();
 }
 
 function t(key, params = {}) {
@@ -1293,7 +1304,7 @@ function getProfileStats(user = {}) {
   return [
     user.weight ? `${user.weight} kg` : "",
     user.height ? `${user.height} m` : "",
-    user.age ? `${user.age} años` : ""
+    user.age ? `${user.age} aÃ±os` : ""
   ].filter(Boolean);
 }
 
@@ -1423,7 +1434,7 @@ async function ensureUserDocument(user) {
         { merge: true }
       );
     } catch (error) {
-      console.warn("No se pudo guardar el rol admin. Se usará el email admin local.", error);
+      console.warn("No se pudo guardar el rol admin. Se usarÃ¡ el email admin local.", error);
     }
     data.role = "admin";
   }
@@ -1708,7 +1719,7 @@ function getRecentActivityItems() {
     .map((invite) => {
       const student = state.adminUsers.find((user) => user.uid === invite.studentId);
       const name = student?.displayName || getDisplayNameFromEmail(invite.studentEmail || "") || invite.studentEmail || "Alumno";
-      return `${name} aceptó tu invitación`;
+      return `${name} aceptÃ³ tu invitaciÃ³n`;
     });
   const routinesUpdated = getAdminRoutineIds()
     .slice(0, 2)
@@ -1744,11 +1755,11 @@ function renderTrainerHome() {
       </article>
     </div>
 
-    <div class="home-section-title">Acciones rápidas</div>
+    <div class="home-section-title">Acciones rÃ¡pidas</div>
     <div class="home-actions">
       <button class="primary-button" type="button" data-home-action="new-student">+ Nuevo alumno</button>
-      <button class="secondary-button" type="button" data-home-action="new-routine">📋 Nueva rutina</button>
-      <button class="secondary-button" type="button" data-home-action="assign-routine">↻ Asignar rutina</button>
+      <button class="secondary-button" type="button" data-home-action="new-routine">ðŸ“‹ Nueva rutina</button>
+      <button class="secondary-button" type="button" data-home-action="assign-routine">â†» Asignar rutina</button>
     </div>
 
     <section class="home-activity">
@@ -1817,7 +1828,7 @@ function getNextTrainingLabel(routine = getActiveRoutine()) {
     for (let dayIndex = 0; dayIndex < (week.days || []).length; dayIndex += 1) {
       const day = week.days[dayIndex];
       const ids = (day.exercises || []).map((exerciseKey) => progressId(week.number, dayIndex, exerciseKey));
-      if (ids.some((id) => !progress[id])) return `${t("week")} ${week.number} · ${day.title}`;
+      if (ids.some((id) => !progress[id])) return `${t("week")} ${week.number} Â· ${day.title}`;
     }
   }
   return t("completeWeek");
@@ -1853,14 +1864,14 @@ function renderStudentHome() {
   const nextInfo = getNextTrainingInfo(routine);
   const displayName = state.currentUserData?.displayName || getDisplayNameFromEmail(state.currentUser?.email || "");
   const subtitle = nextInfo
-    ? `${t("week")} ${nextInfo.weekNumber} de ${nextInfo.totalWeeks} · Dia ${nextInfo.dayNumber} de ${nextInfo.totalDays}`
+    ? `${t("week")} ${nextInfo.weekNumber} de ${nextInfo.totalWeeks} Â· Dia ${nextInfo.dayNumber} de ${nextInfo.totalDays}`
     : (routine?.plan?.length ? "Rutina completada" : t("noRoutine"));
   const todayExercises = nextInfo ? nextInfo.exerciseCount : 0;
   const todayMinutes = todayExercises ? Math.round(todayExercises * 7.5) : 0;
   const todayKcal = todayMinutes ? Math.round(todayMinutes * 7) : 0;
 
   studentHome.innerHTML = `
-    <p class="sh-greeting">Hola, ${escapeHtml(displayName || t("user"))} <span aria-hidden="true">👋</span></p>
+    <p class="sh-greeting">Hola, ${escapeHtml(displayName || t("user"))} <span aria-hidden="true">ðŸ‘‹</span></p>
     <section class="student-dashboard-card">
       <div>
         <span class="kicker">Rutina actual</span>
@@ -1890,7 +1901,7 @@ function renderStudentHome() {
     <section class="student-current-card next-training-card">
       <small>${nextInfo ? `${t("week")} ${nextInfo.weekNumber}` : ""}</small>
       <strong>${escapeHtml(nextInfo ? nextInfo.dayTitle : getNextTrainingLabel(routine))}</strong>
-      <span>Manana · 18:00</span>
+      <span>Manana Â· 18:00</span>
     </section>
     <section class="student-current-card streak-card">
       <small>Racha</small>
@@ -1908,7 +1919,7 @@ function renderStudentHomeV2() {
   const nextInfo = getNextTrainingInfo(routine);
   const displayName = state.currentUserData?.displayName || getDisplayNameFromEmail(state.currentUser?.email || "");
   const subtitle = nextInfo
-    ? `${t("week")} ${nextInfo.weekNumber} de ${nextInfo.totalWeeks} · Día ${nextInfo.dayNumber} de ${nextInfo.totalDays}`
+    ? `${t("week")} ${nextInfo.weekNumber} de ${nextInfo.totalWeeks} Â· DÃ­a ${nextInfo.dayNumber} de ${nextInfo.totalDays}`
     : (routine?.plan?.length ? "Rutina completada" : t("noRoutine"));
   const todayExercises = nextInfo ? nextInfo.exerciseCount : 0;
   const todayMinutes = todayExercises ? Math.round(todayExercises * 7.5) : 0;
@@ -1954,16 +1965,16 @@ function renderStudentHomeV2() {
         <span>Kcal aprox.</span>
       </article>
     </div>
-    <div class="home-section-title">Próximo entrenamiento</div>
+    <div class="home-section-title">PrÃ³ximo entrenamiento</div>
     <button class="student-current-card next-training-card" type="button" data-student-home-action="routine">
       <small>${nextInfo ? `${t("week")} ${nextInfo.weekNumber}` : ""}</small>
       <strong>${escapeHtml(nextInfo ? nextInfo.dayTitle : getNextTrainingLabel(routine))}</strong>
-      <span>Mañana · 18:00</span>
+      <span>MaÃ±ana Â· 18:00</span>
     </button>
     <section class="student-current-card streak-card">
       <small>Racha</small>
       <strong>12</strong>
-      <span>Días seguidos</span>
+      <span>DÃ­as seguidos</span>
       <div class="flame-row" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
     </section>
   `;
@@ -1978,17 +1989,17 @@ function renderStudentNotifications() {
   studentProgress.innerHTML = `
     <section class="student-notifications-screen">
       <div class="screen-topbar progress-topbar">
-        <button class="icon-button ghost-icon" type="button" data-notification-action="back" aria-label="Volver">‹</button>
+        <button class="icon-button ghost-icon" type="button" data-notification-action="back" aria-label="Volver">â€¹</button>
         <h2>Notificaciones</h2>
         <span></span>
       </div>
-      <button class="notifications-read-all" type="button" data-notification-action="read-all">Marcar todas como leídas</button>
+      <button class="notifications-read-all" type="button" data-notification-action="read-all">Marcar todas como leÃ­das</button>
       <div class="notification-list">
         ${renderNotificationRow("purple", "Nuevo entrenamiento disponible", `${escapeHtml(nextTitle)}<br>Hace 1h`, "")}
-        ${renderNotificationRow("purple", "Entrenamiento completado", "Buen trabajo! Has completado tu entrenamiento del día.", "Ayer")}
-        ${renderNotificationRow("orange", "Recordatorio", "No olvides registrar tus medidas semanales.", "2 días")}
-        ${renderNotificationRow("orange", "Nueva rutina asignada", `${escapeHtml(routineName)} ha sido asignada a tu plan.`, "3 días")}
-        ${renderNotificationRow("orange", "Meta alcanzada", "Felicidades! 10 días de racha conseguidos.", "5 días")}
+        ${renderNotificationRow("purple", "Entrenamiento completado", "Buen trabajo! Has completado tu entrenamiento del dÃ­a.", "Ayer")}
+        ${renderNotificationRow("orange", "Recordatorio", "No olvides registrar tus medidas semanales.", "2 dÃ­as")}
+        ${renderNotificationRow("orange", "Nueva rutina asignada", `${escapeHtml(routineName)} ha sido asignada a tu plan.`, "3 dÃ­as")}
+        ${renderNotificationRow("orange", "Meta alcanzada", "Felicidades! 10 dÃ­as de racha conseguidos.", "5 dÃ­as")}
       </div>
     </section>
   `;
@@ -2030,7 +2041,7 @@ function renderStudentProgress() {
       <div class="screen-topbar progress-topbar">
         <span></span>
         <h2>Progreso</h2>
-        <button class="icon-button ghost-icon" type="button" data-progress-action="menu" aria-label="Opciones">⋮</button>
+        <button class="icon-button ghost-icon" type="button" data-progress-action="menu" aria-label="Opciones">â‹®</button>
       </div>
 
       <div class="mock-tabs progress-tabs">
@@ -2068,8 +2079,8 @@ function renderProgressSummary({ weekWorkouts, percent, kcal }) {
     </div>
 
     <section class="performance-card">
-      <div class="progress-section-title">Gráfico de rendimiento</div>
-      <div class="performance-chart" aria-label="Gráfico de rendimiento">
+      <div class="progress-section-title">GrÃ¡fico de rendimiento</div>
+      <div class="performance-chart" aria-label="GrÃ¡fico de rendimiento">
         <span class="axis top">100%</span>
         <span class="axis mid">50%</span>
         <span class="axis bottom">0%</span>
@@ -2086,13 +2097,13 @@ function renderProgressSummary({ weekWorkouts, percent, kcal }) {
             <circle cx="20" cy="118" r="4"/><circle cx="62" cy="91" r="4"/><circle cx="95" cy="48" r="4"/><circle cx="132" cy="82" r="4"/><circle cx="170" cy="56" r="4"/><circle cx="205" cy="92" r="4"/><circle cx="238" cy="55" r="4"/><circle cx="275" cy="42" r="4"/><circle cx="304" cy="22" r="4"/>
           </g>
         </svg>
-        <div class="chart-days"><span>Lun</span><span>Mar</span><span>Mié</span><span>Jue</span><span>Vie</span><span>Sáb</span><span>Dom</span></div>
+        <div class="chart-days"><span>Lun</span><span>Mar</span><span>MiÃ©</span><span>Jue</span><span>Vie</span><span>SÃ¡b</span><span>Dom</span></div>
       </div>
     </section>
 
     <section class="progress-streak">
       <div class="progress-section-title">Racha de entrenamiento</div>
-      <strong>12 <span>días seguidos</span></strong>
+      <strong>12 <span>dÃ­as seguidos</span></strong>
       <div class="flame-row" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
     </section>
   `;
@@ -2116,8 +2127,8 @@ function renderProgressHistory(routine) {
         <article class="history-row">
           <span class="routine-list-icon ${iconClass}"></span>
           <div>
-            <strong>${escapeHtml(day.title || `Día ${index + 1}`)}</strong>
-            <small>${date} · ${minutes} min</small>
+            <strong>${escapeHtml(day.title || `DÃ­a ${index + 1}`)}</strong>
+            <small>${date} Â· ${minutes} min</small>
           </div>
           <b>${percent}%</b>
         </article>
@@ -2128,7 +2139,7 @@ function renderProgressHistory(routine) {
   return `
     <section class="student-progress-screen progress-history-screen">
       <div class="screen-topbar progress-topbar">
-        <button class="icon-button ghost-icon" type="button" data-progress-back aria-label="Volver">‹</button>
+        <button class="icon-button ghost-icon" type="button" data-progress-back aria-label="Volver">â€¹</button>
         <h2>Historial</h2>
         <button class="icon-button ghost-icon filter-icon" type="button" data-progress-action="cycle-history" aria-label="Filtrar">${getInlineIcon("filter")}</button>
       </div>
@@ -2151,7 +2162,7 @@ function renderProgressMeasures() {
   return `
     <section class="student-progress-screen progress-measures-screen">
       <div class="screen-topbar progress-topbar">
-        <button class="icon-button ghost-icon" type="button" data-progress-back aria-label="Volver">‹</button>
+        <button class="icon-button ghost-icon" type="button" data-progress-back aria-label="Volver">â€¹</button>
         <h2>Medidas</h2>
         <span></span>
       </div>
@@ -2173,7 +2184,7 @@ function renderProgressMeasures() {
             <article><span>Grasa corporal</span><strong>${escapeHtml(bodyFat)}</strong><small>%</small></article>
             <article><span>Masa muscular</span><strong>${escapeHtml(muscleMass)}</strong><small>kg</small></article>
           </div>
-          <div class="progress-section-title">Histórico</div>
+          <div class="progress-section-title">HistÃ³rico</div>
           <div class="performance-chart compact-chart measure-chart">
             <span class="axis top">80</span>
             <span class="axis mid">78</span>
@@ -2352,9 +2363,18 @@ function renderAdminUsers() {
     return;
   }
 
+  const query = normalizeText(state.adminStudentQuery || "");
+  const filter = state.adminStudentFilter || "all";
+  const filteredUsers = state.adminUsers.filter((user) => {
+    const text = normalizeText(`${user.displayName || ""} ${user.email || ""}`);
+    const isActive = Boolean(user.routineId);
+    const matchesQuery = !query || text.includes(query);
+    const matchesFilter = filter === "all" || (filter === "active" ? isActive : !isActive);
+    return matchesQuery && matchesFilter;
+  });
   const visibleUsers = state.selectedAdminUserId
     ? state.adminUsers.filter((user) => user.uid === state.selectedAdminUserId)
-    : state.adminUsers;
+    : filteredUsers;
 
   if (state.selectedAdminUserId && !visibleUsers.length) {
     state.selectedAdminUserId = "";
@@ -2366,88 +2386,144 @@ function renderAdminUsers() {
     return;
   }
 
-  adminUsers.innerHTML = [
-    state.isTrainer && !state.isAdmin && !state.selectedAdminUserId ? renderTrainerInviteTools() : "",
-    state.selectedAdminUserId
-      ? `<button class="secondary-button admin-back-button" type="button" data-admin-users-back>${t("backToUsers")}</button>`
-      : "",
-    ...visibleUsers
-    .map((user) => {
-      const displayName = user.displayName || getDisplayNameFromEmail(user.email || "");
-      const profileStats = getProfileStats(user);
-      const currentRoutine = user.routineId || "";
-      const canDeleteUser = state.isAdmin && user.uid !== state.currentUser?.uid;
-      const currentRoutineName = currentRoutine && routines[currentRoutine]
-        ? routines[currentRoutine].name || currentRoutine
-        : currentRoutine
-          ? t("unavailableRoutine", { id: currentRoutine })
-          : t("noRoutine");
-      const isOpen = state.selectedAdminUserId === user.uid;
-      const routineOptions = [
-        `<option value="" ${!currentRoutine ? "selected" : ""}>${t("noRoutine")}</option>`,
-        ...routineIds.map((id) => `<option value="${escapeHtml(id)}" ${id === currentRoutine ? "selected" : ""}>${escapeHtml(routines[id].name || id)}</option>`),
-        currentRoutine && !routineIds.includes(currentRoutine)
-          ? `<option value="${escapeHtml(currentRoutine)}" selected>${escapeHtml(t("unavailableRoutine", { id: currentRoutine }))}</option>`
-          : ""
-      ].join("");
-      return `
-        <article class="admin-user-card ${isOpen ? "open" : ""}" data-user-id="${escapeHtml(user.uid)}">
-          <button class="admin-user-toggle ${isOpen ? "is-hidden" : ""}" type="button" data-user-toggle aria-expanded="${isOpen}">
-            ${renderUserAvatar(user, "student-list-avatar")}
-            <span class="admin-user-main">
-              <span class="admin-user-name-row">
-                <strong>${escapeHtml(displayName || t("user"))}</strong>
-                ${canDeleteUser ? `<button class="user-delete-button" type="button" data-user-delete aria-label="${t("deleteUser")}">×</button>` : ""}
-              </span>
-              <span>${escapeHtml(user.email || t("noEmail"))}</span>
-              ${profileStats.length ? `<span>${profileStats.map(escapeHtml).join(" · ")}</span>` : ""}
-              <small>${escapeHtml(user.role || "user")}</small>
-            </span>
-            <span class="admin-user-status">${escapeHtml(currentRoutineName)}</span>
-            <span class="week-chevron">${isOpen ? "−" : "+"}</span>
+  if (state.selectedAdminUserId) {
+    adminUsers.innerHTML = visibleUsers.map((user) => renderTrainerStudentActivity(user, routineIds)).join("");
+    return;
+  }
+
+  adminUsers.innerHTML = `
+    <section class="trainer-students-screen">
+      <div class="trainer-students-topbar">
+        <h2>Alumnos</h2>
+        <button class="trainer-add-student-button" type="button" data-admin-new-student aria-label="Nuevo alumno">+</button>
+      </div>
+      <label class="trainer-student-search">
+        <span aria-hidden="true">⌕</span>
+        <input type="search" data-admin-student-search value="${escapeHtml(state.adminStudentQuery || "")}" placeholder="Buscar alumnos..." autocomplete="off" />
+      </label>
+      <div class="trainer-student-tabs">
+        ${["all", "active", "inactive"].map((item) => `
+          <button type="button" data-admin-student-filter="${item}" class="${filter === item ? "active" : ""}">
+            ${item === "all" ? "Todos" : item === "active" ? "Activos" : "Inactivos"}
           </button>
-          ${isOpen ? `
-            <div class="admin-user-panel">
-              <section class="student-profile-card">
-                <div class="home-section-title">${t("profile")}</div>
-                <div class="student-profile-head">
-                  ${renderUserAvatar(user)}
-                  <div>
-                    <span class="admin-user-name-row">
-                      <strong>${escapeHtml(displayName || t("user"))}</strong>
-                      ${canDeleteUser ? `<button class="user-delete-button" type="button" data-user-delete aria-label="${t("deleteUser")}">×</button>` : ""}
-                    </span>
-                    <p>${profileStats.length ? profileStats.map(escapeHtml).join(" · ") : t("notCompleted")}</p>
-                  </div>
-                </div>
-                <div class="student-profile-list">
-                  <span>${t("goal")}</span>
-                  <strong>${escapeHtml(user.goal || t("notCompleted"))}</strong>
-                  <span>${t("trainerLabel")}</span>
-                  <strong>${escapeHtml(getTrainerDisplayName())}</strong>
-                  <span>${t("memberSince")}</span>
-                  <strong>${escapeHtml(formatMemberSince(user.createdAt))}</strong>
-                </div>
-              </section>
-              <label class="search-box admin-user-routine">
-                <span>${t("assignExistingRoutine")}</span>
-                <select data-user-routine>
-                  ${routineOptions}
-                </select>
-              </label>
-              <div class="admin-row-actions">
-                <button class="primary-button" type="button" data-user-action="add-routine">${t("addRoutine")}</button>
-                <button class="secondary-button" type="button" data-user-action="edit-routine" ${currentRoutine && routines[currentRoutine] ? "" : "disabled"}>${t("editCurrentRoutine")}</button>
-                <button class="danger-button" type="button" data-user-clear>${t("removeRoutine")}</button>
-              </div>
-            </div>
-          ` : ""}
-        </article>
-      `;
-    })
-  ].join("");
+        `).join("")}
+      </div>
+      ${state.adminStudentFormOpen ? renderTrainerNewStudentForm() : ""}
+      <div class="trainer-student-list">
+        ${filteredUsers.length
+          ? filteredUsers.map((user) => renderTrainerStudentListItem(user)).join("")
+          : `<div class="empty-state">${t("noStudents")}</div>`
+        }
+      </div>
+    </section>
+  `;
 }
 
+function renderTrainerStudentListItem(user) {
+  const displayName = user.displayName || getDisplayNameFromEmail(user.email || "");
+  const isActive = Boolean(user.routineId);
+  const canDeleteUser = state.isAdmin && user.uid !== state.currentUser?.uid;
+  return `
+    <article class="trainer-student-item" data-user-id="${escapeHtml(user.uid)}">
+      <button class="trainer-student-open" type="button" data-user-toggle>
+        ${renderUserAvatar(user, "student-list-avatar")}
+        <span>
+          <strong>${escapeHtml(displayName || t("user"))}</strong>
+          <small>${escapeHtml(user.email || t("noEmail"))}</small>
+        </span>
+        <em class="${isActive ? "active" : "inactive"}">${isActive ? "Activo" : "Inactivo"}</em>
+      </button>
+      ${canDeleteUser ? `<button class="user-delete-button compact-delete" type="button" data-user-delete aria-label="${t("deleteUser")}">×</button>` : ""}
+    </article>
+  `;
+}
+
+function renderTrainerNewStudentForm() {
+  return `
+    <section class="trainer-new-student-card">
+      <div class="screen-topbar">
+        <button class="icon-button ghost-icon" type="button" data-admin-new-student-close aria-label="Volver">‹</button>
+        <h2>Nuevo alumno</h2>
+        <span></span>
+      </div>
+      <div class="new-student-avatar">
+        ${renderUserAvatar(state.currentUserData || {}, "student-home-avatar")}
+        <b aria-hidden="true">▣</b>
+      </div>
+      <label class="search-box"><span>Nombre completo</span><input type="text" id="trainerInviteName" placeholder="Juan Pérez García" /></label>
+      <label class="search-box"><span>Email</span><input type="email" id="trainerInviteEmail" placeholder="juan.perez@email.com" /></label>
+      <label class="search-box"><span>Teléfono</span><input type="tel" id="trainerInvitePhone" placeholder="+34 600 123 456" /></label>
+      <label class="search-box"><span>Fecha de nacimiento</span><input type="text" id="trainerInviteBirth" placeholder="15/05/1995" /></label>
+      <div class="student-level-pills">
+        <span>Principiante</span><span class="active">Intermedio</span><span>Avanzado</span>
+      </div>
+      <button class="primary-button" type="button" data-trainer-action="invite">Guardar alumno</button>
+    </section>
+  `;
+}
+
+function renderTrainerStudentActivity(user, routineIds) {
+  const displayName = user.displayName || getDisplayNameFromEmail(user.email || "");
+  const currentRoutine = user.routineId || "";
+  const routine = currentRoutine ? routines[currentRoutine] : null;
+  const currentRoutineName = routine ? routine.name || currentRoutine : t("noRoutine");
+  const routineStats = routine ? getRoutineProgressStats(routine) : { percent: 0, totalSessions: 0 };
+  const nextInfo = routine ? getNextTrainingInfo(routine) : null;
+  const canDeleteUser = state.isAdmin && user.uid !== state.currentUser?.uid;
+  const routineOptions = [
+    `<option value="" ${!currentRoutine ? "selected" : ""}>${t("noRoutine")}</option>`,
+    ...routineIds.map((id) => `<option value="${escapeHtml(id)}" ${id === currentRoutine ? "selected" : ""}>${escapeHtml(routines[id].name || id)}</option>`),
+    currentRoutine && !routineIds.includes(currentRoutine)
+      ? `<option value="${escapeHtml(currentRoutine)}" selected>${escapeHtml(t("unavailableRoutine", { id: currentRoutine }))}</option>`
+      : ""
+  ].join("");
+  return `
+    <section class="trainer-student-activity" data-user-id="${escapeHtml(user.uid)}">
+      <div class="screen-topbar">
+        <button class="icon-button ghost-icon" type="button" data-admin-users-back aria-label="Volver">‹</button>
+        <h2>${escapeHtml(displayName || t("user"))}</h2>
+        ${canDeleteUser ? `<button class="icon-button ghost-icon user-delete-button" type="button" data-user-delete aria-label="${t("deleteUser")}">⋮</button>` : `<button class="icon-button ghost-icon" type="button" aria-label="Opciones">⋮</button>`}
+      </div>
+      <div class="activity-profile-hero">
+        ${renderUserAvatar(user, "student-activity-avatar")}
+      </div>
+      <div class="student-activity-tabs">
+        <button class="active" type="button">Resumen</button>
+        <button type="button" data-user-action="edit-routine" ${currentRoutine && routines[currentRoutine] ? "" : "disabled"}>Rutinas</button>
+        <button type="button">Progreso</button>
+        <button type="button">Historial</button>
+      </div>
+      <section class="student-activity-routine">
+        <div>
+          <small>Rutina actual</small>
+          <strong>${escapeHtml(currentRoutineName)}</strong>
+          <span>${nextInfo ? `Semana ${nextInfo.weekNumber} de ${nextInfo.totalWeeks}` : "Sin plan activo"}</span>
+        </div>
+        <div class="mini-progress" style="--progress:${routineStats.percent}%"><strong>${routineStats.percent}%</strong></div>
+      </section>
+      <div class="progress-section-title">Estadísticas</div>
+      <div class="student-activity-stats">
+        <article><b>▣</b><strong>${routineStats.totalSessions || 0}</strong><span>Entrenamientos</span></article>
+        <article><b>◴</b><strong>12h 45m</strong><span>Tiempo total</span></article>
+        <article><b>◎</b><strong>85%</strong><span>Asistencia</span></article>
+      </div>
+      <div class="progress-section-title">Próximo entrenamiento</div>
+      <section class="student-current-card next-training-card">
+        <strong>${escapeHtml(nextInfo ? nextInfo.dayTitle : getNextTrainingLabel(routine))}</strong>
+        <span>Mañana · 18:00</span>
+      </section>
+      <label class="search-box admin-user-routine">
+        <span>${t("assignExistingRoutine")}</span>
+        <select data-user-routine>${routineOptions}</select>
+      </label>
+      <div class="admin-row-actions">
+        <button class="primary-button" type="button" data-user-action="add-routine">${t("addRoutine")}</button>
+        <button class="secondary-button" type="button" data-user-action="edit-routine" ${currentRoutine && routines[currentRoutine] ? "" : "disabled"}>${t("editCurrentRoutine")}</button>
+        <button class="danger-button" type="button" data-user-clear>${t("removeRoutine")}</button>
+      </div>
+    </section>
+  `;
+}
 async function saveRoutineToFirestore(routine) {
   const data = serializeRoutine(routine);
   if (state.isTrainer && !state.isAdmin) {
@@ -2755,7 +2831,7 @@ function renderAccountPanel() {
           <strong>${escapeHtml(displayName || t("user"))}</strong>
           <span>${escapeHtml(email || t("noEmail"))}</span>
           <small>${escapeHtml(role)}</small>
-          ${stats.length ? `<p>${stats.map(escapeHtml).join(" · ")}</p>` : ""}
+          ${stats.length ? `<p>${stats.map(escapeHtml).join(" Â· ")}</p>` : ""}
         </div>
       </article>
       <div class="profile-form">
@@ -2798,7 +2874,7 @@ function renderAccountPanel() {
       </div>
       <p class="account-help">${t("accountPanelHelp")}</p>
       <section class="settings-list" aria-label="${t("accountNav")}">
-        <div><span>Información personal</span><strong>></strong></div>
+        <div><span>InformaciÃ³n personal</span><strong>></strong></div>
         <div><span>Objetivos</span><strong>></strong></div>
         <div><span>Preferencias</span><strong>></strong></div>
         <div><span>Centro de ayuda</span><strong>></strong></div>
@@ -2849,24 +2925,24 @@ const routines = {
     id: "bia",
     name: "Bia",
     title: "Rutina Bia",
-    kicker: "Próximamente",
+    kicker: "PrÃ³ximamente",
     exerciseLibrary: {},
     plan: []
   },
   pending: {
     id: "pending",
     name: "Sin rutina",
-    title: "Rutina en preparación",
-    kicker: "Próximamente",
+    title: "Rutina en preparaciÃ³n",
+    kicker: "PrÃ³ximamente",
     exerciseLibrary: {},
     plan: []
   }
 };
 
 routines.dario.title = "RutFit";
-routines.bia.kicker = "Próximamente";
-routines.pending.title = "Rutina en preparación";
-routines.pending.kicker = "Próximamente";
+routines.bia.kicker = "PrÃ³ximamente";
+routines.pending.title = "Rutina en preparaciÃ³n";
+routines.pending.kicker = "PrÃ³ximamente";
 
 function progressId(week, dayIndex, exerciseKey) {
   return `w${week}-d${dayIndex + 1}-${exerciseKey}`;
@@ -2904,16 +2980,16 @@ function matchesFilters(exercise) {
 function phasePrescription(exercise, weekNumber) {
   if ([4, 8].includes(weekNumber)) {
     return {
-      sets: exercise.objective === "recuperación" ? exercise.baseSets : "2-3",
+      sets: exercise.objective === "recuperaciÃ³n" ? exercise.baseSets : "2-3",
       reps: exercise.objective === "fuerza" ? "3 suave" : exercise.baseReps,
-      rest: exercise.objective === "recuperación" ? exercise.rest : "1:00-1:30"
+      rest: exercise.objective === "recuperaciÃ³n" ? exercise.rest : "1:00-1:30"
     };
   }
 
   if (weekNumber === 12) {
     return {
       sets: exercise.objective === "lactato" ? "4" : "2-3",
-      reps: exercise.objective === "fuerza" ? "2 rápido" : exercise.baseReps,
+      reps: exercise.objective === "fuerza" ? "2 rÃ¡pido" : exercise.baseReps,
       rest: exercise.objective === "lactato" ? "1:30" : exercise.rest
     };
   }
@@ -3135,10 +3211,10 @@ function renderRoutineCatalog(routineIds) {
             <span class="routine-list-icon ${getRoutineCardIcon(index)}"></span>
             <span class="routine-list-main">
               <strong>${escapeHtml(routine.name || id)}</strong>
-              <small>${totalWeeks} semanas · ${assigned} alumnos</small>
+              <small>${totalWeeks} semanas Â· ${assigned} alumnos</small>
             </span>
             <span class="routine-mini-ring" style="--progress:${progressValue}%">${progressValue}%</span>
-            <button class="routine-menu-button" type="button" data-routine-card-edit="${escapeHtml(id)}" aria-label="Editar rutina">⋮</button>
+            <button class="routine-menu-button" type="button" data-routine-card-edit="${escapeHtml(id)}" aria-label="Editar rutina">â‹®</button>
           </article>
         `;
       }).join("")}
@@ -3156,14 +3232,14 @@ function getProfileCompletionPercent() {
 function renderStudentProfileAccount(userData, displayName, email) {
   const percent = getProfileCompletionPercent();
   const stats = [
-    ["12", "Días de racha"],
+    ["12", "DÃ­as de racha"],
     [String(Object.values(progress).filter(Boolean).length), "Entrenamientos"],
     [`${percent}%`, "Cumplimiento"]
   ];
   return `
     <section class="student-account-screen profile-screen">
       <div class="screen-topbar">
-        <button class="icon-button ghost-icon" type="button" data-account-back aria-label="Volver">‹</button>
+        <button class="icon-button ghost-icon" type="button" data-account-back aria-label="Volver">â€¹</button>
         <h2>Perfil del Alumno</h2>
         <button class="icon-button ghost-icon" type="button" data-account-section="settings" aria-label="Ajustes">${getInlineIcon("settings")}</button>
       </div>
@@ -3190,7 +3266,7 @@ function renderStudentProfileAccount(userData, displayName, email) {
       </div>
 
       <section class="settings-list account-menu">
-        <button type="button" data-account-section="personal"><span>${getInlineIcon("user")} Información personal</span><strong>></strong></button>
+        <button type="button" data-account-section="personal"><span>${getInlineIcon("user")} InformaciÃ³n personal</span><strong>></strong></button>
         <button type="button" data-account-section="goals"><span>${getInlineIcon("heart")} Objetivos</span><strong>></strong></button>
         <button type="button" data-account-section="settings"><span>${getInlineIcon("settings")} Preferencias</span><strong>></strong></button>
         <button type="button" data-account-action="help"><span>${getInlineIcon("info")} Centro de ayuda</span><strong>></strong></button>
@@ -3236,14 +3312,14 @@ function renderStudentSettingsAccount(userData) {
   return `
     <section class="student-account-screen settings-screen">
       <div class="screen-topbar">
-        <button class="icon-button ghost-icon" type="button" data-account-section="profile" aria-label="Volver">‹</button>
+        <button class="icon-button ghost-icon" type="button" data-account-section="profile" aria-label="Volver">â€¹</button>
         <h2>Ajustes</h2>
         <span></span>
       </div>
 
       <div class="settings-group-title">Preferencias</div>
       <section class="settings-list account-menu">
-        <button type="button" data-settings-action="units"><span>Unidades</span><em>Métrico (kg, cm)</em><strong>></strong></button>
+        <button type="button" data-settings-action="units"><span>Unidades</span><em>MÃ©trico (kg, cm)</em><strong>></strong></button>
         ${renderPreferenceToggle("reminders", "Recordatorios", preference("reminders", true))}
         ${renderPreferenceToggle("notifications", "Notificaciones", preference("notifications", true))}
         ${renderPreferenceToggle("sounds", "Sonidos", preference("sounds", true))}
@@ -3251,13 +3327,13 @@ function renderStudentSettingsAccount(userData) {
 
       <div class="settings-group-title">Cuenta</div>
       <section class="settings-list account-menu">
-        <button type="button" data-settings-action="password"><span>Cambiar contraseña</span><strong>></strong></button>
+        <button type="button" data-settings-action="password"><span>Cambiar contraseÃ±a</span><strong>></strong></button>
         <button type="button" data-settings-action="privacy"><span>Privacidad</span><strong>></strong></button>
         <button class="delete-account-row" type="button" data-settings-action="delete"><span>Eliminar cuenta</span></button>
       </section>
 
       <p class="account-status" id="accountStatus" aria-live="polite"></p>
-      <p class="app-version">Versión 1.0.0</p>
+      <p class="app-version">VersiÃ³n 1.0.0</p>
     </section>
   `;
 }
@@ -3372,7 +3448,7 @@ function renderAdminPanel() {
                   <div class="admin-exercise-summary">
                     <div>
                       <strong>${escapeHtml(exercise.name || t("newExercise"))}</strong>
-                      <small>${escapeHtml([exercise.objective, exercise.baseSets && exercise.baseReps ? `${exercise.baseSets} x ${exercise.baseReps}` : "", exercise.rest].filter(Boolean).join(" · "))}</small>
+                      <small>${escapeHtml([exercise.objective, exercise.baseSets && exercise.baseReps ? `${exercise.baseSets} x ${exercise.baseReps}` : "", exercise.rest].filter(Boolean).join(" Â· "))}</small>
                     </div>
                     <div class="admin-row-actions compact">
                       <button class="secondary-button" type="button" data-admin-action="edit-exercise">${t("editExercise")}</button>
@@ -3699,9 +3775,9 @@ function renderPlan() {
                   <span class="exercise-thumb objective-dot ${objectiveClass}">${thumb}</span>
                   <span>
                     <strong>${exercise.name}</strong>
-                    <small>${exercise.objective} · ${prescription.sets} x ${prescription.reps} · ${t("restLower")} ${prescription.rest}</small>
+                    <small>${exercise.objective} Â· ${prescription.sets} x ${prescription.reps} Â· ${t("restLower")} ${prescription.rest}</small>
                   </span>
-                  <span class="done-mark">✓</span>
+                  <span class="done-mark">âœ“</span>
                 </button>
               `;
             })
@@ -3787,16 +3863,16 @@ function renderStudentRoutineOverview(routine) {
           <small>${escapeHtml(phase.name || `Semana ${index + 1}`)}</small>
         </span>
         <b>${percent >= 100 ? "100%" : percent > 0 ? "En progreso" : "0%"}</b>
-        <i>${percent >= 100 ? "✓" : ">"}</i>
+        <i>${percent >= 100 ? "âœ“" : ">"}</i>
       </button>
     `;
   }).join("");
   return `
     <section class="student-routine-screen routine-overview-screen">
       <div class="screen-topbar routine-topbar">
-        <button class="icon-button ghost-icon" type="button" data-routine-back aria-label="Volver">‹</button>
+        <button class="icon-button ghost-icon" type="button" data-routine-back aria-label="Volver">â€¹</button>
         <h2>Mi Rutina</h2>
-        <button class="icon-button ghost-icon" type="button" data-routine-menu aria-label="Opciones">⋮</button>
+        <button class="icon-button ghost-icon" type="button" data-routine-menu aria-label="Opciones">â‹®</button>
       </div>
       <section class="routine-current-card">
         <div>
@@ -3808,7 +3884,7 @@ function renderStudentRoutineOverview(routine) {
       </section>
       <div class="mock-tabs routine-tabs">
         <button type="button" data-routine-tab="weeks" class="active">Semanas</button>
-        <button type="button" data-routine-tab="info">Información</button>
+        <button type="button" data-routine-tab="info">InformaciÃ³n</button>
       </div>
       <section class="routine-week-list">
         ${weekRows || `<div class="empty-state">${t("routineInPreparation")}</div>`}
@@ -3825,8 +3901,8 @@ function renderStudentRoutineInfo(routine) {
   return `
     <section class="student-routine-screen routine-info-screen">
       <div class="screen-topbar routine-topbar">
-        <button class="icon-button ghost-icon" type="button" data-routine-tab="weeks" aria-label="Volver">‹</button>
-        <h2>Información de Rutina</h2>
+        <button class="icon-button ghost-icon" type="button" data-routine-tab="weeks" aria-label="Volver">â€¹</button>
+        <h2>InformaciÃ³n de Rutina</h2>
         <span></span>
       </div>
       <section class="routine-current-card">
@@ -3837,15 +3913,15 @@ function renderStudentRoutineInfo(routine) {
         ${renderRoutineProgressRing(stats.percent)}
       </section>
       <div class="mock-tabs routine-tabs">
-        <button type="button" data-routine-tab="info" class="active">Información</button>
+        <button type="button" data-routine-tab="info" class="active">InformaciÃ³n</button>
         <button type="button" data-routine-tab="notes">Notas</button>
       </div>
       <section class="routine-info-list">
         <article><span>Objetivo</span><strong>${escapeHtml(routine.goal || "Aumentar fuerza y masa muscular")}</strong></article>
         <article><span>Nivel</span><strong>${escapeHtml(routine.level || "Intermedio")}</strong></article>
-        <article><span>Duración</span><strong>${routine.plan.length || 0} semanas</strong></article>
-        <article><span>Descripción</span><strong>${escapeHtml(description)}</strong></article>
-        <article><span>Frecuencia</span><strong>${escapeHtml(routine.frequency || "4 días por semana")}</strong></article>
+        <article><span>DuraciÃ³n</span><strong>${routine.plan.length || 0} semanas</strong></article>
+        <article><span>DescripciÃ³n</span><strong>${escapeHtml(description)}</strong></article>
+        <article><span>Frecuencia</span><strong>${escapeHtml(routine.frequency || "4 dÃ­as por semana")}</strong></article>
         <article><span>Equipo</span><strong>${escapeHtml(routine.equipment || "Gimnasio")}</strong></article>
       </section>
     </section>
@@ -3869,10 +3945,10 @@ function renderStudentRoutineWeek(routine, week) {
         <button class="routine-day-row" type="button" data-routine-day="${dayIndex}">
           <span class="routine-list-icon ${iconClass}"></span>
           <span>
-            <strong>${escapeHtml(day.title || `Día ${dayIndex + 1}`)}</strong>
+            <strong>${escapeHtml(day.title || `DÃ­a ${dayIndex + 1}`)}</strong>
             <small>${escapeHtml(day.focus || (completed ? "Completado" : inProgress ? "En progreso" : "Pendiente"))}</small>
           </span>
-          <b class="${completed ? "complete" : inProgress ? "progress" : ""}">${completed ? "✓" : inProgress ? "▶" : "□"}</b>
+          <b class="${completed ? "complete" : inProgress ? "progress" : ""}">${completed ? "âœ“" : inProgress ? "â–¶" : "â–¡"}</b>
         </button>
         ${exerciseList}
       </article>
@@ -3881,7 +3957,7 @@ function renderStudentRoutineWeek(routine, week) {
   return `
     <section class="student-routine-screen routine-week-screen">
       <div class="screen-topbar routine-topbar">
-        <button class="icon-button ghost-icon" type="button" data-routine-tab="weeks" aria-label="Volver">‹</button>
+        <button class="icon-button ghost-icon" type="button" data-routine-tab="weeks" aria-label="Volver">â€¹</button>
         <h2>${t("week")} ${week.number} - ${escapeHtml(phase.name || "Hipertrofia")}</h2>
         <span></span>
       </div>
@@ -3892,7 +3968,7 @@ function renderStudentRoutineWeek(routine, week) {
         </div>
         <div class="week-progress-bar"><span style="width:${percent}%"></span></div>
       </section>
-      <div class="progress-section-title">Días</div>
+      <div class="progress-section-title">DÃ­as</div>
       <section class="routine-day-list">${days || `<div class="empty-state">${t("emptyWeek")}</div>`}</section>
     </section>
   `;
@@ -3913,9 +3989,9 @@ function renderStudentRoutineDayExercises(routine, week, day, dayIndex) {
         <span class="exercise-thumb objective-dot ${normalize(exercise.objective).replaceAll(" ", "-")}">${thumb}</span>
         <span>
           <strong>${escapeHtml(exercise.name || t("newExercise"))}</strong>
-          <small>${escapeHtml(exercise.objective || "")} · ${escapeHtml(prescription.sets)} x ${escapeHtml(prescription.reps)}</small>
+          <small>${escapeHtml(exercise.objective || "")} Â· ${escapeHtml(prescription.sets)} x ${escapeHtml(prescription.reps)}</small>
         </span>
-        <span class="done-mark">✓</span>
+        <span class="done-mark">âœ“</span>
       </button>
     `;
   }).join("");
@@ -3954,16 +4030,16 @@ function renderStudentRoutineDayScreen(routine, week, day, dayIndex) {
           <strong>${index + 1}. ${escapeHtml(exercise.name || t("newExercise"))}</strong>
           <small>${escapeHtml(prescription.sets)} series x ${escapeHtml(prescription.reps)} reps</small>
         </span>
-        <b>${done ? "✓" : current ? "▶" : "○"}</b>
+        <b>${done ? "âœ“" : current ? "â–¶" : "â—‹"}</b>
       </button>
     `;
   }).join("");
   return `
     <section class="student-routine-screen training-day-screen">
       <div class="screen-topbar routine-topbar">
-        <button class="icon-button ghost-icon" type="button" data-routine-view="week" aria-label="Volver">‹</button>
-        <h2>${escapeHtml(day.title || `Día ${dayIndex + 1}`)}</h2>
-        <button class="icon-button ghost-icon" type="button" data-routine-menu aria-label="Opciones">⋮</button>
+        <button class="icon-button ghost-icon" type="button" data-routine-view="week" aria-label="Volver">â€¹</button>
+        <h2>${escapeHtml(day.title || `DÃ­a ${dayIndex + 1}`)}</h2>
+        <button class="icon-button ghost-icon" type="button" data-routine-menu aria-label="Opciones">â‹®</button>
       </div>
       <span class="training-status">${stats.percent >= 100 ? "Completado" : stats.percent > 0 ? "En progreso" : "Pendiente"}</span>
       <div class="progress-stat-grid training-stat-grid">
@@ -3992,9 +4068,9 @@ function renderStudentExerciseScreen(routine, week, day, dayIndex, exerciseKey) 
   return `
     <section class="student-routine-screen exercise-run-screen">
       <div class="screen-topbar routine-topbar">
-        <button class="icon-button ghost-icon" type="button" data-routine-view="day" aria-label="Volver">‹</button>
+        <button class="icon-button ghost-icon" type="button" data-routine-view="day" aria-label="Volver">â€¹</button>
         <h2>${escapeHtml(exercise.name || t("newExercise"))}</h2>
-        <button class="icon-button ghost-icon" type="button" data-routine-menu aria-label="Opciones">⋮</button>
+        <button class="icon-button ghost-icon" type="button" data-routine-menu aria-label="Opciones">â‹®</button>
       </div>
       <div class="exercise-run-image">
         <img src="${escapeHtml(image)}" alt="${escapeHtml(exercise.name || t("newExercise"))}" />
@@ -4366,7 +4442,35 @@ adminUsers.addEventListener("change", async (event) => {
   }
 });
 
+adminUsers.addEventListener("input", (event) => {
+  const searchInput = event.target.closest("[data-admin-student-search]");
+  if (!searchInput) return;
+  state.adminStudentQuery = searchInput.value || "";
+  renderAdminUsers();
+});
+
 adminUsers.addEventListener("click", async (event) => {
+  const newStudentButton = event.target.closest("[data-admin-new-student]");
+  if (newStudentButton) {
+    state.adminStudentFormOpen = true;
+    renderAdminUsers();
+    return;
+  }
+
+  const closeNewStudentButton = event.target.closest("[data-admin-new-student-close]");
+  if (closeNewStudentButton) {
+    state.adminStudentFormOpen = false;
+    renderAdminUsers();
+    return;
+  }
+
+  const filterButton = event.target.closest("[data-admin-student-filter]");
+  if (filterButton) {
+    state.adminStudentFilter = filterButton.dataset.adminStudentFilter || "all";
+    renderAdminUsers();
+    return;
+  }
+
   const deleteButton = event.target.closest("[data-user-delete]");
   if (deleteButton) {
     const card = deleteButton.closest("[data-user-id]");
@@ -4580,7 +4684,7 @@ accountPanel?.addEventListener("click", async (event) => {
     if (action === "password") {
       try {
         await firebase.auth().sendPasswordResetEmail(state.currentUser.email);
-        if (status) status.textContent = "Te enviamos un mail para cambiar la contraseña.";
+        if (status) status.textContent = "Te enviamos un mail para cambiar la contraseÃ±a.";
       } catch (error) {
         if (status) status.textContent = getAuthErrorMessage(error);
       }
@@ -4591,13 +4695,13 @@ accountPanel?.addEventListener("click", async (event) => {
       return;
     }
     if (action === "units") {
-      if (status) status.textContent = "RutFit usa sistema métrico: kg y cm.";
+      if (status) status.textContent = "RutFit usa sistema mÃ©trico: kg y cm.";
       return;
     }
     if (action === "delete") {
-      const confirmed = await showConfirmDialog("¿Eliminar tu cuenta de RutFit?");
+      const confirmed = await showConfirmDialog("Â¿Eliminar tu cuenta de RutFit?");
       if (!confirmed) return;
-      if (status) status.textContent = "Para eliminar la cuenta definitivamente, vuelve a iniciar sesión recientemente y solicita eliminación al admin.";
+      if (status) status.textContent = "Para eliminar la cuenta definitivamente, vuelve a iniciar sesiÃ³n recientemente y solicita eliminaciÃ³n al admin.";
       return;
     }
   }
@@ -4699,7 +4803,7 @@ studentProgress?.addEventListener("click", (event) => {
     setActiveView("home");
   }
   if (button.dataset.notificationAction === "read-all") {
-    button.textContent = "Todo leído";
+    button.textContent = "Todo leÃ­do";
     button.disabled = true;
   }
 });
