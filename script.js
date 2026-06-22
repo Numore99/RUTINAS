@@ -671,7 +671,7 @@ const translations = {
     newRoutinePreparedAssign: "Nueva rutina preparada. Al guardar se asigna a este usuario.",
     removingRoutine: "Quitando rutina...",
     routineRemoved: "Rutina quitada. El usuario ver? Pr?ximamente.",
-    newRoutinePrepared: "Nueva rutina preparada. Edita los datos y gu?rdala.",
+    newRoutinePrepared: "Nueva rutina preparada. Edita los datos y guárdala.",
     darioMigrated: "Rutina Dario migrada.",
     darioMigratedAssigned: "Rutina Dario migrada y asignada al usuario.",
     routineNeedsId: "La rutina necesita un ID.",
@@ -1080,7 +1080,7 @@ const translations = {
     updatingUser: "Atualizando usu?rio...",
     assignedRoutine: "Rotina atribu?da ao usu?rio.",
     userWithoutRoutine: "Usu?rio sem rotina atribu?da.",
-    newRoutinePreparedAssign: "Nova rotina preparada. Ao salvar, ser? atribu?da a este usu?rio.",
+    newRoutinePreparedAssign: "Nova rotina preparada. Ao salvar, será atribuída a este usuário.",
     removingRoutine: "Removendo rotina...",
     routineRemoved: "Rotina removida. O usu?rio ver? Em breve.",
     newRoutinePrepared: "Nova rotina preparada. Edite os dados e salve.",
@@ -5391,15 +5391,23 @@ adminSaveRoutine.addEventListener("click", async () => {
     return;
   }
   try {
+    const savedRoutineId = state.adminDraft.id;
     const assignedUserId = await saveAdminDraftAndAssignment();
     setAdminMessage(assignedUserId ?t("routineSavedAssigned") : t("routineSaved"), "success");
-    state.adminEditorMode = "";
-    state.pendingAssignUserId = "";
+    state.adminEditorMode = "edit";
+    state.pendingAssignUserId = assignedUserId || "";
     state.adminEditingExerciseKey = "";
-    state.adminDraft = null;
-    state.activeView = "home";
-    state.adminPanelOpen = false;
-    renderAdminPanel();
+    state.adminWeekEditorIndex = null;
+    state.adminDayEditorIndex = null;
+    setAdminDraftFromRoutine(savedRoutineId);
+    state.adminDraft.plan.forEach((week) => {
+      week.collapsed = true;
+      (week.days || []).forEach((day) => {
+        day.collapsed = true;
+      });
+    });
+    state.activeView = "routines";
+    state.adminPanelOpen = true;
     renderApp();
   } catch (error) {
     setAdminMessage(getAuthErrorMessage(error), "error");
