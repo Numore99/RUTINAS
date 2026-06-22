@@ -5944,6 +5944,308 @@ button.student-current-card {
   grid-template-columns: 1fr;
 }
 
+/* Trainer routine editor replica */
+.admin-panel.routines-view #adminRoutineEditor {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
+}
+
+.admin-panel.routines-view.editing-routine #adminRoutineEditor > .admin-card-title {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.82rem;
+}
+
+.admin-panel.routines-view.editing-routine #adminRoutineEditor > .admin-card-title::before {
+  content: none;
+}
+
+.admin-editor-back {
+  display: none;
+}
+
+.admin-panel.routines-view.editing-routine .admin-editor-back {
+  display: grid;
+  place-items: center;
+  width: 1.8rem;
+  height: 1.8rem;
+  color: #fff;
+  font-size: 1.35rem;
+}
+
+.admin-panel.routines-view.editing-routine #adminRoutineEditor > .admin-card-title::after {
+  content: "⋮";
+  color: #8f9db8;
+  font-size: 1.2rem;
+}
+
+.admin-panel.routines-view.editing-routine #adminRoutineEditor > .admin-card-title small {
+  display: none;
+}
+
+.admin-panel.routines-view.editing-routine #adminRoutineEditor > .admin-card-title h3 {
+  margin: 0;
+  color: #fff;
+  font-size: 1.05rem;
+  text-align: center;
+}
+
+.admin-panel.routines-view.editing-routine .admin-grid {
+  display: grid;
+  gap: 0.74rem;
+  padding: 0;
+}
+
+.admin-panel.routines-view.editing-routine .admin-grid .search-box {
+  min-height: 3.35rem;
+  padding: 0.48rem 0.72rem;
+  border-radius: 11px;
+  background: rgba(13, 27, 54, 0.86);
+}
+
+.admin-panel.routines-view.editing-routine .admin-grid .search-box span {
+  color: #92a4c2;
+  font-size: 0.56rem;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.admin-panel.routines-view.editing-routine .admin-grid .search-box input,
+.admin-panel.routines-view.editing-routine .admin-grid .search-box select {
+  min-height: 1.6rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #fff;
+  font-size: 0.76rem;
+}
+
+.admin-panel.routines-view.editing-routine .admin-grid label[for="adminRoutineSelect"],
+.admin-panel.routines-view.editing-routine .admin-grid label[for="adminRoutineId"] {
+  display: none;
+}
+
+.admin-panel.routines-view.editing-routine .admin-grid label[for="adminRoutineName"] span {
+  font-size: 0;
+}
+
+.admin-panel.routines-view.editing-routine .admin-grid label[for="adminRoutineName"] span::after {
+  content: "Nombre de la rutina";
+  font-size: 0.56rem;
+}
+
+.admin-panel.routines-view.editing-routine .admin-grid label[for="adminRoutineTitle"] span {
+  font-size: 0;
+}
+
+.admin-panel.routines-view.editing-routine .admin-grid label[for="adminRoutineTitle"] span::after {
+  content: "Objetivo";
+  font-size: 0.56rem;
+}
+
+.admin-panel.routines-view.editing-routine .admin-grid label[for="adminRoutineKicker"] span {
+  font-size: 0;
+}
+
+.admin-panel.routines-view.editing-routine .admin-grid label[for="adminRoutineKicker"] span::after {
+  content: "Duración estimada / etiqueta";
+  font-size: 0.56rem;
+}
+
+.admin-panel.routines-view.editing-routine .admin-actions {
+  display: grid;
+  gap: 0.55rem;
+  margin: 0.85rem 0;
+}
+
+.admin-panel.routines-view.editing-routine .admin-actions #adminSaveRoutine {
+  order: 10;
+  min-height: 2.9rem;
+  border-radius: 11px;
+}
+
+.admin-panel.routines-view.editing-routine .admin-actions #adminAddWeek {
+  order: 9;
+  min-height: 2.55rem;
+  border-radius: 11px;
+  background: linear-gradient(135deg, rgba(91, 53, 255, 0.92), rgba(191, 36, 242, 0.86));
+  color: #fff;
+}
+
+.admin-panel.routines-view.editing-routine .admin-actions #adminNewRoutine,
+.admin-panel.routines-view.editing-routine .admin-actions #adminEditRoutine,
+.admin-panel.routines-view.editing-routine .admin-actions #adminSeedDario {
+  display: none;
+}
+
+.admin-panel.routines-view.editing-routine .admin-actions #adminDeleteRoutine {
+  order: 11;
+  min-height: 2.45rem;
+}
+
+.admin-panel.routines-view .admin-weeks {
+  display: grid;
+  gap: 0.72rem;
+}
+
+.admin-panel.routines-view.editing-routine .admin-weeks > .admin-editor-card {
+  overflow: hidden;
+  border: 1px solid rgba(75, 96, 142, 0.17);
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 84% 7%, rgba(124, 60, 255, 0.18), transparent 5rem),
+    linear-gradient(145deg, rgba(10, 24, 49, 0.95), rgba(6, 16, 37, 0.98));
+  padding: 0.82rem;
+}
+
+.admin-panel.routines-view.editing-routine .admin-weeks > .admin-editor-card > .admin-card-title {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.65rem;
+  align-items: start;
+  margin-bottom: 0.72rem;
+}
+
+.admin-panel.routines-view.editing-routine .admin-weeks > .admin-editor-card > .admin-card-title small {
+  color: #92a4c2;
+  font-size: 0.55rem;
+  text-transform: uppercase;
+}
+
+.admin-panel.routines-view.editing-routine .admin-weeks > .admin-editor-card > .admin-card-title h3 {
+  margin: 0.16rem 0 0;
+  color: #fff;
+  font-size: 0.92rem;
+}
+
+.admin-panel.routines-view.editing-routine .admin-weeks > .admin-editor-card > .admin-card-title::after {
+  content: "";
+  grid-column: 1 / -1;
+  display: block;
+  height: 0.38rem;
+  border-radius: 999px;
+  background:
+    linear-gradient(90deg, #22c55e 0 75%, rgba(75, 96, 142, 0.22) 75% 100%);
+}
+
+.admin-panel.routines-view.editing-routine .admin-week-header,
+.admin-panel.routines-view.editing-routine .admin-day-header,
+.admin-panel.routines-view.editing-routine .admin-row-actions {
+  gap: 0.45rem;
+}
+
+.admin-panel.routines-view.editing-routine .admin-day {
+  border: 1px solid rgba(75, 96, 142, 0.14);
+  border-radius: 14px;
+  background: rgba(8, 19, 42, 0.58);
+  padding: 0.62rem;
+}
+
+.admin-panel.routines-view.editing-routine .admin-day > .admin-card-title {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.55rem;
+  align-items: center;
+}
+
+.admin-panel.routines-view.editing-routine .admin-day h4 {
+  margin: 0;
+  color: #fff;
+  font-size: 0.8rem;
+}
+
+.admin-panel.routines-view.editing-routine .admin-day small {
+  color: #8f9db8;
+  font-size: 0.58rem;
+}
+
+.admin-panel.routines-view.editing-routine .admin-day .admin-exercise-grid {
+  margin-top: 0.62rem;
+}
+
+.admin-panel.routines-view.editing-routine .admin-exercise-grid {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.admin-panel.routines-view.editing-routine .admin-exercise-grid .search-box,
+.admin-panel.routines-view.editing-routine .admin-day .search-box {
+  min-height: 3.1rem;
+  padding: 0.44rem 0.62rem;
+  border-radius: 11px;
+  background: rgba(13, 27, 54, 0.8);
+}
+
+.admin-panel.routines-view.editing-routine .admin-row-actions .primary-button,
+.admin-panel.routines-view.editing-routine .admin-row-actions .secondary-button,
+.admin-panel.routines-view.editing-routine .admin-row-actions .danger-button {
+  min-height: 2.25rem;
+  border-radius: 10px;
+  font-size: 0.7rem;
+}
+
+.admin-panel.routines-view.editing-routine .admin-exercise-list {
+  display: grid;
+  gap: 0.45rem;
+  margin-top: 0.65rem;
+}
+
+.admin-panel.routines-view.editing-routine .admin-exercise {
+  overflow: hidden;
+  border: 1px solid rgba(75, 96, 142, 0.14);
+  border-radius: 12px;
+  background: rgba(8, 19, 42, 0.68);
+  padding: 0.45rem;
+}
+
+.admin-panel.routines-view.editing-routine .admin-exercise-summary {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.admin-panel.routines-view.editing-routine .admin-exercise-summary strong {
+  display: block;
+  color: #fff;
+  font-size: 0.74rem;
+}
+
+.admin-panel.routines-view.editing-routine .admin-exercise-summary small {
+  display: block;
+  margin-top: 0.12rem;
+  color: #8f9db8;
+  font-size: 0.56rem;
+}
+
+.admin-panel.routines-view.editing-routine .admin-exercise-form {
+  margin-top: 0.55rem;
+  border-radius: 14px;
+  background: rgba(4, 12, 28, 0.54);
+  padding: 0.62rem;
+}
+
+.admin-panel.routines-view.editing-routine .admin-image-preview,
+.admin-panel.routines-view.editing-routine .admin-image-empty {
+  max-height: 7.5rem;
+  border-radius: 12px;
+}
+
+.admin-panel.routines-view:not(.editing-routine) .routine-card-list {
+  gap: 0.62rem;
+}
+
+.admin-panel.routines-view:not(.editing-routine) .routine-list-card {
+  min-height: 4.5rem;
+  border-radius: 14px;
+  background: rgba(8, 19, 42, 0.68);
+}
+
 /* Inicio - Alumno: greeting line above the rutina actual card (matches mockup) */
 .sh-greeting {
   margin: 0 0 0.6rem;

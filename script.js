@@ -456,6 +456,7 @@ const adminPanel = document.querySelector("#adminPanel");
 const adminClose = document.querySelector("#adminClose");
 const adminUsersCard = document.querySelector("#adminUsersCard");
 const adminRoutineEditor = document.querySelector("#adminRoutineEditor");
+const adminEditorBack = document.querySelector("#adminEditorBack");
 const adminEditorTitle = document.querySelector("#adminEditorTitle");
 const adminRoutineSelect = document.querySelector("#adminRoutineSelect");
 const adminRoutineId = document.querySelector("#adminRoutineId");
@@ -3414,7 +3415,7 @@ function renderAdminPanel() {
   const selectedUser = getAdminUser(state.pendingAssignUserId || state.selectedAdminUserId);
   const selectedUserName = selectedUser?.displayName || getDisplayNameFromEmail(selectedUser?.email || "");
   adminEditorTitle.textContent = state.adminEditorMode === "create"
-    ? t("newRoutineFor", { name: selectedUserName || t("user") })
+    ? "Nueva rutina"
     : t("editingRoutine", { name: draft.name || t("newRoutineOption") });
 
   const routineIds = getAdminRoutineIds();
@@ -4849,6 +4850,15 @@ adminNewRoutine.addEventListener("click", () => {
 adminEditRoutine?.addEventListener("click", () => {
   const routineId = adminRoutineSelect.value || getAdminRoutineIds()[0] || "";
   startRoutineEditing(routineId, state.selectedAdminUserId || "");
+});
+
+adminEditorBack?.addEventListener("click", () => {
+  state.adminEditorMode = "";
+  state.pendingAssignUserId = "";
+  state.adminEditingExerciseKey = "";
+  state.adminDraft = null;
+  setAdminMessage("");
+  renderAdminPanel();
 });
 
 adminSeedDario.addEventListener("click", async () => {
