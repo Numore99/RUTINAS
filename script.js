@@ -2,19 +2,19 @@
   "back-squat": {
     name: "Sentadilla trasera",
     objective: "fuerza",
-    goal: "Construir fuerza mÃ¡xima de piernas para derribos, defensa de derribo y control de cadera.",
+    goal: "Construir fuerza m?xima de piernas para derribos, defensa de derribo y control de cadera.",
     baseSets: "5",
     baseReps: "3-5",
     rest: "2:30",
     technique:
-      "Barra firme sobre trapecios, pies estables, abdomen bloqueado y bajada controlada hasta profundidad Ãºtil. Sube empujando el suelo, manteniendo rodillas alineadas y torso sÃ³lido.",
-    mistakes: ["Perder tensiÃ³n lumbar", "Colapsar rodillas hacia dentro", "Rebotar sin control en la bajada"],
+      "Barra firme sobre trapecios, pies estables, abdomen bloqueado y bajada controlada hasta profundidad ?til. Sube empujando el suelo, manteniendo rodillas alineadas y torso s?lido.",
+    mistakes: ["Perder tensi?n lumbar", "Colapsar rodillas hacia dentro", "Rebotar sin control en la bajada"],
     images: ["img/back-squat-1.jpg", "img/back-squat-2.jpg"]
   },
   "trap-bar-deadlift": {
     name: "Peso muerto con barra hexagonal",
     objective: "fuerza",
-    goal: "Mejorar extensiÃ³n de cadera y fuerza total sin castigar tanto la espalda baja.",
+    goal: "Mejorar extensi?n de cadera y fuerza total sin castigar tanto la espalda baja.",
     baseSets: "4-5",
     baseReps: "3-5",
     rest: "2:30",
@@ -31,20 +31,20 @@
     baseReps: "3-5",
     rest: "2:00",
     technique:
-      "EscÃ¡pulas juntas, pies firmes y barra bajando al esternÃ³n bajo. Empuja en diagonal suave manteniendo muÃ±ecas apiladas sobre codos.",
-    mistakes: ["Abrir codos en exceso", "Rebotar la barra", "Levantar glÃºteos del banco"],
+      "Esc?pulas juntas, pies firmes y barra bajando al estern?n bajo. Empuja en diagonal suave manteniendo mu?ecas apiladas sobre codos.",
+    mistakes: ["Abrir codos en exceso", "Rebotar la barra", "Levantar gl?teos del banco"],
     images: ["img/bench-press-1.jpg", "img/bench-press-2.jpg"]
   },
   "weighted-pull-up": {
     name: "Dominada con lastre",
     objective: "fuerza",
-    goal: "Aumentar tracciÃ³n especÃ­fica para clinch, agarres y control de espalda.",
+    goal: "Aumentar tracci?n espec?fica para clinch, agarres y control de espalda.",
     baseSets: "4",
     baseReps: "3-6",
     rest: "2:00",
     technique:
       "Inicia colgado con hombros activos, tira los codos hacia las costillas y lleva el pecho a la barra sin balanceo.",
-    mistakes: ["Patada de impulso", "Encoger hombros arriba", "No completar la extensiÃ³n controlada"],
+    mistakes: ["Patada de impulso", "Encoger hombros arriba", "No completar la extensi?n controlada"],
     images: ["img/weighted-pull-up-1.jpg", "img/weighted-pull-up-2.jpg"]
   },
   "front-squat": {
@@ -56,7 +56,7 @@
     rest: "2:00",
     technique:
       "Codos altos, barra apoyada en deltoides y abdomen firme. Baja vertical, pausa breve y sube sin dejar caer el pecho.",
-    mistakes: ["Codos caÃ­dos", "Talones despegados", "Respirar sin bracing antes de bajar"],
+    mistakes: ["Codos ca?dos", "Talones despegados", "Respirar sin bracing antes de bajar"],
     images: ["img/front-squat-1.jpg", "img/front-squat-2.jpg"]
   },
   "landmine-press": {
@@ -67,31 +67,31 @@
     baseReps: "5 por lado",
     rest: "1:30",
     technique:
-      "Base atlÃ©tica, costillas abajo y barra cerca del hombro. Empuja hacia arriba y adelante sin rotar el torso.",
-    mistakes: ["Arquear la espalda", "Perder la muÃ±eca neutra", "Empujar sin estabilizar la escÃ¡pula"],
+      "Base atl?tica, costillas abajo y barra cerca del hombro. Empuja hacia arriba y adelante sin rotar el torso.",
+    mistakes: ["Arquear la espalda", "Perder la mu?eca neutra", "Empujar sin estabilizar la esc?pula"],
     images: ["img/landmine-press-1.jpg", "img/landmine-press-2.jpg"]
   },
   "med-ball-slam": {
-    name: "Lanzamiento de balÃ³n medicinal al suelo",
+    name: "Lanzamiento de bal?n medicinal al suelo",
     objective: "potencia",
-    goal: "Convertir extensiÃ³n de cadera y tronco en potencia explosiva repetible.",
+    goal: "Convertir extensi?n de cadera y tronco en potencia explosiva repetible.",
     baseSets: "5",
     baseReps: "5",
     rest: "1:15",
     technique:
-      "Eleva el balÃ³n con cuerpo largo, bloquea abdomen y acelera hacia el suelo usando cadera, dorsales y brazos.",
-    mistakes: ["Lanzar solo con brazos", "Perder postura lumbar", "Hacer repeticiones lentas sin intenciÃ³n"],
+      "Eleva el bal?n con cuerpo largo, bloquea abdomen y acelera hacia el suelo usando cadera, dorsales y brazos.",
+    mistakes: ["Lanzar solo con brazos", "Perder postura lumbar", "Hacer repeticiones lentas sin intenci?n"],
     images: ["img/med-ball-slam-1.jpg", "img/med-ball-slam-2.jpg"]
   },
   "box-jump": {
-    name: "Salto al cajÃ³n",
+    name: "Salto al caj?n",
     objective: "potencia",
-    goal: "Mejorar producciÃ³n rÃ¡pida de fuerza para entradas y cambios de nivel.",
+    goal: "Mejorar producci?n r?pida de fuerza para entradas y cambios de nivel.",
     baseSets: "5",
     baseReps: "3",
     rest: "1:30",
     technique:
-      "Carga cadera corta, salta con intenciÃ³n mÃ¡xima y aterriza suave con rodillas alineadas. Baja caminando para preservar potencia.",
+      "Carga cadera corta, salta con intenci?n m?xima y aterriza suave con rodillas alineadas. Baja caminando para preservar potencia.",
     mistakes: ["Aterrizar pesado", "Elegir caja demasiado alta", "Convertirlo en cardio"],
     images: ["img/box-jump-1.jpg", "img/box-jump-2.jpg"]
   },
@@ -103,74 +103,74 @@
     baseReps: "8",
     rest: "1:00",
     technique:
-      "La pesa viaja por bisagra de cadera, no por sentadilla. Aprieta glÃºteos al frente y deja que los brazos guÃ­en.",
+      "La pesa viaja por bisagra de cadera, no por sentadilla. Aprieta gl?teos al frente y deja que los brazos gu?en.",
     mistakes: ["Elevar con hombros", "Flexionar demasiado rodillas", "Perder ritmo respiratorio"],
     images: ["img/kettlebell-swing-1.jpg", "img/kettlebell-swing-2.jpg"]
   },
   "broad-jump": {
     name: "Salto horizontal",
     objective: "potencia",
-    goal: "Transferir potencia horizontal a entradas de derribo y presiÃ³n hacia delante.",
+    goal: "Transferir potencia horizontal a entradas de derribo y presi?n hacia delante.",
     baseSets: "5",
     baseReps: "3",
     rest: "1:30",
     technique:
       "Carga brazos y cadera, proyecta el cuerpo hacia delante y cae estable absorbiendo con tobillo, rodilla y cadera.",
-    mistakes: ["Caer con rodillas rÃ­gidas", "Mirar al piso", "Repetir sin recuperar potencia"],
+    mistakes: ["Caer con rodillas r?gidas", "Mirar al piso", "Repetir sin recuperar potencia"],
     images: ["img/broad-jump-1.jpg", "img/broad-jump-2.jpg"]
   },
   "sled-push": {
     name: "Empuje de trineo",
     objective: "potencia",
-    goal: "Desarrollar empuje de piernas y tronco para presiÃ³n contra jaula.",
+    goal: "Desarrollar empuje de piernas y tronco para presi?n contra jaula.",
     baseSets: "6",
     baseReps: "15-20 m",
     rest: "1:30",
     technique:
-      "Cuerpo inclinado, brazos fuertes y pasos cortos potentes. MantÃ©n respiraciÃ³n agresiva sin perder lÃ­nea de cadera.",
+      "Cuerpo inclinado, brazos fuertes y pasos cortos potentes. Mant?n respiraci?n agresiva sin perder l?nea de cadera.",
     mistakes: ["Pasos demasiado largos", "Cadera alta sin empuje", "Dejar caer la cabeza"],
     images: ["img/sled-push-1.jpg", "img/sled-push-2.jpg"]
   },
   "isometric-split-squat": {
-    name: "Zancada isomÃ©trica",
-    objective: "isometrÃ­a",
+    name: "Zancada isom?trica",
+    objective: "isometr?a",
     goal: "Fortalecer posiciones de base, rodilla y cadera bajo fatiga.",
     baseSets: "3",
     baseReps: "25-40 s por lado",
     rest: "1:00",
     technique:
-      "MantÃ©n zancada sÃ³lida, rodilla delantera alineada y torso alto. Presiona el suelo como si fueras a subir, pero sostÃ©n la posiciÃ³n.",
-    mistakes: ["Descansar sobre ligamentos", "Inclinarse hacia delante", "Perder presiÃ³n del pie delantero"],
+      "Mant?n zancada s?lida, rodilla delantera alineada y torso alto. Presiona el suelo como si fueras a subir, pero sost?n la posici?n.",
+    mistakes: ["Descansar sobre ligamentos", "Inclinarse hacia delante", "Perder presi?n del pie delantero"],
     images: ["img/isometric-split-squat-1.jpg", "img/isometric-split-squat-2.jpg"]
   },
   "wall-sit-adductor-squeeze": {
-    name: "Sentadilla en pared con presiÃ³n de aductores",
-    objective: "isometrÃ­a",
-    goal: "Reforzar aductores y piernas para guardia, presiÃ³n y prevenciÃ³n de lesiones.",
+    name: "Sentadilla en pared con presi?n de aductores",
+    objective: "isometr?a",
+    goal: "Reforzar aductores y piernas para guardia, presi?n y prevenci?n de lesiones.",
     baseSets: "3",
     baseReps: "30-45 s",
     rest: "1:00",
     technique:
-      "Espalda contra pared, rodillas a 90 grados y balÃ³n o almohadilla entre rodillas. Aprieta de forma constante sin contener la respiraciÃ³n.",
+      "Espalda contra pared, rodillas a 90 grados y bal?n o almohadilla entre rodillas. Aprieta de forma constante sin contener la respiraci?n.",
     mistakes: ["Subir demasiado la cadera", "Relajar aductores", "Colapsar pies hacia dentro"],
     images: ["img/wall-sit-adductor-squeeze-1.jpg", "img/wall-sit-adductor-squeeze-2.jpg"]
   },
   "chin-over-bar-hold": {
-    name: "Aguante con mentÃ³n sobre la barra",
-    objective: "isometrÃ­a",
+    name: "Aguante con ment?n sobre la barra",
+    objective: "isometr?a",
     goal: "Sostener agarres fuertes y control de espalda cuando el rival intenta escapar.",
     baseSets: "4",
     baseReps: "10-25 s",
     rest: "1:15",
     technique:
-      "Sube con control, mentÃ³n sobre barra, hombros lejos de orejas y costillas cerradas. MantÃ©n tensiÃ³n sin balanceo.",
-    mistakes: ["Cuello adelantado", "Codos abiertos", "Caer sin controlar la excÃ©ntrica"],
+      "Sube con control, ment?n sobre barra, hombros lejos de orejas y costillas cerradas. Mant?n tensi?n sin balanceo.",
+    mistakes: ["Cuello adelantado", "Codos abiertos", "Caer sin controlar la exc?ntrica"],
     images: ["img/chin-over-bar-hold-1.jpg", "img/chin-over-bar-hold-2.jpg"]
   },
   "plank-drag": {
     name: "Arrastre en plancha",
-    objective: "isometrÃ­a",
-    goal: "Entrenar anti-rotaciÃ³n del tronco para scrambles y golpes desde arriba.",
+    objective: "isometr?a",
+    goal: "Entrenar anti-rotaci?n del tronco para scrambles y golpes desde arriba.",
     baseSets: "3",
     baseReps: "8 por lado",
     rest: "0:45",
@@ -181,31 +181,31 @@
   },
   "bear-hug-hold": {
     name: "Aguante abrazando saco de arena",
-    objective: "isometrÃ­a",
-    goal: "Simular presiÃ³n de clinch y control corporal con respiraciÃ³n bajo compresiÃ³n.",
+    objective: "isometr?a",
+    goal: "Simular presi?n de clinch y control corporal con respiraci?n bajo compresi?n.",
     baseSets: "4",
     baseReps: "20-40 s",
     rest: "1:00",
     technique:
-      "Abraza el saco alto, conecta costillas y pelvis, y mantÃ©n respiraciÃ³n nasal o corta sin perder postura.",
+      "Abraza el saco alto, conecta costillas y pelvis, y mant?n respiraci?n nasal o corta sin perder postura.",
     mistakes: ["Apoyar el saco en la espalda baja", "Cerrar demasiado la garganta", "Relajar piernas"],
     images: ["img/bear-hug-hold-1.jpg", "img/bear-hug-hold-2.jpg"]
   },
   "assault-bike-sprint": {
     name: "Sprint en Assault Bike",
     objective: "lactato",
-    goal: "Elevar tolerancia al lactato y recuperaciÃ³n entre esfuerzos de alta intensidad.",
+    goal: "Elevar tolerancia al lactato y recuperaci?n entre esfuerzos de alta intensidad.",
     baseSets: "8",
     baseReps: "15-30 s fuerte",
     rest: "1:00-1:30",
     technique:
-      "Acelera desde el primer segundo con empuje coordinado de brazos y piernas. MantÃ©n torso estable y termina cada sprint con respiraciÃ³n controlada.",
+      "Acelera desde el primer segundo con empuje coordinado de brazos y piernas. Mant?n torso estable y termina cada sprint con respiraci?n controlada.",
     mistakes: ["Salir suave y acelerar tarde", "Desordenar la postura", "Mirar la pantalla todo el tiempo"],
     images: ["img/assault-bike-1.jpg", "img/assault-bike-2.jpg"]
   },
   "assault-bike-recovery": {
-    name: "RecuperaciÃ³n en Assault Bike",
-    objective: "recuperaciÃ³n",
+    name: "Recuperaci?n en Assault Bike",
+    objective: "recuperaci?n",
     goal: "Mejorar aclarado de metabolitos y bajar pulsaciones entre rounds.",
     baseSets: "4-6",
     baseReps: "2:00 suave",
@@ -218,49 +218,49 @@
   "shuttle-run": {
     name: "Carrera ida y vuelta",
     objective: "lactato",
-    goal: "Entrenar cambios de direcciÃ³n repetidos y potencia bajo acidez.",
+    goal: "Entrenar cambios de direcci?n repetidos y potencia bajo acidez.",
     baseSets: "6-10",
     baseReps: "20 s",
     rest: "0:40-1:00",
     technique:
-      "Acelera bajo, frena con pasos cortos y toca lÃ­nea sin doblar la espalda. Reacelera con intenciÃ³n mÃ¡xima.",
-    mistakes: ["Frenar con una sola pierna rÃ­gida", "Girar alto", "Perder calidad por exceso de volumen"],
+      "Acelera bajo, frena con pasos cortos y toca l?nea sin doblar la espalda. Reacelera con intenci?n m?xima.",
+    mistakes: ["Frenar con una sola pierna r?gida", "Girar alto", "Perder calidad por exceso de volumen"],
     images: ["img/shuttle-run-1.jpg", "img/shuttle-run-2.jpg"]
   },
   "battle-rope-sprawl": {
     name: "Cuerdas de batalla con sprawl",
     objective: "lactato",
-    goal: "Combinar tren superior, sprawls y respiraciÃ³n agresiva en formato de round.",
+    goal: "Combinar tren superior, sprawls y respiraci?n agresiva en formato de round.",
     baseSets: "5",
     baseReps: "30-40 s",
     rest: "1:00",
     technique:
-      "Ondas fuertes con hombros bajos, sprawl explosivo y regreso rÃ¡pido a base atlÃ©tica sin perder respiraciÃ³n.",
-    mistakes: ["Caer con lumbar hundida", "Ondas pequeÃ±as", "Volver de pie demasiado lento"],
+      "Ondas fuertes con hombros bajos, sprawl explosivo y regreso r?pido a base atl?tica sin perder respiraci?n.",
+    mistakes: ["Caer con lumbar hundida", "Ondas peque?as", "Volver de pie demasiado lento"],
     images: ["img/battle-rope-sprawl-1.jpg", "img/battle-rope-sprawl-2.jpg"]
   },
   "ground-and-pound": {
-    name: "Golpes desde posiciÃ³n superior",
+    name: "Golpes desde posici?n superior",
     objective: "ground and pound",
-    goal: "Construir potencia, postura y continuidad golpeando desde posiciÃ³n superior.",
+    goal: "Construir potencia, postura y continuidad golpeando desde posici?n superior.",
     baseSets: "6",
     baseReps: "20-30 s",
     rest: "0:45-1:00",
     technique:
-      "Rodillas pesadas, cadera estable y mano libre posteando cuando hace falta. Golpea en rÃ¡fagas cortas y vuelve a base.",
-    mistakes: ["Quedar alto y fÃ¡cil de barrer", "Golpear sin retraer mano", "Perder presiÃ³n de cadera"],
+      "Rodillas pesadas, cadera estable y mano libre posteando cuando hace falta. Golpea en r?fagas cortas y vuelve a base.",
+    mistakes: ["Quedar alto y f?cil de barrer", "Golpear sin retraer mano", "Perder presi?n de cadera"],
     images: ["img/ground-and-pound-1.jpg", "img/ground-and-pound-2.jpg"]
   },
   "medicine-ball-gp": {
-    name: "Golpes al suelo con balÃ³n medicinal",
+    name: "Golpes al suelo con bal?n medicinal",
     objective: "ground and pound",
     goal: "Transferir potencia de tronco a golpes repetidos con bajo riesgo articular.",
     baseSets: "5",
     baseReps: "8-12 por lado",
     rest: "1:00",
     technique:
-      "Desde rodillas o base de montada, rota el tronco y golpea el balÃ³n contra el suelo manteniendo cadera pesada.",
-    mistakes: ["Golpear solo con brazo", "Perder equilibrio lateral", "No volver a posiciÃ³n defensiva"],
+      "Desde rodillas o base de montada, rota el tronco y golpea el bal?n contra el suelo manteniendo cadera pesada.",
+    mistakes: ["Golpear solo con brazo", "Perder equilibrio lateral", "No volver a posici?n defensiva"],
     images: ["img/medicine-ball-gp-1.jpg", "img/medicine-ball-gp-2.jpg"]
   },
   "dummy-posture-strikes": {
@@ -271,49 +271,49 @@
     baseReps: "30 s",
     rest: "0:45",
     technique:
-      "Rompe postura con cadera atrÃ¡s, controla bÃ­ceps o torso y alterna golpes cortos sin regalar brazos.",
+      "Rompe postura con cadera atr?s, controla b?ceps o torso y alterna golpes cortos sin regalar brazos.",
     mistakes: ["Cabeza adelantada", "Manos plantadas sin defensa", "Golpes largos sin base"],
     images: ["img/dummy-posture-strikes-1.jpg", "img/dummy-posture-strikes-2.jpg"]
   },
   "zone-2-run": {
     name: "Carrera en zona 2",
-    objective: "recuperaciÃ³n",
-    goal: "Desarrollar base aerÃ³bica para recuperar mejor entre rounds y sesiones.",
+    objective: "recuperaci?n",
+    goal: "Desarrollar base aer?bica para recuperar mejor entre rounds y sesiones.",
     baseSets: "1",
     baseReps: "25-45 min",
     rest: "Libre",
     technique:
-      "Ritmo conversacional, respiraciÃ³n controlada y pisada relajada. Termina con sensaciÃ³n de poder seguir.",
+      "Ritmo conversacional, respiraci?n controlada y pisada relajada. Termina con sensaci?n de poder seguir.",
     mistakes: ["Convertirlo en tempo", "Subir pulsaciones en cuestas", "Acortar por impaciencia"],
     images: ["img/zone-2-run-1.jpg", "img/zone-2-run-2.jpg"]
   },
   "copenhagen-plank": {
     name: "Plancha Copenhagen",
-    objective: "recuperaciÃ³n",
+    objective: "recuperaci?n",
     goal: "Prevenir lesiones de aductor y mejorar estabilidad lateral para grappling.",
     baseSets: "3",
     baseReps: "15-30 s por lado",
     rest: "0:45",
     technique:
-      "Apoya pierna superior, bloquea costillas y eleva cadera hasta formar una lÃ­nea larga. MantÃ©n presiÃ³n suave y constante.",
+      "Apoya pierna superior, bloquea costillas y eleva cadera hasta formar una l?nea larga. Mant?n presi?n suave y constante.",
     mistakes: ["Rotar el torso", "Dejar caer la cadera", "Aguantar dolor punzante"],
     images: ["img/copenhagen-plank-1.jpg", "img/copenhagen-plank-2.jpg"]
   },
   "neck-isometrics": {
-    name: "IsomÃ©tricos de cuello",
-    objective: "recuperaciÃ³n",
-    goal: "Fortalecer cuello para clinch, impactos y prevenciÃ³n de molestias cervicales.",
+    name: "Isom?tricos de cuello",
+    objective: "recuperaci?n",
+    goal: "Fortalecer cuello para clinch, impactos y prevenci?n de molestias cervicales.",
     baseSets: "2-3",
-    baseReps: "10-20 s por direcciÃ³n",
+    baseReps: "10-20 s por direcci?n",
     rest: "0:30",
     technique:
-      "Presiona contra mano, banda o pared sin mover la cabeza. MantÃ©n mandÃ­bula relajada y respiraciÃ³n constante.",
-    mistakes: ["Empujar con dolor", "Mover la cabeza rÃ¡pido", "Tensionar hombros"],
+      "Presiona contra mano, banda o pared sin mover la cabeza. Mant?n mand?bula relajada y respiraci?n constante.",
+    mistakes: ["Empujar con dolor", "Mover la cabeza r?pido", "Tensionar hombros"],
     images: ["img/neck-isometrics-1.jpg", "img/neck-isometrics-2.jpg"]
   },
   "hip-airplane": {
-    name: "AviÃ³n de cadera",
-    objective: "recuperaciÃ³n",
+    name: "Avi?n de cadera",
+    objective: "recuperaci?n",
     goal: "Mejorar control de cadera, equilibrio y salud de rodilla para cambios de nivel.",
     baseSets: "2-3",
     baseReps: "5 por lado",
@@ -325,40 +325,40 @@
   },
   "turkish-get-up": {
     name: "Levantada turca",
-    objective: "recuperaciÃ³n",
+    objective: "recuperaci?n",
     goal: "Integrar hombro, cadera y tronco para levantadas seguras desde el suelo.",
     baseSets: "3",
     baseReps: "2 por lado",
     rest: "1:00",
     technique:
       "Mira la carga, crea posteos claros y avanza por fases: codo, mano, puente, barrido, medio arrodillado y de pie.",
-    mistakes: ["Apurarse entre fases", "Doblar muÃ±eca", "Perder mirada sobre la carga"],
+    mistakes: ["Apurarse entre fases", "Doblar mu?eca", "Perder mirada sobre la carga"],
     images: ["img/turkish-get-up-1.jpg", "img/turkish-get-up-2.jpg"]
   }
 };
 
 const phases = [
-  { weeks: [1, 2, 3], name: "Base de fuerza", badge: "AcumulaciÃ³n", modifier: "RPE 7-8, tÃ©cnica limpia, zona 2 estable." },
+  { weeks: [1, 2, 3], name: "Base de fuerza", badge: "Acumulaci?n", modifier: "RPE 7-8, t?cnica limpia, zona 2 estable." },
   { weeks: [4], name: "Descarga activa", badge: "Deload", modifier: "Reduce 30% el volumen, conserva velocidad." },
-  { weeks: [5, 6, 7], name: "Fuerza + potencia", badge: "IntensificaciÃ³n", modifier: "MÃ¡s carga, menos reps, potencia fresca." },
-  { weeks: [8], name: "Descarga neural", badge: "Deload", modifier: "Baja fatiga, cuida movilidad y sueÃ±o." },
+  { weeks: [5, 6, 7], name: "Fuerza + potencia", badge: "Intensificaci?n", modifier: "M?s carga, menos reps, potencia fresca." },
+  { weeks: [8], name: "Descarga neural", badge: "Deload", modifier: "Baja fatiga, cuida movilidad y sue?o." },
   { weeks: [9, 10, 11], name: "Fight specific", badge: "Pico", modifier: "Rounds densos, repeat power ability y lactato." },
-  { weeks: [12], name: "Taper", badge: "Puesta a punto", modifier: "Bajo volumen, velocidad alta, recuperaciÃ³n prioritaria." }
+  { weeks: [12], name: "Taper", badge: "Puesta a punto", modifier: "Bajo volumen, velocidad alta, recuperaci?n prioritaria." }
 ];
 
 const dayTemplates = [
   {
-    title: "DÃ­a 1",
+    title: "D?a 1",
     focus: "Fuerza piernas + lactato",
     exercises: ["back-squat", "box-jump", "isometric-split-squat", "assault-bike-sprint", "ground-and-pound", "copenhagen-plank"]
   },
   {
-    title: "DÃ­a 2",
-    focus: "TracciÃ³n, clinch y zona 2",
+    title: "D?a 2",
+    focus: "Tracci?n, clinch y zona 2",
     exercises: ["trap-bar-deadlift", "weighted-pull-up", "med-ball-slam", "chin-over-bar-hold", "zone-2-run", "neck-isometrics"]
   },
   {
-    title: "DÃ­a 3",
+    title: "D?a 3",
     focus: "Potencia repeat + G&P",
     exercises: ["front-squat", "landmine-press", "kettlebell-swing", "bear-hug-hold", "battle-rope-sprawl", "dummy-posture-strikes"]
   }
@@ -501,22 +501,22 @@ const DEFAULT_LANGUAGE = "es";
 const translations = {
   es: {
     privateAccess: "Acceso privado",
-    loginTitle: "Iniciar sesiÃ³n",
+    loginTitle: "Iniciar sesi?n",
     languageLabel: "Idioma",
-    password: "ContraseÃ±a",
-    passwordPlaceholder: "MÃ­nimo 6 caracteres",
-    rememberSession: "Mantener sesiÃ³n iniciada",
-    loginButton: "Iniciar sesiÃ³n",
+    password: "Contrase?a",
+    passwordPlaceholder: "M?nimo 6 caracteres",
+    rememberSession: "Mantener sesi?n iniciada",
+    loginButton: "Iniciar sesi?n",
     createAccount: "Crear cuenta",
-    resetPassword: "Recuperar contraseÃ±a por mail",
+    resetPassword: "Recuperar contrase?a por mail",
     accountType: "Tipo de cuenta",
     student: "Alumno",
     trainer: "Entrenador",
     admin: "Admin",
-    logout: "Cerrar sesiÃ³n",
+    logout: "Cerrar sesi?n",
     totalProgress: "Progreso total",
     doneShort: "hecho",
-    searchFilterControls: "Controles de bÃºsqueda y filtro",
+    searchFilterControls: "Controles de b?squeda y filtro",
     search: "Buscar",
     searchPlaceholder: "Ej: squat, lactato, bike...",
     filterByGoal: "Filtrar por objetivo",
@@ -524,11 +524,11 @@ const translations = {
     strength: "Fuerza",
     power: "Potencia",
     lactate: "Lactato",
-    isometry: "IsometrÃ­a",
-    recovery: "RecuperaciÃ³n",
+    isometry: "Isometr?a",
+    recovery: "Recuperaci?n",
     planSummary: "Resumen del plan",
-    routineInPreparation: "Rutina en preparaciÃ³n",
-    comingSoon: "PrÃ³ximamente",
+    routineInPreparation: "Rutina en preparaci?n",
+    comingSoon: "Pr?ximamente",
     administrator: "Administrador",
     routinePanel: "Panel de rutinas",
     routinePanelHelp: "Crea y edita rutinas.",
@@ -537,7 +537,7 @@ const translations = {
     loadingUsers: "Cargando usuarios...",
     students: "Alumnos",
     studentPanel: "Panel de alumnos",
-    studentPanelHelp: "Invita alumnos, espera su aceptaciÃ³n y asÃ­gnales rutinas.",
+    studentPanelHelp: "Invita alumnos, espera su aceptaci?n y as?gnales rutinas.",
     inviteStudent: "Invitar alumno",
     studentEmail: "Email del alumno",
     sendInvite: "Enviar solicitud",
@@ -548,9 +548,9 @@ const translations = {
     accountNav: "Cuenta",
     yourProfessors: "Tus profesores",
     acceptedProfessors: "Profesores aceptados",
-    noProfessors: "TodavÃ­a no tienes profesores aceptados.",
+    noProfessors: "Todav?a no tienes profesores aceptados.",
     accountPanelTitle: "Cuenta",
-    accountPanelHelp: "Gestiona tu sesiÃ³n en RutFit.",
+    accountPanelHelp: "Gestiona tu sesi?n en RutFit.",
     profile: "Perfil",
     editProfile: "Editar perfil",
     saveProfile: "Guardar perfil",
@@ -564,9 +564,9 @@ const translations = {
     memberSince: "Miembro desde",
     trainerLabel: "Entrenador",
     notCompleted: "Sin completar",
-    noStudents: "TodavÃ­a no tienes alumnos aceptados.",
+    noStudents: "Todav?a no tienes alumnos aceptados.",
     noPendingInvites: "No hay solicitudes pendientes.",
-    inviteSent: "Solicitud enviada. El alumno la verÃ¡ al crear cuenta o iniciar sesiÃ³n.",
+    inviteSent: "Solicitud enviada. El alumno la ver? al crear cuenta o iniciar sesi?n.",
     inviteExists: "Ya existe una solicitud pendiente o aceptada para ese email.",
     invitationForYou: "Solicitud de entrenador",
     invitationHelp: "{name} quiere asignarte rutinas en RutFit.",
@@ -578,7 +578,7 @@ const translations = {
     routine: "Rutina",
     routineEditor: "Editor de rutina",
     name: "Nombre",
-    title: "TÃ­tulo",
+    title: "T?tulo",
     tag: "Etiqueta",
     saveRoutine: "Guardar rutina",
     newRoutine: "Nueva rutina",
@@ -586,12 +586,12 @@ const translations = {
     createWeek: "Crear semana",
     deleteRoutine: "Eliminar rutina",
     closeDetail: "Cerrar detalle",
-    startPosition: "PosiciÃ³n inicial / bajada",
-    endPosition: "PosiciÃ³n final / subida",
+    startPosition: "Posici?n inicial / bajada",
+    endPosition: "Posici?n final / subida",
     sets: "Series",
     reps: "Reps",
     rest: "Descanso",
-    technique: "TÃ©cnica",
+    technique: "T?cnica",
     commonMistakes: "Errores comunes",
     done: "Hecho",
     markDone: "Marcar como hecho",
@@ -601,7 +601,7 @@ const translations = {
     exercises: "ejercicios",
     completed: "completados",
     weeks: "semanas",
-    noUsers: "TodavÃ­a no hay usuarios.",
+    noUsers: "Todav?a no hay usuarios.",
     usersLoadError: "No se pudieron cargar usuarios.",
     noRoutine: "Sin rutina",
     unavailableRoutine: "Rutina no disponible: {id}",
@@ -623,39 +623,39 @@ const translations = {
     saveExercise: "Guardar ejercicio",
     exerciseSaved: "Ejercicio guardado.",
     savedExercisesCount: "{count} ejercicios guardados",
-    editDay: "Editar dÃ­a",
-    saveDay: "Guardar dÃ­a",
+    editDay: "Editar d?a",
+    saveDay: "Guardar d?a",
     editWeek: "Editar semana",
     saveWeek: "Guardar semana",
-    weekSavedSummary: "Semana guardada - {count} dÃ­as guardados",
+    weekSavedSummary: "Semana guardada - {count} d?as guardados",
     deleteExercise: "Eliminar ejercicio",
     objective: "Objetivo",
     startImage: "Imagen inicial",
     endImage: "Imagen final",
-    startImageAlt: "{name} posiciÃ³n inicial o bajada",
-    endImageAlt: "{name} posiciÃ³n final o subida",
+    startImageAlt: "{name} posici?n inicial o bajada",
+    endImageAlt: "{name} posici?n final o subida",
     uploadStartImage: "Subir imagen inicial",
     uploadEndImage: "Subir imagen final",
-    technicalGoal: "Objetivo tÃ©cnico",
-    mistakesOnePerLine: "Errores comunes, uno por lÃ­nea",
-    dayNumber: "DÃ­a {number}",
-    deleteDay: "Eliminar dÃ­a",
-    dayTitle: "TÃ­tulo del dÃ­a",
+    technicalGoal: "Objetivo t?cnico",
+    mistakesOnePerLine: "Errores comunes, uno por l?nea",
+    dayNumber: "D?a {number}",
+    deleteDay: "Eliminar d?a",
+    dayTitle: "T?tulo del d?a",
     focus: "Foco",
     createExercise: "Crear ejercicio",
-    emptyDay: "Este dÃ­a todavÃ­a no tiene ejercicios.",
+    emptyDay: "Este d?a todav?a no tiene ejercicios.",
     week: "Semana",
     noPhase: "Sin fase",
     deleteWeek: "Eliminar semana",
-    number: "NÃºmero",
+    number: "N?mero",
     phase: "Fase",
     badge: "Etiqueta",
     instructions: "Indicaciones",
-    createDay: "Crear dÃ­a",
-    emptyWeek: "Esta semana todavÃ­a no tiene dÃ­as.",
+    createDay: "Crear d?a",
+    emptyWeek: "Esta semana todav?a no tiene d?as.",
     createWeekPrompt: "Crea una semana para empezar esta rutina.",
     newPhase: "Nueva fase",
-    noMatchingExercises: "No hay ejercicios que coincidan con esa bÃºsqueda.",
+    noMatchingExercises: "No hay ejercicios que coincidan con esa b?squeda.",
     completeWeek: "Hecha",
     restLower: "descanso",
     hello: "Hola, {name}",
@@ -670,38 +670,38 @@ const translations = {
     userWithoutRoutine: "Usuario sin rutina asignada.",
     newRoutinePreparedAssign: "Nueva rutina preparada. Al guardar se asigna a este usuario.",
     removingRoutine: "Quitando rutina...",
-    routineRemoved: "Rutina quitada. El usuario verÃ¡ PrÃ³ximamente.",
-    newRoutinePrepared: "Nueva rutina preparada. Edita los datos y guÃ¡rdala.",
+    routineRemoved: "Rutina quitada. El usuario ver? Pr?ximamente.",
+    newRoutinePrepared: "Nueva rutina preparada. Edita los datos y gu?rdala.",
     darioMigrated: "Rutina Dario migrada.",
     darioMigratedAssigned: "Rutina Dario migrada y asignada al usuario.",
     routineNeedsId: "La rutina necesita un ID.",
     routineSaved: "Rutina guardada.",
     routineSavedAssigned: "Rutina guardada y asignada al usuario.",
-    deleteRoutineConfirm: "Â¿Eliminar la rutina \"{name}\"?",
+    deleteRoutineConfirm: "?Eliminar la rutina \"{name}\"?",
     routineDeleted: "Rutina eliminada.",
     deleteUser: "Eliminar usuario",
-    deleteUserConfirm: "Â¿Eliminar el usuario \"{name}\" de RutFit?",
+    deleteUserConfirm: "?Eliminar el usuario \"{name}\" de RutFit?",
     userDeleted: "Usuario eliminado.",
-    cannotDeleteSelf: "No puedes eliminar tu propio usuario admin desde aquÃ­.",
+    cannotDeleteSelf: "No puedes eliminar tu propio usuario admin desde aqu?.",
     signingIn: "Ingresando...",
     creatingAccount: "Creando cuenta...",
-    writeEmailForReset: "Escribe tu email para recuperar la contraseÃ±a.",
-    sendingReset: "Enviando correo de recuperaciÃ³n...",
-    resetSent: "Te enviÃ© un correo para recuperar la contraseÃ±a.",
+    writeEmailForReset: "Escribe tu email para recuperar la contrase?a.",
+    sendingReset: "Enviando correo de recuperaci?n...",
+    resetSent: "Te envi? un correo para recuperar la contrase?a.",
     firebaseMissing: "Falta configurar Firebase en firebase-config.js.",
-    invalidEmail: "El email no es vÃ¡lido.",
-    invalidLogin: "Email o contraseÃ±a incorrectos.",
+    invalidEmail: "El email no es v?lido.",
+    invalidLogin: "Email o contrase?a incorrectos.",
     emailInUse: "Ese email ya tiene una cuenta.",
-    weakPassword: "La contraseÃ±a debe tener al menos 6 caracteres.",
+    weakPassword: "La contrase?a debe tener al menos 6 caracteres.",
     firebaseAuthMissing: "Falta activar Firebase Authentication en este proyecto.",
     authProviderDisabled: "Activa Email/Password en Firebase Authentication.",
-    invalidApiKey: "La configuraciÃ³n de Firebase no es vÃ¡lida.",
-    permissionDenied: "Firestore estÃ¡ bloqueando el acceso. Revisa las reglas de la base de datos.",
-    firestoreNotFound: "No se encontrÃ³ Firestore o el documento solicitado. Revisa que la base sea (default).",
-    firestorePending: "Firestore necesita terminar de activarse o tiene una condiciÃ³n pendiente ({code}). Espera un minuto y recarga.",
-    firestoreUnavailable: "Firestore no estÃ¡ disponible ahora. Revisa conexiÃ³n o configuraciÃ³n.",
-    networkFailed: "No hay conexiÃ³n. IntÃ©ntalo de nuevo.",
-    actionFailed: "No se pudo completar la acciÃ³n{code}.",
+    invalidApiKey: "La configuraci?n de Firebase no es v?lida.",
+    permissionDenied: "Firestore est? bloqueando el acceso. Revisa las reglas de la base de datos.",
+    firestoreNotFound: "No se encontr? Firestore o el documento solicitado. Revisa que la base sea (default).",
+    firestorePending: "Firestore necesita terminar de activarse o tiene una condici?n pendiente ({code}). Espera un minuto y recarga.",
+    firestoreUnavailable: "Firestore no est? disponible ahora. Revisa conexi?n o configuraci?n.",
+    networkFailed: "No hay conexi?n. Int?ntalo de nuevo.",
+    actionFailed: "No se pudo completar la acci?n{code}.",
     storageNotReady: "La imagen se guarda dentro de la rutina.",
     selectImageFile: "Selecciona un archivo de imagen."
   },
@@ -916,8 +916,8 @@ const translations = {
     loginTitle: "Entrar",
     languageLabel: "Idioma",
     password: "Senha",
-    passwordPlaceholder: "MÃ­nimo de 6 caracteres",
-    rememberSession: "Manter sessÃ£o iniciada",
+    passwordPlaceholder: "M?nimo de 6 caracteres",
+    rememberSession: "Manter sess?o iniciada",
     loginButton: "Entrar",
     createAccount: "Criar conta",
     resetPassword: "Recuperar senha por email",
@@ -933,36 +933,36 @@ const translations = {
     searchPlaceholder: "Ex: squat, lactato, bike...",
     filterByGoal: "Filtrar por objetivo",
     all: "Todos",
-    strength: "ForÃ§a",
-    power: "PotÃªncia",
+    strength: "For?a",
+    power: "Pot?ncia",
     lactate: "Lactato",
     isometry: "Isometria",
-    recovery: "RecuperaÃ§Ã£o",
+    recovery: "Recupera?o",
     planSummary: "Resumo do plano",
-    routineInPreparation: "Rotina em preparaÃ§Ã£o",
+    routineInPreparation: "Rotina em prepara?o",
     comingSoon: "Em breve",
     administrator: "Administrador",
     routinePanel: "Painel de rotinas",
     routinePanelHelp: "Crie e edite rotinas.",
     closePanel: "Fechar painel",
-    users: "UsuÃ¡rios",
-    loadingUsers: "Carregando usuÃ¡rios...",
+    users: "Usu?rios",
+    loadingUsers: "Carregando usu?rios...",
     students: "Alunos",
     studentPanel: "Painel de alunos",
-    studentPanelHelp: "Convide alunos, espere a aceitaÃ§Ã£o e atribua rotinas.",
+    studentPanelHelp: "Convide alunos, espere a aceita?o e atribua rotinas.",
     inviteStudent: "Convidar aluno",
     studentEmail: "Email do aluno",
-    sendInvite: "Enviar solicitaÃ§Ã£o",
-    pendingInvites: "SolicitaÃ§Ãµes pendentes",
+    sendInvite: "Enviar solicita?o",
+    pendingInvites: "Solicita?es pendentes",
     acceptedStudents: "Alunos aceitos",
     routinesNav: "Rotinas",
     professorsNav: "Professores",
     accountNav: "Conta",
     yourProfessors: "Seus professores",
     acceptedProfessors: "Professores aceitos",
-    noProfessors: "VocÃª ainda nÃ£o tem professores aceitos.",
+    noProfessors: "Voc? ainda n?o tem professores aceitos.",
     accountPanelTitle: "Conta",
-    accountPanelHelp: "Gerencie sua sessÃ£o no RutFit.",
+    accountPanelHelp: "Gerencie sua sess?o no RutFit.",
     profile: "Perfil",
     editProfile: "Editar perfil",
     saveProfile: "Salvar perfil",
@@ -976,21 +976,21 @@ const translations = {
     memberSince: "Membro desde",
     trainerLabel: "Treinador",
     notCompleted: "Sem preencher",
-    noStudents: "VocÃª ainda nÃ£o tem alunos aceitos.",
-    noPendingInvites: "NÃ£o hÃ¡ solicitaÃ§Ãµes pendentes.",
-    inviteSent: "SolicitaÃ§Ã£o enviada. O aluno verÃ¡ ao criar conta ou entrar.",
-    inviteExists: "JÃ¡ existe uma solicitaÃ§Ã£o pendente ou aceita para esse email.",
-    invitationForYou: "SolicitaÃ§Ã£o de treinador",
-    invitationHelp: "{name} quer atribuir rotinas para vocÃª no RutFit.",
+    noStudents: "Voc? ainda n?o tem alunos aceitos.",
+    noPendingInvites: "N?o h? solicita?es pendentes.",
+    inviteSent: "Solicita?o enviada. O aluno ver? ao criar conta ou entrar.",
+    inviteExists: "J? existe uma solicita?o pendente ou aceita para esse email.",
+    invitationForYou: "Solicita?o de treinador",
+    invitationHelp: "{name} quer atribuir rotinas para voc? no RutFit.",
     acceptInvite: "Aceitar",
     declineInvite: "Recusar",
-    inviteAccepted: "SolicitaÃ§Ã£o aceita.",
-    inviteDeclined: "SolicitaÃ§Ã£o recusada.",
+    inviteAccepted: "Solicita?o aceita.",
+    inviteDeclined: "Solicita?o recusada.",
     assignRoutines: "Atribuir rotinas",
     routine: "Rotina",
     routineEditor: "Editor de rotina",
     name: "Nome",
-    title: "TÃ­tulo",
+    title: "T?tulo",
     tag: "Etiqueta",
     saveRoutine: "Salvar rotina",
     newRoutine: "Nova rotina",
@@ -998,122 +998,122 @@ const translations = {
     createWeek: "Criar semana",
     deleteRoutine: "Excluir rotina",
     closeDetail: "Fechar detalhe",
-    startPosition: "PosiÃ§Ã£o inicial / descida",
-    endPosition: "PosiÃ§Ã£o final / subida",
-    sets: "SÃ©ries",
+    startPosition: "Posi?o inicial / descida",
+    endPosition: "Posi?o final / subida",
+    sets: "S?ries",
     reps: "Reps",
     rest: "Descanso",
-    technique: "TÃ©cnica",
+    technique: "T?cnica",
     commonMistakes: "Erros comuns",
     done: "Feito",
     markDone: "Marcar como feito",
     startRest: "Iniciar descanso",
     reset: "Reiniciar",
-    sessions: "sessÃµes",
-    exercises: "exercÃ­cios",
-    completed: "concluÃ­dos",
+    sessions: "sess?es",
+    exercises: "exerc?cios",
+    completed: "conclu?dos",
     weeks: "semanas",
-    noUsers: "Ainda nÃ£o hÃ¡ usuÃ¡rios.",
-    usersLoadError: "NÃ£o foi possÃ­vel carregar usuÃ¡rios.",
+    noUsers: "Ainda n?o h? usu?rios.",
+    usersLoadError: "N?o foi poss?vel carregar usu?rios.",
     noRoutine: "Sem rotina",
-    unavailableRoutine: "Rotina indisponÃ­vel: {id}",
-    user: "UsuÃ¡rio",
+    unavailableRoutine: "Rotina indispon?vel: {id}",
+    user: "Usu?rio",
     noEmail: "Sem email",
     assignExistingRoutine: "Atribuir rotina existente",
     addRoutine: "Adicionar rotina",
     editCurrentRoutine: "Editar rotina atual",
     removeRoutine: "Remover rotina",
-    backToUsers: "â† Voltar aos usuÃ¡rios",
+    backToUsers: "â† Voltar aos usu?rios",
     newRoutineFor: "Nova rotina para {name}",
     editingRoutine: "Editando {name}",
     newRoutineOption: "Nova rotina",
     noStartImage: "Sem imagem inicial",
     noEndImage: "Sem imagem final",
-    newExercise: "Novo exercÃ­cio",
-    savedExercises: "ExercÃ­cios salvos",
-    editExercise: "Editar exercÃ­cio",
-    saveExercise: "Salvar exercÃ­cio",
-    exerciseSaved: "ExercÃ­cio salvo.",
-    savedExercisesCount: "{count} exercÃ­cios salvos",
+    newExercise: "Novo exerc?cio",
+    savedExercises: "Exerc?cios salvos",
+    editExercise: "Editar exerc?cio",
+    saveExercise: "Salvar exerc?cio",
+    exerciseSaved: "Exerc?cio salvo.",
+    savedExercisesCount: "{count} exerc?cios salvos",
     editDay: "Editar dia",
     saveDay: "Salvar dia",
     editWeek: "Editar semana",
     saveWeek: "Salvar semana",
     weekSavedSummary: "Semana salva - {count} dias salvos",
-    deleteExercise: "Excluir exercÃ­cio",
+    deleteExercise: "Excluir exerc?cio",
     objective: "Objetivo",
     startImage: "Imagem inicial",
     endImage: "Imagem final",
-    startImageAlt: "{name} posiÃ§Ã£o inicial ou descida",
-    endImageAlt: "{name} posiÃ§Ã£o final ou subida",
+    startImageAlt: "{name} posi?o inicial ou descida",
+    endImageAlt: "{name} posi?o final ou subida",
     uploadStartImage: "Enviar imagem inicial",
     uploadEndImage: "Enviar imagem final",
-    technicalGoal: "Objetivo tÃ©cnico",
+    technicalGoal: "Objetivo t?cnico",
     mistakesOnePerLine: "Erros comuns, um por linha",
     dayNumber: "Dia {number}",
     deleteDay: "Excluir dia",
-    dayTitle: "TÃ­tulo do dia",
+    dayTitle: "T?tulo do dia",
     focus: "Foco",
-    createExercise: "Criar exercÃ­cio",
-    emptyDay: "Este dia ainda nÃ£o tem exercÃ­cios.",
+    createExercise: "Criar exerc?cio",
+    emptyDay: "Este dia ainda n?o tem exerc?cios.",
     week: "Semana",
     noPhase: "Sem fase",
     deleteWeek: "Excluir semana",
-    number: "NÃºmero",
+    number: "N?mero",
     phase: "Fase",
     badge: "Etiqueta",
-    instructions: "IndicaÃ§Ãµes",
+    instructions: "Indica?es",
     createDay: "Criar dia",
-    emptyWeek: "Esta semana ainda nÃ£o tem dias.",
+    emptyWeek: "Esta semana ainda n?o tem dias.",
     createWeekPrompt: "Crie uma semana para iniciar esta rotina.",
     newPhase: "Nova fase",
-    noMatchingExercises: "Nenhum exercÃ­cio corresponde a essa busca.",
+    noMatchingExercises: "Nenhum exerc?cio corresponde a essa busca.",
     completeWeek: "Feita",
     restLower: "descanso",
-    hello: "OlÃ¡, {name}",
+    hello: "Ol?, {name}",
     loadingRoutine: "Carregando rotina...",
-    adminRulesNotice: "VocÃª entrou como admin.",
-    userLoadError: "NÃ£o foi possÃ­vel carregar seu usuÃ¡rio.",
+    adminRulesNotice: "Voc? entrou como admin.",
+    userLoadError: "N?o foi poss?vel carregar seu usu?rio.",
     uploadingImage: "Salvando imagem...",
     imageLoaded: "Imagem comprimida e salva na rotina.",
     imageStoredInRoutine: "Imagem comprimida e salva na rotina.",
-    updatingUser: "Atualizando usuÃ¡rio...",
-    assignedRoutine: "Rotina atribuÃ­da ao usuÃ¡rio.",
-    userWithoutRoutine: "UsuÃ¡rio sem rotina atribuÃ­da.",
-    newRoutinePreparedAssign: "Nova rotina preparada. Ao salvar, serÃ¡ atribuÃ­da a este usuÃ¡rio.",
+    updatingUser: "Atualizando usu?rio...",
+    assignedRoutine: "Rotina atribu?da ao usu?rio.",
+    userWithoutRoutine: "Usu?rio sem rotina atribu?da.",
+    newRoutinePreparedAssign: "Nova rotina preparada. Ao salvar, ser? atribu?da a este usu?rio.",
     removingRoutine: "Removendo rotina...",
-    routineRemoved: "Rotina removida. O usuÃ¡rio verÃ¡ Em breve.",
+    routineRemoved: "Rotina removida. O usu?rio ver? Em breve.",
     newRoutinePrepared: "Nova rotina preparada. Edite os dados e salve.",
     darioMigrated: "Rotina Dario migrada.",
-    darioMigratedAssigned: "Rotina Dario migrada e atribuÃ­da ao usuÃ¡rio.",
+    darioMigratedAssigned: "Rotina Dario migrada e atribu?da ao usu?rio.",
     routineNeedsId: "A rotina precisa de um ID.",
     routineSaved: "Rotina salva.",
-    routineSavedAssigned: "Rotina salva e atribuÃ­da ao usuÃ¡rio.",
+    routineSavedAssigned: "Rotina salva e atribu?da ao usu?rio.",
     deleteRoutineConfirm: "Excluir a rotina \"{name}\"?",
-    routineDeleted: "Rotina excluÃ­da.",
-    deleteUser: "Excluir usuÃ¡rio",
-    deleteUserConfirm: "Excluir o usuÃ¡rio \"{name}\" do RutFit?",
-    userDeleted: "UsuÃ¡rio excluÃ­do.",
-    cannotDeleteSelf: "VocÃª nÃ£o pode excluir seu prÃ³prio usuÃ¡rio admin aqui.",
+    routineDeleted: "Rotina exclu?da.",
+    deleteUser: "Excluir usu?rio",
+    deleteUserConfirm: "Excluir o usu?rio \"{name}\" do RutFit?",
+    userDeleted: "Usu?rio exclu?do.",
+    cannotDeleteSelf: "Voc? n?o pode excluir seu pr?prio usu?rio admin aqui.",
     signingIn: "Entrando...",
     creatingAccount: "Criando conta...",
     writeEmailForReset: "Digite seu email para recuperar a senha.",
-    sendingReset: "Enviando email de recuperaÃ§Ã£o...",
+    sendingReset: "Enviando email de recupera?o...",
     resetSent: "Enviei um email para recuperar a senha.",
     firebaseMissing: "Falta configurar Firebase em firebase-config.js.",
-    invalidEmail: "O email nÃ£o Ã© vÃ¡lido.",
+    invalidEmail: "O email n?o ? v?lido.",
     invalidLogin: "Email ou senha incorretos.",
-    emailInUse: "Esse email jÃ¡ tem uma conta.",
+    emailInUse: "Esse email j? tem uma conta.",
     weakPassword: "A senha deve ter pelo menos 6 caracteres.",
-    firebaseAuthMissing: "Ã‰ necessÃ¡rio ativar Firebase Authentication neste projeto.",
+    firebaseAuthMissing: "Ã‰ necess?rio ativar Firebase Authentication neste projeto.",
     authProviderDisabled: "Ative Email/Password no Firebase Authentication.",
-    invalidApiKey: "A configuraÃ§Ã£o do Firebase nÃ£o Ã© vÃ¡lida.",
-    permissionDenied: "Firestore estÃ¡ bloqueando o acesso. Revise as regras do banco de dados.",
-    firestoreNotFound: "Firestore ou o documento solicitado nÃ£o foi encontrado. Confira se o banco Ã© (default).",
-    firestorePending: "Firestore precisa terminar de ativar ou tem uma condiÃ§Ã£o pendente ({code}). Aguarde um minuto e recarregue.",
-    firestoreUnavailable: "Firestore nÃ£o estÃ¡ disponÃ­vel agora. Revise conexÃ£o ou configuraÃ§Ã£o.",
-    networkFailed: "Sem conexÃ£o. Tente novamente.",
-    actionFailed: "NÃ£o foi possÃ­vel concluir a aÃ§Ã£o{code}.",
+    invalidApiKey: "A configura?o do Firebase n?o ? v?lida.",
+    permissionDenied: "Firestore est? bloqueando o acesso. Revise as regras do banco de dados.",
+    firestoreNotFound: "Firestore ou o documento solicitado n?o foi encontrado. Confira se o banco ? (default).",
+    firestorePending: "Firestore precisa terminar de ativar ou tem uma condi?o pendente ({code}). Aguarde um minuto e recarregue.",
+    firestoreUnavailable: "Firestore n?o est? dispon?vel agora. Revise conex?o ou configura?o.",
+    networkFailed: "Sem conex?o. Tente novamente.",
+    actionFailed: "N?o foi poss?vel concluir a a?o{code}.",
     storageNotReady: "A imagem e salva dentro da rotina.",
     selectImageFile: "Selecione um arquivo de imagem."
   }
@@ -1174,7 +1174,7 @@ function t(key, params = {}) {
   const dictionary = translations[state.language] || translations[DEFAULT_LANGUAGE];
   let value = dictionary[key] || translations[DEFAULT_LANGUAGE][key] || key;
   Object.entries(params).forEach(([paramKey, paramValue]) => {
-    value = value.replaceAll(`{${paramKey}}`, String(paramValue ?? ""));
+    value = value.replaceAll(`{${paramKey}}`, String(paramValue ? ""));
   });
   return value;
 }
@@ -1194,12 +1194,12 @@ function applyTranslations() {
   });
 
   if (state.currentExerciseKey) {
-    doneButton.textContent = progress[state.currentExerciseKey.id] ? t("done") : t("markDone");
+    doneButton.textContent = progress[state.currentExerciseKey.id] ?t("done") : t("markDone");
   }
 }
 
 function setLanguage(language) {
-  state.language = translations[language] ? language : DEFAULT_LANGUAGE;
+  state.language = translations[language] ?language : DEFAULT_LANGUAGE;
   localStorage.setItem(LANGUAGE_KEY, state.language);
   applyTranslations();
   if (getActiveRoutine()) renderApp();
@@ -1213,10 +1213,10 @@ function initializeRememberSession() {
 
 async function applyAuthPersistence() {
   if (!rememberSession || !window.firebase?.auth) return;
-  const mode = rememberSession.checked ? "local" : "session";
+  const mode = rememberSession.checked ?"local" : "session";
   localStorage.setItem(AUTH_PERSISTENCE_KEY, mode);
   const persistence = mode === "local"
-    ? firebase.auth.Auth.Persistence.LOCAL
+    ?firebase.auth.Auth.Persistence.LOCAL
     : firebase.auth.Auth.Persistence.SESSION;
   await firebase.auth().setPersistence(persistence);
 }
@@ -1274,7 +1274,7 @@ function getDefaultRoutineForUser(user) {
 
 function getPendingAccountRole() {
   const role = localStorage.getItem(PENDING_ACCOUNT_ROLE_KEY) || accountRole?.value || "student";
-  return role === "trainer" ? "trainer" : "student";
+  return role === "trainer" ?"trainer" : "student";
 }
 
 function canManageStudents() {
@@ -1315,21 +1315,21 @@ function renderUserAvatar(user = {}, className = "profile-avatar") {
 
 function getProfileStats(user = {}) {
   return [
-    user.weight ? `${user.weight} kg` : "",
-    user.height ? `${user.height} m` : "",
-    user.age ? `${user.age} aÃ±os` : ""
+    user.weight ?`${user.weight} kg` : "",
+    user.height ?`${user.height} m` : "",
+    user.age ?`${user.age} a?os` : ""
   ].filter(Boolean);
 }
 
 function formatMemberSince(value) {
   if (!value) return t("notCompleted");
   const date = typeof value.toDate === "function"
-    ? value.toDate()
+    ?value.toDate()
     : typeof value.seconds === "number"
-      ? new Date(value.seconds * 1000)
+      ?new Date(value.seconds * 1000)
       : new Date(value);
   if (Number.isNaN(date.getTime())) return t("notCompleted");
-  return date.toLocaleDateString(state.language === "en" ? "en-US" : state.language === "pt" ? "pt-BR" : "es-ES", {
+  return date.toLocaleDateString(state.language === "en" ?"en-US" : state.language === "pt" ?"pt-BR" : "es-ES", {
     month: "long",
     year: "numeric"
   });
@@ -1349,7 +1349,7 @@ function getAuthErrorMessage(error) {
   if (code.includes("failed-precondition")) return t("firestorePending", { code });
   if (code.includes("unavailable")) return t("firestoreUnavailable");
   if (code.includes("network-request-failed")) return t("networkFailed");
-  return t("actionFailed", { code: code ? ` (${code})` : "" });
+  return t("actionFailed", { code: code ?` (${code})` : "" });
 }
 
 function showAuthScreen(message = "") {
@@ -1368,6 +1368,8 @@ function showAuthScreen(message = "") {
   state.adminEditorMode = "";
   state.pendingAssignUserId = "";
   state.adminEditingExerciseKey = "";
+  state.adminWeekEditorIndex = null;
+  state.adminDayEditorIndex = null;
   state.activeView = "home";
   closeExercise();
   stopTimer();
@@ -1422,7 +1424,7 @@ async function ensureUserDocument(user) {
   if (!snapshot.exists) {
     const routineId = getDefaultRoutineForUser(user);
     const displayName = getDisplayNameFromEmail(user.email);
-    const selectedRole = isAdmin ? "admin" : getPendingAccountRole();
+    const selectedRole = isAdmin ?"admin" : getPendingAccountRole();
     await ref.set({
       email: normalizeEmail(user.email),
       displayName,
@@ -1447,7 +1449,7 @@ async function ensureUserDocument(user) {
         { merge: true }
       );
     } catch (error) {
-      console.warn("No se pudo guardar el rol admin. Se usarÃ¡ el email admin local.", error);
+      console.warn("No se pudo guardar el rol admin. Se usar? el email admin local.", error);
     }
     data.role = "admin";
   }
@@ -1563,7 +1565,7 @@ function startTrainerInvitesListener() {
         accepted.map(async (invite) => {
           try {
             const studentDoc = await db.collection("users").doc(invite.studentId).get();
-            return studentDoc.exists ? { uid: studentDoc.id, inviteId: invite.id, ...studentDoc.data() } : null;
+            return studentDoc.exists ?{ uid: studentDoc.id, inviteId: invite.id, ...studentDoc.data() } : null;
           } catch (error) {
             console.warn("No se pudo cargar un alumno aceptado.", error);
             return null;
@@ -1711,10 +1713,10 @@ async function respondToTrainerInvitation(inviteId, accepted) {
     );
   }
   state.studentInvites = accepted
-    ? state.studentInvites.map((item) => (item.id === inviteId ? { ...item, status: "accepted" } : item))
+    ?state.studentInvites.map((item) => (item.id === inviteId ?{ ...item, status: "accepted" } : item))
     : state.studentInvites.filter((item) => item.id !== inviteId);
   renderStudentProfessorsPanel();
-  return { ...invite, status: accepted ? "accepted" : "declined" };
+  return { ...invite, status: accepted ?"accepted" : "declined" };
 }
 
 function getAdminUser(uid) {
@@ -1750,7 +1752,7 @@ function renderTrainerHome() {
   trainerHome.innerHTML = `
     <section class="trainer-dashboard-hero">
       <div>
-        <span class="student-role-pill">${state.isAdmin ? "Admin" : "Entrenador"}</span>
+        <span class="student-role-pill">${state.isAdmin ?"Admin" : "Entrenador"}</span>
         <h1>RutFit</h1>
         <p>Hola, ${escapeHtml(displayName || t("user"))} <span aria-hidden="true">&#128075;</span></p>
       </div>
@@ -1800,7 +1802,7 @@ function renderTrainerHome() {
     <section class="home-activity">
       <div class="home-section-title">Actividad reciente</div>
       ${recentItems.length
-        ? recentItems.map((item, index) => `<div class="activity-item"><i></i><span>${escapeHtml(item)}</span><small>${index === 0 ? "Hace 2h" : index === 1 ? "Ayer" : "Hace 3h"}</small></div>`).join("")
+        ?recentItems.map((item, index) => `<div class="activity-item"><i></i><span>${escapeHtml(item)}</span><small>${index === 0 ?"Hace 2h" : index === 1 ?"Ayer" : "Hace 3h"}</small></div>`).join("")
         : `<div class="empty-state">Sin actividad reciente.</div>`
       }
     </section>
@@ -1818,6 +1820,8 @@ function setActiveView(view) {
     state.adminEditorMode = "";
     state.pendingAssignUserId = "";
     state.adminEditingExerciseKey = "";
+    state.adminWeekEditorIndex = null;
+    state.adminDayEditorIndex = null;
     state.adminDraft = null;
   }
   renderApp();
@@ -1849,6 +1853,8 @@ function openAcceptedStudentsForAssignment() {
   state.adminEditorMode = "";
   state.pendingAssignUserId = "";
   state.adminEditingExerciseKey = "";
+  state.adminWeekEditorIndex = null;
+  state.adminDayEditorIndex = null;
   state.adminDraft = null;
   setAdminMessage("");
   renderApp();
@@ -1857,8 +1863,8 @@ function openAcceptedStudentsForAssignment() {
 function getRoutineProgressStats(routine = getActiveRoutine()) {
   const totalSessions = getRoutineTotalSessions(routine);
   const doneCount = Object.values(progress).filter(Boolean).length;
-  const percent = totalSessions ? Math.round((doneCount / totalSessions) * 100) : 0;
-  const totalExercises = routine ? Object.keys(routine.exerciseLibrary || {}).length : 0;
+  const percent = totalSessions ?Math.round((doneCount / totalSessions) * 100) : 0;
+  const totalExercises = routine ?Object.keys(routine.exerciseLibrary || {}).length : 0;
   const totalWeeks = routine?.plan?.length || 0;
   return { totalSessions, doneCount, percent, totalExercises, totalWeeks };
 }
@@ -1869,7 +1875,7 @@ function getNextTrainingLabel(routine = getActiveRoutine()) {
     for (let dayIndex = 0; dayIndex < (week.days || []).length; dayIndex += 1) {
       const day = week.days[dayIndex];
       const ids = (day.exercises || []).map((exerciseKey) => progressId(week.number, dayIndex, exerciseKey));
-      if (ids.some((id) => !progress[id])) return `${t("week")} ${week.number} Â· ${day.title}`;
+      if (ids.some((id) => !progress[id])) return `${t("week")} ${week.number} ? ${day.title}`;
     }
   }
   return t("completeWeek");
@@ -1905,11 +1911,11 @@ function renderStudentHome() {
   const nextInfo = getNextTrainingInfo(routine);
   const displayName = state.currentUserData?.displayName || getDisplayNameFromEmail(state.currentUser?.email || "");
   const subtitle = nextInfo
-    ? `${t("week")} ${nextInfo.weekNumber} de ${nextInfo.totalWeeks} Â· Dia ${nextInfo.dayNumber} de ${nextInfo.totalDays}`
-    : (routine?.plan?.length ? "Rutina completada" : t("noRoutine"));
-  const todayExercises = nextInfo ? nextInfo.exerciseCount : 0;
-  const todayMinutes = todayExercises ? Math.round(todayExercises * 7.5) : 0;
-  const todayKcal = todayMinutes ? Math.round(todayMinutes * 7) : 0;
+    ?`${t("week")} ${nextInfo.weekNumber} de ${nextInfo.totalWeeks} ? Dia ${nextInfo.dayNumber} de ${nextInfo.totalDays}`
+    : (routine?.plan?.length ?"Rutina completada" : t("noRoutine"));
+  const todayExercises = nextInfo ?nextInfo.exerciseCount : 0;
+  const todayMinutes = todayExercises ?Math.round(todayExercises * 7.5) : 0;
+  const todayKcal = todayMinutes ?Math.round(todayMinutes * 7) : 0;
 
   studentHome.innerHTML = `
     <p class="sh-greeting">Hola, ${escapeHtml(displayName || t("user"))} <span aria-hidden="true">ðŸ‘‹</span></p>
@@ -1940,9 +1946,9 @@ function renderStudentHome() {
     </div>
     <div class="home-section-title">Proximo entrenamiento</div>
     <section class="student-current-card next-training-card">
-      <small>${nextInfo ? `${t("week")} ${nextInfo.weekNumber}` : ""}</small>
-      <strong>${escapeHtml(nextInfo ? nextInfo.dayTitle : getNextTrainingLabel(routine))}</strong>
-      <span>Manana Â· 18:00</span>
+      <small>${nextInfo ?`${t("week")} ${nextInfo.weekNumber}` : ""}</small>
+      <strong>${escapeHtml(nextInfo ?nextInfo.dayTitle : getNextTrainingLabel(routine))}</strong>
+      <span>Ma?ana ? 18:00</span>
     </section>
     <section class="student-current-card streak-card">
       <small>Racha</small>
@@ -1960,11 +1966,11 @@ function renderStudentHomeV2() {
   const nextInfo = getNextTrainingInfo(routine);
   const displayName = state.currentUserData?.displayName || getDisplayNameFromEmail(state.currentUser?.email || "");
   const subtitle = nextInfo
-    ? `${t("week")} ${nextInfo.weekNumber} de ${nextInfo.totalWeeks} Â· DÃ­a ${nextInfo.dayNumber} de ${nextInfo.totalDays}`
-    : (routine?.plan?.length ? "Rutina completada" : t("noRoutine"));
-  const todayExercises = nextInfo ? nextInfo.exerciseCount : 0;
-  const todayMinutes = todayExercises ? Math.round(todayExercises * 7.5) : 0;
-  const todayKcal = todayMinutes ? Math.round(todayMinutes * 7) : 0;
+    ?`${t("week")} ${nextInfo.weekNumber} de ${nextInfo.totalWeeks} ? D?a ${nextInfo.dayNumber} de ${nextInfo.totalDays}`
+    : (routine?.plan?.length ?"Rutina completada" : t("noRoutine"));
+  const todayExercises = nextInfo ?nextInfo.exerciseCount : 0;
+  const todayMinutes = todayExercises ?Math.round(todayExercises * 7.5) : 0;
+  const todayKcal = todayMinutes ?Math.round(todayMinutes * 7) : 0;
 
   studentHome.innerHTML = `
     <section class="student-home-hero">
@@ -2006,16 +2012,16 @@ function renderStudentHomeV2() {
         <span>Kcal aprox.</span>
       </article>
     </div>
-    <div class="home-section-title">PrÃ³ximo entrenamiento</div>
+    <div class="home-section-title">Pr?ximo entrenamiento</div>
     <button class="student-current-card next-training-card" type="button" data-student-home-action="routine">
-      <small>${nextInfo ? `${t("week")} ${nextInfo.weekNumber}` : ""}</small>
-      <strong>${escapeHtml(nextInfo ? nextInfo.dayTitle : getNextTrainingLabel(routine))}</strong>
-      <span>MaÃ±ana Â· 18:00</span>
+      <small>${nextInfo ?`${t("week")} ${nextInfo.weekNumber}` : ""}</small>
+      <strong>${escapeHtml(nextInfo ?nextInfo.dayTitle : getNextTrainingLabel(routine))}</strong>
+      <span>Ma?ana ? 18:00</span>
     </button>
     <section class="student-current-card streak-card">
       <small>Racha</small>
       <strong>12</strong>
-      <span>DÃ­as seguidos</span>
+      <span>D?as seguidos</span>
       <div class="flame-row" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
     </section>
   `;
@@ -2030,17 +2036,17 @@ function renderStudentNotifications() {
   studentProgress.innerHTML = `
     <section class="student-notifications-screen">
       <div class="screen-topbar progress-topbar">
-        <button class="icon-button ghost-icon" type="button" data-notification-action="back" aria-label="Volver">â€¹</button>
+        <button class="icon-button ghost-icon" type="button" data-notification-action="back" aria-label="Volver">⬹</button>
         <h2>Notificaciones</h2>
         <span></span>
       </div>
-      <button class="notifications-read-all" type="button" data-notification-action="read-all">Marcar todas como leÃ­das</button>
+      <button class="notifications-read-all" type="button" data-notification-action="read-all">Marcar todas como le?das</button>
       <div class="notification-list">
         ${renderNotificationRow("purple", "Nuevo entrenamiento disponible", `${escapeHtml(nextTitle)}<br>Hace 1h`, "")}
-        ${renderNotificationRow("purple", "Entrenamiento completado", "Buen trabajo! Has completado tu entrenamiento del dÃ­a.", "Ayer")}
-        ${renderNotificationRow("orange", "Recordatorio", "No olvides registrar tus medidas semanales.", "2 dÃ­as")}
-        ${renderNotificationRow("orange", "Nueva rutina asignada", `${escapeHtml(routineName)} ha sido asignada a tu plan.`, "3 dÃ­as")}
-        ${renderNotificationRow("orange", "Meta alcanzada", "Felicidades! 10 dÃ­as de racha conseguidos.", "5 dÃ­as")}
+        ${renderNotificationRow("purple", "Entrenamiento completado", "Buen trabajo! Has completado tu entrenamiento del d?a.", "Ayer")}
+        ${renderNotificationRow("orange", "Recordatorio", "No olvides registrar tus medidas semanales.", "2 d?as")}
+        ${renderNotificationRow("orange", "Nueva rutina asignada", `${escapeHtml(routineName)} ha sido asignada a tu plan.`, "3 d?as")}
+        ${renderNotificationRow("orange", "Meta alcanzada", "Felicidades! 10 d?as de racha conseguidos.", "5 d?as")}
       </div>
     </section>
   `;
@@ -2054,7 +2060,7 @@ function renderNotificationRow(color, title, body, time) {
         <strong>${title}</strong>
         <p>${body}</p>
       </div>
-      ${time ? `<span>${time}</span>` : `<b aria-hidden="true"></b>`}
+      ${time ?`<span>${time}</span>` : `<b aria-hidden="true"></b>`}
     </article>
   `;
 }
@@ -2086,9 +2092,9 @@ function renderStudentProgress() {
       </div>
 
       <div class="mock-tabs progress-tabs">
-        <button type="button" data-progress-tab="summary" class="${currentTab === "summary" ? "active" : ""}">Resumen</button>
-        <button type="button" data-progress-tab="history" class="${currentTab === "history" ? "active" : ""}">Entrenamientos</button>
-        <button type="button" data-progress-tab="measures" class="${currentTab === "measures" ? "active" : ""}">Medidas</button>
+        <button type="button" data-progress-tab="summary" class="${currentTab === "summary" ?"active" : ""}">Resumen</button>
+        <button type="button" data-progress-tab="history" class="${currentTab === "history" ?"active" : ""}">Entrenamientos</button>
+        <button type="button" data-progress-tab="measures" class="${currentTab === "measures" ?"active" : ""}">Medidas</button>
       </div>
 
       ${renderProgressSummary({
@@ -2120,8 +2126,8 @@ function renderProgressSummary({ weekWorkouts, percent, kcal }) {
     </div>
 
     <section class="performance-card">
-      <div class="progress-section-title">GrÃ¡fico de rendimiento</div>
-      <div class="performance-chart" aria-label="GrÃ¡fico de rendimiento">
+      <div class="progress-section-title">Gr?fico de rendimiento</div>
+      <div class="performance-chart" aria-label="Gr?fico de rendimiento">
         <span class="axis top">100%</span>
         <span class="axis mid">50%</span>
         <span class="axis bottom">0%</span>
@@ -2138,13 +2144,13 @@ function renderProgressSummary({ weekWorkouts, percent, kcal }) {
             <circle cx="20" cy="118" r="4"/><circle cx="62" cy="91" r="4"/><circle cx="95" cy="48" r="4"/><circle cx="132" cy="82" r="4"/><circle cx="170" cy="56" r="4"/><circle cx="205" cy="92" r="4"/><circle cx="238" cy="55" r="4"/><circle cx="275" cy="42" r="4"/><circle cx="304" cy="22" r="4"/>
           </g>
         </svg>
-        <div class="chart-days"><span>Lun</span><span>Mar</span><span>MiÃ©</span><span>Jue</span><span>Vie</span><span>SÃ¡b</span><span>Dom</span></div>
+        <div class="chart-days"><span>Lun</span><span>Mar</span><span>Mi?</span><span>Jue</span><span>Vie</span><span>S?b</span><span>Dom</span></div>
       </div>
     </section>
 
     <section class="progress-streak">
       <div class="progress-section-title">Racha de entrenamiento</div>
-      <strong>12 <span>dÃ­as seguidos</span></strong>
+      <strong>12 <span>d?as seguidos</span></strong>
       <div class="flame-row" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
     </section>
   `;
@@ -2156,38 +2162,38 @@ function renderProgressHistory(routine) {
     (week.days || []).map((day, index) => {
       const ids = (day.exercises || []).map((exerciseKey) => progressId(week.number, index, exerciseKey));
       const done = ids.filter((id) => progress[id]).length;
-      const percent = ids.length ? Math.round((done / ids.length) * 100) : 0;
+      const percent = ids.length ?Math.round((done / ids.length) * 100) : 0;
       const completed = percent >= 100;
       const pending = percent < 100;
       if (filter === "completed" && !completed) return "";
       if (filter === "pending" && !pending) return "";
-      const iconClass = completed ? "calendar" : percent >= 80 ? "fire" : "dumbbell";
-      const date = completed ? "Hoy" : "Ayer";
+      const iconClass = completed ?"calendar" : percent >= 80 ?"fire" : "dumbbell";
+      const date = completed ?"Hoy" : "Ayer";
       const minutes = Math.max(40, Math.round(ids.length * 7.5));
       return `
         <article class="history-row">
           <span class="routine-list-icon ${iconClass}"></span>
           <div>
-            <strong>${escapeHtml(day.title || `DÃ­a ${index + 1}`)}</strong>
-            <small>${date} Â· ${minutes} min</small>
+            <strong>${escapeHtml(day.title || `D?a ${index + 1}`)}</strong>
+            <small>${date} ? ${minutes} min</small>
           </div>
           <b>${percent}%</b>
         </article>
       `;
     })
   ).filter(Boolean);
-  const rows = allRows.length ? allRows.join("") : `<div class="empty-state">${t("routineInPreparation")}</div>`;
+  const rows = allRows.length ?allRows.join("") : `<div class="empty-state">${t("routineInPreparation")}</div>`;
   return `
     <section class="student-progress-screen progress-history-screen">
       <div class="screen-topbar progress-topbar">
-        <button class="icon-button ghost-icon" type="button" data-progress-back aria-label="Volver">â€¹</button>
+        <button class="icon-button ghost-icon" type="button" data-progress-back aria-label="Volver">⬹</button>
         <h2>Historial</h2>
         <button class="icon-button ghost-icon filter-icon" type="button" data-progress-action="cycle-history" aria-label="Filtrar">${getInlineIcon("filter")}</button>
       </div>
       <div class="mock-tabs progress-tabs history-filter-tabs">
-        <button type="button" data-history-filter="all" class="${filter === "all" ? "active" : ""}">Todos</button>
-        <button type="button" data-history-filter="completed" class="${filter === "completed" ? "active" : ""}">Completados</button>
-        <button type="button" data-history-filter="pending" class="${filter === "pending" ? "active" : ""}">Pendientes</button>
+        <button type="button" data-history-filter="all" class="${filter === "all" ?"active" : ""}">Todos</button>
+        <button type="button" data-history-filter="completed" class="${filter === "completed" ?"active" : ""}">Completados</button>
+        <button type="button" data-history-filter="pending" class="${filter === "pending" ?"active" : ""}">Pendientes</button>
       </div>
       <section class="progress-list-card history-list-card">${rows}</section>
     </section>
@@ -2203,18 +2209,18 @@ function renderProgressMeasures() {
   return `
     <section class="student-progress-screen progress-measures-screen">
       <div class="screen-topbar progress-topbar">
-        <button class="icon-button ghost-icon" type="button" data-progress-back aria-label="Volver">â€¹</button>
+        <button class="icon-button ghost-icon" type="button" data-progress-back aria-label="Volver">⬹</button>
         <h2>Medidas</h2>
         <span></span>
       </div>
       <div class="mock-tabs progress-tabs measure-tabs">
-        <button type="button" data-measure-tab="summary" class="${tab === "summary" ? "active" : ""}">Resumen</button>
-        <button type="button" data-measure-tab="weight" class="${tab === "weight" ? "active" : ""}">Peso</button>
-        <button type="button" data-measure-tab="photos" class="${tab === "photos" ? "active" : ""}">Fotos</button>
+        <button type="button" data-measure-tab="summary" class="${tab === "summary" ?"active" : ""}">Resumen</button>
+        <button type="button" data-measure-tab="weight" class="${tab === "weight" ?"active" : ""}">Peso</button>
+        <button type="button" data-measure-tab="photos" class="${tab === "photos" ?"active" : ""}">Fotos</button>
       </div>
       <section class="progress-list-card measure-card">
         <div class="progress-section-title">Actuales</div>
-        ${tab === "photos" ? `
+        ${tab === "photos" ?`
           <div class="measure-photo-empty">
             ${renderUserAvatar(userData)}
             <span>No hay fotos registradas.</span>
@@ -2225,7 +2231,7 @@ function renderProgressMeasures() {
             <article><span>Grasa corporal</span><strong>${escapeHtml(bodyFat)}</strong><small>%</small></article>
             <article><span>Masa muscular</span><strong>${escapeHtml(muscleMass)}</strong><small>kg</small></article>
           </div>
-          <div class="progress-section-title">HistÃ³rico</div>
+          <div class="progress-section-title">Hist?rico</div>
           <div class="performance-chart compact-chart measure-chart">
             <span class="axis top">80</span>
             <span class="axis mid">78</span>
@@ -2249,7 +2255,7 @@ function getNextRoutineNumber() {
     .map((id) => routines[id]?.name || "")
     .map((name) => Number(String(name).match(/^Rutina\s+(\d+)$/i)?.[1] || 0))
     .filter(Boolean);
-  return numbers.length ? Math.max(...numbers) + 1 : getAdminRoutineIds().length + 1;
+  return numbers.length ?Math.max(...numbers) + 1 : getAdminRoutineIds().length + 1;
 }
 
 function createRoutineDraftId(number = getNextRoutineNumber()) {
@@ -2270,7 +2276,7 @@ function startRoutineCreation(userId = "") {
   state.adminDraft = createEmptyRoutine(routineId);
   state.adminDraft.name = `Rutina ${routineNumber}`;
   state.adminRoutineId = state.adminDraft.id;
-  setAdminMessage(userId ? t("newRoutinePreparedAssign") : t("newRoutinePrepared"), "success");
+  setAdminMessage(userId ?t("newRoutinePreparedAssign") : t("newRoutinePrepared"), "success");
   renderApp();
 }
 
@@ -2321,7 +2327,7 @@ function renderStudentProfessorsPanel() {
   const pendingInvites = invites.filter((invite) => invite.status === "pending");
   const acceptedInvites = invites.filter((invite) => invite.status === "accepted");
   const pendingHtml = pendingInvites.length
-    ? `
+    ?`
       <div class="home-section-title">${t("pendingInvites")}</div>
       ${pendingInvites
         .map((invite) => {
@@ -2344,7 +2350,7 @@ function renderStudentProfessorsPanel() {
     `
     : `<div class="empty-state">${t("noPendingInvites")}</div>`;
   const acceptedHtml = acceptedInvites.length
-    ? `
+    ?`
       <div class="home-section-title">${t("acceptedProfessors")}</div>
       ${acceptedInvites
         .map((invite) => {
@@ -2392,7 +2398,7 @@ function renderTrainerInviteTools() {
       <div class="trainer-pending">
         <small>${t("pendingInvites")}</small>
         ${pending.length
-          ? pending.map((invite) => `<div class="trainer-pending-item">${escapeHtml(invite.studentEmail)}</div>`).join("")
+          ?pending.map((invite) => `<div class="trainer-pending-item">${escapeHtml(invite.studentEmail)}</div>`).join("")
           : `<div class="empty-state">${t("noPendingInvites")}</div>`
         }
       </div>
@@ -2425,11 +2431,11 @@ function renderAdminUsers() {
     const text = normalizeText(`${user.displayName || ""} ${user.email || ""}`);
     const isActive = Boolean(user.routineId);
     const matchesQuery = !query || text.includes(query);
-    const matchesFilter = filter === "all" || (filter === "active" ? isActive : !isActive);
+    const matchesFilter = filter === "all" || (filter === "active" ?isActive : !isActive);
     return matchesQuery && matchesFilter;
   });
   const visibleUsers = state.selectedAdminUserId
-    ? state.adminUsers.filter((user) => user.uid === state.selectedAdminUserId)
+    ?state.adminUsers.filter((user) => user.uid === state.selectedAdminUserId)
     : filteredUsers;
 
   if (state.selectedAdminUserId && !visibleUsers.length) {
@@ -2459,15 +2465,15 @@ function renderAdminUsers() {
       </label>
       <div class="trainer-student-tabs">
         ${["all", "active", "inactive"].map((item) => `
-          <button type="button" data-admin-student-filter="${item}" class="${filter === item ? "active" : ""}">
-            ${item === "all" ? "Todos" : item === "active" ? "Activos" : "Inactivos"}
+          <button type="button" data-admin-student-filter="${item}" class="${filter === item ?"active" : ""}">
+            ${item === "all" ?"Todos" : item === "active" ?"Activos" : "Inactivos"}
           </button>
         `).join("")}
       </div>
-      ${state.adminStudentFormOpen ? renderTrainerNewStudentForm() : ""}
+      ${state.adminStudentFormOpen ?renderTrainerNewStudentForm() : ""}
       <div class="trainer-student-list">
         ${filteredUsers.length
-          ? filteredUsers.map((user) => renderTrainerStudentListItem(user)).join("")
+          ?filteredUsers.map((user) => renderTrainerStudentListItem(user)).join("")
           : `<div class="empty-state">${t("noStudents")}</div>`
         }
       </div>
@@ -2498,7 +2504,7 @@ function renderAssignRoutineScreen(routineIds) {
           <select data-assign-student>
             ${state.adminUsers.map((user) => {
               const name = user.displayName || getDisplayNameFromEmail(user.email || "");
-              return `<option value="${escapeHtml(user.uid)}" ${user.uid === student.uid ? "selected" : ""}>${escapeHtml(name)} · ${escapeHtml(user.email || "")}</option>`;
+              return `<option value="${escapeHtml(user.uid)}" ${user.uid === student.uid ?"selected" : ""}>${escapeHtml(name)} · ${escapeHtml(user.email || "")}</option>`;
             }).join("")}
           </select>
         </label>
@@ -2509,7 +2515,7 @@ function renderAssignRoutineScreen(routineIds) {
         <label>
           <small>Seleccionar rutina</small>
           <select data-assign-routine>
-            ${routineIds.map((id) => `<option value="${escapeHtml(id)}" ${id === routineId ? "selected" : ""}>${escapeHtml(routines[id]?.name || id)} · ${(routines[id]?.plan || []).length} semanas</option>`).join("")}
+            ${routineIds.map((id) => `<option value="${escapeHtml(id)}" ${id === routineId ?"selected" : ""}>${escapeHtml(routines[id]?.name || id)} · ${(routines[id]?.plan || []).length} semanas</option>`).join("")}
           </select>
         </label>
       </section>
@@ -2538,7 +2544,7 @@ function renderAssignRoutineScreen(routineIds) {
 function formatDateDisplay(value) {
   if (!value) return "";
   const [year, month, day] = String(value).split("-");
-  return day && month && year ? `${day}/${month}/${year}` : value;
+  return day && month && year ?`${day}/${month}/${year}` : value;
 }
 
 function renderAdminWeekEditorScreen(week, weekIndex) {
@@ -2568,7 +2574,7 @@ function renderAdminWeekEditorScreen(week, weekIndex) {
         <span>Fase</span>
         <select class="admin-field" data-week-field="phase.name">
           ${["Adaptación", "Fuerza básica", "Hipertrofia", "Hipertrofia avanzada", "Fuerza máxima"].map((item) =>
-            `<option value="${escapeHtml(item)}" ${item === (phase.name || "") ? "selected" : ""}>${escapeHtml(item)}</option>`
+            `<option value="${escapeHtml(item)}" ${item === (phase.name || "") ?"selected" : ""}>${escapeHtml(item)}</option>`
           ).join("")}
         </select>
       </label>
@@ -2609,7 +2615,7 @@ function renderAdminDayEditorScreen(week, day, weekIndex, dayIndex) {
         <span>Foco principal</span>
         <div class="native-pill-row">
           ${["Fuerza", "Hipertrofia", "Resistencia"].map((item) => `
-            <button type="button" class="${item === focus ? "active" : ""}" data-day-focus="${escapeHtml(item)}">${escapeHtml(item)}</button>
+            <button type="button" class="${item === focus ?"active" : ""}" data-day-focus="${escapeHtml(item)}">${escapeHtml(item)}</button>
           `).join("")}
         </div>
       </div>
@@ -2639,9 +2645,9 @@ function renderTrainerStudentListItem(user) {
           <strong>${escapeHtml(displayName || t("user"))}</strong>
           <small>${escapeHtml(user.email || t("noEmail"))}</small>
         </span>
-        <em class="${isActive ? "active" : "inactive"}">${isActive ? "Activo" : "Inactivo"}</em>
+        <em class="${isActive ?"active" : "inactive"}">${isActive ?"Activo" : "Inactivo"}</em>
       </button>
-      ${canDeleteUser ? `<button class="user-delete-button compact-delete" type="button" data-user-delete aria-label="${t("deleteUser")}">×</button>` : ""}
+      ${canDeleteUser ?`<button class="user-delete-button compact-delete" type="button" data-user-delete aria-label="${t("deleteUser")}">×</button>` : ""}
     </article>
   `;
 }
@@ -2673,31 +2679,31 @@ function renderTrainerNewStudentForm() {
 function renderTrainerStudentActivity(user, routineIds) {
   const displayName = user.displayName || getDisplayNameFromEmail(user.email || "");
   const currentRoutine = user.routineId || "";
-  const routine = currentRoutine ? routines[currentRoutine] : null;
-  const currentRoutineName = routine ? routine.name || currentRoutine : t("noRoutine");
-  const routineStats = routine ? getRoutineProgressStats(routine) : { percent: 0, totalSessions: 0 };
-  const nextInfo = routine ? getNextTrainingInfo(routine) : null;
+  const routine = currentRoutine ?routines[currentRoutine] : null;
+  const currentRoutineName = routine ?routine.name || currentRoutine : t("noRoutine");
+  const routineStats = routine ?getRoutineProgressStats(routine) : { percent: 0, totalSessions: 0 };
+  const nextInfo = routine ?getNextTrainingInfo(routine) : null;
   const canDeleteUser = state.isAdmin && user.uid !== state.currentUser?.uid;
   const routineOptions = [
-    `<option value="" ${!currentRoutine ? "selected" : ""}>${t("noRoutine")}</option>`,
-    ...routineIds.map((id) => `<option value="${escapeHtml(id)}" ${id === currentRoutine ? "selected" : ""}>${escapeHtml(routines[id].name || id)}</option>`),
+    `<option value="" ${!currentRoutine ?"selected" : ""}>${t("noRoutine")}</option>`,
+    ...routineIds.map((id) => `<option value="${escapeHtml(id)}" ${id === currentRoutine ?"selected" : ""}>${escapeHtml(routines[id].name || id)}</option>`),
     currentRoutine && !routineIds.includes(currentRoutine)
-      ? `<option value="${escapeHtml(currentRoutine)}" selected>${escapeHtml(t("unavailableRoutine", { id: currentRoutine }))}</option>`
+      ?`<option value="${escapeHtml(currentRoutine)}" selected>${escapeHtml(t("unavailableRoutine", { id: currentRoutine }))}</option>`
       : ""
   ].join("");
   return `
     <section class="trainer-student-activity" data-user-id="${escapeHtml(user.uid)}">
       <div class="screen-topbar">
-        <button class="icon-button ghost-icon" type="button" data-admin-users-back aria-label="Volver">‹</button>
+        <button class="icon-button ghost-icon" type="button" data-admin-users-back aria-label="Volver">9</button>
         <h2>${escapeHtml(displayName || t("user"))}</h2>
-        ${canDeleteUser ? `<button class="icon-button ghost-icon user-delete-button" type="button" data-user-delete aria-label="${t("deleteUser")}">⋮</button>` : `<button class="icon-button ghost-icon" type="button" aria-label="Opciones">⋮</button>`}
+        ${canDeleteUser ?`<button class="icon-button ghost-icon user-delete-button" type="button" data-user-delete aria-label="${t("deleteUser")}">⋮</button>` : `<button class="icon-button ghost-icon" type="button" aria-label="Opciones">⋮</button>`}
       </div>
       <div class="activity-profile-hero">
         ${renderUserAvatar(user, "student-activity-avatar")}
       </div>
       <div class="student-activity-tabs">
         <button class="active" type="button">Resumen</button>
-        <button type="button" data-user-action="edit-routine" ${currentRoutine && routines[currentRoutine] ? "" : "disabled"}>Rutinas</button>
+        <button type="button" data-user-action="edit-routine" ${currentRoutine && routines[currentRoutine] ?"" : "disabled"}>Rutinas</button>
         <button type="button">Progreso</button>
         <button type="button">Historial</button>
       </div>
@@ -2705,7 +2711,7 @@ function renderTrainerStudentActivity(user, routineIds) {
         <div>
           <small>Rutina actual</small>
           <strong>${escapeHtml(currentRoutineName)}</strong>
-          <span>${nextInfo ? `Semana ${nextInfo.weekNumber} de ${nextInfo.totalWeeks}` : "Sin plan activo"}</span>
+          <span>${nextInfo ?`Semana ${nextInfo.weekNumber} de ${nextInfo.totalWeeks}` : "Sin plan activo"}</span>
         </div>
         <div class="mini-progress" style="--progress:${routineStats.percent}%"><strong>${routineStats.percent}%</strong></div>
       </section>
@@ -2717,7 +2723,7 @@ function renderTrainerStudentActivity(user, routineIds) {
       </div>
       <div class="progress-section-title">Próximo entrenamiento</div>
       <section class="student-current-card next-training-card">
-        <strong>${escapeHtml(nextInfo ? nextInfo.dayTitle : getNextTrainingLabel(routine))}</strong>
+        <strong>${escapeHtml(nextInfo ?nextInfo.dayTitle : getNextTrainingLabel(routine))}</strong>
         <span>Mañana · 18:00</span>
       </section>
       <label class="search-box admin-user-routine">
@@ -2726,7 +2732,7 @@ function renderTrainerStudentActivity(user, routineIds) {
       </label>
       <div class="admin-row-actions">
         <button class="primary-button" type="button" data-user-action="add-routine">${t("addRoutine")}</button>
-        <button class="secondary-button" type="button" data-user-action="edit-routine" ${currentRoutine && routines[currentRoutine] ? "" : "disabled"}>${t("editCurrentRoutine")}</button>
+        <button class="secondary-button" type="button" data-user-action="edit-routine" ${currentRoutine && routines[currentRoutine] ?"" : "disabled"}>${t("editCurrentRoutine")}</button>
         <button class="danger-button" type="button" data-user-clear>${t("removeRoutine")}</button>
       </div>
     </section>
@@ -2845,7 +2851,7 @@ async function applyUserData(userData) {
   const routineId = userData.routineId || "";
   let firestoreRoutine = null;
   try {
-    firestoreRoutine = routineId ? await loadRoutineFromFirestore(routineId) : null;
+    firestoreRoutine = routineId ?await loadRoutineFromFirestore(routineId) : null;
   } catch (error) {
     console.warn("No se pudo cargar la rutina asignada.", error);
     setAuthMessage(getAuthErrorMessage(error), "error");
@@ -2914,24 +2920,24 @@ function renderApp() {
     return;
   }
   const managerMode = canManageStudents();
-  if (managerMode && !["home", "students", "routines", "account"].includes(state.activeView)) {
+  if (managerMode && !["home", "students", "routines", "account", "notifications"].includes(state.activeView)) {
     state.activeView = "home";
   }
   if (!managerMode && !["home", "routines", "progress", "professors", "account", "notifications"].includes(state.activeView)) {
     state.activeView = "home";
   }
-  const trainerDashboardOnly = managerMode && ["home", "students", "routines", "account"].includes(state.activeView);
+  const trainerDashboardOnly = managerMode && ["home", "students", "routines", "account", "notifications"].includes(state.activeView);
   const studentMode = !managerMode;
 
   routineSelect.classList.add("is-hidden");
   appHeader.classList.add("is-hidden");
   appMain.classList.remove("is-hidden");
-  appKicker.textContent = trainerDashboardOnly ? (state.isAdmin ? t("admin") : t("trainer")) : "";
+  appKicker.textContent = trainerDashboardOnly ?(state.isAdmin ?t("admin") : t("trainer")) : "";
   appKicker.classList.toggle("is-hidden", !appKicker.textContent.trim());
   appTitle.textContent = "RutFit";
   const displayName = state.currentUserData?.displayName || getDisplayNameFromEmail(state.currentUser?.email || "");
-  userGreeting.textContent = displayName ? t("hello", { name: displayName }) : "";
-  adminToggle.textContent = state.isAdmin ? t("admin") : t("students");
+  userGreeting.textContent = displayName ?t("hello", { name: displayName }) : "";
+  adminToggle.textContent = state.isAdmin ?t("admin") : t("students");
   adminToggle.classList.add("is-hidden");
   bottomNav?.classList.remove("is-hidden");
   renderBottomNav();
@@ -2948,9 +2954,9 @@ function renderApp() {
   if (managerMode && state.activeView === "home") renderTrainerHome();
   studentHome?.classList.toggle("is-hidden", !(studentMode && state.activeView === "home"));
   if (studentMode && state.activeView === "home") renderStudentHomeV2();
-  studentProgress?.classList.toggle("is-hidden", !(studentMode && ["progress", "notifications"].includes(state.activeView)));
+  studentProgress?.classList.toggle("is-hidden", !((studentMode && ["progress", "notifications"].includes(state.activeView)) || (managerMode && state.activeView === "notifications")));
   if (studentMode && state.activeView === "progress") renderStudentProgress();
-  if (studentMode && state.activeView === "notifications") renderStudentNotifications();
+  if (state.activeView === "notifications") renderStudentNotifications();
   studentInvitesPanel?.classList.toggle("is-hidden", !(studentMode && state.activeView === "professors"));
 
   const showAccount = state.activeView === "account";
@@ -2977,7 +2983,7 @@ function renderApp() {
 function renderBottomNav() {
   if (!bottomNav) return;
   const items = canManageStudents()
-    ? [
+    ?[
         ["home", "Inicio"],
         ["students", t("students")],
         ["routines", t("routinesNav")],
@@ -3021,15 +3027,15 @@ function renderAccountPanel() {
   const email = state.currentUser?.email || "";
   const userData = state.currentUserData || {};
   const displayName = userData.displayName || getDisplayNameFromEmail(email);
-  const role = state.isAdmin ? t("admin") : state.isTrainer ? t("trainer") : t("student");
+  const role = state.isAdmin ?t("admin") : state.isTrainer ?t("trainer") : t("student");
   const isStudentProfile = !state.isAdmin && !state.isTrainer;
   if (isStudentProfile) {
     accountPanel.innerHTML = state.accountSubView === "settings"
-      ? renderStudentSettingsAccount(userData, displayName, email)
+      ?renderStudentSettingsAccount(userData, displayName, email)
       : renderStudentProfileAccount(userData, displayName, email);
     return;
   }
-  const stats = isStudentProfile ? getProfileStats(userData) : [];
+  const stats = isStudentProfile ?getProfileStats(userData) : [];
   accountPanel.innerHTML = `
     <section class="student-panel-card">
       <div class="home-section-title">${t("profile")}</div>
@@ -3039,7 +3045,7 @@ function renderAccountPanel() {
           <strong>${escapeHtml(displayName || t("user"))}</strong>
           <span>${escapeHtml(email || t("noEmail"))}</span>
           <small>${escapeHtml(role)}</small>
-          ${stats.length ? `<p>${stats.map(escapeHtml).join(" Â· ")}</p>` : ""}
+          ${stats.length ?`<p>${stats.map(escapeHtml).join(" ? ")}</p>` : ""}
         </div>
       </article>
       <div class="profile-form">
@@ -3047,7 +3053,7 @@ function renderAccountPanel() {
           <span>${t("name")}</span>
           <input type="text" data-profile-field="displayName" value="${escapeHtml(displayName || "")}" autocomplete="name" />
         </label>
-        ${canManageStudents() ? `<div class="profile-grid trainer-market-fields">
+        ${canManageStudents() ?`<div class="profile-grid trainer-market-fields">
           <label class="search-box">
             <span>Precio</span>
             <input type="number" inputmode="decimal" data-profile-field="trainerPrice" value="${escapeHtml(userData.trainerPrice || "")}" placeholder="Ej: 15000" />
@@ -3057,7 +3063,7 @@ function renderAccountPanel() {
             <input type="text" data-profile-field="trainerSpecialty" value="${escapeHtml(userData.trainerSpecialty || "")}" placeholder="MMA, fuerza" />
           </label>
         </div>` : ""}
-        ${isStudentProfile ? `<div class="profile-grid">
+        ${isStudentProfile ?`<div class="profile-grid">
           <label class="search-box">
             <span>${t("weight")}</span>
             <input type="number" inputmode="decimal" data-profile-field="weight" value="${escapeHtml(userData.weight || "")}" placeholder="78" />
@@ -3082,7 +3088,7 @@ function renderAccountPanel() {
       </div>
       <p class="account-help">${t("accountPanelHelp")}</p>
       <section class="settings-list" aria-label="${t("accountNav")}">
-        <div><span>InformaciÃ³n personal</span><strong>></strong></div>
+        <div><span>Informaci?n personal</span><strong>></strong></div>
         <div><span>Objetivos</span><strong>></strong></div>
         <div><span>Preferencias</span><strong>></strong></div>
         <div><span>Centro de ayuda</span><strong>></strong></div>
@@ -3133,24 +3139,24 @@ const routines = {
     id: "bia",
     name: "Bia",
     title: "Rutina Bia",
-    kicker: "PrÃ³ximamente",
+    kicker: "Pr?ximamente",
     exerciseLibrary: {},
     plan: []
   },
   pending: {
     id: "pending",
     name: "Sin rutina",
-    title: "Rutina en preparaciÃ³n",
-    kicker: "PrÃ³ximamente",
+    title: "Rutina en preparaci?n",
+    kicker: "Pr?ximamente",
     exerciseLibrary: {},
     plan: []
   }
 };
 
 routines.dario.title = "RutFit";
-routines.bia.kicker = "PrÃ³ximamente";
-routines.pending.title = "Rutina en preparaciÃ³n";
-routines.pending.kicker = "PrÃ³ximamente";
+routines.bia.kicker = "Pr?ximamente";
+routines.pending.title = "Rutina en preparaci?n";
+routines.pending.kicker = "Pr?ximamente";
 
 function progressId(week, dayIndex, exerciseKey) {
   return `w${week}-d${dayIndex + 1}-${exerciseKey}`;
@@ -3188,33 +3194,33 @@ function matchesFilters(exercise) {
 function phasePrescription(exercise, weekNumber) {
   if ([4, 8].includes(weekNumber)) {
     return {
-      sets: exercise.objective === "recuperaciÃ³n" ? exercise.baseSets : "2-3",
-      reps: exercise.objective === "fuerza" ? "3 suave" : exercise.baseReps,
-      rest: exercise.objective === "recuperaciÃ³n" ? exercise.rest : "1:00-1:30"
+      sets: exercise.objective === "recuperaci?n" ?exercise.baseSets : "2-3",
+      reps: exercise.objective === "fuerza" ?"3 suave" : exercise.baseReps,
+      rest: exercise.objective === "recuperaci?n" ?exercise.rest : "1:00-1:30"
     };
   }
 
   if (weekNumber === 12) {
     return {
-      sets: exercise.objective === "lactato" ? "4" : "2-3",
-      reps: exercise.objective === "fuerza" ? "2 rÃ¡pido" : exercise.baseReps,
-      rest: exercise.objective === "lactato" ? "1:30" : exercise.rest
+      sets: exercise.objective === "lactato" ?"4" : "2-3",
+      reps: exercise.objective === "fuerza" ?"2 r?pido" : exercise.baseReps,
+      rest: exercise.objective === "lactato" ?"1:30" : exercise.rest
     };
   }
 
   if (weekNumber >= 9) {
     return {
-      sets: exercise.objective === "lactato" || exercise.objective === "ground and pound" ? "6-8" : exercise.baseSets,
-      reps: exercise.objective === "fuerza" ? "2-3" : exercise.baseReps,
-      rest: exercise.objective === "lactato" ? "0:45-1:00" : exercise.rest
+      sets: exercise.objective === "lactato" || exercise.objective === "ground and pound" ?"6-8" : exercise.baseSets,
+      reps: exercise.objective === "fuerza" ?"2-3" : exercise.baseReps,
+      rest: exercise.objective === "lactato" ?"0:45-1:00" : exercise.rest
     };
   }
 
   if (weekNumber >= 5) {
     return {
-      sets: exercise.objective === "potencia" ? "5-7" : exercise.baseSets,
-      reps: exercise.objective === "fuerza" ? "3" : exercise.baseReps,
-      rest: exercise.objective === "potencia" ? "1:30" : exercise.rest
+      sets: exercise.objective === "potencia" ?"5-7" : exercise.baseSets,
+      reps: exercise.objective === "fuerza" ?"3" : exercise.baseReps,
+      rest: exercise.objective === "potencia" ?"1:30" : exercise.rest
     };
   }
 
@@ -3239,7 +3245,7 @@ function renderSummary() {
   const routine = getActiveRoutine();
   const totalSessions = getRoutineTotalSessions(routine);
   const doneCount = Object.values(progress).filter(Boolean).length;
-  const percent = totalSessions ? Math.round((doneCount / totalSessions) * 100) : 0;
+  const percent = totalSessions ?Math.round((doneCount / totalSessions) * 100) : 0;
   progressPercent.textContent = `${percent}%`;
   progressRing.style.setProperty("--progress", `${percent}%`);
 
@@ -3261,7 +3267,7 @@ function renderSummary() {
 }
 
 function escapeHtml(value) {
-  return String(value ?? "")
+  return String(value ? "")
     .replaceAll("&", "&amp;")
     .replaceAll("<", "&lt;")
     .replaceAll(">", "&gt;")
@@ -3324,7 +3330,7 @@ function compressImageFile(file, maxSize = 520, quality = 0.68) {
 }
 
 function getFileExtension(file) {
-  const nameExtension = file.name.includes(".") ? file.name.split(".").pop().toLowerCase() : "";
+  const nameExtension = file.name.includes(".") ?file.name.split(".").pop().toLowerCase() : "";
   if (nameExtension) return nameExtension.replace(/[^a-z0-9]/g, "") || "jpg";
   const mimeExtension = file.type.split("/")[1] || "jpg";
   return mimeExtension.replace(/[^a-z0-9]/g, "") || "jpg";
@@ -3434,7 +3440,7 @@ function renderRoutineCatalog(routineIds) {
         <button class="trainer-add-student-button" type="button" data-admin-action="new-routine-card" aria-label="Nueva rutina">+</button>
       </div>
       <label class="trainer-student-search routine-search">
-        <span aria-hidden="true">⌕</span>
+        <span aria-hidden="true"></span>
         <input type="search" placeholder="Buscar rutinas..." autocomplete="off" />
       </label>
       <div class="trainer-student-tabs routine-tabs">
@@ -3447,7 +3453,7 @@ function renderRoutineCatalog(routineIds) {
         const routine = routines[id] || {};
         const totalWeeks = routine.plan?.length || 0;
         const assigned = getRoutineAssignedCount(id);
-        const progressValue = [75, 60, 90, 40, 30][index % 5] || (totalWeeks ? Math.min(95, Math.max(30, Math.round(100 / Math.max(1, totalWeeks)))) : 0);
+        const progressValue = [75, 60, 90, 40, 30][index % 5] || (totalWeeks ?Math.min(95, Math.max(30, Math.round(100 / Math.max(1, totalWeeks)))) : 0);
         return `
           <article class="routine-list-card" data-routine-card="${escapeHtml(id)}">
             <span class="routine-list-icon ${getRoutineCardIcon(index)}"></span>
@@ -3469,13 +3475,13 @@ function getProfileCompletionPercent() {
   const routine = getActiveRoutine() || routines.pending;
   const total = getRoutineTotalSessions(routine);
   const done = Object.values(progress).filter(Boolean).length;
-  return total ? Math.round((done / total) * 100) : 0;
+  return total ?Math.round((done / total) * 100) : 0;
 }
 
 function renderStudentProfileAccount(userData, displayName, email) {
   const percent = getProfileCompletionPercent();
   const stats = [
-    ["12", "DÃ­as de racha"],
+    ["12", "D?as de racha"],
     [String(Object.values(progress).filter(Boolean).length), "Entrenamientos"],
     [`${percent}%`, "Cumplimiento"]
   ];
@@ -3509,13 +3515,13 @@ function renderStudentProfileAccount(userData, displayName, email) {
       </div>
 
       <section class="settings-list account-menu">
-        <button type="button" data-account-section="personal"><span>${getInlineIcon("user")} InformaciÃ³n personal</span><strong>></strong></button>
+        <button type="button" data-account-section="personal"><span>${getInlineIcon("user")} Informaci?n personal</span><strong>></strong></button>
         <button type="button" data-account-section="goals"><span>${getInlineIcon("heart")} Objetivos</span><strong>></strong></button>
         <button type="button" data-account-section="settings"><span>${getInlineIcon("settings")} Preferencias</span><strong>></strong></button>
         <button type="button" data-account-action="help"><span>${getInlineIcon("info")} Centro de ayuda</span><strong>></strong></button>
       </section>
 
-      <section class="profile-form compact-profile-form ${["personal", "goals"].includes(state.accountSubView) ? "" : "is-hidden"}">
+      <section class="profile-form compact-profile-form ${["personal", "goals"].includes(state.accountSubView) ?"" : "is-hidden"}">
         <label class="search-box">
           <span>${t("name")}</span>
           <input type="text" data-profile-field="displayName" value="${escapeHtml(displayName || "")}" autocomplete="name" />
@@ -3551,18 +3557,18 @@ function renderStudentProfileAccount(userData, displayName, email) {
 
 function renderStudentSettingsAccount(userData) {
   const preferences = userData.preferences || {};
-  const preference = (key, fallback = true) => preferences[key] !== undefined ? preferences[key] : fallback;
+  const preference = (key, fallback = true) => preferences[key] !== undefined ?preferences[key] : fallback;
   return `
     <section class="student-account-screen settings-screen">
       <div class="screen-topbar">
-        <button class="icon-button ghost-icon" type="button" data-account-section="profile" aria-label="Volver">â€¹</button>
+        <button class="icon-button ghost-icon" type="button" data-account-section="profile" aria-label="Volver">⬹</button>
         <h2>Ajustes</h2>
         <span></span>
       </div>
 
       <div class="settings-group-title">Preferencias</div>
       <section class="settings-list account-menu">
-        <button type="button" data-settings-action="units"><span>Unidades</span><em>MÃ©trico (kg, cm)</em><strong>></strong></button>
+        <button type="button" data-settings-action="units"><span>Unidades</span><em>M?trico (kg, cm)</em><strong>></strong></button>
         ${renderPreferenceToggle("reminders", "Recordatorios", preference("reminders", true))}
         ${renderPreferenceToggle("notifications", "Notificaciones", preference("notifications", true))}
         ${renderPreferenceToggle("sounds", "Sonidos", preference("sounds", true))}
@@ -3570,13 +3576,13 @@ function renderStudentSettingsAccount(userData) {
 
       <div class="settings-group-title">Cuenta</div>
       <section class="settings-list account-menu">
-        <button type="button" data-settings-action="password"><span>Cambiar contraseÃ±a</span><strong>></strong></button>
+        <button type="button" data-settings-action="password"><span>Cambiar contrase?a</span><strong>></strong></button>
         <button type="button" data-settings-action="privacy"><span>Privacidad</span><strong>></strong></button>
         <button class="delete-account-row" type="button" data-settings-action="delete"><span>Eliminar cuenta</span></button>
       </section>
 
       <p class="account-status" id="accountStatus" aria-live="polite"></p>
-      <p class="app-version">VersiÃ³n 1.0.0</p>
+      <p class="app-version">Versi?n 1.0.0</p>
     </section>
   `;
 }
@@ -3585,8 +3591,8 @@ function renderPreferenceToggle(key, label, checked) {
   return `
     <label class="settings-toggle-row">
       <span>${escapeHtml(label)}</span>
-      <em>${checked ? "Activado" : "Desactivado"}</em>
-      <input type="checkbox" data-preference-toggle="${escapeHtml(key)}" ${checked ? "checked" : ""} />
+      <em>${checked ?"Activado" : "Desactivado"}</em>
+      <input type="checkbox" data-preference-toggle="${escapeHtml(key)}" ${checked ?"checked" : ""} />
       <i aria-hidden="true"></i>
     </label>
   `;
@@ -3621,8 +3627,8 @@ function renderAdminPanel() {
   adminPanel.classList.toggle("assigning-routine", showUsers && state.adminAssignmentMode);
   adminPanel.classList.toggle("native-subscreen", isNativeSubscreen);
   if (state.isTrainer && !state.isAdmin) {
-    if (panelTitle) panelTitle.textContent = showRoutines ? t("routinePanel") : t("studentPanel");
-    if (panelHelp) panelHelp.textContent = showRoutines ? t("routinePanelHelp") : t("studentPanelHelp");
+    if (panelTitle) panelTitle.textContent = showRoutines ?t("routinePanel") : t("studentPanel");
+    if (panelHelp) panelHelp.textContent = showRoutines ?t("routinePanelHelp") : t("studentPanelHelp");
     if (usersTitle) usersTitle.textContent = t("acceptedStudents");
   } else {
     if (panelTitle) panelTitle.textContent = t("routinePanel");
@@ -3640,7 +3646,7 @@ function renderAdminPanel() {
     const routineIds = getAdminRoutineIds();
     adminRoutineEditor.classList.remove("is-hidden");
     adminRoutineSelect.innerHTML = routineIds.length
-      ? routineIds.map((id) => `<option value="${escapeHtml(id)}">${escapeHtml(routines[id].name || id)}</option>`).join("")
+      ?routineIds.map((id) => `<option value="${escapeHtml(id)}">${escapeHtml(routines[id].name || id)}</option>`).join("")
       : `<option value="">${t("newRoutineOption")}</option>`;
     adminRoutineId.value = "";
     adminRoutineName.value = "";
@@ -3664,13 +3670,13 @@ function renderAdminPanel() {
   const selectedUser = getAdminUser(state.pendingAssignUserId || state.selectedAdminUserId);
   const selectedUserName = selectedUser?.displayName || getDisplayNameFromEmail(selectedUser?.email || "");
   adminEditorTitle.textContent = state.adminEditorMode === "create"
-    ? "Nueva rutina"
+    ?"Nueva rutina"
     : t("editingRoutine", { name: draft.name || t("newRoutineOption") });
 
   const routineIds = getAdminRoutineIds();
   adminRoutineSelect.innerHTML = [
-    !routineIds.includes(draft.id) ? `<option value="${escapeHtml(draft.id)}" selected>${t("newRoutineOption")}</option>` : "",
-    ...routineIds.map((id) => `<option value="${escapeHtml(id)}" ${id === draft.id ? "selected" : ""}>${escapeHtml(routines[id].name || id)}</option>`)
+    !routineIds.includes(draft.id) ?`<option value="${escapeHtml(draft.id)}" selected>${t("newRoutineOption")}</option>` : "",
+    ...routineIds.map((id) => `<option value="${escapeHtml(id)}" ${id === draft.id ?"selected" : ""}>${escapeHtml(routines[id].name || id)}</option>`)
   ].join("");
   adminRoutineId.value = draft.id || "";
   adminRoutineName.value = draft.name || "";
@@ -3683,7 +3689,7 @@ function renderAdminPanel() {
   });
 
   const routineOverview = state.adminEditorMode === "edit"
-    ? `
+    ?`
       <section class="admin-routine-overview-card">
         <article><span>Duración</span><strong>${draft.plan.length || 0} semanas</strong></article>
         <article><span>Alumnos</span><strong>${getRoutineAssignedCount(draft.id)}</strong></article>
@@ -3719,28 +3725,28 @@ function renderAdminPanel() {
               const isEditingExercise = state.adminEditingExerciseKey === exerciseKey;
               const images = exercise.images || ["", ""];
               const thumb = images[0]
-                ? `<img src="${escapeHtml(resolveExerciseImage(images[0], exercise.name || t("newExercise")))}" alt="${escapeHtml(exercise.name || t("newExercise"))}" />`
+                ?`<img src="${escapeHtml(resolveExerciseImage(images[0], exercise.name || t("newExercise")))}" alt="${escapeHtml(exercise.name || t("newExercise"))}" />`
                 : "";
               const startPreview = images[0]
-                ? `<img class="admin-image-preview" src="${escapeHtml(resolveExerciseImage(images[0], t("startImage")))}" alt="${t("startImage")}" />`
+                ?`<img class="admin-image-preview" src="${escapeHtml(resolveExerciseImage(images[0], t("startImage")))}" alt="${t("startImage")}" />`
                 : `<div class="admin-image-empty">${t("noStartImage")}</div>`;
               const endPreview = images[1]
-                ? `<img class="admin-image-preview" src="${escapeHtml(resolveExerciseImage(images[1], t("endImage")))}" alt="${t("endImage")}" />`
+                ?`<img class="admin-image-preview" src="${escapeHtml(resolveExerciseImage(images[1], t("endImage")))}" alt="${t("endImage")}" />`
                 : `<div class="admin-image-empty">${t("noEndImage")}</div>`;
               return `
-                <div class="admin-exercise ${isEditingExercise ? "is-editing" : ""}" data-week-index="${weekIndex}" data-day-index="${dayIndex}" data-exercise-key="${escapeHtml(exerciseKey)}">
+                <div class="admin-exercise ${isEditingExercise ?"is-editing" : ""}" data-week-index="${weekIndex}" data-day-index="${dayIndex}" data-exercise-key="${escapeHtml(exerciseKey)}">
                   <div class="admin-exercise-summary">
                     <span class="admin-exercise-thumb">${thumb}</span>
                     <div>
                       <strong>${escapeHtml(exercise.name || t("newExercise"))}</strong>
                       <small>${escapeHtml([
-                        exercise.baseSets && exercise.baseReps ? `${exercise.baseSets} series x ${exercise.baseReps} reps` : "",
-                        exercise.rest ? `Descanso: ${exercise.rest}` : ""
+                        exercise.baseSets && exercise.baseReps ?`${exercise.baseSets} series x ${exercise.baseReps} reps` : "",
+                        exercise.rest ?`Descanso: ${exercise.rest}` : ""
                       ].filter(Boolean).join(" · "))}</small>
                     </div>
                     <button class="exercise-kebab" type="button" data-admin-action="edit-exercise" aria-label="${t("editExercise")}">⋮</button>
                   </div>
-                  ${isEditingExercise ? `
+                  ${isEditingExercise ?`
                     <div class="admin-exercise-form">
                       <div class="exercise-editor-hero">
                         ${startPreview}
@@ -3785,7 +3791,7 @@ function renderAdminPanel() {
           const isDayCollapsed = day.collapsed === true;
 
 return `
-  <div class="admin-day ${isDayCollapsed ? "collapsed" : ""}" data-week-index="${weekIndex}" data-day-index="${dayIndex}">
+  <div class="admin-day ${isDayCollapsed ?"collapsed" : ""}" data-week-index="${weekIndex}" data-day-index="${dayIndex}">
     <div class="admin-card-title">
       <div>
         <h4>${escapeHtml(day.title || t("dayNumber", { number: dayIndex + 1 }))}</h4>
@@ -3794,14 +3800,14 @@ return `
 
       <div class="admin-row-actions">
         ${isDayCollapsed
-          ? `<button class="secondary-button" type="button" data-admin-action="edit-day">${t("editDay")}</button>`
+          ?`<button class="secondary-button" type="button" data-admin-action="edit-day">${t("editDay")}</button>`
           : `<button class="primary-button" type="button" data-admin-action="save-day">${t("saveDay")}</button>`
         }
         <button class="danger-button" type="button" data-admin-action="delete-day">${t("deleteDay")}</button>
       </div>
     </div>
 
-    ${isDayCollapsed ? "" : `
+    ${isDayCollapsed ?"" : `
       <div class="admin-day-stats">
         <article><span>Ejercicios</span><strong>${(day.exercises || []).length}</strong></article>
         <article><span>Series totales</span><strong>${(day.exercises || []).reduce((total, key) => total + (Number(String(draft.exerciseLibrary[key]?.baseSets || "").match(/\d+/)?.[0]) || 0), 0)}</strong></article>
@@ -3816,7 +3822,7 @@ return `
         <button class="secondary-button" type="button" data-admin-action="add-exercise">${t("createExercise")}</button>
       </div>
 
-      ${exercises ? `<div class="admin-exercise-list"><small>${t("savedExercises")}</small>${exercises}</div>` : `<div class="empty-state">${t("emptyDay")}</div>`}
+      ${exercises ?`<div class="admin-exercise-list"><small>${t("savedExercises")}</small>${exercises}</div>` : `<div class="empty-state">${t("emptyDay")}</div>`}
     `}
   </div>
           `;
@@ -3825,7 +3831,7 @@ return `
         const isWeekCollapsed = week.collapsed === true;
         const totalExercises = (week.days || []).reduce((total, day) => total + (day.exercises || []).length, 0);
       return `
-        <article class="admin-editor-card ${isWeekCollapsed ? "week-overview-mode" : "week-edit-mode"}" data-week-index="${weekIndex}">
+        <article class="admin-editor-card ${isWeekCollapsed ?"week-overview-mode" : "week-edit-mode"}" data-week-index="${weekIndex}">
           <div class="admin-card-title">
             <div>
               <small>${t("week")}</small>
@@ -3833,12 +3839,12 @@ return `
             </div>
             <div class="admin-row-actions">
   ${isWeekCollapsed
-  ? `<button class="secondary-button" type="button" data-admin-action="edit-week">${t("editWeek")}</button>`
+  ?`<button class="secondary-button" type="button" data-admin-action="edit-week">${t("editWeek")}</button>`
   : `<button class="primary-button" type="button" data-admin-action="save-week">${t("saveWeek")}</button>`
 }
   <button class="danger-button" type="button" data-admin-action="delete-week">${t("deleteWeek")}</button>
 </div>
-          ${isWeekCollapsed ? `
+          ${isWeekCollapsed ?`
   <section class="week-overview-panel">
     <div class="week-progress-card">
       <span>Progreso de la semana</span>
@@ -3951,7 +3957,7 @@ async function handleAdminAction(button) {
   }
 
   if (action === "edit-exercise") {
-    state.adminEditingExerciseKey = state.adminEditingExerciseKey === exerciseKey ? "" : exerciseKey;
+    state.adminEditingExerciseKey = state.adminEditingExerciseKey === exerciseKey ?"" : exerciseKey;
     renderAdminPanel();
     return;
   }
@@ -4085,14 +4091,14 @@ function renderPlan() {
   }
   if (state.routineSubView === "week") {
     const week = plan.find((item) => Number(item.number) === Number(state.selectedRoutineWeekNumber)) || plan[0];
-    weeksContainer.innerHTML = week ? renderStudentRoutineWeek(routine, week) : `<div class="empty-state">${t("routineInPreparation")}</div>`;
+    weeksContainer.innerHTML = week ?renderStudentRoutineWeek(routine, week) : `<div class="empty-state">${t("routineInPreparation")}</div>`;
     renderSummary();
     return;
   }
   if (state.routineSubView === "day") {
     const week = plan.find((item) => Number(item.number) === Number(state.selectedRoutineWeekNumber)) || plan[0];
     const day = week?.days?.[Number(state.selectedRoutineDayIndex) || 0];
-    weeksContainer.innerHTML = week && day ? renderStudentRoutineDayScreen(routine, week, day, Number(state.selectedRoutineDayIndex) || 0) : `<div class="empty-state">${t("emptyDay")}</div>`;
+    weeksContainer.innerHTML = week && day ?renderStudentRoutineDayScreen(routine, week, day, Number(state.selectedRoutineDayIndex) || 0) : `<div class="empty-state">${t("emptyDay")}</div>`;
     renderSummary();
     return;
   }
@@ -4100,7 +4106,7 @@ function renderPlan() {
     const week = plan.find((item) => Number(item.number) === Number(state.selectedRoutineWeekNumber)) || plan[0];
     const dayIndex = Number(state.selectedRoutineDayIndex) || 0;
     const day = week?.days?.[dayIndex];
-    weeksContainer.innerHTML = week && day ? renderStudentExerciseScreen(routine, week, day, dayIndex, state.selectedRoutineExerciseKey) : `<div class="empty-state">${t("newExercise")}</div>`;
+    weeksContainer.innerHTML = week && day ?renderStudentExerciseScreen(routine, week, day, dayIndex, state.selectedRoutineExerciseKey) : `<div class="empty-state">${t("newExercise")}</div>`;
     renderSummary();
     return;
   }
@@ -4118,7 +4124,7 @@ function renderPlan() {
       const phase = week.phase || { name: "Semana", badge: "Plan", modifier: "" };
       const weekDays = week.days || [];
       const days = weekDays.length
-        ? weekDays
+        ?weekDays
         .map((day, dayIndex) => {
           const exerciseCards = (day.exercises || [])
             .map((exerciseKey) => {
@@ -4130,14 +4136,14 @@ function renderPlan() {
               const prescription = phasePrescription(exercise, week.number);
               const objectiveClass = normalize(exercise.objective).replaceAll(" ", "-");
               const thumb = Array.isArray(exercise.images) && hasRealExerciseImage(exercise.images[0])
-                ? `<img src="${escapeHtml(resolveExerciseImage(exercise.images[0], exercise.name))}" alt="${escapeHtml(exercise.name)}" />`
+                ?`<img src="${escapeHtml(resolveExerciseImage(exercise.images[0], exercise.name))}" alt="${escapeHtml(exercise.name)}" />`
                 : "";
               return `
-                <button class="exercise-card ${progress[id] ? "done" : ""}" type="button" data-week="${week.number}" data-day="${dayIndex}" data-exercise="${exerciseKey}">
+                <button class="exercise-card ${progress[id] ?"done" : ""}" type="button" data-week="${week.number}" data-day="${dayIndex}" data-exercise="${exerciseKey}">
                   <span class="exercise-thumb objective-dot ${objectiveClass}">${thumb}</span>
                   <span>
                     <strong>${exercise.name}</strong>
-                    <small>${exercise.objective} Â· ${prescription.sets} x ${prescription.reps} Â· ${t("restLower")} ${prescription.rest}</small>
+                    <small>${exercise.objective} ? ${prescription.sets} x ${prescription.reps} ? ${t("restLower")} ${prescription.rest}</small>
                   </span>
                   <span class="done-mark">âœ“</span>
                 </button>
@@ -4157,16 +4163,16 @@ function renderPlan() {
 
       const weekIds = getWeekExerciseIds(week);
       const weekDoneCount = weekIds.filter((id) => progress[id]).length;
-      const weekPercent = weekIds.length ? Math.round((weekDoneCount / weekIds.length) * 100) : 0;
-      const weekStatus = weekPercent >= 100 ? "done" : weekPercent > 0 ? "active" : "pending";
+      const weekPercent = weekIds.length ?Math.round((weekDoneCount / weekIds.length) * 100) : 0;
+      const weekStatus = weekPercent >= 100 ?"done" : weekPercent > 0 ?"active" : "pending";
       const weekStatusIcon = weekStatus === "done"
-        ? '<svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+        ?'<svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>'
         : weekStatus === "active"
-          ? '<svg viewBox="0 0 24 24"><path d="M7 5v14l12-7z" fill="currentColor"/></svg>'
+          ?'<svg viewBox="0 0 24 24"><path d="M7 5v14l12-7z" fill="currentColor"/></svg>'
           : '<svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M3 9h18M8 3v4M16 3v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
 
       return `
-        <article class="week-card ${weekDone ? "week-done" : ""} ${isCollapsed ? "collapsed" : ""}">
+        <article class="week-card ${weekDone ?"week-done" : ""} ${isCollapsed ?"collapsed" : ""}">
           <button class="week-row week-header week-toggle" type="button" data-week="${week.number}" aria-expanded="${!isCollapsed}">
             <span class="week-row-icon ${weekStatus}" aria-hidden="true">${weekStatusIcon}</span>
             <span class="week-row-text">
@@ -4175,7 +4181,7 @@ function renderPlan() {
             </span>
             <span class="week-status-pill ${weekStatus}">${weekPercent}%</span>
           </button>
-          ${isCollapsed ? "" : `<div class="days">${days}</div>`}
+          ${isCollapsed ?"" : `<div class="days">${days}</div>`}
         </article>
       `;
     })
@@ -4191,7 +4197,7 @@ function renderPlan() {
 function getWeekProgressPercent(week) {
   const ids = getWeekExerciseIds(week);
   const done = ids.filter((id) => progress[id]).length;
-  return ids.length ? Math.round((done / ids.length) * 100) : 0;
+  return ids.length ?Math.round((done / ids.length) * 100) : 0;
 }
 
 function getCurrentWeekInfo(routine) {
@@ -4199,7 +4205,7 @@ function getCurrentWeekInfo(routine) {
   const activeWeek = plan.find((week) => getWeekProgressPercent(week) < 100) || plan[plan.length - 1] || null;
   return {
     week: activeWeek,
-    percent: activeWeek ? getWeekProgressPercent(activeWeek) : 0
+    percent: activeWeek ?getWeekProgressPercent(activeWeek) : 0
   };
 }
 
@@ -4211,12 +4217,12 @@ function renderStudentRoutineOverview(routine) {
   const stats = getRoutineProgressStats(routine);
   const current = getCurrentWeekInfo(routine);
   const currentWeek = current.week;
-  const subtitle = currentWeek ? `${t("week")} ${currentWeek.number} de ${routine.plan.length}` : t("routineInPreparation");
+  const subtitle = currentWeek ?`${t("week")} ${currentWeek.number} de ${routine.plan.length}` : t("routineInPreparation");
   const weekRows = (routine.plan || []).map((week, index) => {
     const percent = getWeekProgressPercent(week);
     const phase = week.phase || {};
-    const iconClass = percent >= 100 ? "calendar" : percent > 0 ? "dumbbell" : "clipboard";
-    const status = percent >= 100 ? "complete" : percent > 0 ? "progress" : "pending";
+    const iconClass = percent >= 100 ?"calendar" : percent > 0 ?"dumbbell" : "clipboard";
+    const status = percent >= 100 ?"complete" : percent > 0 ?"progress" : "pending";
     return `
       <button class="routine-week-row ${status}" type="button" data-routine-week="${week.number}">
         <span class="routine-list-icon ${iconClass}"></span>
@@ -4224,8 +4230,8 @@ function renderStudentRoutineOverview(routine) {
           <strong>${t("week")} ${week.number}</strong>
           <small>${escapeHtml(phase.name || `Semana ${index + 1}`)}</small>
         </span>
-        <b>${percent >= 100 ? "100%" : percent > 0 ? "En progreso" : "0%"}</b>
-        <i>${percent >= 100 ? "âœ“" : ">"}</i>
+        <b>${percent >= 100 ?"100%" : percent > 0 ?"En progreso" : "0%"}</b>
+        <i>${percent >= 100 ?"âœ“" : ">"}</i>
       </button>
     `;
   }).join("");
@@ -4246,7 +4252,7 @@ function renderStudentRoutineOverview(routine) {
       </section>
       <div class="mock-tabs routine-tabs">
         <button type="button" data-routine-tab="weeks" class="active">Semanas</button>
-        <button type="button" data-routine-tab="info">InformaciÃ³n</button>
+        <button type="button" data-routine-tab="info">Informaci?n</button>
       </div>
       <section class="routine-week-list">
         ${weekRows || `<div class="empty-state">${t("routineInPreparation")}</div>`}
@@ -4263,27 +4269,27 @@ function renderStudentRoutineInfo(routine) {
   return `
     <section class="student-routine-screen routine-info-screen">
       <div class="screen-topbar routine-topbar">
-        <button class="icon-button ghost-icon" type="button" data-routine-tab="weeks" aria-label="Volver">â€¹</button>
-        <h2>InformaciÃ³n de Rutina</h2>
+        <button class="icon-button ghost-icon" type="button" data-routine-tab="weeks" aria-label="Volver">⬹</button>
+        <h2>Informaci?n de Rutina</h2>
         <span></span>
       </div>
       <section class="routine-current-card">
         <div>
           <strong>${escapeHtml(title)}</strong>
-          <small>${current.week ? `${t("week")} ${current.week.number} de ${routine.plan.length}` : t("routineInPreparation")}</small>
+          <small>${current.week ?`${t("week")} ${current.week.number} de ${routine.plan.length}` : t("routineInPreparation")}</small>
         </div>
         ${renderRoutineProgressRing(stats.percent)}
       </section>
       <div class="mock-tabs routine-tabs">
-        <button type="button" data-routine-tab="info" class="active">InformaciÃ³n</button>
+        <button type="button" data-routine-tab="info" class="active">Informaci?n</button>
         <button type="button" data-routine-tab="notes">Notas</button>
       </div>
       <section class="routine-info-list">
         <article><span>Objetivo</span><strong>${escapeHtml(routine.goal || "Aumentar fuerza y masa muscular")}</strong></article>
         <article><span>Nivel</span><strong>${escapeHtml(routine.level || "Intermedio")}</strong></article>
-        <article><span>DuraciÃ³n</span><strong>${routine.plan.length || 0} semanas</strong></article>
-        <article><span>DescripciÃ³n</span><strong>${escapeHtml(description)}</strong></article>
-        <article><span>Frecuencia</span><strong>${escapeHtml(routine.frequency || "4 dÃ­as por semana")}</strong></article>
+        <article><span>Duraci?n</span><strong>${routine.plan.length || 0} semanas</strong></article>
+        <article><span>Descripci?n</span><strong>${escapeHtml(description)}</strong></article>
+        <article><span>Frecuencia</span><strong>${escapeHtml(routine.frequency || "4 d?as por semana")}</strong></article>
         <article><span>Equipo</span><strong>${escapeHtml(routine.equipment || "Gimnasio")}</strong></article>
       </section>
     </section>
@@ -4296,21 +4302,21 @@ function renderStudentRoutineWeek(routine, week) {
   const days = (week.days || []).map((day, dayIndex) => {
     const ids = (day.exercises || []).map((exerciseKey) => progressId(week.number, dayIndex, exerciseKey));
     const done = ids.filter((id) => progress[id]).length;
-    const dayPercent = ids.length ? Math.round((done / ids.length) * 100) : 0;
+    const dayPercent = ids.length ?Math.round((done / ids.length) * 100) : 0;
     const completed = dayPercent >= 100;
     const inProgress = dayPercent > 0 && dayPercent < 100;
-    const iconClass = completed ? "calendar" : inProgress ? "fire" : "clipboard";
+    const iconClass = completed ?"calendar" : inProgress ?"fire" : "clipboard";
     const open = Number(state.selectedRoutineDayIndex) === dayIndex;
-    const exerciseList = open ? renderStudentRoutineDayExercises(routine, week, day, dayIndex) : "";
+    const exerciseList = open ?renderStudentRoutineDayExercises(routine, week, day, dayIndex) : "";
     return `
-      <article class="routine-day-card ${open ? "open" : ""}">
+      <article class="routine-day-card ${open ?"open" : ""}">
         <button class="routine-day-row" type="button" data-routine-day="${dayIndex}">
           <span class="routine-list-icon ${iconClass}"></span>
           <span>
-            <strong>${escapeHtml(day.title || `DÃ­a ${dayIndex + 1}`)}</strong>
-            <small>${escapeHtml(day.focus || (completed ? "Completado" : inProgress ? "En progreso" : "Pendiente"))}</small>
+            <strong>${escapeHtml(day.title || `D?a ${dayIndex + 1}`)}</strong>
+            <small>${escapeHtml(day.focus || (completed ?"Completado" : inProgress ?"En progreso" : "Pendiente"))}</small>
           </span>
-          <b class="${completed ? "complete" : inProgress ? "progress" : ""}">${completed ? "âœ“" : inProgress ? "â–¶" : "â–¡"}</b>
+          <b class="${completed ?"complete" : inProgress ?"progress" : ""}">${completed ?"âœ“" : inProgress ?"â–¶" : "â–¡"}</b>
         </button>
         ${exerciseList}
       </article>
@@ -4319,7 +4325,7 @@ function renderStudentRoutineWeek(routine, week) {
   return `
     <section class="student-routine-screen routine-week-screen">
       <div class="screen-topbar routine-topbar">
-        <button class="icon-button ghost-icon" type="button" data-routine-tab="weeks" aria-label="Volver">â€¹</button>
+        <button class="icon-button ghost-icon" type="button" data-routine-tab="weeks" aria-label="Volver">⬹</button>
         <h2>${t("week")} ${week.number} - ${escapeHtml(phase.name || "Hipertrofia")}</h2>
         <span></span>
       </div>
@@ -4330,7 +4336,7 @@ function renderStudentRoutineWeek(routine, week) {
         </div>
         <div class="week-progress-bar"><span style="width:${percent}%"></span></div>
       </section>
-      <div class="progress-section-title">DÃ­as</div>
+      <div class="progress-section-title">D?as</div>
       <section class="routine-day-list">${days || `<div class="empty-state">${t("emptyWeek")}</div>`}</section>
     </section>
   `;
@@ -4344,14 +4350,14 @@ function renderStudentRoutineDayExercises(routine, week, day, dayIndex) {
     const id = progressId(week.number, dayIndex, exerciseKey);
     const prescription = phasePrescription(exercise, week.number);
     const thumb = Array.isArray(exercise.images) && hasRealExerciseImage(exercise.images[0])
-      ? `<img src="${escapeHtml(resolveExerciseImage(exercise.images[0], exercise.name))}" alt="${escapeHtml(exercise.name)}" />`
+      ?`<img src="${escapeHtml(resolveExerciseImage(exercise.images[0], exercise.name))}" alt="${escapeHtml(exercise.name)}" />`
       : "";
     return `
-      <button class="exercise-card ${progress[id] ? "done" : ""}" type="button" data-week="${week.number}" data-day="${dayIndex}" data-exercise="${escapeHtml(exerciseKey)}">
+      <button class="exercise-card ${progress[id] ?"done" : ""}" type="button" data-week="${week.number}" data-day="${dayIndex}" data-exercise="${escapeHtml(exerciseKey)}">
         <span class="exercise-thumb objective-dot ${normalize(exercise.objective).replaceAll(" ", "-")}">${thumb}</span>
         <span>
           <strong>${escapeHtml(exercise.name || t("newExercise"))}</strong>
-          <small>${escapeHtml(exercise.objective || "")} Â· ${escapeHtml(prescription.sets)} x ${escapeHtml(prescription.reps)}</small>
+          <small>${escapeHtml(exercise.objective || "")} ? ${escapeHtml(prescription.sets)} x ${escapeHtml(prescription.reps)}</small>
         </span>
         <span class="done-mark">âœ“</span>
       </button>
@@ -4369,7 +4375,7 @@ function getDayProgressStats(week, day, dayIndex) {
     done,
     minutes: Math.max(45, Math.round(total * 7.5)),
     kcal: Math.max(320, Math.round(Math.max(45, total * 7.5) * 7)),
-    percent: total ? Math.round((done / total) * 100) : 0
+    percent: total ?Math.round((done / total) * 100) : 0
   };
 }
 
@@ -4383,16 +4389,16 @@ function renderStudentRoutineDayScreen(routine, week, day, dayIndex) {
     const done = Boolean(progress[id]);
     const current = !done && index === (day.exercises || []).findIndex((key) => !progress[progressId(week.number, dayIndex, key)]);
     const image = Array.isArray(exercise.images) && hasRealExerciseImage(exercise.images[0])
-      ? `<img src="${escapeHtml(resolveExerciseImage(exercise.images[0], exercise.name))}" alt="${escapeHtml(exercise.name)}" />`
+      ?`<img src="${escapeHtml(resolveExerciseImage(exercise.images[0], exercise.name))}" alt="${escapeHtml(exercise.name)}" />`
       : "";
     return `
-      <button class="training-exercise-row ${done ? "done" : ""} ${current ? "current" : ""}" type="button" data-routine-exercise="${escapeHtml(exerciseKey)}">
+      <button class="training-exercise-row ${done ?"done" : ""} ${current ?"current" : ""}" type="button" data-routine-exercise="${escapeHtml(exerciseKey)}">
         <span class="training-thumb">${image}</span>
         <span>
           <strong>${index + 1}. ${escapeHtml(exercise.name || t("newExercise"))}</strong>
           <small>${escapeHtml(prescription.sets)} series x ${escapeHtml(prescription.reps)} reps</small>
         </span>
-        <b>${done ? "âœ“" : current ? "â–¶" : "â—‹"}</b>
+        <b>${done ?"âœ“" : current ?"â–¶" : "â—‹"}</b>
       </button>
     `;
   }).join("");
@@ -4400,10 +4406,10 @@ function renderStudentRoutineDayScreen(routine, week, day, dayIndex) {
     <section class="student-routine-screen training-day-screen">
       <div class="screen-topbar routine-topbar">
         <button class="icon-button ghost-icon" type="button" data-routine-view="week" aria-label="Volver">â€¹</button>
-        <h2>${escapeHtml(day.title || `DÃ­a ${dayIndex + 1}`)}</h2>
+        <h2>${escapeHtml(day.title || `D?a ${dayIndex + 1}`)}</h2>
         <button class="icon-button ghost-icon" type="button" data-routine-menu aria-label="Opciones">â‹®</button>
       </div>
-      <span class="training-status">${stats.percent >= 100 ? "Completado" : stats.percent > 0 ? "En progreso" : "Pendiente"}</span>
+      <span class="training-status">${stats.percent >= 100 ?"Completado" : stats.percent > 0 ?"En progreso" : "Pendiente"}</span>
       <div class="progress-stat-grid training-stat-grid">
         <article><strong>${stats.total}</strong><span>Ejercicios</span></article>
         <article><strong>${stats.minutes}</strong><span>Minutos</span></article>
@@ -4420,13 +4426,13 @@ function renderStudentExerciseScreen(routine, week, day, dayIndex, exerciseKey) 
   const exercise = routine.exerciseLibrary[exerciseKey] || {};
   const prescription = phasePrescription(exercise, week.number);
   const id = progressId(week.number, dayIndex, exerciseKey);
-  const [startImage] = Array.isArray(exercise.images) ? exercise.images : [""];
+  const [startImage] = Array.isArray(exercise.images) ?exercise.images : [""];
   const image = resolveExerciseImage(startImage, exercise.name || t("newExercise"));
   const sets = Number(String(prescription.sets || "").match(/\d+/)?.[0] || 3);
   const reps = String(prescription.reps || exercise.baseReps || "8 / 12");
   const restSeconds = parseRestToSeconds(prescription.rest || "1:00");
   const done = Boolean(progress[id]);
-  const currentSeries = done ? sets : Math.min(Math.max(1, state.exerciseSeriesDone || 2), sets);
+  const currentSeries = done ?sets : Math.min(Math.max(1, state.exerciseSeriesDone || 2), sets);
   return `
     <section class="student-routine-screen exercise-run-screen">
       <div class="screen-topbar routine-topbar">
@@ -4445,7 +4451,7 @@ function renderStudentExerciseScreen(routine, week, day, dayIndex, exerciseKey) 
         <span>Descanso <small>segundos</small></span>
         <strong>${restSeconds}</strong>
       </section>
-      <button class="measure-register-button" type="button" data-routine-action="finish-exercise">${done ? "Ejercicio finalizado" : "Finalizar serie"}</button>
+      <button class="measure-register-button" type="button" data-routine-action="finish-exercise">${done ?"Ejercicio finalizado" : "Finalizar serie"}</button>
       <button class="secondary-button skip-exercise-button" type="button" data-routine-action="skip-exercise">Omitir ejercicio</button>
     </section>
   `;
@@ -4490,7 +4496,7 @@ function openExercise(weekNumber, dayIndex, exerciseKey) {
   document.querySelector("#modalTechnique").textContent = exercise.technique;
   document.querySelector("#modalMistakes").innerHTML = exercise.mistakes.map((mistake) => `<li>${mistake}</li>`).join("");
 
-  const [startImage, endImage] = Array.isArray(exercise.images) ? exercise.images : ["", ""];
+  const [startImage, endImage] = Array.isArray(exercise.images) ?exercise.images : ["", ""];
   const startFigure = document.querySelector("#modalImageStart").closest("figure");
   const endFigure = document.querySelector("#modalImageEnd").closest("figure");
   const hasStartImage = hasRealExerciseImage(startImage);
@@ -4506,7 +4512,7 @@ function openExercise(weekNumber, dayIndex, exerciseKey) {
   document.querySelector("#modalImageEnd").alt = t("endImageAlt", { name: exercise.name });
 
   doneButton.classList.toggle("done", Boolean(progress[id]));
-  doneButton.textContent = progress[id] ? t("done") : t("markDone");
+  doneButton.textContent = progress[id] ?t("done") : t("markDone");
   setTimer(parseRestToSeconds(prescription.rest));
   stopTimer();
 
@@ -4562,7 +4568,7 @@ function toggleDone() {
   progress[id] = !progress[id];
   localStorage.setItem(progressKey, JSON.stringify(progress));
   doneButton.classList.toggle("done", Boolean(progress[id]));
-  doneButton.textContent = progress[id] ? t("done") : t("markDone");
+  doneButton.textContent = progress[id] ?t("done") : t("markDone");
 
   const week = getActiveRoutine().plan.find((item) => item.number === weekNumber);
   if (week) {
@@ -4585,7 +4591,7 @@ weeksContainer.addEventListener("click", (event) => {
   const routineTab = event.target.closest("[data-routine-tab]");
   if (routineTab) {
     const tab = routineTab.dataset.routineTab;
-    state.routineSubView = tab === "info" || tab === "notes" ? "info" : "weeks";
+    state.routineSubView = tab === "info" || tab === "notes" ?"info" : "weeks";
     state.selectedRoutineDayIndex = null;
     renderPlan();
     return;
@@ -4688,6 +4694,8 @@ adminToggle.addEventListener("click", () => {
     state.adminEditorMode = "";
     state.pendingAssignUserId = "";
     state.adminEditingExerciseKey = "";
+    state.adminWeekEditorIndex = null;
+    state.adminDayEditorIndex = null;
     state.adminDraft = null;
   }
   renderApp();
@@ -4758,7 +4766,7 @@ adminWeeks.addEventListener("change", async (event) => {
     }
 
     const imageDataUrl = await createExerciseImageDataUrl(file);
-    exercise.images = Array.isArray(exercise.images) ? exercise.images : ["", ""];
+    exercise.images = Array.isArray(exercise.images) ?exercise.images : ["", ""];
     exercise.images[imageIndex] = imageDataUrl;
     state.adminEditingExerciseKey = exerciseKey;
 
@@ -4843,7 +4851,7 @@ adminUsers.addEventListener("change", async (event) => {
   try {
     await updateUserRoutine(uid, select.value);
     state.adminUsers = state.adminUsers.map((user) =>
-      user.uid === uid ? { ...user, routineId: select.value } : user
+      user.uid === uid ?{ ...user, routineId: select.value } : user
     );
     if (state.pendingAssignUserId === uid || state.selectedAdminUserId === uid) {
       state.adminEditorMode = "";
@@ -4851,7 +4859,7 @@ adminUsers.addEventListener("change", async (event) => {
       state.adminEditingExerciseKey = "";
       state.adminDraft = null;
     }
-    setAdminMessage(select.value ? t("assignedRoutine") : t("userWithoutRoutine"), "success");
+    setAdminMessage(select.value ?t("assignedRoutine") : t("userWithoutRoutine"), "success");
     renderAdminPanel();
   } catch (error) {
     setAdminMessage(getAuthErrorMessage(error), "error");
@@ -4903,7 +4911,7 @@ adminUsers.addEventListener("click", async (event) => {
         }, { merge: true });
         state.adminUsers = state.adminUsers.map((user) =>
           user.uid === uid
-            ? { ...user, routineId, routineStartDate: state.assignmentStartDate || "" }
+            ?{ ...user, routineId, routineStartDate: state.assignmentStartDate || "" }
             : user
         );
         setAdminMessage(t("assignedRoutine"), "success");
@@ -5002,7 +5010,7 @@ adminUsers.addEventListener("click", async (event) => {
   if (toggle) {
     const card = toggle.closest("[data-user-id]");
     const uid = card?.dataset.userId;
-    state.selectedAdminUserId = state.selectedAdminUserId === uid ? "" : uid;
+    state.selectedAdminUserId = state.selectedAdminUserId === uid ?"" : uid;
     state.adminEditorMode = "";
     state.pendingAssignUserId = "";
     state.adminEditingExerciseKey = "";
@@ -5041,7 +5049,7 @@ adminUsers.addEventListener("click", async (event) => {
   try {
     await updateUserRoutine(uid, "");
     state.adminUsers = state.adminUsers.map((user) =>
-      user.uid === uid ? { ...user, routineId: "" } : user
+      user.uid === uid ?{ ...user, routineId: "" } : user
     );
     if (state.pendingAssignUserId === uid) {
       state.adminEditorMode = "";
@@ -5111,7 +5119,7 @@ studentProgress?.addEventListener("click", (event) => {
     return;
   }
   if (action.dataset.progressAction === "menu") {
-    state.progressSubView = state.progressSubView === "history" ? "summary" : "history";
+    state.progressSubView = state.progressSubView === "history" ?"summary" : "history";
     renderStudentProgress();
     return;
   }
@@ -5133,7 +5141,7 @@ accountPanel?.addEventListener("click", async (event) => {
   const sectionButton = event.target.closest("[data-account-section]");
   if (sectionButton) {
     const target = sectionButton.dataset.accountSection;
-    state.accountSubView = target === "settings" ? "settings" : target === "profile" ? "profile" : target;
+    state.accountSubView = target === "settings" ?"settings" : target === "profile" ?"profile" : target;
     renderAccountPanel();
     return;
   }
@@ -5152,7 +5160,7 @@ accountPanel?.addEventListener("click", async (event) => {
     if (action === "password") {
       try {
         await firebase.auth().sendPasswordResetEmail(state.currentUser.email);
-        if (status) status.textContent = "Te enviamos un mail para cambiar la contraseÃ±a.";
+        if (status) status.textContent = "Te enviamos un mail para cambiar la contrase?a.";
       } catch (error) {
         if (status) status.textContent = getAuthErrorMessage(error);
       }
@@ -5163,13 +5171,13 @@ accountPanel?.addEventListener("click", async (event) => {
       return;
     }
     if (action === "units") {
-      if (status) status.textContent = "RutFit usa sistema mÃ©trico: kg y cm.";
+      if (status) status.textContent = "RutFit usa sistema m?trico: kg y cm.";
       return;
     }
     if (action === "delete") {
-      const confirmed = await showConfirmDialog("Â¿Eliminar tu cuenta de RutFit?");
+      const confirmed = await showConfirmDialog("?Eliminar tu cuenta de RutFit?");
       if (!confirmed) return;
-      if (status) status.textContent = "Para eliminar la cuenta definitivamente, vuelve a iniciar sesiÃ³n recientemente y solicita eliminaciÃ³n al admin.";
+      if (status) status.textContent = "Para eliminar la cuenta definitivamente, vuelve a iniciar sesi?n recientemente y solicita eliminaci?n al admin.";
       return;
     }
   }
@@ -5247,7 +5255,7 @@ trainerHome?.addEventListener("click", (event) => {
     return;
   }
   if (button.dataset.homeAction === "notifications") {
-    setActiveView("students");
+    setActiveView("notifications");
     return;
   }
   if (button.dataset.homeAction === "assign-routine") {
@@ -5277,7 +5285,7 @@ studentProgress?.addEventListener("click", (event) => {
     setActiveView("home");
   }
   if (button.dataset.notificationAction === "read-all") {
-    button.textContent = "Todo leÃ­do";
+    button.textContent = "Todo le?do";
     button.disabled = true;
   }
 });
@@ -5295,7 +5303,7 @@ studentInvitesPanel?.addEventListener("click", async (event) => {
   try {
     const accepted = button.dataset.studentInviteAction === "accept";
     await respondToTrainerInvitation(inviteId, accepted);
-    setAuthMessage(accepted ? t("inviteAccepted") : t("inviteDeclined"), "success");
+    setAuthMessage(accepted ?t("inviteAccepted") : t("inviteDeclined"), "success");
   } catch (error) {
     setAuthMessage(`${getAuthErrorMessage(error)} ${error?.message || ""}`.trim(), "error");
     actionButtons.forEach((item) => {
@@ -5329,6 +5337,8 @@ adminEditorBack?.addEventListener("click", () => {
   state.adminEditorMode = "";
   state.pendingAssignUserId = "";
   state.adminEditingExerciseKey = "";
+  state.adminWeekEditorIndex = null;
+  state.adminDayEditorIndex = null;
   state.adminDraft = null;
   setAdminMessage("");
   renderAdminPanel();
@@ -5342,7 +5352,7 @@ adminSeedDario.addEventListener("click", async () => {
     if (state.pendingAssignUserId || state.selectedAdminUserId) {
       await updateUserRoutine(state.pendingAssignUserId || state.selectedAdminUserId, state.adminDraft.id);
     }
-    setAdminMessage(state.pendingAssignUserId || state.selectedAdminUserId ? t("darioMigratedAssigned") : t("darioMigrated"), "success");
+    setAdminMessage(state.pendingAssignUserId || state.selectedAdminUserId ?t("darioMigratedAssigned") : t("darioMigrated"), "success");
     renderAdminPanel();
   } catch (error) {
     setAdminMessage(getAuthErrorMessage(error), "error");
@@ -5358,7 +5368,7 @@ adminSaveRoutine.addEventListener("click", async () => {
   }
   try {
     const assignedUserId = await saveAdminDraftAndAssignment();
-    setAdminMessage(assignedUserId ? t("routineSavedAssigned") : t("routineSaved"), "success");
+    setAdminMessage(assignedUserId ?t("routineSavedAssigned") : t("routineSaved"), "success");
     state.adminEditorMode = "";
     state.pendingAssignUserId = "";
     state.adminEditingExerciseKey = "";
@@ -5381,7 +5391,7 @@ adminDeleteRoutine.addEventListener("click", async () => {
     await deleteRoutineFromFirestore(deletedId);
     setAdminMessage(t("routineDeleted"), "success");
     state.adminDraft = null;
-    const nextRoutineId = getAdminRoutineIds()[0] || (state.isAdmin ? "dario" : "");
+    const nextRoutineId = getAdminRoutineIds()[0] || (state.isAdmin ?"dario" : "");
     if (nextRoutineId && !routines[nextRoutineId]) {
       routines[nextRoutineId] = createEmptyRoutine(nextRoutineId);
     }
@@ -5392,7 +5402,7 @@ adminDeleteRoutine.addEventListener("click", async () => {
       state.adminRoutineId = "";
     }
     if (state.selectedRoutine === deletedId) {
-      selectRoutine(routines[nextRoutineId] ? nextRoutineId : "pending");
+      selectRoutine(routines[nextRoutineId] ?nextRoutineId : "pending");
     }
     renderAdminPanel();
   } catch (error) {
@@ -5453,7 +5463,7 @@ registerButton.addEventListener("click", async () => {
 
   try {
     await applyAuthPersistence();
-    localStorage.setItem(PENDING_ACCOUNT_ROLE_KEY, accountRole?.value === "trainer" ? "trainer" : "student");
+    localStorage.setItem(PENDING_ACCOUNT_ROLE_KEY, accountRole?.value === "trainer" ?"trainer" : "student");
     await firebase.auth().createUserWithEmailAndPassword(email, password);
   } catch (error) {
     setAuthMessage(getAuthErrorMessage(error), "error");
@@ -5493,7 +5503,7 @@ function installTouchScrollFallback() {
   let cancelNextClick = false;
   let active = false;
   const interactiveSelector = "input, textarea, select, option, [contenteditable='true']";
-  const getTarget = (event) => (event.target?.nodeType === Node.TEXT_NODE ? event.target.parentElement : event.target);
+  const getTarget = (event) => (event.target?.nodeType === Node.TEXT_NODE ?event.target.parentElement : event.target);
   const getScrollRoot = () => document.scrollingElement || document.documentElement;
 
   document.addEventListener(
@@ -5599,7 +5609,7 @@ applyTranslations();
 
 if (rememberSession) {
   rememberSession.addEventListener("change", () => {
-    localStorage.setItem(AUTH_PERSISTENCE_KEY, rememberSession.checked ? "local" : "session");
+    localStorage.setItem(AUTH_PERSISTENCE_KEY, rememberSession.checked ?"local" : "session");
   });
 }
 
