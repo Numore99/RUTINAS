@@ -6246,6 +6246,182 @@ button.student-current-card {
   background: rgba(8, 19, 42, 0.68);
 }
 
+.admin-panel.editing-existing-routine .admin-grid {
+  display: none;
+}
+
+.admin-panel.editing-existing-routine .admin-actions {
+  display: none;
+}
+
+.admin-routine-overview-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.55rem;
+  min-height: 5.25rem;
+  border: 1px solid rgba(75, 96, 142, 0.16);
+  border-radius: 16px;
+  background: rgba(8, 19, 42, 0.7);
+  padding: 0.8rem;
+}
+
+.admin-routine-overview-card article {
+  display: grid;
+  gap: 0.26rem;
+  min-height: 3rem;
+  border-right: 1px solid rgba(75, 96, 142, 0.14);
+}
+
+.admin-routine-overview-card article span {
+  color: #8f9db8;
+  font-size: 0.56rem;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.admin-routine-overview-card article strong {
+  color: #fff;
+  font-size: 1.05rem;
+}
+
+.admin-routine-overview-card .mini-progress {
+  width: 3.8rem;
+}
+
+.admin-routine-weeks-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.65rem;
+  margin-top: 0.2rem;
+}
+
+.admin-routine-weeks-title span {
+  color: #92a4c2;
+  font-size: 0.62rem;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.admin-routine-weeks-title .primary-button {
+  width: auto;
+  min-height: 2rem;
+  padding: 0 0.78rem;
+  border-radius: 999px;
+  font-size: 0.62rem;
+}
+
+.admin-panel.editing-existing-routine .admin-weeks > .admin-editor-card {
+  padding: 0;
+  background: rgba(8, 19, 42, 0.68);
+}
+
+.admin-panel.editing-existing-routine .admin-weeks > .admin-editor-card > .admin-card-title {
+  margin: 0;
+  padding: 0.72rem;
+}
+
+.admin-panel.editing-existing-routine .admin-weeks > .admin-editor-card.collapsed,
+.admin-panel.editing-existing-routine .admin-weeks > .admin-editor-card:has(.empty-state) {
+  min-height: 4.15rem;
+}
+
+.admin-panel.editing-existing-routine .admin-weeks > .admin-editor-card > .admin-card-title::after {
+  display: none;
+}
+
+.admin-panel.editing-existing-routine .admin-weeks > .admin-editor-card > .admin-card-title h3 {
+  font-size: 0.82rem;
+}
+
+.admin-panel.editing-existing-routine .admin-weeks > .admin-editor-card > .admin-card-title h3::after {
+  content: "100%";
+  float: right;
+  color: #22c55e;
+  font-size: 0.78rem;
+}
+
+.admin-panel.routines-view.editing-routine .admin-week-header .primary-button,
+.admin-panel.routines-view.editing-routine .admin-week-header .secondary-button,
+.admin-panel.routines-view.editing-routine .admin-week-header .danger-button,
+.admin-panel.routines-view.editing-routine .admin-weeks > .admin-editor-card > .admin-card-title .primary-button,
+.admin-panel.routines-view.editing-routine .admin-weeks > .admin-editor-card > .admin-card-title .secondary-button,
+.admin-panel.routines-view.editing-routine .admin-weeks > .admin-editor-card > .admin-card-title .danger-button {
+  width: auto;
+  min-height: 2rem;
+  padding: 0 0.72rem;
+  border-radius: 10px;
+}
+
+.admin-panel.routines-view.editing-routine .admin-weeks > .admin-editor-card:not(:has(.empty-state)) {
+  padding: 0.82rem;
+}
+
+.exercise-editor-hero {
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 0.7rem;
+  border-radius: 14px;
+}
+
+.exercise-editor-hero .admin-image-preview,
+.exercise-editor-hero .admin-image-empty {
+  width: 100%;
+  max-height: none;
+  aspect-ratio: 16 / 9;
+  border-radius: 14px;
+  object-fit: cover;
+}
+
+.exercise-editor-hero::after {
+  content: "▣";
+  position: absolute;
+  right: 0.55rem;
+  bottom: 0.55rem;
+  display: grid;
+  place-items: center;
+  width: 1.65rem;
+  height: 1.65rem;
+  border-radius: 50%;
+  background: rgba(4, 12, 28, 0.85);
+  color: #fff;
+  font-size: 0.72rem;
+}
+
+.admin-panel.routines-view.editing-routine .admin-exercise.is-editing {
+  border: 0;
+  background: transparent;
+  padding: 0;
+}
+
+.admin-panel.routines-view.editing-routine .admin-exercise.is-editing > .admin-exercise-summary {
+  display: none;
+}
+
+.admin-panel.routines-view.editing-routine .admin-exercise.is-editing .admin-exercise-form {
+  margin-top: 0;
+  border: 0;
+  background: transparent;
+  padding: 0;
+}
+
+.admin-panel.routines-view.editing-routine .admin-exercise.is-editing .admin-image-uploader {
+  display: grid;
+  gap: 0.42rem;
+}
+
+.admin-panel.routines-view.editing-routine .admin-exercise.is-editing .admin-image-uploader .admin-image-preview,
+.admin-panel.routines-view.editing-routine .admin-exercise.is-editing .admin-image-uploader .admin-image-empty {
+  display: none;
+}
+
+.admin-panel.routines-view.editing-routine .admin-exercise.is-editing .file-button {
+  min-height: 2.1rem;
+  border-radius: 10px;
+  font-size: 0.65rem;
+}
+
 /* Inicio - Alumno: greeting line above the rutina actual card (matches mockup) */
 .sh-greeting {
   margin: 0 0 0.6rem;

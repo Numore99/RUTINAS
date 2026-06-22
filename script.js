@@ -2244,6 +2244,12 @@ function startRoutineEditing(routineId, userId = "") {
   state.adminEditorMode = "edit";
   state.adminEditingExerciseKey = "";
   setAdminDraftFromRoutine(routineId);
+  state.adminDraft.plan.forEach((week) => {
+    week.collapsed = true;
+    (week.days || []).forEach((day) => {
+      day.collapsed = true;
+    });
+  });
   setAdminMessage("");
   renderApp();
 }
@@ -3373,6 +3379,8 @@ function renderAdminPanel() {
   adminPanel.classList.toggle("students-view", showUsers);
   adminPanel.classList.toggle("routines-view", showRoutines);
   adminPanel.classList.toggle("editing-routine", isEditingRoutine);
+  adminPanel.classList.toggle("creating-routine", isEditingRoutine && state.adminEditorMode === "create");
+  adminPanel.classList.toggle("editing-existing-routine", isEditingRoutine && state.adminEditorMode === "edit");
   if (state.isTrainer && !state.isAdmin) {
     if (panelTitle) panelTitle.textContent = showRoutines ? t("routinePanel") : t("studentPanel");
     if (panelHelp) panelHelp.textContent = showRoutines ? t("routinePanelHelp") : t("studentPanelHelp");
@@ -3428,7 +3436,21 @@ function renderAdminPanel() {
   adminRoutineTitle.value = draft.title || "";
   adminRoutineKicker.value = draft.kicker || "";
 
-  adminWeeks.innerHTML = draft.plan
+  const routineOverview = state.adminEditorMode === "edit"
+    ? `
+      <section class="admin-routine-overview-card">
+        <article><span>Duración</span><strong>${draft.plan.length || 0} semanas</strong></article>
+        <article><span>Alumnos</span><strong>${getRoutineAssignedCount(draft.id)}</strong></article>
+        <div class="mini-progress" style="--progress:75%"><strong>75%</strong></div>
+      </section>
+      <div class="admin-routine-weeks-title">
+        <span>Semanas</span>
+        <button class="primary-button" type="button" data-admin-action="add-week">+ Nueva semana</button>
+      </div>
+    `
+    : "";
+
+  adminWeeks.innerHTML = routineOverview + draft.plan
     .map((week, weekIndex) => {
       const phase = week.phase || {};
       const days = (week.days || [])
@@ -3458,6 +3480,9 @@ function renderAdminPanel() {
                   </div>
                   ${isEditingExercise ? `
                     <div class="admin-exercise-form">
+                      <div class="exercise-editor-hero">
+                        ${startPreview}
+                      </div>
                       <div class="admin-exercise-grid">
                         <label class="search-box"><span>${t("name")}</span><input class="admin-field" data-exercise-field="name" value="${escapeHtml(exercise.name || "")}" /></label>
                         <label class="search-box"><span>${t("objective")}</span><input class="admin-field" data-exercise-field="objective" value="${escapeHtml(exercise.objective || "")}" /></label>
@@ -3605,6 +3630,16 @@ async function handleAdminAction(button) {
   const dayIndex = Number(button.closest("[data-day-index]")?.dataset.dayIndex);
   const exerciseKey = button.closest("[data-exercise-key]")?.dataset.exerciseKey;
   const action = button.dataset.adminAction;
+
+  if (action === "add-week") {
+    state.adminDraft.plan.push({
+      number: "",
+      phase: { name: "", badge: "", modifier: "" },
+      days: []
+    });
+    renderAdminPanel();
+    return;
+  }
 
   if (action === "edit-exercise") {
     state.adminEditingExerciseKey = state.adminEditingExerciseKey === exerciseKey ? "" : exerciseKey;
