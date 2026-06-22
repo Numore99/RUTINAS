@@ -399,6 +399,7 @@ const state = {
   pendingAssignUserId: "",
   adminEditingExerciseKey: "",
   accountSubView: "profile",
+  progressSubView: "summary",
   currentExerciseKey: null,
   timerSeconds: 0,
   timerInterval: null
@@ -1897,56 +1898,126 @@ function renderStudentProgress() {
   if (!studentProgress) return;
   const routine = getActiveRoutine();
   const stats = getRoutineProgressStats(routine);
-  const weekRows = (routine?.plan || []).map((week) => {
-    const ids = getWeekExerciseIds(week);
-    const done = ids.filter((id) => progress[id]).length;
-    const percent = ids.length ? Math.round((done / ids.length) * 100) : 0;
-    return `
-      <article class="progress-row">
-        <span>${t("week")} ${week.number}</span>
-        <strong>${percent}%</strong>
-        <div class="progress-line"><span style="width:${percent}%"></span></div>
-      </article>
-    `;
-  }).join("");
+  const nextInfo = getNextTrainingInfo(routine);
+  const completedTrainings = Math.max(0, Math.min(stats.totalSessions || 0, stats.doneCount || 0));
+  const weekWorkouts = Math.max(1, Math.min(6, nextInfo?.exerciseCount || completedTrainings || 4));
+  const minutes = Math.max(45, Math.round(weekWorkouts * 11.25));
+  const kcal = Math.max(320, Math.round(minutes * 26.7));
+  const currentTab = state.progressSubView || "summary";
   studentProgress.innerHTML = `
-    <section class="progress-hero">
-      <div>
-        <span class="kicker">Progreso</span>
-        <h2>${stats.percent}%</h2>
-        <p>Cumplimiento total</p>
+    <section class="student-progress-screen">
+      <div class="screen-topbar progress-topbar">
+        <span></span>
+        <h2>Progreso</h2>
+        <button class="icon-button ghost-icon" type="button" data-progress-action="menu" aria-label="Opciones">⋮</button>
       </div>
-      <div class="mini-progress large" style="--progress:${stats.percent}%">
-        <strong>${stats.percent}%</strong>
+
+      <div class="mock-tabs progress-tabs">
+        <button type="button" data-progress-tab="summary" class="${currentTab === "summary" ? "active" : ""}">Resumen</button>
+        <button type="button" data-progress-tab="history" class="${currentTab === "history" ? "active" : ""}">Entrenamientos</button>
+        <button type="button" data-progress-tab="measures" class="${currentTab === "measures" ? "active" : ""}">Medidas</button>
+      </div>
+
+      ${currentTab === "history" ? renderProgressHistory(routine) : currentTab === "measures" ? renderProgressMeasures() : renderProgressSummary({
+        weekWorkouts,
+        percent: stats.percent,
+        kcal,
+        minutes
+      })}
+    </section>
+  `;
+}
+
+function renderProgressSummary({ weekWorkouts, percent, kcal }) {
+  return `
+    <div class="progress-section-title">Esta semana</div>
+    <div class="progress-stat-grid">
+      <article>
+        <strong>${weekWorkouts}</strong>
+        <span>Entrenamientos</span>
+      </article>
+      <article>
+        <strong>${percent}%</strong>
+        <span>Cumplimiento</span>
+      </article>
+      <article>
+        <strong>${kcal}</strong>
+        <span>Kcal totales</span>
+      </article>
+    </div>
+
+    <section class="performance-card">
+      <div class="progress-section-title">Gráfico de rendimiento</div>
+      <div class="performance-chart" aria-label="Gráfico de rendimiento">
+        <span class="axis top">100%</span>
+        <span class="axis mid">50%</span>
+        <span class="axis bottom">0%</span>
+        <svg viewBox="0 0 320 150" preserveAspectRatio="none" aria-hidden="true">
+          <defs>
+            <linearGradient id="progressArea" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#a855f7" stop-opacity="0.58"/>
+              <stop offset="1" stop-color="#7c3cff" stop-opacity="0.02"/>
+            </linearGradient>
+          </defs>
+          <path d="M20 118 L62 91 L95 48 L132 82 L170 56 L205 92 L238 55 L275 42 L304 22 L304 130 L20 130 Z" fill="url(#progressArea)"/>
+          <path d="M20 118 L62 91 L95 48 L132 82 L170 56 L205 92 L238 55 L275 42 L304 22" fill="none" stroke="#a855f7" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+          <g fill="#c084fc">
+            <circle cx="20" cy="118" r="4"/><circle cx="62" cy="91" r="4"/><circle cx="95" cy="48" r="4"/><circle cx="132" cy="82" r="4"/><circle cx="170" cy="56" r="4"/><circle cx="205" cy="92" r="4"/><circle cx="238" cy="55" r="4"/><circle cx="275" cy="42" r="4"/><circle cx="304" cy="22" r="4"/>
+          </g>
+        </svg>
+        <div class="chart-days"><span>Lun</span><span>Mar</span><span>Mié</span><span>Jue</span><span>Vie</span><span>Sáb</span><span>Dom</span></div>
       </div>
     </section>
-    <div class="mock-tabs">
-      <span class="active">Resumen</span>
-      <span>Entrenamientos</span>
-      <span>Medidas</span>
-    </div>
-    <div class="home-grid student-stat-grid">
-      <article class="home-stat">
-        <strong>${stats.totalSessions}</strong>
-        <span>Sesiones</span>
-      </article>
-      <article class="home-stat">
-        <strong>${stats.doneCount}</strong>
-        <span>Hechas</span>
-      </article>
-      <article class="home-stat">
-        <strong>${stats.totalExercises}</strong>
-        <span>Ejercicios</span>
-      </article>
-    </div>
-    <section class="progress-chart">
-      <div class="home-section-title">Semanas</div>
-      ${weekRows || `<div class="empty-state">${t("routineInPreparation")}</div>`}
-    </section>
-    <section class="student-current-card streak-card">
-      <small>Racha de entrenamiento</small>
-      <strong>12 dias seguidos</strong>
+
+    <section class="progress-streak">
+      <div class="progress-section-title">Racha de entrenamiento</div>
+      <strong>12 <span>días seguidos</span></strong>
       <div class="flame-row" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+    </section>
+  `;
+}
+
+function renderProgressHistory(routine) {
+  const rows = (routine?.plan || []).flatMap((week) =>
+    (week.days || []).map((day, index) => {
+      const ids = (day.exercises || []).map((exerciseKey) => progressId(week.number, index, exerciseKey));
+      const done = ids.filter((id) => progress[id]).length;
+      const percent = ids.length ? Math.round((done / ids.length) * 100) : 0;
+      return `
+        <article class="history-row">
+          <span class="routine-list-icon ${percent >= 100 ? "calendar" : "dumbbell"}"></span>
+          <div>
+            <strong>${escapeHtml(day.title || `Día ${index + 1}`)}</strong>
+            <small>${t("week")} ${week.number} · ${ids.length} ejercicios</small>
+          </div>
+          <b>${percent}%</b>
+        </article>
+      `;
+    })
+  ).join("");
+  return `<section class="progress-list-card">${rows || `<div class="empty-state">${t("routineInPreparation")}</div>`}</section>`;
+}
+
+function renderProgressMeasures() {
+  const userData = state.currentUserData || {};
+  const weight = userData.weight || "--";
+  const height = userData.height || "--";
+  const age = userData.age || "--";
+  return `
+    <section class="progress-list-card measure-card">
+      <div class="progress-section-title">Actuales</div>
+      <div class="progress-stat-grid">
+        <article><strong>${escapeHtml(weight)}</strong><span>Peso kg</span></article>
+        <article><strong>${escapeHtml(height)}</strong><span>Altura m</span></article>
+        <article><strong>${escapeHtml(age)}</strong><span>Edad</span></article>
+      </div>
+      <div class="performance-chart compact-chart">
+        <svg viewBox="0 0 320 120" preserveAspectRatio="none" aria-hidden="true">
+          <path d="M20 35 L75 48 L130 55 L190 70 L250 82 L304 95" fill="none" stroke="#a855f7" stroke-width="5" stroke-linecap="round"/>
+          <path d="M20 35 L75 48 L130 55 L190 70 L250 82 L304 95 L304 116 L20 116 Z" fill="rgba(124,60,255,.2)"/>
+        </svg>
+      </div>
+      <button class="secondary-button" type="button" data-progress-action="edit-profile">Registrar medida</button>
     </section>
   `;
 }
@@ -3872,7 +3943,31 @@ bottomNav?.addEventListener("click", (event) => {
   if (button.dataset.view === "account") {
     state.accountSubView = "profile";
   }
+  if (button.dataset.view === "progress") {
+    state.progressSubView = "summary";
+  }
   setActiveView(button.dataset.view);
+});
+
+studentProgress?.addEventListener("click", (event) => {
+  const tab = event.target.closest("[data-progress-tab]");
+  if (tab) {
+    state.progressSubView = tab.dataset.progressTab || "summary";
+    renderStudentProgress();
+    return;
+  }
+
+  const action = event.target.closest("[data-progress-action]");
+  if (!action) return;
+  if (action.dataset.progressAction === "edit-profile") {
+    state.accountSubView = "personal";
+    setActiveView("account");
+    return;
+  }
+  if (action.dataset.progressAction === "menu") {
+    state.progressSubView = state.progressSubView === "history" ? "summary" : "history";
+    renderStudentProgress();
+  }
 });
 
 accountPanel?.addEventListener("click", async (event) => {
