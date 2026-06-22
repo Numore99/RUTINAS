@@ -463,6 +463,9 @@ const adminRoutineId = document.querySelector("#adminRoutineId");
 const adminRoutineName = document.querySelector("#adminRoutineName");
 const adminRoutineTitle = document.querySelector("#adminRoutineTitle");
 const adminRoutineKicker = document.querySelector("#adminRoutineKicker");
+const adminRoutineLevel = document.querySelector("#adminRoutineLevel");
+const adminRoutineDescription = document.querySelector("#adminRoutineDescription");
+const adminRoutineTags = document.querySelector("#adminRoutineTags");
 const adminSaveRoutine = document.querySelector("#adminSaveRoutine");
 const adminNewRoutine = document.querySelector("#adminNewRoutine");
 const adminEditRoutine = document.querySelector("#adminEditRoutine");
@@ -1244,6 +1247,9 @@ function serializeRoutine(routine) {
     name: routine.name,
     title: routine.title,
     kicker: routine.kicker,
+    level: routine.level || "Intermedio",
+    description: routine.description || "",
+    tags: routine.tags || "",
     ownerTrainerId: routine.ownerTrainerId || "",
     ownerTrainerEmail: routine.ownerTrainerEmail || "",
     exerciseLibrary: routine.exerciseLibrary || {},
@@ -3212,6 +3218,9 @@ function readAdminBasics() {
   state.adminDraft.name = adminRoutineName.value.trim();
   state.adminDraft.title = adminRoutineTitle.value.trim();
   state.adminDraft.kicker = adminRoutineKicker.value.trim();
+  state.adminDraft.description = adminRoutineDescription?.value.trim() || "";
+  state.adminDraft.tags = adminRoutineTags?.value.trim() || "";
+  state.adminDraft.level = state.adminDraft.level || "Intermedio";
   state.adminRoutineId = id;
 }
 
@@ -3429,6 +3438,8 @@ function renderAdminPanel() {
     adminRoutineName.value = "";
     adminRoutineTitle.value = "";
     adminRoutineKicker.value = "";
+    if (adminRoutineDescription) adminRoutineDescription.value = "";
+    if (adminRoutineTags) adminRoutineTags.value = "";
     adminWeeks.innerHTML = renderRoutineCatalog(routineIds);
     return;
   }
@@ -3457,6 +3468,11 @@ function renderAdminPanel() {
   adminRoutineName.value = draft.name || "";
   adminRoutineTitle.value = draft.title || "";
   adminRoutineKicker.value = draft.kicker || "";
+  if (adminRoutineDescription) adminRoutineDescription.value = draft.description || "";
+  if (adminRoutineTags) adminRoutineTags.value = draft.tags || "";
+  adminRoutineLevel?.querySelectorAll("[data-routine-level]").forEach((button) => {
+    button.classList.toggle("active", button.dataset.routineLevel === (draft.level || "Intermedio"));
+  });
 
   const routineOverview = state.adminEditorMode === "edit"
     ? `
@@ -4409,10 +4425,20 @@ adminRoutineSelect.addEventListener("change", () => {
   renderAdminPanel();
 });
 
-[adminRoutineId, adminRoutineName, adminRoutineTitle, adminRoutineKicker].forEach((input) => {
+[adminRoutineId, adminRoutineName, adminRoutineTitle, adminRoutineKicker, adminRoutineDescription, adminRoutineTags].forEach((input) => {
+  if (!input) return;
   input.addEventListener("input", () => {
     if (!state.adminDraft) return;
     readAdminBasics();
+  });
+});
+
+adminRoutineLevel?.addEventListener("click", (event) => {
+  const button = event.target.closest("[data-routine-level]");
+  if (!button || !state.adminDraft) return;
+  state.adminDraft.level = button.dataset.routineLevel || "Intermedio";
+  adminRoutineLevel.querySelectorAll("[data-routine-level]").forEach((item) => {
+    item.classList.toggle("active", item === button);
   });
 });
 

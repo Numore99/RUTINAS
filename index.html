@@ -140,8 +140,24 @@
             <input id="adminRoutineTitle" type="text" placeholder="Preparación física" autocomplete="off" />
           </label>
           <label class="search-box" for="adminRoutineKicker">
-            <span data-i18n="tag">Etiqueta</span>
-            <input id="adminRoutineKicker" type="text" placeholder="Ej: 4 semanas" autocomplete="off" />
+            <span>Duración estimada</span>
+            <input id="adminRoutineKicker" type="text" placeholder="8 semanas" autocomplete="off" />
+          </label>
+          <div class="admin-level-field">
+            <span>Nivel</span>
+            <div class="admin-level-pills" id="adminRoutineLevel">
+              <button type="button" data-routine-level="Principiante">Principiante</button>
+              <button type="button" data-routine-level="Intermedio">Intermedio</button>
+              <button type="button" data-routine-level="Avanzado">Avanzado</button>
+            </div>
+          </div>
+          <label class="search-box" for="adminRoutineDescription">
+            <span>Descripción</span>
+            <textarea id="adminRoutineDescription" rows="3" placeholder="Rutina enfocada en el desarrollo de fuerza en la parte superior del cuerpo."></textarea>
+          </label>
+          <label class="search-box" for="adminRoutineTags">
+            <span>Etiqueta</span>
+            <input id="adminRoutineTags" type="text" placeholder="Fuerza, Superior, Hipertrofia" autocomplete="off" />
           </label>
         </div>
 
