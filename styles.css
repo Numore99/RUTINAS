@@ -6145,12 +6145,25 @@ body.native-admin-subscreen-active .app-shell {
 
 .admin-panel.native-subscreen::before,
 .admin-panel.native-subscreen .admin-panel-header,
-.admin-panel.native-subscreen #adminRoutineEditor {
+.admin-panel.native-subscreen #adminRoutineEditor > .admin-card-title,
+.admin-panel.native-subscreen #adminRoutineEditor > .admin-grid,
+.admin-panel.native-subscreen #adminRoutineEditor > .admin-actions {
   display: none !important;
 }
 
+.admin-panel.native-subscreen #adminRoutineEditor {
+  display: block !important;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
 .admin-panel.native-subscreen .admin-weeks {
-  display: block;
+  display: block !important;
   padding: 0;
 }
 
