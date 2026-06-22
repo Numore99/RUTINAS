@@ -4023,7 +4023,7 @@ return `
 }
 
 function updateAdminDraftFromInput(input) {
-  if (!state.adminDraft) return;
+  if (!state.adminDraft || !input) return;
   const weekIndex = Number(input.closest("[data-week-index]")?.dataset.weekIndex);
   const dayIndex = Number(input.closest("[data-day-index]")?.dataset.dayIndex);
   const exerciseKey = input.closest("[data-exercise-key]")?.dataset.exerciseKey;
@@ -4052,6 +4052,24 @@ function updateAdminDraftFromInput(input) {
   }
 }
 
+function syncAdminVisibleFields(container = adminWeeks) {
+  if (!state.adminDraft || !container) return;
+  container.querySelectorAll(".admin-field, .admin-textarea").forEach((input) => {
+    if (input.matches("[data-image-upload]")) return;
+    updateAdminDraftFromInput(input);
+  });
+}
+
+function getAdminDayLocation(button) {
+  const domWeekIndex = Number(button.closest("[data-week-index]")?.dataset.weekIndex);
+  const domDayIndex = Number(button.closest("[data-day-index]")?.dataset.dayIndex);
+  const weekIndex = Number.isInteger(domWeekIndex) ? domWeekIndex : Number(state.adminWeekEditorIndex);
+  const dayIndex = Number.isInteger(domDayIndex) ? domDayIndex : Number(state.adminDayEditorIndex);
+  const day = state.adminDraft?.plan?.[weekIndex]?.days?.[dayIndex];
+  if (!day) return null;
+  return { weekIndex, dayIndex, day };
+}
+
 async function handleAdminAction(button) {
   const weekIndex = Number(button.closest("[data-week-index]")?.dataset.weekIndex);
   const dayIndex = Number(button.closest("[data-day-index]")?.dataset.dayIndex);
@@ -4067,9 +4085,25 @@ async function handleAdminAction(button) {
   }
 
   if (action === "back-to-week-edit") {
-    state.adminDayEditorIndex = null;
-    state.adminEditingExerciseKey = "";
-    renderAdminPanel();
+    const location = getAdminDayLocation(button);
+    if (location) {
+      try {
+        syncAdminVisibleFields();
+        location.day.collapsed = false;
+        await saveAdminDraftAndAssignment();
+        state.adminWeekEditorIndex = location.weekIndex;
+        state.adminDayEditorIndex = null;
+        state.adminEditingExerciseKey = "";
+        setAdminMessage("Día guardado.", "success");
+        renderAdminPanel();
+      } catch (error) {
+        setAdminMessage(`${getAuthErrorMessage(error)} ${error?.message || ""}`.trim(), "error");
+      }
+    } else {
+      state.adminDayEditorIndex = null;
+      state.adminEditingExerciseKey = "";
+      renderAdminPanel();
+    }
     return;
   }
 
@@ -4113,14 +4147,21 @@ async function handleAdminAction(button) {
 }
 
 if (action === "save-day") {
+  const location = getAdminDayLocation(button);
+  if (!location) {
+    setAdminMessage("No se encontró el día para guardar.", "error");
+    return;
+  }
   try {
-    state.adminDraft.plan[weekIndex].days[dayIndex].collapsed = true;
+    syncAdminVisibleFields();
+    location.day.collapsed = false;
     await saveAdminDraftAndAssignment();
     state.adminDayEditorIndex = null;
-    state.adminWeekEditorIndex = weekIndex;
+    state.adminWeekEditorIndex = location.weekIndex;
+    state.adminEditingExerciseKey = "";
+    setAdminMessage("Día guardado.", "success");
     renderAdminPanel();
   } catch (error) {
-    state.adminDraft.plan[weekIndex].days[dayIndex].collapsed = false;
     setAdminMessage(`${getAuthErrorMessage(error)} ${error?.message || ""}`.trim(), "error");
   }
   return;
