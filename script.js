@@ -1124,7 +1124,9 @@ function getActiveRoutine() {
 }
 
 function getRoutineTotalSessions(routine) {
-  return routine.plan.reduce((sum, week) => sum + week.days.reduce((daySum, day) => daySum + day.exercises.length, 0), 0);
+  return (routine?.plan || []).reduce((sum, week) => {
+    return sum + (week.days || []).reduce((daySum, day) => daySum + (day.exercises || []).length, 0);
+  }, 0);
 }
 
 function loadRoutineStorage(routineId) {
@@ -3070,10 +3072,10 @@ function renderApp() {
   renderAccountPanel();
   accountPanel?.classList.toggle("is-hidden", !showAccount);
   changeRoutine.classList.add("is-hidden");
-  progressRing.classList.toggle("is-hidden", showAccount || managerMode || state.activeView !== "routines" || !(routine.plan.length > 0));
+  progressRing.classList.toggle("is-hidden", showAccount || managerMode || state.activeView !== "routines" || !((routine?.plan || []).length > 0));
 
   const showRoutineView = studentMode && state.activeView === "routines";
-  const hasPlan = routine.plan.length > 0 && showRoutineView;
+  const hasPlan = (routine?.plan || []).length > 0 && showRoutineView;
   summaryStrip.classList.add("is-hidden");
   weeksContainer.classList.toggle("is-hidden", !hasPlan);
   routinePlaceholder.classList.toggle("is-hidden", hasPlan || !showRoutineView);
@@ -3342,10 +3344,11 @@ const summaryIcons = {
 };
 
 function getCurrentWeekNumber(routine) {
-  for (const week of routine.plan) {
+  const plan = routine?.plan || [];
+  for (const week of plan) {
     if (!isWeekDone(week)) return week.number;
   }
-  return routine.plan[routine.plan.length - 1]?.number || 1;
+  return plan[plan.length - 1]?.number || 1;
 }
 
 function renderSummary() {
@@ -3357,7 +3360,7 @@ function renderSummary() {
   progressRing.style.setProperty("--progress", `${percent}%`);
 
   const currentWeek = getCurrentWeekNumber(routine);
-  const totalWeeks = routine.plan.length;
+  const totalWeeks = routine?.plan?.length || 0;
 
   summaryStrip.innerHTML = `
     <section class="mi-rutina-card">
@@ -4216,8 +4219,13 @@ if (action === "delete-week") {
 
 function renderPlan() {
   const routine = getActiveRoutine();
-  const plan = routine.plan;
-  const library = routine.exerciseLibrary;
+  if (!routine?.plan) {
+    weeksContainer.innerHTML = `<div class="empty-state">${t("routineInPreparation")}</div>`;
+    renderSummary();
+    return;
+  }
+  const plan = routine.plan || [];
+  const library = routine.exerciseLibrary || {};
   if (state.routineSubView === "info") {
     weeksContainer.innerHTML = renderStudentRoutineInfo(routine);
     renderSummary();
@@ -4351,7 +4359,8 @@ function renderStudentRoutineOverview(routine) {
   const stats = getRoutineProgressStats(routine);
   const current = getCurrentWeekInfo(routine);
   const currentWeek = current.week;
-  const subtitle = currentWeek ?`${t("week")} ${currentWeek.number} de ${routine.plan.length}` : t("routineInPreparation");
+  const totalWeeks = (routine?.plan || []).length;
+  const subtitle = currentWeek ?`${t("week")} ${currentWeek.number} de ${totalWeeks}` : t("routineInPreparation");
   const weekRows = (routine.plan || []).map((week, index) => {
     const percent = getWeekProgressPercent(week);
     const phase = week.phase || {};
@@ -4410,7 +4419,7 @@ function renderStudentRoutineInfo(routine) {
       <section class="routine-current-card">
         <div>
           <strong>${escapeHtml(title)}</strong>
-          <small>${current.week ?`${t("week")} ${current.week.number} de ${routine.plan.length}` : t("routineInPreparation")}</small>
+          <small>${current.week ?`${t("week")} ${current.week.number} de ${totalWeeks}` : t("routineInPreparation")}</small>
         </div>
         ${renderRoutineProgressRing(stats.percent)}
       </section>
@@ -4421,7 +4430,7 @@ function renderStudentRoutineInfo(routine) {
       <section class="routine-info-list">
         <article><span>Objetivo</span><strong>${escapeHtml(routine.goal || "Aumentar fuerza y masa muscular")}</strong></article>
         <article><span>Nivel</span><strong>${escapeHtml(routine.level || "Intermedio")}</strong></article>
-        <article><span>Duración</span><strong>${routine.plan.length || 0} semanas</strong></article>
+        <article><span>Duración</span><strong>${totalWeeks} semanas</strong></article>
         <article><span>Descripción</span><strong>${escapeHtml(description)}</strong></article>
         <article><span>Frecuencia</span><strong>${escapeHtml(routine.frequency || "4 días por semana")}</strong></article>
         <article><span>Equipo</span><strong>${escapeHtml(routine.equipment || "Gimnasio")}</strong></article>
@@ -4516,7 +4525,7 @@ function getDayProgressStats(week, day, dayIndex) {
 function renderStudentRoutineDayScreen(routine, week, day, dayIndex) {
   const stats = getDayProgressStats(week, day, dayIndex);
   const exercises = (day.exercises || []).map((exerciseKey, index) => {
-    const exercise = routine.exerciseLibrary[exerciseKey];
+    const exercise = routine?.exerciseLibrary?.[exerciseKey];
     if (!exercise) return "";
     const prescription = phasePrescription(exercise, week.number);
     const id = progressId(week.number, dayIndex, exerciseKey);
@@ -4557,7 +4566,7 @@ function renderStudentRoutineDayScreen(routine, week, day, dayIndex) {
 }
 
 function renderStudentExerciseScreen(routine, week, day, dayIndex, exerciseKey) {
-  const exercise = routine.exerciseLibrary[exerciseKey] || {};
+  const exercise = routine?.exerciseLibrary?.[exerciseKey] || {};
   const prescription = phasePrescription(exercise, week.number);
   const id = progressId(week.number, dayIndex, exerciseKey);
   const [startImage] = Array.isArray(exercise.images) ?exercise.images : [""];
@@ -4615,7 +4624,7 @@ function setTimer(seconds) {
 
 function openExercise(weekNumber, dayIndex, exerciseKey) {
   const routine = getActiveRoutine();
-  const exercise = routine.exerciseLibrary[exerciseKey];
+  const exercise = routine?.exerciseLibrary?.[exerciseKey];
   if (!exercise) return;
   const prescription = phasePrescription(exercise, weekNumber);
   const id = progressId(weekNumber, dayIndex, exerciseKey);
@@ -4704,7 +4713,7 @@ function toggleDone() {
   doneButton.classList.toggle("done", Boolean(progress[id]));
   doneButton.textContent = progress[id] ?t("done") : t("markDone");
 
-  const week = getActiveRoutine().plan.find((item) => item.number === weekNumber);
+  const week = getActiveRoutine()?.plan?.find((item) => item.number === weekNumber);
   if (week) {
     if (isWeekDone(week)) {
       collapsedWeeks[weekCollapseId(weekNumber)] = true;
@@ -4780,7 +4789,7 @@ weeksContainer.addEventListener("click", (event) => {
   const routineAction = event.target.closest("[data-routine-action]");
   if (routineAction) {
     const routine = getActiveRoutine();
-    const week = routine.plan.find((item) => Number(item.number) === Number(state.selectedRoutineWeekNumber)) || routine.plan[0];
+    const week = routine?.plan?.find((item) => Number(item.number) === Number(state.selectedRoutineWeekNumber)) || routine?.plan?.[0];
     const dayIndex = Number(state.selectedRoutineDayIndex) || 0;
     const day = week?.days?.[dayIndex];
     if (routineAction.dataset.routineAction === "start-first-exercise" && week && day) {
@@ -5590,7 +5599,9 @@ startTimer.addEventListener("click", () => {
 resetTimer.addEventListener("click", () => {
   if (!state.currentExerciseKey) return;
   const { weekNumber, exerciseKey } = state.currentExerciseKey;
-  const prescription = phasePrescription(getActiveRoutine().exerciseLibrary[exerciseKey], weekNumber);
+  const exercise = getActiveRoutine()?.exerciseLibrary?.[exerciseKey];
+  if (!exercise) return;
+  const prescription = phasePrescription(exercise, weekNumber);
   stopTimer();
   setTimer(parseRestToSeconds(prescription.rest));
 });
