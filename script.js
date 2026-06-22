@@ -1814,45 +1814,73 @@ function getNextTrainingLabel(routine = getActiveRoutine()) {
   return t("completeWeek");
 }
 
+function getNextTrainingInfo(routine = getActiveRoutine()) {
+  if (!routine?.plan?.length) return null;
+  const totalWeeks = routine.plan.length;
+  for (const week of routine.plan) {
+    const days = week.days || [];
+    for (let dayIndex = 0; dayIndex < days.length; dayIndex += 1) {
+      const day = days[dayIndex];
+      const ids = (day.exercises || []).map((exerciseKey) => progressId(week.number, dayIndex, exerciseKey));
+      if (ids.some((id) => !progress[id])) {
+        return {
+          weekNumber: week.number,
+          totalWeeks,
+          dayNumber: dayIndex + 1,
+          totalDays: days.length,
+          dayTitle: day.title,
+          exerciseCount: (day.exercises || []).length
+        };
+      }
+    }
+  }
+  return null;
+}
+
 function renderStudentHome() {
   if (!studentHome) return;
   const routine = getActiveRoutine();
   const stats = getRoutineProgressStats(routine);
+  const nextInfo = getNextTrainingInfo(routine);
   const displayName = state.currentUserData?.displayName || getDisplayNameFromEmail(state.currentUser?.email || "");
+  const subtitle = nextInfo
+    ? `${t("week")} ${nextInfo.weekNumber} de ${nextInfo.totalWeeks} · Dia ${nextInfo.dayNumber} de ${nextInfo.totalDays}`
+    : (routine?.plan?.length ? "Rutina completada" : t("noRoutine"));
+  const todayExercises = nextInfo ? nextInfo.exerciseCount : 0;
+  const todayMinutes = todayExercises ? Math.round(todayExercises * 7.5) : 0;
+  const todayKcal = todayMinutes ? Math.round(todayMinutes * 7) : 0;
+
   studentHome.innerHTML = `
+    <p class="sh-greeting">Hola, ${escapeHtml(displayName || t("user"))} <span aria-hidden="true">👋</span></p>
     <section class="student-dashboard-card">
       <div>
-        <span class="kicker">Alumno</span>
-        <h2>Hola, ${escapeHtml(displayName || t("user"))}</h2>
-        <p>${escapeHtml(routine?.name || t("noRoutine"))}</p>
+        <span class="kicker">Rutina actual</span>
+        <h2>${escapeHtml(routine?.name || t("noRoutine"))}</h2>
+        <p>${escapeHtml(subtitle)}</p>
       </div>
       <div class="mini-progress" style="--progress:${stats.percent}%">
         <strong>${stats.percent}%</strong>
       </div>
     </section>
-    <section class="student-current-card">
-      <small>Rutina actual</small>
-      <strong>${escapeHtml(routine?.name || t("routineInPreparation"))}</strong>
-      <span>${escapeHtml(getNextTrainingLabel(routine))}</span>
-    </section>
     <div class="home-section-title">Resumen de hoy</div>
     <div class="home-grid student-stat-grid">
       <article class="home-stat">
-        <strong>${stats.totalExercises}</strong>
+        <strong>${todayExercises}</strong>
         <span>Ejercicios</span>
       </article>
       <article class="home-stat">
-        <strong>${stats.doneCount}</strong>
-        <span>Completados</span>
+        <strong>${todayMinutes}</strong>
+        <span>Minutos</span>
       </article>
       <article class="home-stat">
-        <strong>${stats.totalWeeks}</strong>
-        <span>Semanas</span>
+        <strong>${todayKcal}</strong>
+        <span>Kcal aprox.</span>
       </article>
     </div>
+    <div class="home-section-title">Proximo entrenamiento</div>
     <section class="student-current-card next-training-card">
-      <small>Proximo entrenamiento</small>
-      <strong>${escapeHtml(getNextTrainingLabel(routine))}</strong>
+      <small>${nextInfo ? `${t("week")} ${nextInfo.weekNumber}` : ""}</small>
+      <strong>${escapeHtml(nextInfo ? nextInfo.dayTitle : getNextTrainingLabel(routine))}</strong>
       <span>Manana · 18:00</span>
     </section>
     <section class="student-current-card streak-card">
@@ -1861,7 +1889,6 @@ function renderStudentHome() {
       <span>Dias seguidos</span>
       <div class="flame-row" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
     </section>
-    <button class="primary-button wide-action" type="button" data-student-home-action="routine">Ver rutina</button>
   `;
 }
 
@@ -2668,6 +2695,13 @@ const summaryIcons = {
   weeks: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3v3"/><path d="M17 3v3"/><rect x="4" y="5" width="16" height="16" rx="3"/><path d="M4 10h16"/><path d="M8 14h3"/><path d="M13 14h3"/><path d="M8 18h3"/></svg>`
 };
 
+function getCurrentWeekNumber(routine) {
+  for (const week of routine.plan) {
+    if (!isWeekDone(week)) return week.number;
+  }
+  return routine.plan[routine.plan.length - 1]?.number || 1;
+}
+
 function renderSummary() {
   const routine = getActiveRoutine();
   const totalSessions = getRoutineTotalSessions(routine);
@@ -2676,24 +2710,21 @@ function renderSummary() {
   progressPercent.textContent = `${percent}%`;
   progressRing.style.setProperty("--progress", `${percent}%`);
 
-  summaryStrip.innerHTML = [
-    [totalSessions, t("sessions"), "sessions"],
-    [Object.keys(routine.exerciseLibrary).length, t("exercises"), "exercises"],
-    [doneCount, t("completed"), "completed"],
-    [routine.plan.length, t("weeks"), "weeks"]
-  ]
-    .map(
-      ([value, label, icon]) => `
-        <div class="summary-item">
-          <div>
-            <strong>${value}</strong>
-            <span>${label}</span>
-          </div>
-          <span class="summary-icon">${summaryIcons[icon]}</span>
-        </div>
-      `
-    )
-    .join("");
+  const currentWeek = getCurrentWeekNumber(routine);
+  const totalWeeks = routine.plan.length;
+
+  summaryStrip.innerHTML = `
+    <section class="mi-rutina-card">
+      <div>
+        <span class="kicker">Rutina actual</span>
+        <strong>${escapeHtml(routine.name || t("noRoutine"))}</strong>
+        <span class="mi-rutina-sub">${t("week")} ${currentWeek} de ${totalWeeks}</span>
+      </div>
+      <div class="mini-progress" style="--progress:${percent}%">
+        <strong>${percent}%</strong>
+      </div>
+    </section>
+  `;
 }
 
 function escapeHtml(value) {
@@ -3267,18 +3298,25 @@ function renderPlan() {
         .join("")
         : `<div class="empty-state">${t("emptyWeek")}</div>`;
 
+      const weekIds = getWeekExerciseIds(week);
+      const weekDoneCount = weekIds.filter((id) => progress[id]).length;
+      const weekPercent = weekIds.length ? Math.round((weekDoneCount / weekIds.length) * 100) : 0;
+      const weekStatus = weekPercent >= 100 ? "done" : weekPercent > 0 ? "active" : "pending";
+      const weekStatusIcon = weekStatus === "done"
+        ? '<svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+        : weekStatus === "active"
+          ? '<svg viewBox="0 0 24 24"><path d="M7 5v14l12-7z" fill="currentColor"/></svg>'
+          : '<svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M3 9h18M8 3v4M16 3v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
+
       return `
         <article class="week-card ${weekDone ? "week-done" : ""} ${isCollapsed ? "collapsed" : ""}">
-          <button class="week-header week-toggle" type="button" data-week="${week.number}" aria-expanded="${!isCollapsed}">
-            <div>
-              <h2>${t("week")} ${week.number}: ${phase.name}</h2>
-              ${isCollapsed ? "" : `<p>${phase.modifier || ""}</p>`}
-            </div>
-            <span class="week-actions">
-              ${weekDone ? `<span class="week-done-label">${t("completeWeek")}</span>` : ""}
-              <span class="week-badge">${phase.badge || "Plan"}</span>
-              <span class="week-chevron">${isCollapsed ? "+" : "−"}</span>
+          <button class="week-row week-header week-toggle" type="button" data-week="${week.number}" aria-expanded="${!isCollapsed}">
+            <span class="week-row-icon ${weekStatus}" aria-hidden="true">${weekStatusIcon}</span>
+            <span class="week-row-text">
+              <strong>${t("week")} ${week.number}</strong>
+              <small>${phase.name}</small>
             </span>
+            <span class="week-status-pill ${weekStatus}">${weekPercent}%</span>
           </button>
           ${isCollapsed ? "" : `<div class="days">${days}</div>`}
         </article>

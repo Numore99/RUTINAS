@@ -1,23 +1,27 @@
 :root {
+  /* Single source of truth for the RutFit design system — matches the approved mockups.
+     Do NOT add another :root block elsewhere in this file; edit values here instead. */
   color-scheme: dark;
-  --bg: #0f172a;
-  --panel: #111827;
-  --panel-2: #1e293b;
-  --card: #1e293b;
-  --line: rgba(148, 163, 184, 0.22);
+  --bg: #020817;
+  --panel: #0a0f1f;
+  --panel-2: #11162a;
+  --card: #131a2e;
+  --line: rgba(148, 163, 184, 0.16);
   --text: #ffffff;
-  --muted: #94a3b8;
-  --soft: #cbd5e1;
-  --primary: #6366f1;
+  --muted: #8b93a7;
+  --soft: #c7d2ee;
+  --primary: #7c3cff;
   --secondary: #8b5cf6;
-  --accent: #6366f1;
+  --accent: #7c3cff;
   --accent-dark: #4f46e5;
   --accent-2: #8b5cf6;
   --accent-3: #a78bfa;
-  --warning: #8b5cf6;
+  --warning: #f59e0b;
   --success: #22c55e;
+  --danger: #ef4444;
   --radius: 16px;
-  --shadow: 0 24px 60px rgba(2, 6, 23, 0.56);
+  --shadow: 0 14px 30px rgba(2, 6, 23, 0.45);
+  --app-width: 390px;
 }
 
 * {
@@ -2148,33 +2152,10 @@ body:has(.bottom-nav:not(.is-hidden)) main {
 }
 
 /* RutFit mobile app skin inspired by the native mockups */
-:root {
-  --bg: #020817;
-  --panel: #071126;
-  --panel-2: #0b1730;
-  --card: #0d1b36;
-  --line: rgba(119, 141, 183, 0.2);
-  --text: #f8fbff;
-  --muted: #8fa2c5;
-  --soft: #c7d2ee;
-  --primary: #6d3df7;
-  --secondary: #c026d3;
-  --accent: #7c3cff;
-  --accent-dark: #4f46e5;
-  --accent-2: #ec4899;
-  --accent-3: #22d3ee;
-  --warning: #f59e0b;
-  --success: #22c55e;
-  --danger: #ef4444;
-  --radius: 18px;
-  --shadow: 0 18px 42px rgba(0, 0, 0, 0.34);
-  --app-width: 430px;
-}
-
 body {
   background:
     radial-gradient(circle at 16% 0%, rgba(124, 60, 255, 0.34), transparent 18rem),
-    radial-gradient(circle at 100% 8%, rgba(34, 211, 238, 0.16), transparent 18rem),
+    radial-gradient(circle at 100% 8%, rgba(139, 92, 246, 0.16), transparent 18rem),
     linear-gradient(180deg, #020817 0%, #071126 46%, #020817 100%);
 }
 
@@ -3584,12 +3565,6 @@ main {
 }
 
 /* Visual polish pass: tighter mobile proportions matching the reference boards */
-:root {
-  --app-width: 390px;
-  --radius: 16px;
-  --shadow: 0 14px 30px rgba(0, 0, 0, 0.34);
-}
-
 body {
   font-size: 13px;
   background:
@@ -4468,4 +4443,121 @@ main {
   .rest-timer {
     grid-template-columns: minmax(0, 1fr) auto auto;
   }
+}
+
+/* Inicio - Alumno: greeting line above the rutina actual card (matches mockup) */
+.sh-greeting {
+  margin: 0 0 0.6rem;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--text);
+}
+
+/* Mi Rutina screen: header card + week list rows (matches mockup) */
+.mi-rutina-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  border: 1px solid rgba(125, 150, 199, 0.18);
+  border-radius: 22px;
+  background: linear-gradient(145deg, rgba(13, 27, 54, 0.94), rgba(7, 17, 38, 0.98));
+  box-shadow: 0 16px 38px rgba(0, 0, 0, 0.26);
+  margin-bottom: 0.85rem;
+}
+
+.mi-rutina-card strong {
+  display: block;
+  margin: 0.3rem 0 0.15rem;
+  font-size: 1.15rem;
+  line-height: 1.15;
+}
+
+.mi-rutina-sub {
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.week-row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  border: 0;
+  padding: 0.85rem 1rem;
+  background: transparent;
+  color: var(--text);
+  text-align: left;
+  cursor: pointer;
+}
+
+.week-row-icon {
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 12px;
+  flex: 0 0 auto;
+}
+
+.week-row-icon svg {
+  width: 1.15rem;
+  height: 1.15rem;
+}
+
+.week-row-icon.done {
+  background: rgba(34, 197, 94, 0.16);
+  color: #22c55e;
+}
+
+.week-row-icon.active {
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: #fff;
+}
+
+.week-row-icon.pending {
+  background: rgba(148, 163, 184, 0.12);
+  color: var(--muted);
+}
+
+.week-row-text {
+  display: grid;
+  gap: 0.1rem;
+  min-width: 0;
+}
+
+.week-row-text strong {
+  font-size: 0.92rem;
+}
+
+.week-row-text small {
+  color: var(--muted);
+  font-size: 0.74rem;
+  font-weight: 700;
+}
+
+.week-status-pill {
+  font-size: 0.78rem;
+  font-weight: 900;
+  padding: 0.3rem 0.6rem;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.week-status-pill.done {
+  color: #22c55e;
+  background: rgba(34, 197, 94, 0.14);
+}
+
+.week-status-pill.active {
+  color: var(--accent-2);
+  background: rgba(139, 92, 246, 0.16);
+}
+
+.week-status-pill.pending {
+  color: var(--muted);
+  background: rgba(148, 163, 184, 0.1);
 }
