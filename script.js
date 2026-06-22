@@ -401,6 +401,10 @@ const state = {
   adminStudentQuery: "",
   adminStudentFilter: "all",
   adminStudentFormOpen: false,
+  adminAssignmentMode: false,
+  assignmentStudentId: "",
+  assignmentRoutineId: "",
+  assignmentStartDate: "",
   accountSubView: "profile",
   progressSubView: "summary",
   progressHistoryFilter: "all",
@@ -1806,6 +1810,7 @@ function setActiveView(view) {
   state.adminPanelOpen = canManageStudents() && ["students", "routines"].includes(view);
   if (view !== "students") {
     state.selectedAdminUserId = "";
+    state.adminAssignmentMode = false;
   }
   if (view !== "routines" && state.adminEditorMode !== "create") {
     state.adminEditorMode = "";
@@ -1833,7 +1838,12 @@ function openAcceptedStudentsForAssignment() {
   const fallbackId = state.adminUsers[state.adminUsers.length - 1]?.uid || "";
   state.activeView = "students";
   state.adminPanelOpen = canManageStudents();
-  state.selectedAdminUserId = lastAcceptedId || fallbackId;
+  state.selectedAdminUserId = "";
+  state.adminAssignmentMode = true;
+  state.assignmentStudentId = lastAcceptedId || fallbackId;
+  const selectedUser = getAdminUser(state.assignmentStudentId);
+  state.assignmentRoutineId = selectedUser?.routineId || getAdminRoutineIds()[0] || "";
+  state.assignmentStartDate = state.assignmentStartDate || new Date().toISOString().slice(0, 10);
   state.adminEditorMode = "";
   state.pendingAssignUserId = "";
   state.adminEditingExerciseKey = "";
@@ -2398,6 +2408,11 @@ function renderAdminUsers() {
     return;
   }
 
+  if (state.adminAssignmentMode) {
+    adminUsers.innerHTML = renderAssignRoutineScreen(routineIds);
+    return;
+  }
+
   const query = normalizeText(state.adminStudentQuery || "");
   const filter = state.adminStudentFilter || "all";
   const filteredUsers = state.adminUsers.filter((user) => {
@@ -2452,6 +2467,72 @@ function renderAdminUsers() {
       </div>
     </section>
   `;
+}
+
+function renderAssignRoutineScreen(routineIds) {
+  const student = getAdminUser(state.assignmentStudentId) || state.adminUsers[0] || {};
+  const routineId = state.assignmentRoutineId || student.routineId || routineIds[0] || "";
+  const routine = routines[routineId] || {};
+  const studentName = student.displayName || getDisplayNameFromEmail(student.email || "") || t("user");
+  const routineName = routine.name || t("noRoutine");
+  const routineWeeks = routine.plan?.length || 0;
+  const startDate = state.assignmentStartDate || new Date().toISOString().slice(0, 10);
+  return `
+    <section class="assign-routine-screen">
+      <div class="screen-topbar">
+        <button class="icon-button ghost-icon" type="button" data-assign-action="back" aria-label="Volver">‹</button>
+        <h2>Asignar rutina</h2>
+        <span></span>
+      </div>
+
+      <section class="assign-step">
+        <span class="assign-step-number">1</span>
+        <label>
+          <small>Seleccionar alumno</small>
+          <select data-assign-student>
+            ${state.adminUsers.map((user) => {
+              const name = user.displayName || getDisplayNameFromEmail(user.email || "");
+              return `<option value="${escapeHtml(user.uid)}" ${user.uid === student.uid ? "selected" : ""}>${escapeHtml(name)} · ${escapeHtml(user.email || "")}</option>`;
+            }).join("")}
+          </select>
+        </label>
+      </section>
+
+      <section class="assign-step">
+        <span class="assign-step-number">2</span>
+        <label>
+          <small>Seleccionar rutina</small>
+          <select data-assign-routine>
+            ${routineIds.map((id) => `<option value="${escapeHtml(id)}" ${id === routineId ? "selected" : ""}>${escapeHtml(routines[id]?.name || id)} · ${(routines[id]?.plan || []).length} semanas</option>`).join("")}
+          </select>
+        </label>
+      </section>
+
+      <section class="assign-step">
+        <span class="assign-step-number">3</span>
+        <label>
+          <small>Fecha de inicio</small>
+          <input type="date" data-assign-date value="${escapeHtml(startDate)}" />
+        </label>
+      </section>
+
+      <section class="assign-summary">
+        <small>Resumen</small>
+        <div><span>Alumno</span><strong>${escapeHtml(studentName)}</strong></div>
+        <div><span>Rutina</span><strong>${escapeHtml(routineName)}</strong></div>
+        <div><span>Inicio</span><strong>${escapeHtml(formatDateDisplay(startDate))}</strong></div>
+        <div><span>Duración</span><strong>${routineWeeks} semanas</strong></div>
+      </section>
+
+      <button class="primary-button assign-submit" type="button" data-assign-action="save">Asignar rutina</button>
+    </section>
+  `;
+}
+
+function formatDateDisplay(value) {
+  if (!value) return "";
+  const [year, month, day] = String(value).split("-");
+  return day && month && year ? `${day}/${month}/${year}` : value;
 }
 
 function renderTrainerStudentListItem(user) {
@@ -3444,6 +3525,7 @@ function renderAdminPanel() {
   adminPanel.classList.toggle("editing-routine", isEditingRoutine);
   adminPanel.classList.toggle("creating-routine", isEditingRoutine && state.adminEditorMode === "create");
   adminPanel.classList.toggle("editing-existing-routine", isEditingRoutine && state.adminEditorMode === "edit");
+  adminPanel.classList.toggle("assigning-routine", showUsers && state.adminAssignmentMode);
   if (state.isTrainer && !state.isAdmin) {
     if (panelTitle) panelTitle.textContent = showRoutines ? t("routinePanel") : t("studentPanel");
     if (panelHelp) panelHelp.textContent = showRoutines ? t("routinePanelHelp") : t("studentPanelHelp");
@@ -4571,6 +4653,29 @@ adminWeeks.addEventListener("click", async (event) => {
 });
 
 adminUsers.addEventListener("change", async (event) => {
+  const assignStudent = event.target.closest("[data-assign-student]");
+  if (assignStudent) {
+    state.assignmentStudentId = assignStudent.value;
+    const user = getAdminUser(assignStudent.value);
+    state.assignmentRoutineId = user?.routineId || state.assignmentRoutineId || getAdminRoutineIds()[0] || "";
+    renderAdminUsers();
+    return;
+  }
+
+  const assignRoutine = event.target.closest("[data-assign-routine]");
+  if (assignRoutine) {
+    state.assignmentRoutineId = assignRoutine.value;
+    renderAdminUsers();
+    return;
+  }
+
+  const assignDate = event.target.closest("[data-assign-date]");
+  if (assignDate) {
+    state.assignmentStartDate = assignDate.value;
+    renderAdminUsers();
+    return;
+  }
+
   const select = event.target.closest("[data-user-routine]");
   if (!select) return;
   const card = select.closest("[data-user-id]");
@@ -4600,6 +4705,12 @@ adminUsers.addEventListener("change", async (event) => {
 });
 
 adminUsers.addEventListener("input", (event) => {
+  const assignDate = event.target.closest("[data-assign-date]");
+  if (assignDate) {
+    state.assignmentStartDate = assignDate.value;
+    return;
+  }
+
   const searchInput = event.target.closest("[data-admin-student-search]");
   if (!searchInput) return;
   state.adminStudentQuery = searchInput.value || "";
@@ -4607,6 +4718,50 @@ adminUsers.addEventListener("input", (event) => {
 });
 
 adminUsers.addEventListener("click", async (event) => {
+  const assignButton = event.target.closest("[data-assign-action]");
+  if (assignButton) {
+    const action = assignButton.dataset.assignAction;
+    if (action === "back") {
+      state.adminAssignmentMode = false;
+      setAdminMessage("");
+      renderAdminPanel();
+      return;
+    }
+
+    if (action === "save") {
+      const uid = state.assignmentStudentId;
+      const routineId = state.assignmentRoutineId;
+      if (!uid || !routineId) {
+        setAdminMessage("Selecciona alumno y rutina.", "error");
+        return;
+      }
+
+      assignButton.disabled = true;
+      setAdminMessage(t("updatingUser"));
+      try {
+        await updateUserRoutine(uid, routineId);
+        await db.collection("users").doc(uid).set({
+          routineStartDate: state.assignmentStartDate || "",
+          updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+          updatedBy: normalizeEmail(state.currentUser?.email || "")
+        }, { merge: true });
+        state.adminUsers = state.adminUsers.map((user) =>
+          user.uid === uid
+            ? { ...user, routineId, routineStartDate: state.assignmentStartDate || "" }
+            : user
+        );
+        setAdminMessage(t("assignedRoutine"), "success");
+        state.adminAssignmentMode = false;
+        state.selectedAdminUserId = uid;
+        renderAdminPanel();
+      } catch (error) {
+        setAdminMessage(`${getAuthErrorMessage(error)} ${error?.message || ""}`.trim(), "error");
+        assignButton.disabled = false;
+      }
+      return;
+    }
+  }
+
   const newStudentButton = event.target.closest("[data-admin-new-student]");
   if (newStudentButton) {
     state.adminStudentFormOpen = true;
