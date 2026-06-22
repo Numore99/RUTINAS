@@ -405,6 +405,8 @@ const state = {
   routineSubView: "weeks",
   selectedRoutineWeekNumber: 1,
   selectedRoutineDayIndex: null,
+  selectedRoutineExerciseKey: "",
+  exerciseSeriesDone: 2,
   currentExerciseKey: null,
   timerSeconds: 0,
   timerInterval: null
@@ -3542,6 +3544,21 @@ function renderPlan() {
     renderSummary();
     return;
   }
+  if (state.routineSubView === "day") {
+    const week = plan.find((item) => Number(item.number) === Number(state.selectedRoutineWeekNumber)) || plan[0];
+    const day = week?.days?.[Number(state.selectedRoutineDayIndex) || 0];
+    weeksContainer.innerHTML = week && day ? renderStudentRoutineDayScreen(routine, week, day, Number(state.selectedRoutineDayIndex) || 0) : `<div class="empty-state">${t("emptyDay")}</div>`;
+    renderSummary();
+    return;
+  }
+  if (state.routineSubView === "exercise") {
+    const week = plan.find((item) => Number(item.number) === Number(state.selectedRoutineWeekNumber)) || plan[0];
+    const dayIndex = Number(state.selectedRoutineDayIndex) || 0;
+    const day = week?.days?.[dayIndex];
+    weeksContainer.innerHTML = week && day ? renderStudentExerciseScreen(routine, week, day, dayIndex, state.selectedRoutineExerciseKey) : `<div class="empty-state">${t("newExercise")}</div>`;
+    renderSummary();
+    return;
+  }
   weeksContainer.innerHTML = renderStudentRoutineOverview(routine);
   renderSummary();
   return;
@@ -3798,6 +3815,97 @@ function renderStudentRoutineDayExercises(routine, week, day, dayIndex) {
   return `<div class="routine-day-exercises">${items || `<div class="empty-state">${t("emptyDay")}</div>`}</div>`;
 }
 
+function getDayProgressStats(week, day, dayIndex) {
+  const ids = (day.exercises || []).map((exerciseKey) => progressId(week.number, dayIndex, exerciseKey));
+  const done = ids.filter((id) => progress[id]).length;
+  const total = ids.length;
+  return {
+    total,
+    done,
+    minutes: Math.max(45, Math.round(total * 7.5)),
+    kcal: Math.max(320, Math.round(Math.max(45, total * 7.5) * 7)),
+    percent: total ? Math.round((done / total) * 100) : 0
+  };
+}
+
+function renderStudentRoutineDayScreen(routine, week, day, dayIndex) {
+  const stats = getDayProgressStats(week, day, dayIndex);
+  const exercises = (day.exercises || []).map((exerciseKey, index) => {
+    const exercise = routine.exerciseLibrary[exerciseKey];
+    if (!exercise) return "";
+    const prescription = phasePrescription(exercise, week.number);
+    const id = progressId(week.number, dayIndex, exerciseKey);
+    const done = Boolean(progress[id]);
+    const current = !done && index === (day.exercises || []).findIndex((key) => !progress[progressId(week.number, dayIndex, key)]);
+    const image = Array.isArray(exercise.images) && hasRealExerciseImage(exercise.images[0])
+      ? `<img src="${escapeHtml(resolveExerciseImage(exercise.images[0], exercise.name))}" alt="${escapeHtml(exercise.name)}" />`
+      : "";
+    return `
+      <button class="training-exercise-row ${done ? "done" : ""} ${current ? "current" : ""}" type="button" data-routine-exercise="${escapeHtml(exerciseKey)}">
+        <span class="training-thumb">${image}</span>
+        <span>
+          <strong>${index + 1}. ${escapeHtml(exercise.name || t("newExercise"))}</strong>
+          <small>${escapeHtml(prescription.sets)} series x ${escapeHtml(prescription.reps)} reps</small>
+        </span>
+        <b>${done ? "✓" : current ? "▶" : "○"}</b>
+      </button>
+    `;
+  }).join("");
+  return `
+    <section class="student-routine-screen training-day-screen">
+      <div class="screen-topbar routine-topbar">
+        <button class="icon-button ghost-icon" type="button" data-routine-view="week" aria-label="Volver">‹</button>
+        <h2>${escapeHtml(day.title || `Día ${dayIndex + 1}`)}</h2>
+        <button class="icon-button ghost-icon" type="button" data-routine-menu aria-label="Opciones">⋮</button>
+      </div>
+      <span class="training-status">${stats.percent >= 100 ? "Completado" : stats.percent > 0 ? "En progreso" : "Pendiente"}</span>
+      <div class="progress-stat-grid training-stat-grid">
+        <article><strong>${stats.total}</strong><span>Ejercicios</span></article>
+        <article><strong>${stats.minutes}</strong><span>Minutos</span></article>
+        <article><strong>${stats.kcal}</strong><span>Kcal aprox.</span></article>
+      </div>
+      <div class="progress-section-title">Ejercicios</div>
+      <section class="training-exercise-list">${exercises || `<div class="empty-state">${t("emptyDay")}</div>`}</section>
+      <button class="measure-register-button start-training-button" type="button" data-routine-action="start-first-exercise">Iniciar ejercicio</button>
+    </section>
+  `;
+}
+
+function renderStudentExerciseScreen(routine, week, day, dayIndex, exerciseKey) {
+  const exercise = routine.exerciseLibrary[exerciseKey] || {};
+  const prescription = phasePrescription(exercise, week.number);
+  const id = progressId(week.number, dayIndex, exerciseKey);
+  const [startImage] = Array.isArray(exercise.images) ? exercise.images : [""];
+  const image = resolveExerciseImage(startImage, exercise.name || t("newExercise"));
+  const sets = Number(String(prescription.sets || "").match(/\d+/)?.[0] || 3);
+  const reps = String(prescription.reps || exercise.baseReps || "8 / 12");
+  const restSeconds = parseRestToSeconds(prescription.rest || "1:00");
+  const done = Boolean(progress[id]);
+  const currentSeries = done ? sets : Math.min(Math.max(1, state.exerciseSeriesDone || 2), sets);
+  return `
+    <section class="student-routine-screen exercise-run-screen">
+      <div class="screen-topbar routine-topbar">
+        <button class="icon-button ghost-icon" type="button" data-routine-view="day" aria-label="Volver">‹</button>
+        <h2>${escapeHtml(exercise.name || t("newExercise"))}</h2>
+        <button class="icon-button ghost-icon" type="button" data-routine-menu aria-label="Opciones">⋮</button>
+      </div>
+      <div class="exercise-run-image">
+        <img src="${escapeHtml(image)}" alt="${escapeHtml(exercise.name || t("newExercise"))}" />
+      </div>
+      <div class="exercise-run-grid">
+        <article><span>Serie actual</span><strong><em>${currentSeries}</em> / ${sets}</strong></article>
+        <article><span>Repeticiones</span><strong>${escapeHtml(reps)}</strong></article>
+      </div>
+      <section class="exercise-rest-card">
+        <span>Descanso <small>segundos</small></span>
+        <strong>${restSeconds}</strong>
+      </section>
+      <button class="measure-register-button" type="button" data-routine-action="finish-exercise">${done ? "Ejercicio finalizado" : "Finalizar serie"}</button>
+      <button class="secondary-button skip-exercise-button" type="button" data-routine-action="skip-exercise">Omitir ejercicio</button>
+    </section>
+  `;
+}
+
 function parseRestToSeconds(rest) {
   const match = rest.match(/(\d+):(\d+)/);
   if (!match) return 60;
@@ -3953,12 +4061,64 @@ weeksContainer.addEventListener("click", (event) => {
     return;
   }
 
+  const routineView = event.target.closest("[data-routine-view]");
+  if (routineView) {
+    const nextView = routineView.dataset.routineView || "weeks";
+    state.routineSubView = nextView;
+    if (nextView === "week") {
+      state.selectedRoutineDayIndex = null;
+      state.selectedRoutineExerciseKey = "";
+    }
+    renderPlan();
+    return;
+  }
+
   const routineDay = event.target.closest("[data-routine-day]");
   if (routineDay) {
     const index = Number(routineDay.dataset.routineDay);
-    state.selectedRoutineDayIndex = state.selectedRoutineDayIndex === index ? null : index;
+    state.selectedRoutineDayIndex = index;
+    state.selectedRoutineExerciseKey = "";
+    state.routineSubView = "day";
     renderPlan();
     return;
+  }
+
+  const routineExercise = event.target.closest("[data-routine-exercise]");
+  if (routineExercise) {
+    state.selectedRoutineExerciseKey = routineExercise.dataset.routineExercise || "";
+    state.routineSubView = "exercise";
+    state.exerciseSeriesDone = 2;
+    renderPlan();
+    return;
+  }
+
+  const routineAction = event.target.closest("[data-routine-action]");
+  if (routineAction) {
+    const routine = getActiveRoutine();
+    const week = routine.plan.find((item) => Number(item.number) === Number(state.selectedRoutineWeekNumber)) || routine.plan[0];
+    const dayIndex = Number(state.selectedRoutineDayIndex) || 0;
+    const day = week?.days?.[dayIndex];
+    if (routineAction.dataset.routineAction === "start-first-exercise" && week && day) {
+      const first = (day.exercises || []).find((key) => !progress[progressId(week.number, dayIndex, key)]) || day.exercises?.[0] || "";
+      state.selectedRoutineExerciseKey = first;
+      state.routineSubView = "exercise";
+      state.exerciseSeriesDone = 2;
+      renderPlan();
+      return;
+    }
+    if (routineAction.dataset.routineAction === "finish-exercise" && week && day && state.selectedRoutineExerciseKey) {
+      const id = progressId(week.number, dayIndex, state.selectedRoutineExerciseKey);
+      progress[id] = true;
+      localStorage.setItem(progressKey, JSON.stringify(progress));
+      state.exerciseSeriesDone = Math.max(1, state.exerciseSeriesDone || 2) + 1;
+      renderPlan();
+      return;
+    }
+    if (routineAction.dataset.routineAction === "skip-exercise") {
+      state.routineSubView = "day";
+      renderPlan();
+      return;
+    }
   }
 
   const weekToggle = event.target.closest(".week-toggle");
