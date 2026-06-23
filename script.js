@@ -433,6 +433,7 @@ let unsubscribeAdminUsers = null;
 let unsubscribeTrainerInvites = null;
 let unsubscribeStudentInvites = null;
 let deferredInstallPrompt = null;
+let installCompletedInBrowser = false;
 
 const installWall = document.querySelector("#installWall");
 const installAppButton = document.querySelector("#installAppButton");
@@ -6499,11 +6500,17 @@ function updateInstallWall() {
     installHelp.classList.toggle("is-visible", isIosSafariLike() || !deferredInstallPrompt);
     installHelp.innerHTML = isIosSafariLike()
       ? `<strong>En iPhone:</strong> tocá Compartir y después “Agregar a pantalla de inicio”.`
-      : `<strong>Si no abre el instalador:</strong> tocá el menú del navegador y elegí “Instalar app” o “Agregar a pantalla de inicio”.`;
+      : installCompletedInBrowser
+        ? `<strong>RutFit ya está instalada:</strong> cerrá esta pestaña y abrí la app desde el ícono de tu pantalla de inicio.`
+        : `<strong>Si no abre el instalador:</strong> tocá el menú del navegador y elegí “Instalar app” o “Agregar a pantalla de inicio”.`;
   }
 
   if (installAppButton) {
-    installAppButton.textContent = deferredInstallPrompt ? "Instalar" : "Ver cómo instalar";
+    installAppButton.textContent = deferredInstallPrompt
+      ? "Instalar"
+      : installCompletedInBrowser
+        ? "Abrir desde el ícono instalado"
+        : "Ver cómo instalar";
   }
 }
 
@@ -6515,8 +6522,8 @@ window.addEventListener("beforeinstallprompt", (event) => {
 
 window.addEventListener("appinstalled", () => {
   deferredInstallPrompt = null;
-  installWall?.classList.add("is-hidden");
-  document.body.classList.remove("install-wall-active");
+  installCompletedInBrowser = true;
+  updateInstallWall();
 });
 
 installAppButton?.addEventListener("click", async () => {
