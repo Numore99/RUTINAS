@@ -396,6 +396,7 @@ const state = {
   studentInvites: [],
   selectedAdminUserId: "",
   adminEditorMode: "",
+  adminRoutineScreen: "list",
   adminRoutineBasicsOpen: false,
   pendingAssignUserId: "",
   adminEditingExerciseKey: "",
@@ -1825,6 +1826,7 @@ function setActiveView(view) {
   }
   if (view !== "routines") {
     state.adminEditorMode = "";
+    state.adminRoutineScreen = "list";
     state.adminRoutineBasicsOpen = false;
     state.pendingAssignUserId = "";
     state.adminEditingExerciseKey = "";
@@ -1859,6 +1861,7 @@ function openAcceptedStudentsForAssignment() {
   state.assignmentRoutineId = selectedUser?.routineId || getAdminRoutineIds()[0] || "";
   state.assignmentStartDate = state.assignmentStartDate || new Date().toISOString().slice(0, 10);
   state.adminEditorMode = "";
+  state.adminRoutineScreen = "list";
   state.adminRoutineBasicsOpen = false;
   state.pendingAssignUserId = "";
   state.adminEditingExerciseKey = "";
@@ -2279,6 +2282,7 @@ function startRoutineCreation(userId = "") {
   state.selectedAdminUserId = userId || state.selectedAdminUserId || "";
   state.pendingAssignUserId = userId || "";
   state.adminEditorMode = "create";
+  state.adminRoutineScreen = "basics";
   state.adminRoutineBasicsOpen = true;
   state.adminEditingExerciseKey = "";
   state.adminWeekEditorIndex = null;
@@ -2300,6 +2304,7 @@ function startRoutineEditing(routineId, userId = "") {
   state.selectedAdminUserId = userId || state.selectedAdminUserId || "";
   state.pendingAssignUserId = userId || "";
   state.adminEditorMode = "edit";
+  state.adminRoutineScreen = "detail";
   state.adminRoutineBasicsOpen = false;
   state.adminEditingExerciseKey = "";
   state.adminWeekEditorIndex = null;
@@ -2618,7 +2623,7 @@ function renderAdminRoutineDetailScreen(draft) {
     const iconNames = ["calendar", "clipboard", "dumbbell", "bolt", "fire", "settings"];
     const icon = iconNames[index % iconNames.length];
     return `
-      <button class="routine-detail-week-row" type="button" data-admin-open-week="true" data-week-index="${index}">
+      <button class="routine-detail-week-row" type="button" data-admin-action="open-week" data-admin-open-week="true" data-week-index="${index}">
         <span class="routine-list-icon icon-${icon}">${getInlineIcon(icon)}</span>
         <span class="routine-detail-week-main">
           <strong>Semana ${escapeHtml(week.number || index + 1)}</strong>
@@ -2919,9 +2924,9 @@ async function saveRoutineToFirestore(routine) {
   routines[data.id] = data;
 }
 
-async function saveAdminDraftAndAssignment() {
+async function saveAdminDraftAndAssignment(options = {}) {
   if (!state.adminDraft) return "";
-  readAdminBasics();
+  if (!options.skipReadBasics) readAdminBasics();
   await saveRoutineToFirestore(state.adminDraft);
   const targetUserId = state.pendingAssignUserId || state.selectedAdminUserId;
   if (targetUserId) {
@@ -3610,7 +3615,7 @@ function renderRoutineCatalog(routineIds) {
         <button class="trainer-add-student-button" type="button" data-admin-action="new-routine-card" aria-label="Nueva rutina">+</button>
       </div>
       <label class="trainer-student-search routine-search">
-        <span aria-hidden="true"></span>
+        <span aria-hidden="true">&#8981;</span>
         <input type="search" placeholder="Buscar rutinas..." autocomplete="off" />
       </label>
       <div class="trainer-student-tabs routine-tabs">
@@ -3639,6 +3644,103 @@ function renderRoutineCatalog(routineIds) {
       </div>
     </section>
   `;
+}
+
+function getRoutineLevel(routine) {
+  return routine?.level || "Intermedio";
+}
+
+function getRoutineDurationLabel(routine) {
+  const weeks = routine?.plan?.length || 0;
+  if (routine?.kicker) return routine.kicker;
+  return weeks ?`${weeks} semanas` : "8 semanas";
+}
+
+function renderRoutineLevelPills(level) {
+  return ["Principiante", "Intermedio", "Avanzado"].map((item) => `
+    <button class="${item === level ?"active" : ""}" type="button" data-routine-level="${escapeHtml(item)}">${escapeHtml(item)}</button>
+  `).join("");
+}
+
+function renderAdminRoutineBasicsScreen(draft) {
+  const isNew = state.adminEditorMode === "create";
+  const title = isNew ? "Nueva rutina" : "Editar rutina";
+  return `
+    <section class="native-edit-screen routine-basics-screen">
+      <div class="screen-topbar">
+        <button class="icon-button ghost-icon" type="button" data-admin-action="${isNew ?"back-to-routine-list" : "back-to-routine-detail"}" aria-label="Volver">&lsaquo;</button>
+        <h2>${title} &#127947;</h2>
+        <button class="icon-button ghost-icon" type="button" aria-label="Más opciones">&vellip;</button>
+      </div>
+
+      <label class="native-field">
+        <span>Nombre de la rutina</span>
+        <input class="admin-field" data-routine-field="name" value="${escapeHtml(draft.name || "")}" placeholder="Rutina Fuerza Superior" />
+      </label>
+
+      <label class="native-field">
+        <span>Objetivo</span>
+        <select class="admin-field" data-routine-field="title">
+          ${["", "Aumentar fuerza", "Hipertrofia", "Resistencia", "Preparación física", "Bajar de peso"].map((item) => `
+            <option value="${escapeHtml(item)}" ${item === (draft.title || "") ?"selected" : ""}>${escapeHtml(item || "Seleccionar objetivo")}</option>
+          `).join("")}
+        </select>
+      </label>
+
+      <label class="native-field">
+        <span>Duración estimada</span>
+        <select class="admin-field" data-routine-field="kicker">
+          ${["", "4 semanas", "6 semanas", "8 semanas", "12 semanas"].map((item) => `
+            <option value="${escapeHtml(item)}" ${item === (draft.kicker || "") ?"selected" : ""}>${escapeHtml(item || "Seleccionar duración")}</option>
+          `).join("")}
+        </select>
+      </label>
+
+      <div class="native-field">
+        <span>Nivel</span>
+        <div class="native-pill-row" data-routine-level-row>${renderRoutineLevelPills(getRoutineLevel(draft))}</div>
+      </div>
+
+      <label class="native-field">
+        <span>Descripción</span>
+        <textarea class="admin-textarea" data-routine-field="description" placeholder="Describe el objetivo de esta rutina...">${escapeHtml(draft.description || "")}</textarea>
+      </label>
+
+      <label class="native-field duration-field">
+        <span>Etiqueta</span>
+        <input class="admin-field" data-routine-field="tags" value="${escapeHtml(draft.tags || "")}" placeholder="Fuerza, Superior, Hipertrofia" />
+        <small>&times;</small>
+      </label>
+
+      <button class="primary-button native-main-button" type="button" data-admin-action="save-routine">▣ Guardar rutina</button>
+    </section>
+  `;
+}
+
+function renderAdminRoutineWorkspace() {
+  if (!state.adminDraft) return "";
+  const draft = state.adminDraft;
+  const screen = state.adminRoutineScreen || (state.adminEditorMode === "create" ? "basics" : "detail");
+  const weekIndex = Number(state.adminWeekEditorIndex);
+  const dayIndex = Number(state.adminDayEditorIndex);
+  const exerciseKey = state.adminEditingExerciseKey;
+
+  if (screen === "basics") return renderAdminRoutineBasicsScreen(draft);
+  if (screen === "week" && Number.isInteger(weekIndex) && draft.plan?.[weekIndex]) {
+    return renderAdminWeekEditorScreen(draft.plan[weekIndex], weekIndex);
+  }
+  if (screen === "day" && Number.isInteger(weekIndex) && Number.isInteger(dayIndex) && draft.plan?.[weekIndex]?.days?.[dayIndex]) {
+    return renderAdminDayEditorScreen(draft.plan[weekIndex], draft.plan[weekIndex].days[dayIndex], weekIndex, dayIndex);
+  }
+  if (screen === "exercise" && exerciseKey && draft.exerciseLibrary?.[exerciseKey]) {
+    const location = findExerciseLocation(exerciseKey) || { weekIndex, dayIndex };
+    return renderAdminExerciseEditorScreen(draft.exerciseLibrary[exerciseKey], exerciseKey, location.weekIndex, location.dayIndex);
+  }
+  state.adminRoutineScreen = "detail";
+  state.adminWeekEditorIndex = null;
+  state.adminDayEditorIndex = null;
+  state.adminEditingExerciseKey = "";
+  return renderAdminRoutineDetailScreen(draft);
 }
 
 function getProfileCompletionPercent() {
@@ -3803,6 +3905,7 @@ function renderAdminPanel() {
   adminPanel.classList.toggle("routine-basics-view", isEditingRoutine && (state.adminEditorMode === "create" || state.adminRoutineBasicsOpen));
   adminPanel.classList.toggle("creating-routine", isEditingRoutine && state.adminEditorMode === "create");
   adminPanel.classList.toggle("editing-existing-routine", isEditingRoutine && state.adminEditorMode === "edit");
+  adminPanel.classList.toggle("routine-workspace-view", showRoutines && isEditingRoutine);
   adminPanel.classList.toggle("assigning-routine", showUsers && state.adminAssignmentMode);
   adminPanel.classList.toggle("native-subscreen", isNativeSubscreen);
   if (state.isTrainer && !state.isAdmin) {
@@ -3843,6 +3946,11 @@ function renderAdminPanel() {
     adminRoutineSelect.innerHTML = "";
     return;
   }
+
+  adminRoutineEditor.classList.remove("is-hidden");
+  adminEditorTitle.textContent = "";
+  adminWeeks.innerHTML = renderAdminRoutineWorkspace();
+  return;
 
   adminRoutineEditor.classList.remove("is-hidden");
   const draft = state.adminDraft;
@@ -4087,6 +4195,12 @@ function updateAdminDraftFromInput(input) {
   const dayIndex = Number(input.closest("[data-day-index]")?.dataset.dayIndex);
   const exerciseKey = input.closest("[data-exercise-key]")?.dataset.exerciseKey;
 
+  if (input.dataset.routineField) {
+    const field = input.dataset.routineField;
+    state.adminDraft[field] = input.value.trim();
+    return;
+  }
+
   if (input.dataset.weekField) {
     const week = state.adminDraft.plan[weekIndex];
     week.phase = week.phase || {};
@@ -4135,6 +4249,332 @@ function getAdminWeekLocation(button) {
   const week = state.adminDraft?.plan?.[weekIndex];
   if (!week) return null;
   return { weekIndex, week };
+}
+
+async function handleRoutineWorkspaceAction(button) {
+  const action = button.dataset.adminAction;
+  const weekIndexFromDom = Number(button.closest("[data-week-index]")?.dataset.weekIndex ?? button.dataset.weekIndex);
+  const dayIndexFromDom = Number(button.closest("[data-day-index]")?.dataset.dayIndex ?? button.dataset.dayIndex);
+  const exerciseKeyFromDom = button.closest("[data-exercise-key]")?.dataset.exerciseKey || button.dataset.exerciseKey || "";
+
+  if (!state.adminDraft && action !== "back-to-routine-list") return false;
+
+  if (action === "back-to-routine-list") {
+    state.adminEditorMode = "";
+    state.adminRoutineScreen = "list";
+    state.adminRoutineBasicsOpen = false;
+    state.pendingAssignUserId = "";
+    state.adminEditingExerciseKey = "";
+    state.adminWeekEditorIndex = null;
+    state.adminDayEditorIndex = null;
+    state.adminDraft = null;
+    setAdminMessage("");
+    renderAdminPanel();
+    return true;
+  }
+
+  if (action === "back-to-routine-detail" || action === "back-to-routine-weeks") {
+    state.adminRoutineScreen = "detail";
+    state.adminRoutineBasicsOpen = false;
+    state.adminWeekEditorIndex = null;
+    state.adminDayEditorIndex = null;
+    state.adminEditingExerciseKey = "";
+    setAdminMessage("");
+    renderAdminPanel();
+    return true;
+  }
+
+  if (action === "edit-routine-basics") {
+    state.adminRoutineScreen = "basics";
+    state.adminRoutineBasicsOpen = true;
+    state.adminWeekEditorIndex = null;
+    state.adminDayEditorIndex = null;
+    state.adminEditingExerciseKey = "";
+    setAdminMessage("");
+    renderAdminPanel();
+    return true;
+  }
+
+  if (action === "save-routine") {
+    syncAdminVisibleFields();
+    if (!state.adminDraft.name) state.adminDraft.name = `Rutina ${getNextRoutineNumber()}`;
+    if (!state.adminDraft.id) state.adminDraft.id = createRoutineDraftId(getNextRoutineNumber());
+    button.disabled = true;
+    try {
+      await saveAdminDraftAndAssignment({ skipReadBasics: true });
+      state.adminEditorMode = "edit";
+      state.adminRoutineScreen = "detail";
+      state.adminRoutineBasicsOpen = false;
+      state.adminWeekEditorIndex = null;
+      state.adminDayEditorIndex = null;
+      state.adminEditingExerciseKey = "";
+      setAdminMessage("Rutina guardada.", "success");
+      renderAdminPanel();
+    } catch (error) {
+      button.disabled = false;
+      setAdminMessage(`${getAuthErrorMessage(error)} ${error?.message || ""}`.trim(), "error");
+    }
+    return true;
+  }
+
+  if (action === "delete-routine") {
+    const confirmed = await showConfirmDialog(`¿Eliminar la rutina "${state.adminDraft.name || state.adminDraft.id}"?`);
+    if (!confirmed) return true;
+    button.disabled = true;
+    try {
+      await deleteRoutineFromFirestore(state.adminDraft.id);
+      state.adminEditorMode = "";
+      state.adminRoutineScreen = "list";
+      state.adminRoutineBasicsOpen = false;
+      state.adminDraft = null;
+      setAdminMessage("Rutina eliminada.", "success");
+      renderAdminPanel();
+    } catch (error) {
+      button.disabled = false;
+      setAdminMessage(`${getAuthErrorMessage(error)} ${error?.message || ""}`.trim(), "error");
+    }
+    return true;
+  }
+
+  if (action === "add-week") {
+    syncAdminVisibleFields();
+    const nextIndex = state.adminDraft.plan.length;
+    state.adminDraft.plan.push({
+      number: nextIndex + 1,
+      phase: { name: "", badge: "", modifier: "" },
+      days: []
+    });
+    state.adminWeekEditorIndex = nextIndex;
+    state.adminDayEditorIndex = null;
+    state.adminEditingExerciseKey = "";
+    state.adminRoutineScreen = "week";
+    renderAdminPanel();
+    return true;
+  }
+
+  if (action === "open-week" || action === "edit-week") {
+    if (!Number.isInteger(weekIndexFromDom) || !state.adminDraft.plan?.[weekIndexFromDom]) return true;
+    syncAdminVisibleFields();
+    state.adminWeekEditorIndex = weekIndexFromDom;
+    state.adminDayEditorIndex = null;
+    state.adminEditingExerciseKey = "";
+    state.adminRoutineScreen = "week";
+    renderAdminPanel();
+    return true;
+  }
+
+  if (action === "save-week") {
+    const location = getAdminWeekLocation(button);
+    if (!location) {
+      setAdminMessage("No se encontró la semana para guardar.", "error");
+      return true;
+    }
+    syncAdminVisibleFields();
+    button.disabled = true;
+    try {
+      await saveAdminDraftAndAssignment({ skipReadBasics: true });
+      state.adminRoutineScreen = "detail";
+      state.adminWeekEditorIndex = null;
+      state.adminDayEditorIndex = null;
+      state.adminEditingExerciseKey = "";
+      setAdminMessage("Semana guardada.", "success");
+      renderAdminPanel();
+    } catch (error) {
+      button.disabled = false;
+      setAdminMessage(`${getAuthErrorMessage(error)} ${error?.message || ""}`.trim(), "error");
+    }
+    return true;
+  }
+
+  if (action === "delete-week") {
+    const location = getAdminWeekLocation(button);
+    if (!location) return true;
+    state.adminDraft.plan.splice(location.weekIndex, 1);
+    state.adminDraft.plan.forEach((week, index) => {
+      if (!week.number) week.number = index + 1;
+    });
+    state.adminRoutineScreen = "detail";
+    state.adminWeekEditorIndex = null;
+    state.adminDayEditorIndex = null;
+    state.adminEditingExerciseKey = "";
+    await saveAdminDraftAndAssignment({ skipReadBasics: true });
+    setAdminMessage("Semana eliminada.", "success");
+    renderAdminPanel();
+    return true;
+  }
+
+  if (action === "back-to-week-edit") {
+    state.adminRoutineScreen = "week";
+    state.adminDayEditorIndex = null;
+    state.adminEditingExerciseKey = "";
+    setAdminMessage("");
+    renderAdminPanel();
+    return true;
+  }
+
+  if (action === "add-day") {
+    const location = getAdminWeekLocation(button);
+    if (!location) {
+      setAdminMessage("No se encontró la semana para crear el día.", "error");
+      return true;
+    }
+    syncAdminVisibleFields();
+    location.week.days = location.week.days || [];
+    const nextDayIndex = location.week.days.length;
+    location.week.days.push({
+      title: "",
+      focus: "Hipertrofia",
+      duration: "45",
+      notes: "",
+      exercises: []
+    });
+    state.adminWeekEditorIndex = location.weekIndex;
+    state.adminDayEditorIndex = nextDayIndex;
+    state.adminEditingExerciseKey = "";
+    state.adminRoutineScreen = "day";
+    renderAdminPanel();
+    return true;
+  }
+
+  if (action === "edit-day" || action === "open-day") {
+    const weekIndex = Number.isInteger(weekIndexFromDom) ?weekIndexFromDom : Number(state.adminWeekEditorIndex);
+    const dayIndex = Number.isInteger(dayIndexFromDom) ?dayIndexFromDom : Number(state.adminDayEditorIndex);
+    if (!state.adminDraft.plan?.[weekIndex]?.days?.[dayIndex]) return true;
+    syncAdminVisibleFields();
+    state.adminWeekEditorIndex = weekIndex;
+    state.adminDayEditorIndex = dayIndex;
+    state.adminEditingExerciseKey = "";
+    state.adminRoutineScreen = "day";
+    renderAdminPanel();
+    return true;
+  }
+
+  if (action === "save-day") {
+    const location = getAdminDayLocation(button);
+    if (!location) {
+      setAdminMessage("No se encontró el día para guardar.", "error");
+      return true;
+    }
+    syncAdminVisibleFields();
+    button.disabled = true;
+    try {
+      await saveAdminDraftAndAssignment({ skipReadBasics: true });
+      state.adminRoutineScreen = "week";
+      state.adminWeekEditorIndex = location.weekIndex;
+      state.adminDayEditorIndex = null;
+      state.adminEditingExerciseKey = "";
+      setAdminMessage("Día guardado.", "success");
+      renderAdminPanel();
+    } catch (error) {
+      button.disabled = false;
+      setAdminMessage(`${getAuthErrorMessage(error)} ${error?.message || ""}`.trim(), "error");
+    }
+    return true;
+  }
+
+  if (action === "delete-day") {
+    const location = getAdminDayLocation(button);
+    if (!location) return true;
+    state.adminDraft.plan[location.weekIndex].days.splice(location.dayIndex, 1);
+    await saveAdminDraftAndAssignment({ skipReadBasics: true });
+    state.adminRoutineScreen = "week";
+    state.adminWeekEditorIndex = location.weekIndex;
+    state.adminDayEditorIndex = null;
+    state.adminEditingExerciseKey = "";
+    setAdminMessage("Día eliminado.", "success");
+    renderAdminPanel();
+    return true;
+  }
+
+  if (action === "back-to-day-edit") {
+    state.adminRoutineScreen = "day";
+    state.adminEditingExerciseKey = "";
+    renderAdminPanel();
+    return true;
+  }
+
+  if (action === "add-exercise") {
+    const location = getAdminDayLocation(button);
+    if (!location) {
+      setAdminMessage("No se encontró el día para crear el ejercicio.", "error");
+      return true;
+    }
+    syncAdminVisibleFields();
+    const key = `ejercicio-${Date.now()}`;
+    state.adminDraft.exerciseLibrary[key] = {
+      name: "",
+      objective: "",
+      equipment: "",
+      goal: "",
+      baseSets: "",
+      baseReps: "",
+      rest: "",
+      technique: "",
+      mistakes: [],
+      images: ["", ""]
+    };
+    location.day.exercises = location.day.exercises || [];
+    location.day.exercises.push(key);
+    state.adminWeekEditorIndex = location.weekIndex;
+    state.adminDayEditorIndex = location.dayIndex;
+    state.adminEditingExerciseKey = key;
+    state.adminRoutineScreen = "exercise";
+    renderAdminPanel();
+    return true;
+  }
+
+  if (action === "edit-exercise") {
+    const weekIndex = Number.isInteger(weekIndexFromDom) ?weekIndexFromDom : Number(state.adminWeekEditorIndex);
+    const dayIndex = Number.isInteger(dayIndexFromDom) ?dayIndexFromDom : Number(state.adminDayEditorIndex);
+    const exerciseKey = exerciseKeyFromDom;
+    if (!exerciseKey || !state.adminDraft.exerciseLibrary?.[exerciseKey]) return true;
+    syncAdminVisibleFields();
+    state.adminWeekEditorIndex = weekIndex;
+    state.adminDayEditorIndex = dayIndex;
+    state.adminEditingExerciseKey = exerciseKey;
+    state.adminRoutineScreen = "exercise";
+    renderAdminPanel();
+    return true;
+  }
+
+  if (action === "save-exercise") {
+    if (!state.adminEditingExerciseKey || !state.adminDraft.exerciseLibrary?.[state.adminEditingExerciseKey]) {
+      setAdminMessage("No se encontró el ejercicio para guardar.", "error");
+      return true;
+    }
+    syncAdminVisibleFields();
+    button.disabled = true;
+    try {
+      await saveAdminDraftAndAssignment({ skipReadBasics: true });
+      state.adminRoutineScreen = "day";
+      state.adminEditingExerciseKey = "";
+      setAdminMessage("Ejercicio guardado.", "success");
+      renderAdminPanel();
+    } catch (error) {
+      button.disabled = false;
+      setAdminMessage(`${getAuthErrorMessage(error)} ${error?.message || ""}`.trim(), "error");
+    }
+    return true;
+  }
+
+  if (action === "delete-exercise") {
+    const exerciseKey = exerciseKeyFromDom || state.adminEditingExerciseKey;
+    const location = findExerciseLocation(exerciseKey);
+    if (!exerciseKey || !location) return true;
+    const exercises = state.adminDraft.plan[location.weekIndex].days[location.dayIndex].exercises || [];
+    state.adminDraft.plan[location.weekIndex].days[location.dayIndex].exercises = exercises.filter((key) => key !== exerciseKey);
+    delete state.adminDraft.exerciseLibrary[exerciseKey];
+    await saveAdminDraftAndAssignment({ skipReadBasics: true });
+    state.adminRoutineScreen = "day";
+    state.adminWeekEditorIndex = location.weekIndex;
+    state.adminDayEditorIndex = location.dayIndex;
+    state.adminEditingExerciseKey = "";
+    setAdminMessage("Ejercicio eliminado.", "success");
+    renderAdminPanel();
+    return true;
+  }
+
+  return false;
 }
 
 async function handleAdminAction(button) {
@@ -4240,7 +4680,7 @@ if (action === "save-day") {
   try {
     syncAdminVisibleFields();
     location.day.collapsed = false;
-    await saveAdminDraftAndAssignment();
+    await saveAdminDraftAndAssignment({ skipReadBasics: true });
     state.adminDayEditorIndex = null;
     state.adminWeekEditorIndex = location.weekIndex;
     state.adminEditingExerciseKey = "";
@@ -5076,6 +5516,13 @@ adminWeeks.addEventListener("change", async (event) => {
 });
 
 adminWeeks.addEventListener("click", async (event) => {
+  const routineLevelButton = event.target.closest("[data-routine-level]");
+  if (routineLevelButton && state.adminDraft) {
+    state.adminDraft.level = routineLevelButton.dataset.routineLevel || "Intermedio";
+    renderAdminPanel();
+    return;
+  }
+
   const dayFocus = event.target.closest("[data-day-focus]");
   if (dayFocus && state.adminDraft) {
     const weekIndex = Number(dayFocus.closest("[data-week-index]")?.dataset.weekIndex);
@@ -5086,6 +5533,12 @@ adminWeeks.addEventListener("click", async (event) => {
       renderAdminPanel();
     }
     return;
+  }
+
+  const workspaceButton = event.target.closest("[data-admin-action]");
+  if (workspaceButton && state.activeView === "routines" && state.adminDraft) {
+    const handled = await handleRoutineWorkspaceAction(workspaceButton);
+    if (handled) return;
   }
 
   const newRoutineCard = event.target.closest("[data-admin-action='new-routine-card']");
@@ -5626,21 +6079,22 @@ studentInvitesPanel?.addEventListener("click", async (event) => {
 });
 
 adminAddWeek.addEventListener("click", () => {
-  if (!state.adminDraft) state.adminDraft = createEmptyRoutine("nueva-rutina");
-  if (!state.adminEditorMode) state.adminEditorMode = "edit";
+  if (!state.adminDraft) {
+    startRoutineCreation(state.selectedAdminUserId || "");
+    return;
+  }
   syncAdminVisibleFields();
-  state.activeView = "routines";
-  state.adminPanelOpen = true;
-  state.adminEditingExerciseKey = "";
-  state.adminDayEditorIndex = null;
   const nextIndex = state.adminDraft.plan.length;
   state.adminDraft.plan.push({
-    number: "",
+    number: nextIndex + 1,
     phase: { name: "", badge: "", modifier: "" },
     days: []
   });
+  state.adminRoutineScreen = "week";
+  state.adminEditingExerciseKey = "";
+  state.adminDayEditorIndex = null;
   state.adminWeekEditorIndex = nextIndex;
-  renderApp();
+  renderAdminPanel();
 });
 
 adminNewRoutine.addEventListener("click", () => {
@@ -5654,6 +6108,7 @@ adminEditRoutine?.addEventListener("click", () => {
 
 adminEditorBack?.addEventListener("click", () => {
   state.adminEditorMode = "";
+  state.adminRoutineScreen = "list";
   state.adminRoutineBasicsOpen = false;
   state.pendingAssignUserId = "";
   state.adminEditingExerciseKey = "";
@@ -5681,16 +6136,15 @@ adminSeedDario.addEventListener("click", async () => {
 
 adminSaveRoutine.addEventListener("click", async () => {
   if (!canManageStudents() || !state.adminDraft) return;
-  readAdminBasics();
-  if (!state.adminDraft.id) {
-    setAdminMessage(t("routineNeedsId"), "error");
-    return;
-  }
+  syncAdminVisibleFields();
+  if (!state.adminDraft.name) state.adminDraft.name = `Rutina ${getNextRoutineNumber()}`;
+  if (!state.adminDraft.id) state.adminDraft.id = createRoutineDraftId(getNextRoutineNumber());
   try {
     const savedRoutineId = state.adminDraft.id;
-    const assignedUserId = await saveAdminDraftAndAssignment();
+    const assignedUserId = await saveAdminDraftAndAssignment({ skipReadBasics: true });
     setAdminMessage(assignedUserId ?t("routineSavedAssigned") : t("routineSaved"), "success");
     state.adminEditorMode = "edit";
+    state.adminRoutineScreen = "detail";
     state.adminRoutineBasicsOpen = false;
     state.pendingAssignUserId = assignedUserId || "";
     state.adminEditingExerciseKey = "";
@@ -5720,6 +6174,7 @@ adminDeleteRoutine.addEventListener("click", async () => {
     await deleteRoutineFromFirestore(deletedId);
     setAdminMessage(t("routineDeleted"), "success");
     state.adminDraft = null;
+    state.adminRoutineScreen = "list";
     const nextRoutineId = getAdminRoutineIds()[0] || (state.isAdmin ?"dario" : "");
     if (nextRoutineId && !routines[nextRoutineId]) {
       routines[nextRoutineId] = createEmptyRoutine(nextRoutineId);

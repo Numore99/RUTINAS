@@ -8506,3 +8506,19 @@ body.native-admin-subscreen-active .app-shell {
   font-size: 1.25rem;
   font-style: normal;
 }
+.admin-panel.routine-workspace-view #adminRoutineEditor > .admin-card-title,
+.admin-panel.routine-workspace-view #adminRoutineEditor > .admin-grid,
+.admin-panel.routine-workspace-view #adminRoutineEditor > .admin-actions {
+  display: none !important;
+}
+
+.admin-panel.routine-workspace-view #adminWeeks {
+  margin-top: 0;
+}
+
+.admin-panel.routine-workspace-view #adminRoutineEditor {
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
+}
