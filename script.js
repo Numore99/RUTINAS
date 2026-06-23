@@ -2613,6 +2613,71 @@ function renderAdminWeekEditorScreen(week, weekIndex) {
   `;
 }
 
+function getAdminWeekStats(week) {
+  const days = week?.days || [];
+  const exerciseCount = days.reduce((total, day) => total + (day.exercises || []).length, 0);
+  const totalSets = days.reduce((total, day) => {
+    return total + (day.exercises || []).reduce((setsTotal, key) => {
+      const exercise = state.adminDraft?.exerciseLibrary?.[key] || {};
+      return setsTotal + (Number(String(exercise.baseSets || "").match(/\d+/)?.[0]) || 0);
+    }, 0);
+  }, 0);
+  const duration = days.reduce((total, day) => total + (Number(String(day.duration || "").match(/\d+/)?.[0]) || 45), 0);
+  const completedDays = days.filter((day) => (day.exercises || []).length > 0).length;
+  const progress = days.length ?Math.round((completedDays / days.length) * 100) : 0;
+  const hours = Math.floor(duration / 60);
+  const minutes = duration % 60;
+  const durationLabel = hours ?`${hours}h ${minutes}m` : `${duration || 0} min`;
+  return { daysCount: days.length, exerciseCount, totalSets, durationLabel, progress };
+}
+
+function renderAdminWeekOverviewScreen(week, weekIndex) {
+  const phase = week.phase || {};
+  const stats = getAdminWeekStats(week);
+  const days = week.days || [];
+  return `
+    <article class="native-edit-screen week-overview-screen" data-week-index="${weekIndex}">
+      <div class="screen-topbar">
+        <button class="icon-button ghost-icon" type="button" data-admin-action="back-to-routine-weeks" aria-label="Volver">&lsaquo;</button>
+        <h2>Semana ${escapeHtml(week.number || weekIndex + 1)} - ${escapeHtml(phase.name || "Adaptación")}</h2>
+        <button class="icon-button ghost-icon" type="button" data-admin-action="edit-week" aria-label="Editar semana">&vellip;</button>
+      </div>
+
+      <section class="week-progress-hero">
+        <div>
+          <span>Progreso de la semana</span>
+          <strong>${stats.progress}%</strong>
+        </div>
+        <b aria-hidden="true">&#127881;</b>
+        <i style="--progress:${stats.progress}%"></i>
+      </section>
+
+      <div class="admin-day-stats native-day-stats week-overview-stats">
+        <article><span>Días</span><strong>${stats.daysCount}</strong></article>
+        <article><span>Ejercicios</span><strong>${stats.exerciseCount}</strong></article>
+        <article><span>Duración</span><strong>${escapeHtml(stats.durationLabel)}</strong></article>
+      </div>
+
+      <div class="week-days-title">
+        <span>Días de entrenamiento</span>
+        <button class="primary-button" type="button" data-admin-action="add-day">+ Nuevo día</button>
+      </div>
+
+      <section class="week-overview-day-list">
+        ${days.map((day, dayIndex) => `
+          <button class="week-overview-day-card" type="button" data-admin-action="edit-day" data-week-index="${weekIndex}" data-day-index="${dayIndex}">
+            <span>
+              <strong>${escapeHtml(day.title || `Día ${dayIndex + 1}`)}</strong>
+              <small>${(day.exercises || []).length} ejercicios</small>
+            </span>
+            <b aria-hidden="true">&check;</b>
+          </button>
+        `).join("") || `<div class="empty-state">Todavía no hay días creados.</div>`}
+      </section>
+    </article>
+  `;
+}
+
 function renderAdminRoutineDetailScreen(draft) {
   const weeks = draft.plan || [];
   const assignedCount = getRoutineAssignedCount(draft.id);
@@ -3726,6 +3791,9 @@ function renderAdminRoutineWorkspace() {
   const exerciseKey = state.adminEditingExerciseKey;
 
   if (screen === "basics") return renderAdminRoutineBasicsScreen(draft);
+  if (screen === "weekOverview" && Number.isInteger(weekIndex) && draft.plan?.[weekIndex]) {
+    return renderAdminWeekOverviewScreen(draft.plan[weekIndex], weekIndex);
+  }
   if (screen === "week" && Number.isInteger(weekIndex) && draft.plan?.[weekIndex]) {
     return renderAdminWeekEditorScreen(draft.plan[weekIndex], weekIndex);
   }
@@ -4352,10 +4420,22 @@ async function handleRoutineWorkspaceAction(button) {
     return true;
   }
 
-  if (action === "open-week" || action === "edit-week") {
+  if (action === "open-week") {
     if (!Number.isInteger(weekIndexFromDom) || !state.adminDraft.plan?.[weekIndexFromDom]) return true;
     syncAdminVisibleFields();
     state.adminWeekEditorIndex = weekIndexFromDom;
+    state.adminDayEditorIndex = null;
+    state.adminEditingExerciseKey = "";
+    state.adminRoutineScreen = "weekOverview";
+    renderAdminPanel();
+    return true;
+  }
+
+  if (action === "edit-week") {
+    const weekIndex = Number.isInteger(weekIndexFromDom) ?weekIndexFromDom : Number(state.adminWeekEditorIndex);
+    if (!Number.isInteger(weekIndex) || !state.adminDraft.plan?.[weekIndex]) return true;
+    syncAdminVisibleFields();
+    state.adminWeekEditorIndex = weekIndex;
     state.adminDayEditorIndex = null;
     state.adminEditingExerciseKey = "";
     state.adminRoutineScreen = "week";
@@ -4404,7 +4484,7 @@ async function handleRoutineWorkspaceAction(button) {
   }
 
   if (action === "back-to-week-edit") {
-    state.adminRoutineScreen = "week";
+    state.adminRoutineScreen = "weekOverview";
     state.adminDayEditorIndex = null;
     state.adminEditingExerciseKey = "";
     setAdminMessage("");
@@ -4459,7 +4539,7 @@ async function handleRoutineWorkspaceAction(button) {
     button.disabled = true;
     try {
       await saveAdminDraftAndAssignment({ skipReadBasics: true });
-      state.adminRoutineScreen = "week";
+      state.adminRoutineScreen = "weekOverview";
       state.adminWeekEditorIndex = location.weekIndex;
       state.adminDayEditorIndex = null;
       state.adminEditingExerciseKey = "";
@@ -4477,7 +4557,7 @@ async function handleRoutineWorkspaceAction(button) {
     if (!location) return true;
     state.adminDraft.plan[location.weekIndex].days.splice(location.dayIndex, 1);
     await saveAdminDraftAndAssignment({ skipReadBasics: true });
-    state.adminRoutineScreen = "week";
+    state.adminRoutineScreen = "weekOverview";
     state.adminWeekEditorIndex = location.weekIndex;
     state.adminDayEditorIndex = null;
     state.adminEditingExerciseKey = "";

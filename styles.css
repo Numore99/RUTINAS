@@ -8522,3 +8522,118 @@ body.native-admin-subscreen-active .app-shell {
   box-shadow: none;
   padding: 0;
 }
+
+.week-overview-screen {
+  gap: 0.72rem;
+}
+
+.week-overview-screen .screen-topbar h2 {
+  font-size: 0.92rem;
+  line-height: 1.15;
+}
+
+.week-progress-hero {
+  position: relative;
+  display: grid;
+  gap: 0.42rem;
+  min-height: 5.2rem;
+  border: 1px solid rgba(148, 163, 184, 0.16);
+  border-radius: 0.78rem;
+  padding: 0.82rem;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 88% 18%, rgba(168, 85, 247, 0.36), transparent 4.6rem),
+    linear-gradient(145deg, rgba(15, 23, 42, 0.96), rgba(20, 26, 49, 0.78));
+}
+
+.week-progress-hero span {
+  color: var(--muted);
+  font-size: 0.62rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.week-progress-hero strong {
+  display: block;
+  margin-top: 0.12rem;
+  color: var(--text);
+  font-size: 1.55rem;
+  line-height: 1;
+}
+
+.week-progress-hero b {
+  position: absolute;
+  top: 0.76rem;
+  right: 1rem;
+  font-size: 2rem;
+  filter: drop-shadow(0 0 18px rgba(168, 85, 247, 0.62));
+}
+
+.week-progress-hero i {
+  display: block;
+  height: 0.46rem;
+  border-radius: 999px;
+  background:
+    linear-gradient(90deg, #22c55e 0 var(--progress, 0%), rgba(30, 41, 59, 0.92) var(--progress, 0) 100%);
+  box-shadow: 0 0 18px rgba(34, 197, 94, 0.26);
+}
+
+.week-overview-stats {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.48rem;
+}
+
+.week-overview-day-list {
+  display: grid;
+  overflow: hidden;
+  border: 1px solid rgba(148, 163, 184, 0.13);
+  border-radius: 0.82rem;
+  background: rgba(15, 23, 42, 0.58);
+}
+
+.week-overview-day-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.78rem;
+  width: 100%;
+  min-height: 3.65rem;
+  border: 0;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+  padding: 0.68rem 0.78rem;
+  background: transparent;
+  color: var(--text);
+  text-align: left;
+}
+
+.week-overview-day-card:last-child {
+  border-bottom: 0;
+}
+
+.week-overview-day-card strong,
+.week-overview-day-card small {
+  display: block;
+}
+
+.week-overview-day-card strong {
+  font-size: 0.82rem;
+  line-height: 1.2;
+}
+
+.week-overview-day-card small {
+  margin-top: 0.12rem;
+  color: var(--muted);
+  font-size: 0.68rem;
+}
+
+.week-overview-day-card b {
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 1.7rem;
+  aspect-ratio: 1;
+  border-radius: 0.45rem;
+  background: rgba(34, 197, 94, 0.24);
+  color: #22c55e;
+  font-size: 0.9rem;
+}
