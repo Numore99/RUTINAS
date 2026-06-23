@@ -2007,8 +2007,8 @@ function renderStudentHomeV2() {
       : "img/ground-and-pound-1.jpg";
   };
   const recentRows = recentDays.length ?recentDays : [
-    { day: { title: "Push - Pecho y Tríceps", exercises: [] } },
-    { day: { title: "Pull - Espalda y Bíceps", exercises: [] } }
+    { week: null, day: { title: "Push - Pecho y Tríceps", exercises: [] }, dayIndex: 0 },
+    { week: null, day: { title: "Pull - Espalda y Bíceps", exercises: [] }, dayIndex: 1 }
   ];
 
   studentHome.innerHTML = `
@@ -2075,13 +2075,13 @@ function renderStudentHomeV2() {
       </div>
       <div class="neo-list">
         ${recentRows.map((item, index) => `
-          <article class="neo-list-row">
+          <article class="neo-list-row" ${item.week ?`data-student-week="${Number(item.week.number) || 1}" data-student-day="${Number(item.dayIndex) || 0}"` : ""}>
             <img src="${escapeHtml(getDayThumb(item.day))}" alt="${escapeHtml(item.day.title || "Rutina")}" />
             <div>
               <h3>${escapeHtml(item.day.title || `Día ${index + 1}`)}</h3>
               <p>${index === 0 ?"Ayer" : "2 días atrás"} · ${Math.max(45, (item.day.exercises || []).length * 8)} min</p>
             </div>
-            <button type="button" data-student-home-action="routine">Ver</button>
+            <button type="button" data-student-home-action="${item.week ?"routine-day" : "routine"}" ${item.week ?`data-student-week="${Number(item.week.number) || 1}" data-student-day="${Number(item.dayIndex) || 0}"` : ""}>Ver</button>
           </article>
         `).join("")}
       </div>
@@ -6180,14 +6180,27 @@ trainerHome?.addEventListener("click", (event) => {
 
 studentHome?.addEventListener("click", (event) => {
   const button = event.target.closest("[data-student-home-action]");
-  if (!button) return;
-  if (button.dataset.studentHomeAction === "routine") {
+  const recentDayRow = event.target.closest(".neo-list-row[data-student-week][data-student-day]");
+  if (!button && !recentDayRow) return;
+  const action = button?.dataset.studentHomeAction || (recentDayRow ?"routine-day" : "");
+  if (action === "routine-day") {
+    const source = button?.closest("[data-student-week][data-student-day]") || recentDayRow || button;
+    state.selectedRoutineWeekNumber = Number(source.dataset.studentWeek) || 1;
+    state.selectedRoutineDayIndex = Number(source.dataset.studentDay) || 0;
+    state.routineSubView = "day";
     setActiveView("routines");
+    return;
   }
-  if (button.dataset.studentHomeAction === "progress") {
+  if (action === "routine") {
+    state.routineSubView = "weeks";
+    setActiveView("routines");
+    return;
+  }
+  if (action === "progress") {
     setActiveView("progress");
+    return;
   }
-  if (button.dataset.studentHomeAction === "notifications") {
+  if (action === "notifications") {
     setActiveView("notifications");
   }
 });
