@@ -8313,8 +8313,8 @@ body.native-admin-subscreen-active .app-shell {
   padding: 0;
 }
 
-.admin-panel.routines-view.routine-detail-view #adminMessage,
-.admin-panel.routines-view.native-subscreen #adminMessage {
+.admin-panel.routines-view.routine-detail-view #adminMessage:not(.error),
+.admin-panel.routines-view.native-subscreen #adminMessage:not(.error) {
   display: none !important;
 }
 

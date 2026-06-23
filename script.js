@@ -4177,21 +4177,15 @@ async function handleAdminAction(button) {
   if (action === "back-to-week-edit") {
     const location = getAdminDayLocation(button);
     if (location) {
-      try {
-        syncAdminVisibleFields();
-        location.day.collapsed = false;
-        await saveAdminDraftAndAssignment();
-        state.adminWeekEditorIndex = location.weekIndex;
-        state.adminDayEditorIndex = null;
-        state.adminEditingExerciseKey = "";
-        setAdminMessage("Día guardado.", "success");
-        renderAdminPanel();
-      } catch (error) {
-        setAdminMessage(`${getAuthErrorMessage(error)} ${error?.message || ""}`.trim(), "error");
-      }
+      state.adminWeekEditorIndex = location.weekIndex;
+      state.adminDayEditorIndex = null;
+      state.adminEditingExerciseKey = "";
+      setAdminMessage("");
+      renderAdminPanel();
     } else {
       state.adminDayEditorIndex = null;
       state.adminEditingExerciseKey = "";
+      setAdminMessage("");
       renderAdminPanel();
     }
     return;
@@ -4254,6 +4248,7 @@ if (action === "save-day") {
     renderAdminPanel();
   } catch (error) {
     setAdminMessage(`${getAuthErrorMessage(error)} ${error?.message || ""}`.trim(), "error");
+    renderAdminPanel();
   }
   return;
 }
