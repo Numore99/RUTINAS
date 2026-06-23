@@ -8313,6 +8313,11 @@ body.native-admin-subscreen-active .app-shell {
   padding: 0;
 }
 
+.admin-panel.routines-view.routine-detail-view #adminMessage,
+.admin-panel.routines-view.native-subscreen #adminMessage {
+  display: none !important;
+}
+
 .routine-detail-screen {
   min-height: calc(100svh - 4.7rem);
   padding: 0.62rem 0.62rem 4.8rem;

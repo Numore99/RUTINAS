@@ -4129,6 +4129,14 @@ function getAdminDayLocation(button) {
   return { weekIndex, dayIndex, day };
 }
 
+function getAdminWeekLocation(button) {
+  const domWeekIndex = Number(button.closest("[data-week-index]")?.dataset.weekIndex);
+  const weekIndex = Number.isInteger(domWeekIndex) ? domWeekIndex : Number(state.adminWeekEditorIndex);
+  const week = state.adminDraft?.plan?.[weekIndex];
+  if (!week) return null;
+  return { weekIndex, week };
+}
+
 async function handleAdminAction(button) {
   const weekIndex = Number(button.closest("[data-week-index]")?.dataset.weekIndex);
   const dayIndex = Number(button.closest("[data-day-index]")?.dataset.dayIndex);
@@ -4300,11 +4308,17 @@ if (action === "delete-week") {
 }
 
   if (action === "add-day") {
-    const week = state.adminDraft.plan[weekIndex];
+    const location = getAdminWeekLocation(button);
+    if (!location) {
+      setAdminMessage("No se encontró la semana para crear el día.", "error");
+      return;
+    }
+    const { week } = location;
+    syncAdminVisibleFields();
     week.days = week.days || [];
     const nextDayIndex = week.days.length;
     week.days.push({ title: "", focus: "Hipertrofia", duration: "45", notes: "", exercises: [] });
-    state.adminWeekEditorIndex = weekIndex;
+    state.adminWeekEditorIndex = location.weekIndex;
     state.adminDayEditorIndex = nextDayIndex;
     renderAdminPanel();
     return;
