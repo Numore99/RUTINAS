@@ -9061,15 +9061,15 @@ body.install-wall-active {
 
 /* Compact student home reference */
 .student-home.neo-student-home {
-  gap: 0.72rem;
-  padding: 0.72rem 0.72rem 5.6rem;
+  gap: 0.58rem;
+  padding: 0.62rem 0.62rem 5.45rem;
 }
 
 .neo-student-hero {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: start;
-  gap: 0.8rem;
+  gap: 0.62rem;
 }
 
 .neo-student-title {
@@ -9079,11 +9079,11 @@ body.install-wall-active {
 
 .neo-student-role {
   width: max-content;
-  border-radius: 0.62rem;
-  padding: 0.34rem 0.62rem;
+  border-radius: 0.56rem;
+  padding: 0.24rem 0.52rem;
   background: linear-gradient(135deg, #7c3cff, #8b5cf6);
   color: #fff;
-  font-size: 0.62rem;
+  font-size: 0.54rem;
   font-weight: 950;
   text-transform: uppercase;
   box-shadow: 0 0.7rem 1.7rem rgba(124, 60, 255, 0.3);
@@ -9092,15 +9092,15 @@ body.install-wall-active {
 .neo-student-title h1 {
   margin: 0;
   color: #fff;
-  font-size: clamp(2.85rem, 12vw, 3.6rem);
-  line-height: 0.9;
-  letter-spacing: -0.06em;
+  font-size: clamp(2.25rem, 10vw, 2.95rem);
+  line-height: 0.94;
+  letter-spacing: -0.045em;
 }
 
 .neo-student-title p {
   margin: 0;
   color: #f3f7ff;
-  font-size: 1.05rem;
+  font-size: 0.9rem;
   font-weight: 800;
 }
 
@@ -9114,8 +9114,8 @@ body.install-wall-active {
   position: relative;
   display: grid;
   place-items: center;
-  width: 1.85rem;
-  height: 1.85rem;
+  width: 1.6rem;
+  height: 1.6rem;
   border: 0;
   background: transparent;
   color: #fff;
@@ -9123,8 +9123,8 @@ body.install-wall-active {
 }
 
 .neo-notification-button svg {
-  width: 1.25rem;
-  height: 1.25rem;
+  width: 1.08rem;
+  height: 1.08rem;
   fill: currentColor;
 }
 
@@ -9132,16 +9132,16 @@ body.install-wall-active {
   position: absolute;
   top: 0.04rem;
   right: 0;
-  width: 0.82rem;
-  height: 0.82rem;
+  width: 0.68rem;
+  height: 0.68rem;
   border-radius: 50%;
   background: #8b5cf6;
 }
 
 .neo-student-avatar,
 .neo-student-avatar.profile-avatar-empty {
-  width: 5rem;
-  height: 5rem;
+  width: 4rem;
+  height: 4rem;
   border: 2px solid rgba(124, 60, 255, 0.92);
   border-radius: 50%;
   object-fit: cover;
@@ -9152,22 +9152,22 @@ body.install-wall-active {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.58rem;
   border: 1px solid rgba(125, 150, 199, 0.18);
-  border-radius: 18px;
-  padding: 0.95rem;
+  border-radius: 16px;
+  padding: 0.72rem;
   background: linear-gradient(145deg, rgba(13, 27, 54, 0.92), rgba(7, 17, 38, 0.98));
   box-shadow: var(--shadow);
 }
 
 .neo-current-copy {
   display: grid;
-  gap: 0.42rem;
+  gap: 0.3rem;
 }
 
 .neo-current-copy small {
   color: #8b5cf6;
-  font-size: 0.62rem;
+  font-size: 0.55rem;
   font-weight: 950;
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -9176,16 +9176,16 @@ body.install-wall-active {
 .neo-current-copy h2 {
   margin: 0;
   color: #fff;
-  font-size: 1.05rem;
+  font-size: 0.88rem;
   line-height: 1.15;
 }
 
 .neo-current-meta {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.36rem;
+  gap: 0.28rem;
   color: #c7d2ee;
-  font-size: 0.74rem;
+  font-size: 0.62rem;
 }
 
 .neo-current-meta strong {
@@ -9195,28 +9195,28 @@ body.install-wall-active {
 .neo-deadline-pill {
   display: inline-flex;
   align-items: center;
-  gap: 0.35rem;
+  gap: 0.28rem;
   width: max-content;
   max-width: 100%;
   border: 1px solid rgba(125, 150, 199, 0.16);
   border-radius: 999px;
-  padding: 0.34rem 0.55rem;
+  padding: 0.24rem 0.45rem;
   background: rgba(124, 60, 255, 0.12);
   color: #dfe7f7;
-  font-size: 0.66rem;
+  font-size: 0.56rem;
 }
 
 .neo-deadline-pill svg {
-  width: 0.78rem;
-  height: 0.78rem;
+  width: 0.66rem;
+  height: 0.66rem;
   fill: #8b5cf6;
 }
 
 .neo-progress-ring {
   display: grid;
   place-items: center;
-  width: 5.05rem;
-  height: 5.05rem;
+  width: 4rem;
+  height: 4rem;
   border-radius: 50%;
   background:
     radial-gradient(circle, #071126 56%, transparent 57%),
@@ -9226,26 +9226,26 @@ body.install-wall-active {
 
 .neo-progress-ring strong {
   color: #fff;
-  font-size: 1.35rem;
+  font-size: 1.02rem;
   line-height: 1;
 }
 
 .neo-progress-ring span {
   color: #c7d2ee;
-  font-size: 0.58rem;
+  font-size: 0.48rem;
 }
 
 .neo-section-head {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: 0.18rem;
+  margin-top: 0.08rem;
 }
 
 .neo-section-head h2 {
   margin: 0;
   color: #fff;
-  font-size: 1rem;
+  font-size: 0.84rem;
   font-weight: 950;
 }
 
@@ -9253,7 +9253,7 @@ body.install-wall-active {
   border: 0;
   background: transparent;
   color: #8b5cf6;
-  font-size: 0.82rem;
+  font-size: 0.68rem;
   font-weight: 900;
   box-shadow: none;
 }
@@ -9261,16 +9261,16 @@ body.install-wall-active {
 .neo-progress-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0.5rem;
+  gap: 0.42rem;
 }
 
 .neo-stat-card {
   display: grid;
-  gap: 0.32rem;
-  min-height: 6.15rem;
+  gap: 0.24rem;
+  min-height: 4.7rem;
   border: 1px solid rgba(125, 150, 199, 0.15);
-  border-radius: 16px;
-  padding: 0.72rem 0.55rem;
+  border-radius: 14px;
+  padding: 0.5rem 0.44rem;
   background: rgba(8, 19, 42, 0.66);
 }
 
@@ -9278,9 +9278,9 @@ body.install-wall-active {
 .neo-activity-icon {
   display: grid;
   place-items: center;
-  width: 1.72rem;
-  height: 1.72rem;
-  border-radius: 0.52rem;
+  width: 1.34rem;
+  height: 1.34rem;
+  border-radius: 0.42rem;
   background: linear-gradient(135deg, #4f46e5, #7c3cff);
   color: #fff;
   font-style: normal;
@@ -9288,66 +9288,66 @@ body.install-wall-active {
 
 .neo-stat-card svg,
 .neo-activity-icon svg {
-  width: 1rem;
-  height: 1rem;
+  width: 0.8rem;
+  height: 0.8rem;
   fill: currentColor;
 }
 
 .neo-stat-card strong {
   color: #fff;
-  font-size: 1.35rem;
+  font-size: 1.04rem;
   line-height: 1;
 }
 
 .neo-stat-card span {
   color: #c7d2ee;
-  font-size: 0.62rem;
+  font-size: 0.52rem;
 }
 
 .neo-list {
   display: grid;
-  gap: 0.48rem;
+  gap: 0.38rem;
 }
 
 .neo-list-row {
   display: grid;
-  grid-template-columns: 4.15rem minmax(0, 1fr) auto;
+  grid-template-columns: 3.15rem minmax(0, 1fr) auto;
   align-items: center;
-  gap: 0.58rem;
+  gap: 0.48rem;
   border: 1px solid rgba(125, 150, 199, 0.15);
-  border-radius: 16px;
-  padding: 0.5rem;
+  border-radius: 14px;
+  padding: 0.42rem;
   background: rgba(8, 19, 42, 0.66);
 }
 
 .neo-list-row img {
-  width: 4.15rem;
-  height: 3rem;
-  border-radius: 0.62rem;
+  width: 3.15rem;
+  height: 2.25rem;
+  border-radius: 0.5rem;
   object-fit: cover;
 }
 
 .neo-list-row h3 {
   margin: 0 0 0.18rem;
   color: #fff;
-  font-size: 0.86rem;
+  font-size: 0.72rem;
   line-height: 1.15;
 }
 
 .neo-list-row p {
   margin: 0;
   color: #c7d2ee;
-  font-size: 0.66rem;
+  font-size: 0.55rem;
 }
 
 .neo-list-row button {
-  min-width: 3.15rem;
-  min-height: 2rem;
+  min-width: 2.55rem;
+  min-height: 1.62rem;
   border: 1px solid rgba(125, 150, 199, 0.15);
   border-radius: 0.65rem;
   background: rgba(124, 60, 255, 0.18);
   color: #a78bfa;
-  font-size: 0.76rem;
+  font-size: 0.64rem;
   font-weight: 950;
 }
 
@@ -9355,71 +9355,87 @@ body.install-wall-active {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
   align-items: center;
-  gap: 0.58rem;
+  gap: 0.46rem;
   border: 1px solid rgba(125, 150, 199, 0.15);
-  border-radius: 16px;
-  padding: 0.68rem;
+  border-radius: 14px;
+  padding: 0.52rem;
   background: rgba(8, 19, 42, 0.66);
 }
 
 .neo-activity-row h3 {
   margin: 0 0 0.16rem;
   color: #fff;
-  font-size: 0.8rem;
+  font-size: 0.68rem;
 }
 
 .neo-activity-row p {
   margin: 0;
   color: #c7d2ee;
-  font-size: 0.64rem;
+  font-size: 0.54rem;
 }
 
-/* Native-like mobile viewport: no document overscroll, screen scrolls internally */
+@media (max-width: 380px) {
+  .neo-student-title h1 {
+    font-size: 2.08rem;
+  }
+
+  .neo-student-avatar,
+  .neo-student-avatar.profile-avatar-empty {
+    width: 3.5rem;
+    height: 3.5rem;
+  }
+
+  .neo-progress-ring {
+    width: 3.55rem;
+    height: 3.55rem;
+  }
+}
+
+/* Stable mobile viewport: native document scroll, bottom navigation fixed */
 @media (max-width: 759px) {
   html,
   body {
-    height: 100%;
+    height: auto;
     min-height: 100%;
-    overflow: hidden;
-    overscroll-behavior: none;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior-y: auto;
     background: #020817;
   }
 
   body {
-    position: fixed;
-    inset: 0;
+    position: static;
     width: 100%;
   }
 
   .app-shell {
     width: 100%;
     max-width: none;
-    height: 100svh;
+    height: auto;
     min-height: 100svh;
-    overflow: hidden;
+    overflow: visible;
   }
 
   .routine-select,
   .install-wall {
-    height: 100svh;
+    height: auto;
     min-height: 100svh;
     overflow-y: auto;
-    overscroll-behavior: contain;
     -webkit-overflow-scrolling: touch;
   }
 
   main {
     width: 100%;
     max-width: none;
-    height: 100svh;
+    height: auto;
     min-height: 100svh;
-    margin: 0;
+    margin: 0 auto;
     padding: 0;
-    overflow: hidden;
+    overflow: visible;
   }
 
   body:has(.bottom-nav:not(.is-hidden)) main {
-    padding-bottom: 0;
+    padding-bottom: 5.25rem;
   }
 
   .trainer-home,
@@ -9431,13 +9447,10 @@ body.install-wall-active {
   .weeks {
     width: min(100%, var(--app-width));
     max-width: var(--app-width);
-    height: 100svh;
-    min-height: 100svh;
+    height: auto;
+    min-height: auto;
     margin-inline: auto;
-    overflow-y: auto;
-    overflow-x: hidden;
-    overscroll-behavior: contain;
-    -webkit-overflow-scrolling: touch;
+    overflow: visible;
     scrollbar-width: none;
   }
 
@@ -9453,7 +9466,7 @@ body.install-wall-active {
   }
 
   .student-home.neo-student-home {
-    padding: max(0.72rem, env(safe-area-inset-top)) 0.72rem calc(5.9rem + env(safe-area-inset-bottom));
+    padding: max(0.58rem, env(safe-area-inset-top)) 0.62rem calc(5.55rem + env(safe-area-inset-bottom));
   }
 
   .bottom-nav {
