@@ -1822,7 +1822,8 @@ function renderTrainerHome() {
   `;
 }
 
-function setActiveView(view) {
+function setActiveView(view, options = {}) {
+  const previousView = state.activeView;
   state.activeView = view;
   state.adminPanelOpen = canManageStudents() && ["students", "routines"].includes(view);
   if (view !== "students") {
@@ -1840,6 +1841,9 @@ function setActiveView(view) {
     state.adminDraft = null;
   }
   renderApp();
+  if (!options.skipHistory && state.currentUser && previousView !== view) {
+    window.history.pushState({ rutfitView: view }, "", window.location.href);
+  }
 }
 
 function openAcceptedStudentsForAssignment() {
@@ -1982,66 +1986,121 @@ function renderStudentHomeV2() {
   const stats = getRoutineProgressStats(routine);
   const nextInfo = getNextTrainingInfo(routine);
   const displayName = state.currentUserData?.displayName || getDisplayNameFromEmail(state.currentUser?.email || "");
+  const library = routine?.exerciseLibrary || {};
   const subtitle = nextInfo
     ?`${t("week")} ${nextInfo.weekNumber} de ${nextInfo.totalWeeks} · Día ${nextInfo.dayNumber} de ${nextInfo.totalDays}`
     : (routine?.plan?.length ?"Rutina completada" : t("noRoutine"));
   const todayExercises = nextInfo ?nextInfo.exerciseCount : 0;
-  const todayMinutes = todayExercises ?Math.round(todayExercises * 7.5) : 0;
-  const todayKcal = todayMinutes ?Math.round(todayMinutes * 7) : 0;
+  const todayMinutes = todayExercises ?Math.round(todayExercises * 7.5) : 45;
+  const completedCount = Object.values(progress).filter(Boolean).length;
+  const totalExercises = Object.values(routine?.plan || {}).reduce((total, week) =>
+    total + (week.days || []).reduce((dayTotal, day) => dayTotal + (day.exercises || []).length, 0), 0);
+  const recentDays = (routine?.plan || [])
+    .flatMap((week) => (week.days || []).map((day, dayIndex) => ({ week, day, dayIndex })))
+    .slice(0, 2);
+  const getDayThumb = (day) => {
+    const firstKey = (day?.exercises || [])[0];
+    const exercise = library[firstKey] || exerciseLibrary[firstKey] || {};
+    const image = Array.isArray(exercise.images) ?exercise.images[0] : "";
+    return hasRealExerciseImage(image)
+      ?resolveExerciseImage(image, exercise.name || day?.title || "RutFit")
+      : "img/ground-and-pound-1.jpg";
+  };
+  const recentRows = recentDays.length ?recentDays : [
+    { day: { title: "Push - Pecho y Tríceps", exercises: [] } },
+    { day: { title: "Pull - Espalda y Bíceps", exercises: [] } }
+  ];
 
   studentHome.innerHTML = `
-    <section class="student-home-hero">
-      <div>
-        <span class="student-role-pill">Alumno</span>
+    <section class="neo-student-hero">
+      <div class="neo-student-title">
+        <span class="neo-student-role">Alumno</span>
         <h1>RutFit</h1>
         <p>Hola, ${escapeHtml(displayName || t("user"))} <span aria-hidden="true">&#128075;</span></p>
       </div>
-      <div class="student-home-actions">
-        <button class="student-notification-button" type="button" data-student-home-action="notifications" aria-label="Notificaciones">
-          <span aria-hidden="true">&#128276;</span>
+      <div class="neo-student-side">
+        <button class="neo-notification-button" type="button" data-student-home-action="notifications" aria-label="Notificaciones">
+          ${getInlineIcon("bell")}
           <b></b>
         </button>
-        ${renderUserAvatar(state.currentUserData || {}, "student-home-avatar")}
+        ${renderUserAvatar(state.currentUserData || {}, "neo-student-avatar")}
       </div>
     </section>
-    <section class="student-dashboard-card">
-      <div>
-        <span class="kicker">Rutina actual</span>
+    <section class="neo-current-routine">
+      <div class="neo-current-copy">
+        <small>Rutina actual</small>
         <h2>${escapeHtml(routine?.name || t("noRoutine"))}</h2>
-        <p>${escapeHtml(subtitle)}</p>
+        <div class="neo-current-meta">
+          <span>${escapeHtml(subtitle.split("·")[0]?.trim() || "")}</span>
+          <span>•</span>
+          <strong>${escapeHtml(subtitle.split("·")[1]?.trim() || "Día 1 de 1")}</strong>
+        </div>
+        <div class="neo-deadline-pill">${getInlineIcon("bolt")} Quedan 2 días para completar</div>
       </div>
-      <div class="mini-progress" style="--progress:${stats.percent}%">
+      <div class="neo-progress-ring" style="--progress:${stats.percent}">
         <strong>${stats.percent}%</strong>
+        <span>Completado</span>
       </div>
     </section>
-    <div class="home-section-title">Resumen de hoy</div>
-    <div class="home-grid student-stat-grid">
-      <article class="home-stat">
-        <strong>${todayExercises}</strong>
-        <span>Ejercicios</span>
+    <section class="neo-home-section">
+      <div class="neo-section-head">
+        <h2>Tu progreso</h2>
+        <button class="neo-more-button" type="button" data-student-home-action="progress">Ver más &rarr;</button>
+      </div>
+      <div class="neo-progress-grid">
+        <article class="neo-stat-card">
+          <i>${getInlineIcon("dumbbell")}</i>
+          <span>Entrenamientos</span>
+          <strong>${completedCount}</strong>
+          <span>Completados</span>
+        </article>
+        <article class="neo-stat-card">
+          <i>${getInlineIcon("clock")}</i>
+          <span>Tiempo total</span>
+          <strong>${Math.max(1, Math.round((completedCount || todayExercises || 1) * 0.75))}h ${todayMinutes}m</strong>
+          <span>Entrenando</span>
+        </article>
+        <article class="neo-stat-card">
+          <i>${getInlineIcon("chart")}</i>
+          <span>Ejercicios</span>
+          <strong>${Math.max(totalExercises, todayExercises)}</strong>
+          <span>Realizados</span>
+        </article>
+      </div>
+    </section>
+    <section class="neo-home-section">
+      <div class="neo-section-head">
+        <h2>Rutinas recientes</h2>
+        <button class="neo-more-button" type="button" data-student-home-action="routine">Ver más &rarr;</button>
+      </div>
+      <div class="neo-list">
+        ${recentRows.map((item, index) => `
+          <article class="neo-list-row">
+            <img src="${escapeHtml(getDayThumb(item.day))}" alt="${escapeHtml(item.day.title || "Rutina")}" />
+            <div>
+              <h3>${escapeHtml(item.day.title || `Día ${index + 1}`)}</h3>
+              <p>${index === 0 ?"Ayer" : "2 días atrás"} · ${Math.max(45, (item.day.exercises || []).length * 8)} min</p>
+            </div>
+            <button type="button" data-student-home-action="routine">Ver</button>
+          </article>
+        `).join("")}
+      </div>
+    </section>
+    <section class="neo-home-section">
+      <div class="neo-section-head">
+        <h2>Actividad reciente</h2>
+        <button class="neo-more-button" type="button" data-student-home-action="progress">Ver más &rarr;</button>
+      </div>
+      <article class="neo-activity-row">
+        <i class="neo-activity-icon">${getInlineIcon("check")}</i>
+        <div>
+          <h3>Completaste ${escapeHtml(recentRows[0]?.day?.title || "tu entrenamiento")}</h3>
+          <p>Ayer · ${Math.max(45, (recentRows[0]?.day?.exercises || []).length * 8)} min</p>
+        </div>
       </article>
-      <article class="home-stat">
-        <strong>${todayMinutes}</strong>
-        <span>Minutos</span>
-      </article>
-      <article class="home-stat">
-        <strong>${todayKcal}</strong>
-        <span>Kcal aprox.</span>
-      </article>
-    </div>
-    <div class="home-section-title">Próximo entrenamiento</div>
-    <button class="student-current-card next-training-card" type="button" data-student-home-action="routine">
-      <small>${nextInfo ?`${t("week")} ${nextInfo.weekNumber}` : ""}</small>
-      <strong>${escapeHtml(nextInfo ?nextInfo.dayTitle : getNextTrainingLabel(routine))}</strong>
-      <span>Mañana · 18:00</span>
-    </button>
-    <section class="student-current-card streak-card">
-      <small>Racha</small>
-      <strong>12</strong>
-      <span>Días seguidos</span>
-      <div class="flame-row" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
     </section>
   `;
+  studentHome.classList.add("neo-student-home");
 }
 
 function renderStudentNotifications() {
@@ -3139,6 +3198,9 @@ async function handleAuthenticatedUser(user) {
   }
 
   state.currentUser = user;
+  if (!window.history.state?.rutfitView) {
+    window.history.replaceState({ rutfitView: state.activeView || "home" }, "", window.location.href);
+  }
   setAuthMessage(t("loadingRoutine"));
 
   try {
@@ -3946,7 +4008,12 @@ function getInlineIcon(name) {
     heart: '<svg viewBox="0 0 24 24"><path d="M12 21s-8-4.8-8-11a5 5 0 0 1 8-4 5 5 0 0 1 8 4c0 6.2-8 11-8 11Z"/></svg>',
     info: '<svg viewBox="0 0 24 24"><path d="M11 10h2v8h-2v-8Zm0-4h2v2h-2V6Zm1 16a10 10 0 1 0 0-20 10 10 0 0 0 0 20Z"/></svg>',
     logout: '<svg viewBox="0 0 24 24"><path d="M10 4H4v16h6v-2H6V6h4V4Zm5.5 3.5L14 9l2 2H9v2h7l-2 2 1.5 1.5L20 12l-4.5-4.5Z"/></svg>',
-    filter: '<svg viewBox="0 0 24 24"><path d="M4 6h16v2H4V6Zm3 5h10v2H7v-2Zm3 5h4v2h-4v-2Z"/></svg>'
+    filter: '<svg viewBox="0 0 24 24"><path d="M4 6h16v2H4V6Zm3 5h10v2H7v-2Zm3 5h4v2h-4v-2Z"/></svg>',
+    bell: '<svg viewBox="0 0 24 24"><path d="M12 22a2.8 2.8 0 0 0 2.6-1.8H9.4A2.8 2.8 0 0 0 12 22Zm8-5-2-2.2V10a6 6 0 0 0-4.5-5.8V2h-3v2.2A6 6 0 0 0 6 10v4.8L4 17v1.5h16V17Z"/></svg>',
+    bolt: '<svg viewBox="0 0 24 24"><path d="M13 2 4 14h6l-1 8 10-13h-6l0-7Z"/></svg>',
+    clock: '<svg viewBox="0 0 24 24"><path d="M12 22a10 10 0 1 1 0-20 10 10 0 0 1 0 20Zm1-15h-2v6l5 3 1-1.7-4-2.3V7Z"/></svg>',
+    chart: '<svg viewBox="0 0 24 24"><path d="M4 19h16v2H4v-2Zm2-8h3v6H6v-6Zm5-5h3v11h-3V6Zm5 3h3v8h-3V9Z"/></svg>',
+    check: '<svg viewBox="0 0 24 24"><path d="m9.2 16.6-4-4L3.8 14l5.4 5.4L21 7.6 19.6 6 9.2 16.6Z"/></svg>'
   };
   return icons[name] || "";
 }
@@ -6117,6 +6184,9 @@ studentHome?.addEventListener("click", (event) => {
   if (button.dataset.studentHomeAction === "routine") {
     setActiveView("routines");
   }
+  if (button.dataset.studentHomeAction === "progress") {
+    setActiveView("progress");
+  }
   if (button.dataset.studentHomeAction === "notifications") {
     setActiveView("notifications");
   }
@@ -6544,6 +6614,12 @@ installAppButton?.addEventListener("click", async () => {
 
 window.addEventListener("resize", updateInstallWall);
 window.addEventListener("DOMContentLoaded", updateInstallWall);
+
+window.addEventListener("popstate", (event) => {
+  if (!state.currentUser) return;
+  const view = event.state?.rutfitView || "home";
+  setActiveView(view, { skipHistory: true });
+});
 
 window.addEventListener("load", () => {
   updateInstallWall();
