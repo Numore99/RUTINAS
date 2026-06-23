@@ -1,10 +1,9 @@
-const CACHE_NAME = "rutfit-pwa-v7";
+const CACHE_NAME = "rutfit-pwa-v6";
 
 const APP_SHELL = [
   "./",
   "./index.html",
   "./styles.css",
-  "./design-system.css",
   "./script.js",
   "./firebase-config.js",
   "./manifest.json",

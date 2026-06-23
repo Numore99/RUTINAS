@@ -1,13 +1,13 @@
 {
   "name": "RutFit",
   "short_name": "RutFit",
-  "description": "Rutinas de preparacion fisica MMA y alto rendimiento.",
+  "description": "Rutinas de preparación física MMA y alto rendimiento.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "display_override": ["standalone", "fullscreen"],
-  "background_color": "#050816",
-  "theme_color": "#050816",
+  "background_color": "#0f172a",
+  "theme_color": "#0f172a",
   "orientation": "portrait",
   "icons": [
     {
