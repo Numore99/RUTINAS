@@ -3278,67 +3278,61 @@ function renderAccountPanel() {
       : renderStudentProfileAccount(userData, displayName, email);
     return;
   }
-  const stats = isStudentProfile ?getProfileStats(userData) : [];
+  const preferences = userData.preferences || {};
+  const preference = (key, fallback = true) => preferences[key] !== undefined ?preferences[key] : fallback;
   accountPanel.innerHTML = `
-    <section class="student-panel-card">
-      <div class="home-section-title">${t("profile")}</div>
-      <article class="profile-card">
-        ${renderUserAvatar(userData)}
-        <div>
-          <strong>${escapeHtml(displayName || t("user"))}</strong>
-          <span>${escapeHtml(email || t("noEmail"))}</span>
-          <small>${escapeHtml(role)}</small>
-          ${stats.length ?`<p>${stats.map(escapeHtml).join(" · ")}</p>` : ""}
+    <section class="trainer-account-screen">
+      <div class="screen-topbar trainer-account-topbar">
+        <button class="icon-button ghost-icon" type="button" data-account-back aria-label="Volver">&larr;</button>
+        <h2>Mi cuenta</h2>
+        <span></span>
+      </div>
+
+      <article class="trainer-account-avatar">
+        <div class="profile-photo-wrap">
+          ${renderUserAvatar(userData, "student-profile-photo")}
+          <label class="profile-camera" aria-label="${t("changePhoto")}">
+            ${getInlineIcon("camera")}
+            <input type="file" accept="image/*" data-profile-photo hidden />
+          </label>
         </div>
       </article>
-      <div class="profile-form">
-        <label class="search-box">
-          <span>${t("name")}</span>
-          <input type="text" data-profile-field="displayName" value="${escapeHtml(displayName || "")}" autocomplete="name" />
+
+      <section class="trainer-account-form">
+        <label class="trainer-account-field">
+          <span>Nombre completo</span>
+          <input type="text" data-profile-field="displayName" value="${escapeHtml(displayName || "")}" autocomplete="name" placeholder="Admin RutFit" />
         </label>
-        ${canManageStudents() ?`<div class="profile-grid trainer-market-fields">
-          <label class="search-box">
+        <label class="trainer-account-field">
+          <span>Email</span>
+          <input type="email" value="${escapeHtml(email || "")}" readonly />
+        </label>
+        <label class="trainer-account-field">
+          <span>Teléfono</span>
+          <input type="tel" data-profile-field="phone" value="${escapeHtml(userData.phone || "")}" autocomplete="tel" placeholder="+34 600 123 456" />
+        </label>
+        ${canManageStudents() ?`
+          <label class="trainer-account-field compact-market-field">
             <span>Precio</span>
             <input type="number" inputmode="decimal" data-profile-field="trainerPrice" value="${escapeHtml(userData.trainerPrice || "")}" placeholder="Ej: 15000" />
           </label>
-          <label class="search-box">
+          <label class="trainer-account-field compact-market-field">
             <span>Especialidad</span>
             <input type="text" data-profile-field="trainerSpecialty" value="${escapeHtml(userData.trainerSpecialty || "")}" placeholder="MMA, fuerza" />
           </label>
-        </div>` : ""}
-        ${isStudentProfile ?`<div class="profile-grid">
-          <label class="search-box">
-            <span>${t("weight")}</span>
-            <input type="number" inputmode="decimal" data-profile-field="weight" value="${escapeHtml(userData.weight || "")}" placeholder="78" />
-          </label>
-          <label class="search-box">
-            <span>${t("height")}</span>
-            <input type="number" inputmode="decimal" step="0.01" data-profile-field="height" value="${escapeHtml(userData.height || "")}" placeholder="1.75" />
-          </label>
-          <label class="search-box">
-            <span>${t("age")}</span>
-            <input type="number" inputmode="numeric" data-profile-field="age" value="${escapeHtml(userData.age || "")}" placeholder="24" />
-          </label>
-        </div>
-        <label class="search-box">
-          <span>${t("goal")}</span>
-          <textarea data-profile-field="goal" rows="2" placeholder="${t("goal")}">${escapeHtml(userData.goal || "")}</textarea>
-        </label>` : ""}
-        <label class="file-button profile-photo-button">
-          ${t("changePhoto")}
-          <input type="file" accept="image/*" data-profile-photo hidden />
-        </label>
-      </div>
-      <p class="account-help">${t("accountPanelHelp")}</p>
-      <section class="settings-list" aria-label="${t("accountNav")}">
-        <div><span>Información personal</span><strong>></strong></div>
-        <div><span>Objetivos</span><strong>></strong></div>
-        <div><span>Preferencias</span><strong>></strong></div>
-        <div><span>Centro de ayuda</span><strong>></strong></div>
+        ` : ""}
       </section>
+
+      <section class="trainer-account-preferences">
+        <span>Notificaciones</span>
+        ${renderPreferenceToggle("notifications", "Activadas", preference("notifications", true))}
+        <span>Modo oscuro</span>
+        ${renderPreferenceToggle("darkMode", "Activado", preference("darkMode", true))}
+      </section>
+
       <p class="account-status" id="accountStatus" aria-live="polite"></p>
-      <button class="secondary-button" type="button" data-profile-save>${t("saveProfile")}</button>
-      <button class="primary-button" type="button" data-account-logout>${t("logout")}</button>
+      <button class="secondary-button trainer-save-profile" type="button" data-profile-save>${t("saveProfile")}</button>
+      <button class="trainer-logout-button" type="button" data-account-logout>${t("logout")}</button>
     </section>
   `;
 }

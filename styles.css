@@ -8897,3 +8897,164 @@ body.install-wall-active {
 .ghost-icon {
   font-family: Inter, Poppins, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
+
+/* Trainer/Admin account screen */
+.account-panel:has(.trainer-account-screen)::before {
+  content: none !important;
+}
+
+.account-panel:has(.trainer-account-screen) {
+  padding: 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+.trainer-account-screen {
+  display: grid;
+  gap: 0.72rem;
+  min-height: calc(100svh - 5.4rem);
+  padding: 0.8rem 0.72rem 1rem;
+  border-radius: 18px;
+  background: linear-gradient(180deg, rgba(8, 21, 45, 0.98), rgba(6, 17, 38, 0.99));
+}
+
+.trainer-account-topbar {
+  display: grid;
+  grid-template-columns: 2rem minmax(0, 1fr) 2rem;
+  align-items: center;
+  min-height: 2.1rem;
+}
+
+.trainer-account-topbar h2 {
+  margin: 0;
+  color: #ffffff;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 950;
+}
+
+.trainer-account-avatar {
+  display: grid;
+  justify-items: center;
+  margin-top: 0.1rem;
+}
+
+.trainer-account-avatar .profile-photo-wrap {
+  width: 5.9rem;
+  height: 5.9rem;
+}
+
+.trainer-account-avatar .student-profile-photo,
+.trainer-account-avatar .profile-avatar-empty {
+  width: 5.9rem;
+  height: 5.9rem;
+  border: 2px solid rgba(139, 92, 246, 0.8);
+  box-shadow: 0 0 1.8rem rgba(139, 92, 246, 0.42);
+}
+
+.trainer-account-avatar .profile-camera {
+  right: 0.15rem;
+  bottom: 0.1rem;
+}
+
+.trainer-account-form {
+  display: grid;
+  gap: 0.48rem;
+}
+
+.trainer-account-field {
+  display: grid;
+  gap: 0.24rem;
+}
+
+.trainer-account-field span,
+.trainer-account-preferences > span {
+  color: #8f9db8;
+  font-size: 0.58rem;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.trainer-account-field input {
+  width: 100%;
+  min-height: 2.42rem;
+  border: 1px solid rgba(75, 96, 142, 0.2);
+  border-radius: 0.48rem;
+  padding: 0 0.72rem;
+  background: rgba(13, 27, 54, 0.78);
+  color: #ffffff;
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+.trainer-account-field input[readonly] {
+  color: #b7c3dc;
+}
+
+.compact-market-field {
+  display: none;
+}
+
+.trainer-account-preferences {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  row-gap: 0.5rem;
+  padding-top: 0.15rem;
+}
+
+.trainer-account-preferences .settings-toggle-row {
+  display: grid;
+  grid-template-columns: auto auto;
+  align-items: center;
+  gap: 0.56rem;
+  min-height: auto;
+  border: 0;
+  padding: 0;
+  background: transparent;
+}
+
+.trainer-account-preferences .settings-toggle-row > span {
+  color: #dfe7f7;
+  font-size: 0.7rem;
+  font-weight: 900;
+  text-transform: none;
+}
+
+.trainer-account-preferences .settings-toggle-row em {
+  display: none;
+}
+
+.trainer-account-preferences .settings-toggle-row strong {
+  display: none;
+}
+
+.trainer-account-screen .account-status {
+  min-height: 1.1rem;
+  margin: 0;
+  color: #22c55e;
+  font-size: 0.72rem;
+  font-weight: 900;
+}
+
+.trainer-save-profile {
+  min-height: 2.7rem;
+  border: 0;
+  border-radius: 0.58rem;
+  background: linear-gradient(135deg, #5b35ff, #bf24f2);
+  color: #ffffff;
+  font-size: 0.84rem;
+  font-weight: 950;
+}
+
+.trainer-logout-button {
+  min-height: 2.85rem;
+  border: 1px solid rgba(244, 63, 94, 0.44);
+  border-radius: 0.55rem;
+  background: transparent;
+  color: #ff647d;
+  font-size: 0.76rem;
+  font-weight: 950;
+}
