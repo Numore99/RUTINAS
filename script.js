@@ -432,7 +432,11 @@ let unsubscribeCurrentUser = null;
 let unsubscribeAdminUsers = null;
 let unsubscribeTrainerInvites = null;
 let unsubscribeStudentInvites = null;
+let deferredInstallPrompt = null;
 
+const installWall = document.querySelector("#installWall");
+const installAppButton = document.querySelector("#installAppButton");
+const installHelp = document.querySelector("#installHelp");
 const routineSelect = document.querySelector("#routineSelect");
 const appHeader = document.querySelector("#appHeader");
 const appMain = document.querySelector("#appMain");
@@ -6462,7 +6466,85 @@ function primeNativeScroll() {
   }
 }
 
+function isRutfitStandalone() {
+  return window.matchMedia?.("(display-mode: standalone)")?.matches ||
+    window.navigator.standalone === true ||
+    document.referrer.startsWith("android-app://");
+}
+
+function isMobileBrowser() {
+  const ua = navigator.userAgent || "";
+  const hasTouch = navigator.maxTouchPoints > 0 || "ontouchstart" in window;
+  const mobileSize = window.matchMedia?.("(max-width: 820px)")?.matches;
+  const mobileUa = /Android|iPhone|iPad|iPod|Mobile/i.test(ua);
+  const webView = /; wv\)|\bwv\b|Version\/[\d.]+.*Chrome\/[\d.]+.*Mobile Safari/i.test(ua) || Boolean(window.ReactNativeWebView);
+  return !webView && hasTouch && (mobileSize || mobileUa);
+}
+
+function isIosSafariLike() {
+  const ua = navigator.userAgent || "";
+  return /iPhone|iPad|iPod/i.test(ua) && !/CriOS|FxiOS|EdgiOS/i.test(ua);
+}
+
+function updateInstallWall() {
+  if (!installWall) return;
+  const shouldBlock = isMobileBrowser() && !isRutfitStandalone();
+  installWall.classList.toggle("is-hidden", !shouldBlock);
+  document.body.classList.toggle("install-wall-active", shouldBlock);
+
+  if (!shouldBlock) return;
+
+  if (installHelp) {
+    installHelp.classList.toggle("is-visible", isIosSafariLike() || !deferredInstallPrompt);
+    installHelp.innerHTML = isIosSafariLike()
+      ? `<strong>En iPhone:</strong> tocá Compartir y después “Agregar a pantalla de inicio”.`
+      : `<strong>Si no abre el instalador:</strong> tocá el menú del navegador y elegí “Instalar app” o “Agregar a pantalla de inicio”.`;
+  }
+
+  if (installAppButton) {
+    installAppButton.textContent = deferredInstallPrompt ? "Instalar" : "Ver cómo instalar";
+  }
+}
+
+window.addEventListener("beforeinstallprompt", (event) => {
+  event.preventDefault();
+  deferredInstallPrompt = event;
+  updateInstallWall();
+});
+
+window.addEventListener("appinstalled", () => {
+  deferredInstallPrompt = null;
+  installWall?.classList.add("is-hidden");
+  document.body.classList.remove("install-wall-active");
+});
+
+installAppButton?.addEventListener("click", async () => {
+  if (isRutfitStandalone()) {
+    updateInstallWall();
+    return;
+  }
+
+  if (!deferredInstallPrompt) {
+    installHelp?.classList.add("is-visible");
+    return;
+  }
+
+  installAppButton.disabled = true;
+  try {
+    deferredInstallPrompt.prompt();
+    await deferredInstallPrompt.userChoice;
+    deferredInstallPrompt = null;
+    updateInstallWall();
+  } finally {
+    installAppButton.disabled = false;
+  }
+});
+
+window.addEventListener("resize", updateInstallWall);
+window.addEventListener("DOMContentLoaded", updateInstallWall);
+
 window.addEventListener("load", () => {
+  updateInstallWall();
   setTimeout(primeNativeScroll, 100);
   setTimeout(primeNativeScroll, 350);
 });

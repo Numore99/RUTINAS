@@ -1,4 +1,4 @@
-const CACHE_NAME = "rutfit-pwa-v5";
+const CACHE_NAME = "rutfit-pwa-v6";
 
 const APP_SHELL = [
   "./",
