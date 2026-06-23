@@ -2088,7 +2088,7 @@ function renderStudentHomeV2() {
         ${renderUserAvatar(state.currentUserData || {}, "neo-student-avatar")}
       </div>
     </section>
-    <section class="neo-current-routine">
+    <section class="neo-current-routine" data-student-home-action="routine" role="button" tabindex="0" aria-label="Abrir rutina actual">
       <div class="neo-current-copy">
         <small>Rutina actual</small>
         <h2>${escapeHtml(routine?.name || t("noRoutine"))}</h2>
@@ -2105,8 +2105,7 @@ function renderStudentHomeV2() {
       </div>
     </section>
     <section class="neo-home-section">
-      <div class="neo-section-head">
-        <h2>Tu progreso</h2>
+      <div class="neo-section-head neo-section-head-only-action">
         <button class="neo-more-button" type="button" data-student-home-action="progress">Ver más &rarr;</button>
       </div>
       <div class="neo-progress-grid">
@@ -3394,71 +3393,15 @@ function renderAccountPanel() {
   const email = state.currentUser?.email || "";
   const userData = state.currentUserData || {};
   const displayName = userData.displayName || getDisplayNameFromEmail(email);
-  const role = state.isAdmin ?t("admin") : state.isTrainer ?t("trainer") : t("student");
-  const isStudentProfile = !state.isAdmin && !state.isTrainer;
-  if (isStudentProfile) {
-    accountPanel.innerHTML = state.accountSubView === "settings"
-      ?renderStudentSettingsAccount(userData, displayName, email)
-      : renderStudentProfileAccount(userData, displayName, email);
+  if (state.accountSubView === "settings") {
+    accountPanel.innerHTML = renderStudentSettingsAccount(userData, displayName, email);
     return;
   }
-  const preferences = userData.preferences || {};
-  const preference = (key, fallback = true) => preferences[key] !== undefined ?preferences[key] : fallback;
-  accountPanel.innerHTML = `
-    <section class="trainer-account-screen">
-      <div class="screen-topbar trainer-account-topbar">
-        <button class="icon-button ghost-icon" type="button" data-account-back aria-label="Volver">&larr;</button>
-        <h2>Mi cuenta</h2>
-        <span></span>
-      </div>
-
-      <article class="trainer-account-avatar">
-        <div class="profile-photo-wrap">
-          ${renderUserAvatar(userData, "student-profile-photo")}
-          <label class="profile-camera" aria-label="${t("changePhoto")}">
-            ${getInlineIcon("camera")}
-            <input type="file" accept="image/*" data-profile-photo hidden />
-          </label>
-        </div>
-      </article>
-
-      <section class="trainer-account-form">
-        <label class="trainer-account-field">
-          <span>Nombre completo</span>
-          <input type="text" data-profile-field="displayName" value="${escapeHtml(displayName || "")}" autocomplete="name" placeholder="Admin RutFit" />
-        </label>
-        <label class="trainer-account-field">
-          <span>Email</span>
-          <input type="email" value="${escapeHtml(email || "")}" readonly />
-        </label>
-        <label class="trainer-account-field">
-          <span>Teléfono</span>
-          <input type="tel" data-profile-field="phone" value="${escapeHtml(userData.phone || "")}" autocomplete="tel" placeholder="+34 600 123 456" />
-        </label>
-        ${canManageStudents() ?`
-          <label class="trainer-account-field compact-market-field">
-            <span>Precio</span>
-            <input type="number" inputmode="decimal" data-profile-field="trainerPrice" value="${escapeHtml(userData.trainerPrice || "")}" placeholder="Ej: 15000" />
-          </label>
-          <label class="trainer-account-field compact-market-field">
-            <span>Especialidad</span>
-            <input type="text" data-profile-field="trainerSpecialty" value="${escapeHtml(userData.trainerSpecialty || "")}" placeholder="MMA, fuerza" />
-          </label>
-        ` : ""}
-      </section>
-
-      <section class="trainer-account-preferences">
-        <span>Notificaciones</span>
-        ${renderPreferenceToggle("notifications", "Activadas", preference("notifications", true))}
-        <span>Modo oscuro</span>
-        ${renderPreferenceToggle("darkMode", "Activado", preference("darkMode", true))}
-      </section>
-
-      <p class="account-status" id="accountStatus" aria-live="polite"></p>
-      <button class="secondary-button trainer-save-profile" type="button" data-profile-save>${t("saveProfile")}</button>
-      <button class="trainer-logout-button" type="button" data-account-logout>${t("logout")}</button>
-    </section>
-  `;
+  if (state.accountSubView === "personal") {
+    accountPanel.innerHTML = renderPersonalInfoAccount(userData, displayName, email);
+    return;
+  }
+  accountPanel.innerHTML = renderStudentProfileAccount(userData, displayName, email);
 }
 
 function getPhase(weekNumber) {
@@ -3942,16 +3885,20 @@ function getProfileCompletionPercent() {
 
 function renderStudentProfileAccount(userData, displayName, email) {
   const percent = getProfileCompletionPercent();
+  const profileTitle = state.isAdmin ? "Perfil Admin" : state.isTrainer ? "Perfil del Profesor" : "Perfil del Alumno";
+  const completedTrainings = Object.values(progress).filter(Boolean).length;
+  const studentsCount = state.adminUsers?.length || 0;
+  const routinesCount = Object.keys(routines || {}).filter((routineId) => routineId !== "pending").length;
   const stats = [
-    ["12", "Días de racha"],
-    [String(Object.values(progress).filter(Boolean).length), "Entrenamientos"],
+    state.isTrainer || state.isAdmin ? [String(studentsCount), "Alumnos"] : ["12", "Días de racha"],
+    state.isTrainer || state.isAdmin ? [String(routinesCount), "Rutinas"] : [String(completedTrainings), "Entrenamientos"],
     [`${percent}%`, "Cumplimiento"]
   ];
   return `
     <section class="student-account-screen profile-screen">
       <div class="screen-topbar">
         <button class="icon-button ghost-icon" type="button" data-account-back aria-label="Volver">&larr;</button>
-        <h2>Perfil del Alumno</h2>
+        <h2>${profileTitle}</h2>
         <button class="icon-button ghost-icon" type="button" data-account-section="settings" aria-label="Ajustes">${getInlineIcon("settings")}</button>
       </div>
 
@@ -3977,42 +3924,46 @@ function renderStudentProfileAccount(userData, displayName, email) {
       </div>
 
       <section class="settings-list account-menu">
-        <button type="button" data-account-section="personal"><span>${getInlineIcon("user")} Información personal</span><strong>></strong></button>
-        <button type="button" data-account-section="goals"><span>${getInlineIcon("heart")} Objetivos</span><strong>></strong></button>
-        <button type="button" data-account-section="settings"><span>${getInlineIcon("settings")} Preferencias</span><strong>></strong></button>
-        <button type="button" data-account-action="help"><span>${getInlineIcon("info")} Centro de ayuda</span><strong>></strong></button>
+        <button type="button" data-account-section="personal"><span>${getInlineIcon("user")} Información personal</span><strong>&gt;</strong></button>
+        <button type="button" data-account-section="settings"><span>${getInlineIcon("settings")} Preferencias</span><strong>&gt;</strong></button>
+        <button type="button" data-account-action="help"><span>${getInlineIcon("info")} Centro de ayuda</span><strong>&gt;</strong></button>
       </section>
 
-      <section class="profile-form compact-profile-form ${["personal", "goals"].includes(state.accountSubView) ?"" : "is-hidden"}">
+      <p class="account-status" id="accountStatus" aria-live="polite"></p>
+      <button class="account-logout-row" type="button" data-account-logout>
+        <span>${getInlineIcon("logout")} ${t("logout")}</span><strong>&gt;</strong>
+      </button>
+    </section>
+  `;
+}
+
+function renderPersonalInfoAccount(userData, displayName, email) {
+  const profileTitle = state.isAdmin ? "Información admin" : state.isTrainer ? "Información del profesor" : "Información personal";
+  return `
+    <section class="student-account-screen personal-info-screen">
+      <div class="screen-topbar">
+        <button class="icon-button ghost-icon" type="button" data-account-section="profile" aria-label="Volver">&larr;</button>
+        <h2>${profileTitle}</h2>
+        <span></span>
+      </div>
+
+      <section class="profile-form compact-profile-form personal-info-form">
         <label class="search-box">
-          <span>${t("name")}</span>
-          <input type="text" data-profile-field="displayName" value="${escapeHtml(displayName || "")}" autocomplete="name" />
+          <span>Nombre completo</span>
+          <input type="text" data-profile-field="displayName" value="${escapeHtml(displayName || "")}" autocomplete="name" placeholder="Nombre" />
         </label>
-        <div class="profile-grid">
-          <label class="search-box">
-            <span>${t("weight")}</span>
-            <input type="number" inputmode="decimal" data-profile-field="weight" value="${escapeHtml(userData.weight || "")}" placeholder="78" />
-          </label>
-          <label class="search-box">
-            <span>${t("height")}</span>
-            <input type="number" inputmode="decimal" step="0.01" data-profile-field="height" value="${escapeHtml(userData.height || "")}" placeholder="1.75" />
-          </label>
-          <label class="search-box">
-            <span>${t("age")}</span>
-            <input type="number" inputmode="numeric" data-profile-field="age" value="${escapeHtml(userData.age || "")}" placeholder="24" />
-          </label>
-        </div>
         <label class="search-box">
-          <span>${t("goal")}</span>
-          <textarea data-profile-field="goal" rows="2" placeholder="${t("goal")}">${escapeHtml(userData.goal || "")}</textarea>
+          <span>Email</span>
+          <input type="email" value="${escapeHtml(email || "")}" readonly />
+        </label>
+        <label class="search-box">
+          <span>Teléfono</span>
+          <input type="tel" data-profile-field="phone" value="${escapeHtml(userData.phone || "")}" autocomplete="tel" placeholder="+55 11 97357 0887" />
         </label>
         <button class="secondary-button" type="button" data-profile-save>${t("saveProfile")}</button>
       </section>
 
       <p class="account-status" id="accountStatus" aria-live="polite"></p>
-      <button class="account-logout-row" type="button" data-account-logout>
-        <span>${getInlineIcon("logout")} ${t("logout")}</span><strong>></strong>
-      </button>
     </section>
   `;
 }
@@ -6272,6 +6223,15 @@ studentHome?.addEventListener("click", (event) => {
   if (action === "notifications") {
     setActiveView("notifications");
   }
+});
+
+studentHome?.addEventListener("keydown", (event) => {
+  if (event.key !== "Enter" && event.key !== " ") return;
+  const target = event.target.closest(".neo-current-routine[data-student-home-action]");
+  if (!target) return;
+  event.preventDefault();
+  state.routineSubView = "weeks";
+  setActiveView("routines");
 });
 
 studentProgress?.addEventListener("click", (event) => {
