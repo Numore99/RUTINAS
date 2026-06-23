@@ -1807,9 +1807,9 @@ function renderTrainerHome() {
 
     <div class="home-section-title">Acciones rápidas</div>
     <div class="home-actions trainer-quick-actions">
-      <button class="primary-button" type="button" data-home-action="new-student"><span>+</span>Nuevo alumno</button>
-      <button class="secondary-button" type="button" data-home-action="new-routine"><span>▣</span>Nueva rutina</button>
-      <button class="secondary-button" type="button" data-home-action="assign-routine"><span>↻</span>Asignar rutina</button>
+      <button class="primary-button" type="button" data-home-action="new-student"><span aria-hidden="true"></span>Nuevo alumno</button>
+      <button class="secondary-button" type="button" data-home-action="new-routine"><span aria-hidden="true"></span>Nueva rutina</button>
+      <button class="secondary-button" type="button" data-home-action="assign-routine"><span aria-hidden="true"></span>Asignar rutina</button>
     </div>
 
     <section class="home-activity">
@@ -2053,7 +2053,7 @@ function renderStudentNotifications() {
   studentProgress.innerHTML = `
     <section class="student-notifications-screen">
       <div class="screen-topbar progress-topbar">
-        <button class="icon-button ghost-icon" type="button" data-notification-action="back" aria-label="Volver">⬹</button>
+        <button class="icon-button ghost-icon" type="button" data-notification-action="back" aria-label="Volver">&larr;</button>
         <h2>Notificaciones</h2>
         <span></span>
       </div>
@@ -2203,7 +2203,7 @@ function renderProgressHistory(routine) {
   return `
     <section class="student-progress-screen progress-history-screen">
       <div class="screen-topbar progress-topbar">
-        <button class="icon-button ghost-icon" type="button" data-progress-back aria-label="Volver">⬹</button>
+        <button class="icon-button ghost-icon" type="button" data-progress-back aria-label="Volver">&larr;</button>
         <h2>Historial</h2>
         <button class="icon-button ghost-icon filter-icon" type="button" data-progress-action="cycle-history" aria-label="Filtrar">${getInlineIcon("filter")}</button>
       </div>
@@ -2226,7 +2226,7 @@ function renderProgressMeasures() {
   return `
     <section class="student-progress-screen progress-measures-screen">
       <div class="screen-topbar progress-topbar">
-        <button class="icon-button ghost-icon" type="button" data-progress-back aria-label="Volver">⬹</button>
+        <button class="icon-button ghost-icon" type="button" data-progress-back aria-label="Volver">&larr;</button>
         <h2>Medidas</h2>
         <span></span>
       </div>
@@ -2514,7 +2514,7 @@ function renderAssignRoutineScreen(routineIds) {
   return `
     <section class="assign-routine-screen">
       <div class="screen-topbar">
-        <button class="icon-button ghost-icon" type="button" data-assign-action="back" aria-label="Volver">&lsaquo;</button>
+        <button class="icon-button ghost-icon" type="button" data-assign-action="back" aria-label="Volver">&larr;</button>
         <h2>Asignar rutina</h2>
         <span></span>
       </div>
@@ -2575,7 +2575,7 @@ function renderAdminWeekEditorScreen(week, weekIndex) {
   return `
     <article class="native-edit-screen week-edit-screen" data-week-index="${weekIndex}">
       <div class="screen-topbar">
-        <button class="icon-button ghost-icon" type="button" data-admin-action="back-to-routine-weeks" aria-label="Volver">&lsaquo;</button>
+        <button class="icon-button ghost-icon" type="button" data-admin-action="back-to-routine-weeks" aria-label="Volver">&larr;</button>
         <h2>Editar semana</h2>
         <span></span>
       </div>
@@ -2643,7 +2643,7 @@ function renderAdminWeekOverviewScreen(week, weekIndex) {
   return `
     <article class="native-edit-screen week-overview-screen" data-week-index="${weekIndex}">
       <div class="screen-topbar">
-        <button class="icon-button ghost-icon" type="button" data-admin-action="back-to-routine-weeks" aria-label="Volver">&lsaquo;</button>
+        <button class="icon-button ghost-icon" type="button" data-admin-action="back-to-routine-weeks" aria-label="Volver">&larr;</button>
         <h2>Semana ${escapeHtml(week.number || weekIndex + 1)} - ${escapeHtml(phase.name || "Adaptación")}</h2>
         <button class="icon-button ghost-icon" type="button" data-admin-action="edit-week" aria-label="Editar semana">&vellip;</button>
       </div>
@@ -2707,7 +2707,7 @@ function renderAdminRoutineDetailScreen(draft) {
   return `
     <section class="routine-detail-screen">
       <div class="screen-topbar routine-detail-topbar">
-        <button class="icon-button ghost-icon" type="button" data-admin-action="back-to-routine-list" aria-label="Volver">&lsaquo;</button>
+        <button class="icon-button ghost-icon" type="button" data-admin-action="back-to-routine-list" aria-label="Volver">&larr;</button>
         <h2>${escapeHtml(draft.name || "Rutina")}</h2>
         <div class="routine-detail-actions">
           <button class="icon-button ghost-icon" type="button" data-admin-action="edit-routine-basics" aria-label="Editar">&#9998;</button>
@@ -2743,7 +2743,7 @@ function renderAdminDayEditorScreen(week, day, weekIndex, dayIndex) {
   return `
     <article class="native-edit-screen day-edit-screen" data-week-index="${weekIndex}" data-day-index="${dayIndex}">
       <div class="screen-topbar">
-        <button class="icon-button ghost-icon" type="button" data-admin-action="back-to-week-edit" aria-label="Volver">&lsaquo;</button>
+        <button class="icon-button ghost-icon" type="button" data-admin-action="back-to-week-edit" aria-label="Volver">&larr;</button>
         <h2>${day.title ?escapeHtml(day.title) : "Crear día"}</h2>
         <button class="icon-button ghost-icon" type="button" data-admin-action="save-day" aria-label="Guardar">&check;</button>
       </div>
@@ -2824,7 +2824,7 @@ function renderAdminExerciseEditorScreen(exercise, exerciseKey, weekIndex, dayIn
   return `
     <article class="native-edit-screen exercise-edit-screen" data-week-index="${weekIndex}" data-day-index="${dayIndex}" data-exercise-key="${escapeHtml(exerciseKey)}">
       <div class="screen-topbar">
-        <button class="icon-button ghost-icon" type="button" data-admin-action="back-to-day-edit" aria-label="Volver">&lsaquo;</button>
+        <button class="icon-button ghost-icon" type="button" data-admin-action="back-to-day-edit" aria-label="Volver">&larr;</button>
         <h2>${exercise.name ? "Editar ejercicio" : "Nuevo ejercicio"}</h2>
         <button class="icon-button ghost-icon" type="button" data-admin-action="delete-exercise" aria-label="Eliminar">&vellip;</button>
       </div>
@@ -2894,7 +2894,7 @@ function renderTrainerNewStudentForm() {
   return `
     <section class="trainer-new-student-card">
       <div class="screen-topbar">
-        <button class="icon-button ghost-icon" type="button" data-admin-new-student-close aria-label="Volver">&lsaquo;</button>
+        <button class="icon-button ghost-icon" type="button" data-admin-new-student-close aria-label="Volver">&larr;</button>
         <h2>Nuevo alumno</h2>
         <span></span>
       </div>
@@ -2932,7 +2932,7 @@ function renderTrainerStudentActivity(user, routineIds) {
   return `
     <section class="trainer-student-activity" data-user-id="${escapeHtml(user.uid)}">
       <div class="screen-topbar">
-        <button class="icon-button ghost-icon" type="button" data-admin-users-back aria-label="Volver">9</button>
+        <button class="icon-button ghost-icon" type="button" data-admin-users-back aria-label="Volver">&larr;</button>
         <h2>${escapeHtml(displayName || t("user"))}</h2>
         ${canDeleteUser ?`<button class="icon-button ghost-icon user-delete-button" type="button" data-user-delete aria-label="${t("deleteUser")}">&vellip;</button>` : `<button class="icon-button ghost-icon" type="button" aria-label="Opciones">&vellip;</button>`}
       </div>
@@ -3737,7 +3737,7 @@ function renderAdminRoutineBasicsScreen(draft) {
   return `
     <section class="native-edit-screen routine-basics-screen">
       <div class="screen-topbar">
-        <button class="icon-button ghost-icon" type="button" data-admin-action="${isNew ?"back-to-routine-list" : "back-to-routine-detail"}" aria-label="Volver">&lsaquo;</button>
+        <button class="icon-button ghost-icon" type="button" data-admin-action="${isNew ?"back-to-routine-list" : "back-to-routine-detail"}" aria-label="Volver">&larr;</button>
         <h2>${title} &#127947;</h2>
         <button class="icon-button ghost-icon" type="button" aria-label="Más opciones">&vellip;</button>
       </div>
@@ -3832,7 +3832,7 @@ function renderStudentProfileAccount(userData, displayName, email) {
   return `
     <section class="student-account-screen profile-screen">
       <div class="screen-topbar">
-        <button class="icon-button ghost-icon" type="button" data-account-back aria-label="Volver">&lsaquo;</button>
+        <button class="icon-button ghost-icon" type="button" data-account-back aria-label="Volver">&larr;</button>
         <h2>Perfil del Alumno</h2>
         <button class="icon-button ghost-icon" type="button" data-account-section="settings" aria-label="Ajustes">${getInlineIcon("settings")}</button>
       </div>
@@ -3905,7 +3905,7 @@ function renderStudentSettingsAccount(userData) {
   return `
     <section class="student-account-screen settings-screen">
       <div class="screen-topbar">
-        <button class="icon-button ghost-icon" type="button" data-account-section="profile" aria-label="Volver">⬹</button>
+        <button class="icon-button ghost-icon" type="button" data-account-section="profile" aria-label="Volver">&larr;</button>
         <h2>Ajustes</h2>
         <span></span>
       </div>
@@ -5047,7 +5047,7 @@ function renderStudentRoutineOverview(routine) {
   return `
     <section class="student-routine-screen routine-overview-screen">
       <div class="screen-topbar routine-topbar">
-        <button class="icon-button ghost-icon" type="button" data-routine-back aria-label="Volver">&lsaquo;</button>
+        <button class="icon-button ghost-icon" type="button" data-routine-back aria-label="Volver">&larr;</button>
         <h2>Mi Rutina</h2>
         <button class="icon-button ghost-icon" type="button" data-routine-menu aria-label="Opciones">&vellip;</button>
       </div>
@@ -5078,7 +5078,7 @@ function renderStudentRoutineInfo(routine) {
   return `
     <section class="student-routine-screen routine-info-screen">
       <div class="screen-topbar routine-topbar">
-        <button class="icon-button ghost-icon" type="button" data-routine-tab="weeks" aria-label="Volver">⬹</button>
+        <button class="icon-button ghost-icon" type="button" data-routine-tab="weeks" aria-label="Volver">&larr;</button>
         <h2>Información de Rutina</h2>
         <span></span>
       </div>
@@ -5134,7 +5134,7 @@ function renderStudentRoutineWeek(routine, week) {
   return `
     <section class="student-routine-screen routine-week-screen">
       <div class="screen-topbar routine-topbar">
-        <button class="icon-button ghost-icon" type="button" data-routine-tab="weeks" aria-label="Volver">⬹</button>
+        <button class="icon-button ghost-icon" type="button" data-routine-tab="weeks" aria-label="Volver">&larr;</button>
         <h2>${t("week")} ${week.number} - ${escapeHtml(phase.name || "Hipertrofia")}</h2>
         <span></span>
       </div>
@@ -5214,7 +5214,7 @@ function renderStudentRoutineDayScreen(routine, week, day, dayIndex) {
   return `
     <section class="student-routine-screen training-day-screen">
       <div class="screen-topbar routine-topbar">
-        <button class="icon-button ghost-icon" type="button" data-routine-view="week" aria-label="Volver">&lsaquo;</button>
+        <button class="icon-button ghost-icon" type="button" data-routine-view="week" aria-label="Volver">&larr;</button>
         <h2>${escapeHtml(day.title || `Día ${dayIndex + 1}`)}</h2>
         <button class="icon-button ghost-icon" type="button" data-routine-menu aria-label="Opciones">&vellip;</button>
       </div>
@@ -5245,7 +5245,7 @@ function renderStudentExerciseScreen(routine, week, day, dayIndex, exerciseKey) 
   return `
     <section class="student-routine-screen exercise-run-screen">
       <div class="screen-topbar routine-topbar">
-        <button class="icon-button ghost-icon" type="button" data-routine-view="day" aria-label="Volver">&lsaquo;</button>
+        <button class="icon-button ghost-icon" type="button" data-routine-view="day" aria-label="Volver">&larr;</button>
         <h2>${escapeHtml(exercise.name || t("newExercise"))}</h2>
         <button class="icon-button ghost-icon" type="button" data-routine-menu aria-label="Opciones">&vellip;</button>
       </div>
