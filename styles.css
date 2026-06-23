@@ -1,5 +1,5 @@
 :root {
-  /* Single source of truth for the RutFit design system — matches the approved mockups.
+  /* Single source of truth for the RutFit design system - matches the approved mockups.
      Do NOT add another :root block elsewhere in this file; edit values here instead. */
   color-scheme: dark;
   --bg: #020817;
@@ -466,7 +466,7 @@ main {
   box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.16);
 }
 
-.filter-dot.isometría {
+.filter-dot.isometria {
   background: var(--accent-3);
   box-shadow: 0 0 0 3px rgba(74, 163, 255, 0.13);
 }
@@ -476,12 +476,12 @@ main {
   box-shadow: 0 0 0 3px rgba(230, 108, 255, 0.13);
 }
 
-.filter-dot.recuperación {
+.filter-dot.recuperacion {
   background: #4aa3ff;
   box-shadow: 0 0 0 3px rgba(74, 163, 255, 0.13);
 }
 
-.filter-dot.isometría {
+.filter-dot.isometria {
   background: #f5f5f5;
   box-shadow: 0 0 0 3px rgba(245, 245, 245, 0.1);
 }
@@ -491,7 +491,7 @@ main {
   box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.18);
 }
 
-.filter-dot.recuperación {
+.filter-dot.recuperacion {
   background: #9a9a9a;
   box-shadow: 0 0 0 3px rgba(154, 154, 154, 0.12);
 }
@@ -718,7 +718,7 @@ main {
   box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.16);
 }
 
-.objective-dot.isometría {
+.objective-dot.isometria {
   background: var(--accent-3);
   box-shadow: 0 0 0 4px rgba(245, 245, 245, 0.08);
 }
@@ -2418,11 +2418,11 @@ main {
 }
 
 .home-actions button:nth-child(2)::before {
-  content: "▣";
+  content: "\25A3";
 }
 
 .home-actions button:nth-child(3)::before {
-  content: "↻";
+  content: "\21BB";
 }
 
 .home-actions .secondary-button:nth-child(2) {
@@ -2608,7 +2608,7 @@ main {
 }
 
 .routine-list-icon.calendar::before {
-  content: "▦";
+  content: "\25A6";
 }
 
 .routine-list-icon.clipboard {
@@ -2616,7 +2616,7 @@ main {
 }
 
 .routine-list-icon.clipboard::before {
-  content: "▤";
+  content: "\25A4";
 }
 
 .routine-list-icon.dumbbell {
@@ -3513,7 +3513,7 @@ main {
 .admin-panel.routines-view.editing-routine #adminSaveRoutine::before,
 .admin-panel.routines-view.editing-routine #adminAddWeek::before,
 .admin-panel.routines-view.editing-routine .admin-row-actions .primary-button::before {
-  content: "▣";
+  content: "\25A3";
   margin-right: 0.4rem;
 }
 
@@ -6757,7 +6757,7 @@ body.native-admin-subscreen-active .app-shell {
 }
 
 .admin-panel.routines-view.editing-routine .admin-grid label[for="adminRoutineKicker"] span::after {
-  content: "Duración estimada / etiqueta";
+  content: "Duracion estimada / etiqueta";
   font-size: 0.56rem;
 }
 
@@ -7079,7 +7079,7 @@ body.native-admin-subscreen-active .app-shell {
 }
 
 .exercise-editor-hero::after {
-  content: "▣";
+  content: "\25A3";
   position: absolute;
   right: 0.55rem;
   bottom: 0.55rem;
@@ -7344,7 +7344,7 @@ body.native-admin-subscreen-active .app-shell {
 }
 
 .admin-panel.creating-routine #adminRoutineEditor > .admin-card-title h3::after {
-  content: " 🏋";
+  content: "";
   color: #8b5cf6;
 }
 
@@ -7438,7 +7438,7 @@ body.native-admin-subscreen-active .app-shell {
 }
 
 .admin-panel.creating-routine .admin-grid label[for="adminRoutineKicker"] span::after {
-  content: "Duración estimada";
+  content: "Duracion estimada";
   font-size: 0.53rem;
 }
 
@@ -7447,7 +7447,7 @@ body.native-admin-subscreen-active .app-shell {
 }
 
 .admin-panel.creating-routine .admin-grid label[for="adminRoutineTags"]::after {
-  content: "×";
+  content: "x";
   position: absolute;
   right: 0.7rem;
   bottom: 0.68rem;
@@ -7468,7 +7468,7 @@ body.native-admin-subscreen-active .app-shell {
 }
 
 .admin-panel.creating-routine .admin-actions #adminSaveRoutine::before {
-  content: "▣ ";
+  content: "\25A3 ";
 }
 
 .admin-panel.creating-routine .admin-actions #adminNewRoutine,
@@ -7911,22 +7911,22 @@ body.native-admin-subscreen-active .app-shell {
 }
 
 .exercise-field-muscle::before {
-  content: "⌘";
+  content: "\2318";
   background: linear-gradient(135deg, #aa1fdc, #ef2fb4);
 }
 
 .exercise-field-equipment::before {
-  content: "▥";
+  content: "\25A5";
   background: linear-gradient(135deg, #0284c7, #06b6d4);
 }
 
 .admin-panel.routines-view.editing-routine .admin-exercise.is-editing .admin-exercise-grid label:nth-of-type(4)::before {
-  content: "⚒";
+  content: "\2692";
   background: linear-gradient(135deg, #5b35ff, #8b5cf6);
 }
 
 .admin-panel.routines-view.editing-routine .admin-exercise.is-editing .admin-exercise-grid label:nth-of-type(5)::before {
-  content: "⏱";
+  content: "\23F1";
   background: linear-gradient(135deg, #d97706, #f59e0b);
 }
 

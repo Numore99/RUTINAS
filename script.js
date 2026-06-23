@@ -1617,7 +1617,7 @@ function startStudentInvitesListener() {
 }
 
 async function updateUserRoutine(uid, routineId) {
-  if (!canManageUser(uid)) return;
+  if (!canManageUser(uid)) throw new Error(t("permissionDenied"));
   await db.collection("users").doc(uid).set(
     {
       routineId,
@@ -1823,7 +1823,7 @@ function setActiveView(view) {
     state.selectedAdminUserId = "";
     state.adminAssignmentMode = false;
   }
-  if (view !== "routines" && state.adminEditorMode !== "create") {
+  if (view !== "routines") {
     state.adminEditorMode = "";
     state.adminRoutineBasicsOpen = false;
     state.pendingAssignUserId = "";
@@ -4181,12 +4181,12 @@ async function handleAdminAction(button) {
       state.adminDayEditorIndex = null;
       state.adminEditingExerciseKey = "";
       setAdminMessage("");
-      renderAdminPanel();
+      renderApp();
     } else {
       state.adminDayEditorIndex = null;
       state.adminEditingExerciseKey = "";
       setAdminMessage("");
-      renderAdminPanel();
+      renderApp();
     }
     return;
   }
@@ -4245,10 +4245,13 @@ if (action === "save-day") {
     state.adminWeekEditorIndex = location.weekIndex;
     state.adminEditingExerciseKey = "";
     setAdminMessage("Día guardado.", "success");
-    renderAdminPanel();
+    renderApp();
   } catch (error) {
+    state.adminDayEditorIndex = null;
+    state.adminWeekEditorIndex = location.weekIndex;
+    state.adminEditingExerciseKey = "";
     setAdminMessage(`${getAuthErrorMessage(error)} ${error?.message || ""}`.trim(), "error");
-    renderAdminPanel();
+    renderApp();
   }
   return;
 }
@@ -4315,7 +4318,7 @@ if (action === "delete-week") {
     week.days.push({ title: "", focus: "Hipertrofia", duration: "45", notes: "", exercises: [] });
     state.adminWeekEditorIndex = location.weekIndex;
     state.adminDayEditorIndex = nextDayIndex;
-    renderAdminPanel();
+    renderApp();
     return;
   }
 
@@ -4868,6 +4871,15 @@ function toggleDone() {
 }
 
 weeksContainer.addEventListener("click", (event) => {
+  const routineMenu = event.target.closest("[data-routine-menu]");
+  if (routineMenu) {
+    state.routineSubView = "info";
+    state.selectedRoutineDayIndex = null;
+    state.selectedRoutineExerciseKey = "";
+    renderPlan();
+    return;
+  }
+
   const routineTab = event.target.closest("[data-routine-tab]");
   if (routineTab) {
     const tab = routineTab.dataset.routineTab;
