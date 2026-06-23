@@ -2689,11 +2689,10 @@ function renderAdminRoutineDetailScreen(draft) {
   const weekRows = weeks.map((week, index) => {
     const phase = week.phase || {};
     const progress = progressValues[index] ?? 0;
-    const iconNames = ["calendar", "clipboard", "dumbbell", "bolt", "fire", "settings"];
-    const icon = iconNames[index % iconNames.length];
+    const icon = "calendar";
     return `
       <button class="routine-detail-week-row" type="button" data-admin-action="open-week" data-admin-open-week="true" data-week-index="${index}">
-        <span class="routine-list-icon icon-${icon}">${getInlineIcon(icon)}</span>
+        <span class="routine-list-icon icon-${icon} calendar">${getInlineIcon("calendar")}</span>
         <span class="routine-detail-week-main">
           <strong>Semana ${escapeHtml(week.number || index + 1)}</strong>
           <small>${escapeHtml(phase.name || "Sin fase")}</small>
@@ -3652,7 +3651,7 @@ function getRoutineAssignedCount(routineId) {
 }
 
 function getRoutineCardIcon(index) {
-  const icons = ["calendar", "clipboard", "dumbbell", "bolt", "fire"];
+  const icons = ["dumbbell"];
   return icons[index % icons.length];
 }
 
@@ -3700,7 +3699,7 @@ function renderRoutineCatalog(routineIds) {
         const progressValue = [75, 60, 90, 40, 30][index % 5] || (totalWeeks ?Math.min(95, Math.max(30, Math.round(100 / Math.max(1, totalWeeks)))) : 0);
         return `
           <article class="routine-list-card" data-routine-card="${escapeHtml(id)}">
-            <span class="routine-list-icon ${getRoutineCardIcon(index)}"></span>
+            <span class="routine-list-icon ${getRoutineCardIcon(index)}">${getInlineIcon("dumbbell")}</span>
             <span class="routine-list-main">
               <strong>${escapeHtml(routine.name || id)}</strong>
               <small>${totalWeeks} semanas · ${assigned} alumnos</small>
@@ -3944,6 +3943,8 @@ function renderPreferenceToggle(key, label, checked) {
 
 function getInlineIcon(name) {
   const icons = {
+    calendar: '<svg viewBox="0 0 24 24"><path d="M7 2h2v3h6V2h2v3h2.2A2.8 2.8 0 0 1 22 7.8v10.4a2.8 2.8 0 0 1-2.8 2.8H4.8A2.8 2.8 0 0 1 2 18.2V7.8A2.8 2.8 0 0 1 4.8 5H7V2Zm12.5 8.5h-15v7.7c0 .7.6 1.3 1.3 1.3h12.4c.7 0 1.3-.6 1.3-1.3v-7.7ZM5.8 6.5c-.7 0-1.3.6-1.3 1.3V9h15V7.8c0-.7-.6-1.3-1.3-1.3H5.8Z"/></svg>',
+    dumbbell: '<svg viewBox="0 0 24 24"><path d="M3 9h2v6H3V9Zm3-2h3v10H6V7Zm9 0h3v10h-3V7Zm4 2h2v6h-2V9ZM9.5 11h5v2h-5v-2Z"/></svg>',
     settings: '<svg viewBox="0 0 24 24"><path d="M12 8.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Zm8.5 3.5-2.1-.7a7 7 0 0 0-.5-1.2l1-2-2.8-2.8-2 .9a7 7 0 0 0-1.2-.5L12 3.5H8l-.7 2.2a7 7 0 0 0-1.2.5l-2-.9-2.8 2.8 1 2a7 7 0 0 0-.5 1.2L-.5 12v4l2.3.7c.1.4.3.8.5 1.2l-1 2 2.8 2.8 2-.9c.4.2.8.4 1.2.5L8 24.5h4l.7-2.2c.4-.1.8-.3 1.2-.5l2 .9 2.8-2.8-1-2c.2-.4.4-.8.5-1.2l2.3-.7v-4Z"/></svg>',
     camera: '<svg viewBox="0 0 24 24"><path d="M8 6 9.5 4h5L16 6h3a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h3Zm4 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"/></svg>',
     user: '<svg viewBox="0 0 24 24"><path d="M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10Zm-9 9a9 9 0 0 1 18 0v1H3v-1Z"/></svg>',
@@ -5028,11 +5029,11 @@ function renderStudentRoutineOverview(routine) {
   const weekRows = (routine.plan || []).map((week, index) => {
     const percent = getWeekProgressPercent(week);
     const phase = week.phase || {};
-    const iconClass = percent >= 100 ?"calendar" : percent > 0 ?"dumbbell" : "clipboard";
+    const iconClass = "calendar";
     const status = percent >= 100 ?"complete" : percent > 0 ?"progress" : "pending";
     return `
       <button class="routine-week-row ${status}" type="button" data-routine-week="${week.number}">
-        <span class="routine-list-icon ${iconClass}"></span>
+        <span class="routine-list-icon ${iconClass}">${getInlineIcon("calendar")}</span>
         <span>
           <strong>${t("week")} ${week.number}</strong>
           <small>${escapeHtml(phase.name || `Semana ${index + 1}`)}</small>
@@ -5112,13 +5113,13 @@ function renderStudentRoutineWeek(routine, week) {
     const dayPercent = ids.length ?Math.round((done / ids.length) * 100) : 0;
     const completed = dayPercent >= 100;
     const inProgress = dayPercent > 0 && dayPercent < 100;
-    const iconClass = completed ?"calendar" : inProgress ?"fire" : "clipboard";
+    const iconClass = "calendar";
     const open = Number(state.selectedRoutineDayIndex) === dayIndex;
     const exerciseList = open ?renderStudentRoutineDayExercises(routine, week, day, dayIndex) : "";
     return `
       <article class="routine-day-card ${open ?"open" : ""}">
         <button class="routine-day-row" type="button" data-routine-day="${dayIndex}">
-          <span class="routine-list-icon ${iconClass}"></span>
+          <span class="routine-list-icon ${iconClass}">${getInlineIcon("calendar")}</span>
           <span>
             <strong>${escapeHtml(day.title || `Día ${dayIndex + 1}`)}</strong>
             <small>${escapeHtml(day.focus || (completed ?"Completado" : inProgress ?"En progreso" : "Pendiente"))}</small>

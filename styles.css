@@ -2607,6 +2607,16 @@ main {
   line-height: 1;
 }
 
+.routine-list-icon svg {
+  width: 1.34rem;
+  height: 1.34rem;
+  fill: currentColor;
+}
+
+.routine-list-icon:has(svg)::before {
+  content: none !important;
+}
+
 .routine-list-icon.calendar::before {
   content: "\25A6";
 }
