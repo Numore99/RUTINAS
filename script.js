@@ -1842,8 +1842,70 @@ function setActiveView(view, options = {}) {
   }
   renderApp();
   if (!options.skipHistory && state.currentUser && previousView !== view) {
-    window.history.pushState({ rutfitView: view }, "", window.location.href);
+    pushAppHistory();
   }
+}
+
+function getAppHistoryState() {
+  return {
+    rutfit: true,
+    rutfitView: state.activeView || "home",
+    accountSubView: state.accountSubView || "profile",
+    progressSubView: state.progressSubView || "summary",
+    progressHistoryFilter: state.progressHistoryFilter || "all",
+    progressMeasureTab: state.progressMeasureTab || "summary",
+    routineSubView: state.routineSubView || "weeks",
+    selectedRoutineWeekNumber: Number(state.selectedRoutineWeekNumber) || 1,
+    selectedRoutineDayIndex: state.selectedRoutineDayIndex ?? null,
+    selectedRoutineExerciseKey: state.selectedRoutineExerciseKey || "",
+    selectedAdminUserId: state.selectedAdminUserId || "",
+    adminRoutineScreen: state.adminRoutineScreen || "list",
+    adminEditorMode: state.adminEditorMode || ""
+  };
+}
+
+function getHistorySignature(snapshot = getAppHistoryState()) {
+  return JSON.stringify(snapshot);
+}
+
+function pushAppHistory(options = {}) {
+  if (!state.currentUser || options.skipHistory) return;
+  const snapshot = getAppHistoryState();
+  const signature = getHistorySignature(snapshot);
+  if (window.history.state?.rutfitSignature === signature) return;
+  window.history.pushState({ ...snapshot, rutfitSignature: signature }, "", window.location.href);
+}
+
+function replaceAppHistory() {
+  if (!state.currentUser) return;
+  const snapshot = getAppHistoryState();
+  window.history.replaceState({ ...snapshot, rutfitSignature: getHistorySignature(snapshot) }, "", window.location.href);
+}
+
+function restoreAppHistory(snapshot) {
+  if (!snapshot?.rutfit) {
+    state.activeView = "home";
+  } else {
+    state.activeView = snapshot.rutfitView || "home";
+    state.accountSubView = snapshot.accountSubView || "profile";
+    state.progressSubView = snapshot.progressSubView || "summary";
+    state.progressHistoryFilter = snapshot.progressHistoryFilter || "all";
+    state.progressMeasureTab = snapshot.progressMeasureTab || "summary";
+    state.routineSubView = snapshot.routineSubView || "weeks";
+    state.selectedRoutineWeekNumber = Number(snapshot.selectedRoutineWeekNumber) || 1;
+    state.selectedRoutineDayIndex = snapshot.selectedRoutineDayIndex ?? null;
+    state.selectedRoutineExerciseKey = snapshot.selectedRoutineExerciseKey || "";
+    state.selectedAdminUserId = snapshot.selectedAdminUserId || "";
+    state.adminRoutineScreen = snapshot.adminRoutineScreen || "list";
+    state.adminEditorMode = snapshot.adminEditorMode || "";
+  }
+  state.adminPanelOpen = canManageStudents() && ["students", "routines"].includes(state.activeView);
+  renderApp();
+}
+
+function renderPlanAndPushHistory() {
+  renderPlan();
+  pushAppHistory();
 }
 
 function openAcceptedStudentsForAssignment() {
@@ -3199,7 +3261,7 @@ async function handleAuthenticatedUser(user) {
 
   state.currentUser = user;
   if (!window.history.state?.rutfitView) {
-    window.history.replaceState({ rutfitView: state.activeView || "home" }, "", window.location.href);
+    replaceAppHistory();
   }
   setAuthMessage(t("loadingRoutine"));
 
@@ -5463,7 +5525,7 @@ weeksContainer.addEventListener("click", (event) => {
     state.routineSubView = "info";
     state.selectedRoutineDayIndex = null;
     state.selectedRoutineExerciseKey = "";
-    renderPlan();
+    renderPlanAndPushHistory();
     return;
   }
 
@@ -5472,7 +5534,7 @@ weeksContainer.addEventListener("click", (event) => {
     const tab = routineTab.dataset.routineTab;
     state.routineSubView = tab === "info" || tab === "notes" ?"info" : "weeks";
     state.selectedRoutineDayIndex = null;
-    renderPlan();
+    renderPlanAndPushHistory();
     return;
   }
 
@@ -5487,7 +5549,7 @@ weeksContainer.addEventListener("click", (event) => {
     state.selectedRoutineWeekNumber = Number(routineWeek.dataset.routineWeek) || 1;
     state.selectedRoutineDayIndex = null;
     state.routineSubView = "week";
-    renderPlan();
+    renderPlanAndPushHistory();
     return;
   }
 
@@ -5499,7 +5561,7 @@ weeksContainer.addEventListener("click", (event) => {
       state.selectedRoutineDayIndex = null;
       state.selectedRoutineExerciseKey = "";
     }
-    renderPlan();
+    renderPlanAndPushHistory();
     return;
   }
 
@@ -5509,7 +5571,7 @@ weeksContainer.addEventListener("click", (event) => {
     state.selectedRoutineDayIndex = index;
     state.selectedRoutineExerciseKey = "";
     state.routineSubView = "day";
-    renderPlan();
+    renderPlanAndPushHistory();
     return;
   }
 
@@ -5518,7 +5580,7 @@ weeksContainer.addEventListener("click", (event) => {
     state.selectedRoutineExerciseKey = routineExercise.dataset.routineExercise || "";
     state.routineSubView = "exercise";
     state.exerciseSeriesDone = 2;
-    renderPlan();
+    renderPlanAndPushHistory();
     return;
   }
 
@@ -5533,7 +5595,7 @@ weeksContainer.addEventListener("click", (event) => {
       state.selectedRoutineExerciseKey = first;
       state.routineSubView = "exercise";
       state.exerciseSeriesDone = 2;
-      renderPlan();
+      renderPlanAndPushHistory();
       return;
     }
     if (routineAction.dataset.routineAction === "finish-exercise" && week && day && state.selectedRoutineExerciseKey) {
@@ -5546,7 +5608,7 @@ weeksContainer.addEventListener("click", (event) => {
     }
     if (routineAction.dataset.routineAction === "skip-exercise") {
       state.routineSubView = "day";
-      renderPlan();
+      renderPlanAndPushHistory();
       return;
     }
   }
@@ -5998,6 +6060,7 @@ studentProgress?.addEventListener("click", (event) => {
   if (back) {
     state.progressSubView = "summary";
     renderStudentProgress();
+    pushAppHistory();
     return;
   }
 
@@ -6005,6 +6068,7 @@ studentProgress?.addEventListener("click", (event) => {
   if (tab) {
     state.progressSubView = tab.dataset.progressTab || "summary";
     renderStudentProgress();
+    pushAppHistory();
     return;
   }
 
@@ -6012,6 +6076,7 @@ studentProgress?.addEventListener("click", (event) => {
   if (historyFilter) {
     state.progressHistoryFilter = historyFilter.dataset.historyFilter || "all";
     renderStudentProgress();
+    pushAppHistory();
     return;
   }
 
@@ -6019,6 +6084,7 @@ studentProgress?.addEventListener("click", (event) => {
   if (measureTab) {
     state.progressMeasureTab = measureTab.dataset.measureTab || "summary";
     renderStudentProgress();
+    pushAppHistory();
     return;
   }
 
@@ -6032,6 +6098,7 @@ studentProgress?.addEventListener("click", (event) => {
   if (action.dataset.progressAction === "menu") {
     state.progressSubView = state.progressSubView === "history" ?"summary" : "history";
     renderStudentProgress();
+    pushAppHistory();
     return;
   }
   if (action.dataset.progressAction === "cycle-history") {
@@ -6039,6 +6106,7 @@ studentProgress?.addEventListener("click", (event) => {
     const index = order.indexOf(state.progressHistoryFilter);
     state.progressHistoryFilter = order[(index + 1) % order.length];
     renderStudentProgress();
+    pushAppHistory();
   }
 });
 
@@ -6054,6 +6122,7 @@ accountPanel?.addEventListener("click", async (event) => {
     const target = sectionButton.dataset.accountSection;
     state.accountSubView = target === "settings" ?"settings" : target === "profile" ?"profile" : target;
     renderAccountPanel();
+    pushAppHistory();
     return;
   }
 
@@ -6630,8 +6699,7 @@ window.addEventListener("DOMContentLoaded", updateInstallWall);
 
 window.addEventListener("popstate", (event) => {
   if (!state.currentUser) return;
-  const view = event.state?.rutfitView || "home";
-  setActiveView(view, { skipHistory: true });
+  restoreAppHistory(event.state);
 });
 
 window.addEventListener("load", () => {
