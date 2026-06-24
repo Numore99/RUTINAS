@@ -1,8 +1,10 @@
 [{
-      "relation": ["delegate_permission/common.handle_all_urls"],
-      "target": {
-        "namespace": "android_app",
-        "package_name": "br.com.numorelabs.rutfit",
-        "sha256_cert_fingerprints": ["49:D7:EA:B1:8C:CA:6E:73:98:75:5B:5E:AF:AF:2A:DE:D7:A9:13:93:68:5C:97:9F:67:5A:B9:15:DE:CC:0A:0B"]
-      }
-    }]
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "br.com.numorelabs.rutfit",
+    "sha256_cert_fingerprints": [
+      "49:D7:EA:B1:8C:CA:6E:73:98:75:5B:5E:AF:AF:2A:DE:D7:A9:13:93:68:5C:97:9F:67:5A:B9:15:DE:CC:0A:0B"
+    ]
+  }
+}]
