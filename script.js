@@ -4902,18 +4902,12 @@ async function handleAdminAction(button) {
 
   if (action === "back-to-week-edit") {
     const location = getAdminDayLocation(button);
-    if (location) {
-      state.adminWeekEditorIndex = location.weekIndex;
-      state.adminDayEditorIndex = null;
-      state.adminEditingExerciseKey = "";
-      setAdminMessage("");
-      renderApp();
-    } else {
-      state.adminDayEditorIndex = null;
-      state.adminEditingExerciseKey = "";
-      setAdminMessage("");
-      renderApp();
-    }
+    state.adminRoutineScreen = "weekOverview";
+    state.adminDayEditorIndex = null;
+    state.adminEditingExerciseKey = "";
+    if (location) state.adminWeekEditorIndex = location.weekIndex;
+    setAdminMessage("");
+    renderAdminPanel();
     return;
   }
 
