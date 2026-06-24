@@ -9537,3 +9537,6 @@ body.install-wall-active {
     transform: translateX(-50%);
   }
 }
+.admin-panel.creating-routine.routine-workspace-view .admin-weeks {
+  display: block;
+}
