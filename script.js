@@ -4221,12 +4221,6 @@ function renderAdminPanel() {
     adminRoutineSelect.innerHTML = "";
     return;
   }
-
-  adminRoutineEditor.classList.remove("is-hidden");
-  adminEditorTitle.textContent = "";
-  adminWeeks.innerHTML = renderAdminRoutineWorkspace();
-  return;
-
   adminRoutineEditor.classList.remove("is-hidden");
   const draft = state.adminDraft;
   const selectedUser = getAdminUser(state.pendingAssignUserId || state.selectedAdminUserId);
@@ -4278,7 +4272,12 @@ function renderAdminPanel() {
     return;
   }
 
-  if (state.adminEditorMode === "edit" && !state.adminRoutineBasicsOpen) {
+  if (state.adminEditorMode === "create" || state.adminRoutineBasicsOpen) {
+  adminWeeks.innerHTML = renderAdminRoutineBasicsScreen(draft);
+  return;
+}
+
+if (state.adminEditorMode === "edit" && !state.adminRoutineBasicsOpen) {
     adminEditorTitle.textContent = draft.name || "Rutina";
     adminWeeks.innerHTML = renderAdminRoutineDetailScreen(draft);
     return;
