@@ -3403,7 +3403,8 @@ async function handleAuthenticatedUser(user) {
 
 function renderApp() {
   const routine = getActiveRoutine() || routines.pending;
-  if (!routine) {
+  const isAdminEditing = canManageStudents() && state.adminEditorMode;
+  if (!routine && !isAdminEditing) {
     return;
   }
   const managerMode = canManageStudents();
