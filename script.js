@@ -4622,6 +4622,12 @@ async function handleRoutineWorkspaceAction(button) {
     state.adminDayEditorIndex = null;
     state.adminEditingExerciseKey = "";
     state.adminRoutineScreen = "week";
+    try {
+      await saveAdminDraftAndAssignment({ skipReadBasics: true });
+      setAdminMessage("Semana creada. Completa los datos y guarda.", "success");
+    } catch (error) {
+      setAdminMessage(`${getAuthErrorMessage(error)} ${error?.message || ""}`.trim(), "error");
+    }
     renderAdminPanel();
     return true;
   }
@@ -4718,6 +4724,12 @@ async function handleRoutineWorkspaceAction(button) {
     state.adminDayEditorIndex = nextDayIndex;
     state.adminEditingExerciseKey = "";
     state.adminRoutineScreen = "day";
+    try {
+      await saveAdminDraftAndAssignment({ skipReadBasics: true });
+      setAdminMessage("Día creado. Completa los datos y guarda.", "success");
+    } catch (error) {
+      setAdminMessage(`${getAuthErrorMessage(error)} ${error?.message || ""}`.trim(), "error");
+    }
     renderAdminPanel();
     return true;
   }
@@ -6390,7 +6402,7 @@ studentInvitesPanel?.addEventListener("click", async (event) => {
   }
 });
 
-adminAddWeek.addEventListener("click", () => {
+adminAddWeek.addEventListener("click", async () => {
   if (!state.adminDraft) {
     startRoutineCreation(state.selectedAdminUserId || "");
     return;
@@ -6406,6 +6418,15 @@ adminAddWeek.addEventListener("click", () => {
   state.adminEditingExerciseKey = "";
   state.adminDayEditorIndex = null;
   state.adminWeekEditorIndex = nextIndex;
+  adminAddWeek.disabled = true;
+  try {
+    await saveAdminDraftAndAssignment({ skipReadBasics: true });
+    setAdminMessage("Semana creada. Completa los datos y guarda.", "success");
+  } catch (error) {
+    setAdminMessage(`${getAuthErrorMessage(error)} ${error?.message || ""}`.trim(), "error");
+  } finally {
+    adminAddWeek.disabled = false;
+  }
   renderAdminPanel();
 });
 
