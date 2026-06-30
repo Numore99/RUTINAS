@@ -5828,7 +5828,7 @@ adminWeeks.addEventListener("click", async (event) => {
   }
 
   const workspaceButton = event.target.closest("[data-admin-action]");
-  if (workspaceButton && state.activeView === "routines" && state.adminDraft) {
+  if (workspaceButton && state.adminDraft) {
     const handled = await handleRoutineWorkspaceAction(workspaceButton);
     if (handled) return;
   }
